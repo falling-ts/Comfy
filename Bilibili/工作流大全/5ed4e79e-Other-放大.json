@@ -1,0 +1,1619 @@
+{
+  "id": "083b52b1-6974-45ce-ab0f-0761bc3612c6",
+  "revision": 0,
+  "last_node_id": 60,
+  "last_link_id": 133,
+  "nodes": [
+    {
+      "id": 43,
+      "type": "SUPIR_decode",
+      "pos": [
+        981,
+        786
+      ],
+      "size": [
+        213.84556579589844,
+        129.1064910888672
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "SUPIR_VAE",
+          "name": "SUPIR_VAE",
+          "type": "SUPIRVAE",
+          "link": 90
+        },
+        {
+          "label": "Latent",
+          "name": "latents",
+          "type": "LATENT",
+          "link": 91
+        },
+        {
+          "label": "解码分块尺寸",
+          "name": "decoder_tile_size",
+          "type": "INT",
+          "widget": {
+            "name": "decoder_tile_size"
+          },
+          "link": 92
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            97
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-supir",
+        "ver": "53fc4f82f139e0875e1f4f3716fbeafa073e4242",
+        "Node name for S&R": "SUPIR_decode",
+        "widget_ue_connectable": {
+          "decoder_tile_size": true
+        }
+      },
+      "widgets_values": [
+        true,
+        512
+      ]
+    },
+    {
+      "id": 50,
+      "type": "ImpactInt",
+      "pos": [
+        474,
+        1119
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "整数",
+          "name": "INT",
+          "type": "INT",
+          "slot_index": 0,
+          "links": [
+            87
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-impact-pack",
+        "ver": "782c6f439eda79d88f22908bc83f57db77d44097",
+        "Node name for S&R": "ImpactInt",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        512
+      ]
+    },
+    {
+      "id": 49,
+      "type": "ImpactInt",
+      "pos": [
+        234,
+        1118
+      ],
+      "size": [
+        221.49961853027344,
+        58
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "整数",
+          "name": "INT",
+          "type": "INT",
+          "slot_index": 0,
+          "links": [
+            79,
+            80,
+            86,
+            92,
+            95
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-impact-pack",
+        "ver": "782c6f439eda79d88f22908bc83f57db77d44097",
+        "Node name for S&R": "ImpactInt",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        1024
+      ]
+    },
+    {
+      "id": 45,
+      "type": "ColorMatch",
+      "pos": [
+        985,
+        968
+      ],
+      "size": [
+        212.60520935058594,
+        125.10394287109375
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "参考图像",
+          "name": "image_ref",
+          "type": "IMAGE",
+          "link": 96
+        },
+        {
+          "label": "目标图像",
+          "name": "image_target",
+          "type": "IMAGE",
+          "link": 97
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            110,
+            128
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "c19ad3491691dde7219bc0dab17acefb81bd0be0",
+        "Node name for S&R": "ColorMatch",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "mkl",
+        1
+      ]
+    },
+    {
+      "id": 42,
+      "type": "SUPIR_conditioner",
+      "pos": [
+        472,
+        780
+      ],
+      "size": [
+        210,
+        306.2048034667969
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "SUPIR_model",
+          "type": "SUPIRMODEL",
+          "link": 88
+        },
+        {
+          "label": "Latent",
+          "name": "latents",
+          "type": "LATENT",
+          "link": 89
+        },
+        {
+          "label": "captions",
+          "name": "captions",
+          "shape": 7,
+          "type": "STRING",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "SUPIR_cond_pos",
+          "slot_index": 0,
+          "links": [
+            83
+          ]
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "SUPIR_cond_neg",
+          "slot_index": 1,
+          "links": [
+            84
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-supir",
+        "ver": "53fc4f82f139e0875e1f4f3716fbeafa073e4242",
+        "Node name for S&R": "SUPIR_conditioner",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "high quality, detailed, photograph",
+        "bad quality, blurry, messy",
+        "",
+        true
+      ]
+    },
+    {
+      "id": 48,
+      "type": "Seed (rgthree)",
+      "pos": [
+        983,
+        580
+      ],
+      "size": [
+        211.84556579589844,
+        151.58975219726562
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "dir": 4,
+          "label": "随机种",
+          "name": "SEED",
+          "shape": 3,
+          "type": "INT",
+          "slot_index": 0,
+          "links": [
+            85,
+            115
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "32142fe476878a354dda6e2d4b5ea98960de3ced",
+        "Node name for S&R": "Seed (rgthree)",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        -1,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 58,
+      "type": "CLIPTextEncode",
+      "pos": [
+        1242,
+        1034
+      ],
+      "size": [
+        315.26739501953125,
+        132
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 123
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            131
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.25",
+        "Node name for S&R": "CLIPTextEncode",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "bad quality, blurry, messy",
+        null,
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 51,
+      "type": "ImageResizeKJ",
+      "pos": [
+        232,
+        777
+      ],
+      "size": [
+        224.63909912109375,
+        300.9258728027344
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 101
+        },
+        {
+          "label": "参考图像",
+          "name": "get_image_size",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            78
+          ]
+        },
+        {
+          "label": "宽度",
+          "name": "width",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "label": "高度",
+          "name": "height",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "c19ad3491691dde7219bc0dab17acefb81bd0be0",
+        "Node name for S&R": "ImageResizeKJ",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        2048,
+        2048,
+        "nearest-exact",
+        true,
+        2,
+        0
+      ]
+    },
+    {
+      "id": 44,
+      "type": "SUPIR_encode",
+      "pos": [
+        697,
+        573
+      ],
+      "size": [
+        263.14984130859375,
+        158.3388671875
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "SUPIR_VAE",
+          "name": "SUPIR_VAE",
+          "type": "SUPIRVAE",
+          "link": 93
+        },
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 94
+        },
+        {
+          "label": "编码分块尺寸",
+          "name": "encoder_tile_size",
+          "type": "INT",
+          "widget": {
+            "name": "encoder_tile_size"
+          },
+          "link": 95
+        }
+      ],
+      "outputs": [
+        {
+          "label": "Latent",
+          "name": "latent",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            82
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-supir",
+        "ver": "53fc4f82f139e0875e1f4f3716fbeafa073e4242",
+        "Node name for S&R": "SUPIR_encode",
+        "widget_ue_connectable": {
+          "encoder_tile_size": true
+        }
+      },
+      "widgets_values": [
+        true,
+        512,
+        "auto"
+      ]
+    },
+    {
+      "id": 39,
+      "type": "LoadImage",
+      "pos": [
+        -177,
+        785
+      ],
+      "size": [
+        393.0514221191406,
+        380.3810119628906
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            96,
+            101,
+            111,
+            113
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.25",
+        "Node name for S&R": "LoadImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "dd5c2dcece9d416e896e5cf81fa5b20ef8c109b5291205b2d60299560218f57f.jfif",
+        "image"
+      ]
+    },
+    {
+      "id": 56,
+      "type": "UpscaleModelLoader",
+      "pos": [
+        1235,
+        569
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "放大模型",
+          "name": "UPSCALE_MODEL",
+          "type": "UPSCALE_MODEL",
+          "slot_index": 0,
+          "links": [
+            133
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.25",
+        "Node name for S&R": "UpscaleModelLoader",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "4x-UltraSharp.pth"
+      ]
+    },
+    {
+      "id": 46,
+      "type": "SUPIR_model_loader_v2",
+      "pos": [
+        130,
+        570
+      ],
+      "size": [
+        298.2899475097656,
+        170
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 98
+        },
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 99
+        },
+        {
+          "label": "VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 100
+        }
+      ],
+      "outputs": [
+        {
+          "label": "SUPIR模型",
+          "name": "SUPIR_model",
+          "type": "SUPIRMODEL",
+          "slot_index": 0,
+          "links": [
+            81,
+            88
+          ]
+        },
+        {
+          "label": "SUPIR_VAE",
+          "name": "SUPIR_VAE",
+          "type": "SUPIRVAE",
+          "slot_index": 1,
+          "links": [
+            77,
+            90
+          ]
+        }
+      ],
+      "title": "火苗AI",
+      "properties": {
+        "cnr_id": "comfyui-supir",
+        "ver": "53fc4f82f139e0875e1f4f3716fbeafa073e4242",
+        "Node name for S&R": "SUPIR_model_loader_v2",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "SUPIR\\SUPIR-v0Q.ckpt",
+        true,
+        "fp16",
+        false
+      ]
+    },
+    {
+      "id": 47,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        -175,
+        578
+      ],
+      "size": [
+        275.5035095214844,
+        117.45014953613281
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            98,
+            119
+          ]
+        },
+        {
+          "label": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 1,
+          "links": [
+            99,
+            120
+          ]
+        },
+        {
+          "label": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 2,
+          "links": [
+            100,
+            132
+          ]
+        }
+      ],
+      "title": "火苗AI",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.25",
+        "Node name for S&R": "CheckpointLoaderSimple",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "快速\\Juggernaut_RunDiffusionPhoto2_Lightning_4Steps.safetensors"
+      ]
+    },
+    {
+      "id": 41,
+      "type": "SUPIR_sample",
+      "pos": [
+        696,
+        773
+      ],
+      "size": [
+        264.060302734375,
+        454
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "SUPIR模型",
+          "name": "SUPIR_model",
+          "type": "SUPIRMODEL",
+          "link": 81
+        },
+        {
+          "label": "Latent",
+          "name": "latents",
+          "type": "LATENT",
+          "link": 82
+        },
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "SUPIR_cond_pos",
+          "link": 83
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "SUPIR_cond_neg",
+          "link": 84
+        },
+        {
+          "label": "随机种",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": 85
+        },
+        {
+          "label": "采样器分块尺寸",
+          "name": "sampler_tile_size",
+          "shape": 7,
+          "type": "INT",
+          "widget": {
+            "name": "sampler_tile_size"
+          },
+          "link": 86
+        },
+        {
+          "label": "采样器分块步长",
+          "name": "sampler_tile_stride",
+          "shape": 7,
+          "type": "INT",
+          "widget": {
+            "name": "sampler_tile_stride"
+          },
+          "link": 87
+        }
+      ],
+      "outputs": [
+        {
+          "label": "Latent",
+          "name": "latent",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            91
+          ]
+        }
+      ],
+      "title": "火苗AI",
+      "properties": {
+        "cnr_id": "comfyui-supir",
+        "ver": "53fc4f82f139e0875e1f4f3716fbeafa073e4242",
+        "Node name for S&R": "SUPIR_sample",
+        "widget_ue_connectable": {
+          "seed": true,
+          "sampler_tile_size": true,
+          "sampler_tile_stride": true
+        }
+      },
+      "widgets_values": [
+        174277455657960,
+        "fixed",
+        12,
+        2,
+        1.5,
+        5,
+        1.0010000000000001,
+        1,
+        1,
+        0.9,
+        1,
+        false,
+        "RestoreDPMPP2MSampler",
+        512,
+        256
+      ]
+    },
+    {
+      "id": 60,
+      "type": "Load Lora",
+      "pos": [
+        1240,
+        667
+      ],
+      "size": [
+        312.6592712402344,
+        146
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 119
+        },
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 120
+        }
+      ],
+      "outputs": [
+        {
+          "label": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            129
+          ]
+        },
+        {
+          "label": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 1,
+          "links": [
+            122,
+            123
+          ]
+        },
+        {
+          "label": "名称字符串",
+          "name": "NAME_STRING",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "title": "火苗AI",
+      "properties": {
+        "cnr_id": "was-node-suite-comfyui",
+        "ver": "9ae952b1b435d2bd846bfe6516919b5a8b9201aa",
+        "Node name for S&R": "Load Lora",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "SDXL\\细节调整\\SDXL Detail 细节调节器_v1.0.safetensors",
+        1,
+        1
+      ]
+    },
+    {
+      "id": 57,
+      "type": "CLIPTextEncode",
+      "pos": [
+        1239,
+        859
+      ],
+      "size": [
+        326.0656433105469,
+        132
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 122
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            130
+          ]
+        }
+      ],
+      "title": "火苗AI",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.25",
+        "Node name for S&R": "CLIPTextEncode",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "high quality, detailed, photograph",
+        null,
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 55,
+      "type": "UltimateSDUpscale",
+      "pos": [
+        1568,
+        571
+      ],
+      "size": [
+        323.505859375,
+        614
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 128
+        },
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 129
+        },
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 130
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 131
+        },
+        {
+          "label": "VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 132
+        },
+        {
+          "label": "放大模型",
+          "name": "upscale_model",
+          "type": "UPSCALE_MODEL",
+          "link": 133
+        },
+        {
+          "label": "随机种",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": 115
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            112
+          ]
+        }
+      ],
+      "title": "火苗AI",
+      "properties": {
+        "cnr_id": "comfyui_ultimatesdupscale",
+        "ver": "778a475dde8116a2066fe07f6c9ca15554e0b5be",
+        "Node name for S&R": "UltimateSDUpscale",
+        "widget_ue_connectable": {
+          "seed": true
+        }
+      },
+      "widgets_values": [
+        4,
+        1062318229575379,
+        "randomize",
+        25,
+        7,
+        "dpmpp_2m",
+        "karras",
+        0.2,
+        "None",
+        1024,
+        1024,
+        8,
+        32,
+        "None",
+        1,
+        64,
+        8,
+        16,
+        "enable",
+        false
+      ]
+    },
+    {
+      "id": 52,
+      "type": "Image Comparer (rgthree)",
+      "pos": [
+        -53,
+        1293
+      ],
+      "size": [
+        679.541748046875,
+        626.6851806640625
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "label": "图像_A",
+          "name": "image_a",
+          "type": "IMAGE",
+          "link": 110
+        },
+        {
+          "dir": 3,
+          "label": "图像_B",
+          "name": "image_b",
+          "type": "IMAGE",
+          "link": 111
+        }
+      ],
+      "outputs": [],
+      "title": "火苗AI",
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "32142fe476878a354dda6e2d4b5ea98960de3ced",
+        "comparer_mode": "Slide",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        [
+          {
+            "name": "A",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_pnnpi_00001_.png&type=temp&subfolder=&rand=0.8576885106578164"
+          },
+          {
+            "name": "B",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_pnnpi_00002_.png&type=temp&subfolder=&rand=0.5810752803722185"
+          }
+        ]
+      ]
+    },
+    {
+      "id": 59,
+      "type": "Image Comparer (rgthree)",
+      "pos": [
+        1135.4736328125,
+        1293.640625
+      ],
+      "size": [
+        741.2084350585938,
+        629.4629516601562
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "label": "图像_A",
+          "name": "image_a",
+          "type": "IMAGE",
+          "link": 112
+        },
+        {
+          "dir": 3,
+          "label": "图像_B",
+          "name": "image_b",
+          "type": "IMAGE",
+          "link": 113
+        }
+      ],
+      "outputs": [],
+      "title": "火苗AI",
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "32142fe476878a354dda6e2d4b5ea98960de3ced",
+        "comparer_mode": "Slide",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        [
+          {
+            "name": "A",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_gflrd_00001_.png&type=temp&subfolder=&rand=0.4297809756065464"
+          },
+          {
+            "name": "B",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_gflrd_00002_.png&type=temp&subfolder=&rand=0.823193330542893"
+          }
+        ]
+      ]
+    },
+    {
+      "id": 40,
+      "type": "SUPIR_first_stage",
+      "pos": [
+        450,
+        572
+      ],
+      "size": [
+        236.67604064941406,
+        190
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "SUPIR_VAE",
+          "name": "SUPIR_VAE",
+          "type": "SUPIRVAE",
+          "link": 77
+        },
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 78
+        },
+        {
+          "label": "编码分块尺寸",
+          "name": "encoder_tile_size",
+          "type": "INT",
+          "widget": {
+            "name": "encoder_tile_size"
+          },
+          "link": 79
+        },
+        {
+          "label": "解码分块尺寸",
+          "name": "decoder_tile_size",
+          "type": "INT",
+          "widget": {
+            "name": "decoder_tile_size"
+          },
+          "link": 80
+        }
+      ],
+      "outputs": [
+        {
+          "label": "SUPIR_VAE",
+          "name": "SUPIR_VAE",
+          "type": "SUPIRVAE",
+          "slot_index": 0,
+          "links": [
+            93
+          ]
+        },
+        {
+          "label": "图像",
+          "name": "denoised_image",
+          "type": "IMAGE",
+          "slot_index": 1,
+          "links": [
+            94
+          ]
+        },
+        {
+          "label": "Latent",
+          "name": "denoised_latents",
+          "type": "LATENT",
+          "slot_index": 2,
+          "links": [
+            89
+          ]
+        }
+      ],
+      "title": "火苗AI  huomiao765",
+      "properties": {
+        "cnr_id": "comfyui-supir",
+        "ver": "53fc4f82f139e0875e1f4f3716fbeafa073e4242",
+        "Node name for S&R": "SUPIR_first_stage",
+        "widget_ue_connectable": {
+          "encoder_tile_size": true,
+          "decoder_tile_size": true
+        }
+      },
+      "widgets_values": [
+        true,
+        512,
+        512,
+        "auto"
+      ]
+    }
+  ],
+  "links": [
+    [
+      77,
+      46,
+      1,
+      40,
+      0,
+      "SUPIRVAE"
+    ],
+    [
+      78,
+      51,
+      0,
+      40,
+      1,
+      "IMAGE"
+    ],
+    [
+      79,
+      49,
+      0,
+      40,
+      2,
+      "INT"
+    ],
+    [
+      80,
+      49,
+      0,
+      40,
+      3,
+      "INT"
+    ],
+    [
+      81,
+      46,
+      0,
+      41,
+      0,
+      "SUPIRMODEL"
+    ],
+    [
+      82,
+      44,
+      0,
+      41,
+      1,
+      "LATENT"
+    ],
+    [
+      83,
+      42,
+      0,
+      41,
+      2,
+      "SUPIR_cond_pos"
+    ],
+    [
+      84,
+      42,
+      1,
+      41,
+      3,
+      "SUPIR_cond_neg"
+    ],
+    [
+      85,
+      48,
+      0,
+      41,
+      4,
+      "INT"
+    ],
+    [
+      86,
+      49,
+      0,
+      41,
+      5,
+      "INT"
+    ],
+    [
+      87,
+      50,
+      0,
+      41,
+      6,
+      "INT"
+    ],
+    [
+      88,
+      46,
+      0,
+      42,
+      0,
+      "SUPIRMODEL"
+    ],
+    [
+      89,
+      40,
+      2,
+      42,
+      1,
+      "LATENT"
+    ],
+    [
+      90,
+      46,
+      1,
+      43,
+      0,
+      "SUPIRVAE"
+    ],
+    [
+      91,
+      41,
+      0,
+      43,
+      1,
+      "LATENT"
+    ],
+    [
+      92,
+      49,
+      0,
+      43,
+      2,
+      "INT"
+    ],
+    [
+      93,
+      40,
+      0,
+      44,
+      0,
+      "SUPIRVAE"
+    ],
+    [
+      94,
+      40,
+      1,
+      44,
+      1,
+      "IMAGE"
+    ],
+    [
+      95,
+      49,
+      0,
+      44,
+      2,
+      "INT"
+    ],
+    [
+      96,
+      39,
+      0,
+      45,
+      0,
+      "IMAGE"
+    ],
+    [
+      97,
+      43,
+      0,
+      45,
+      1,
+      "IMAGE"
+    ],
+    [
+      98,
+      47,
+      0,
+      46,
+      0,
+      "MODEL"
+    ],
+    [
+      99,
+      47,
+      1,
+      46,
+      1,
+      "CLIP"
+    ],
+    [
+      100,
+      47,
+      2,
+      46,
+      2,
+      "VAE"
+    ],
+    [
+      101,
+      39,
+      0,
+      51,
+      0,
+      "IMAGE"
+    ],
+    [
+      110,
+      45,
+      0,
+      52,
+      0,
+      "IMAGE"
+    ],
+    [
+      111,
+      39,
+      0,
+      52,
+      1,
+      "IMAGE"
+    ],
+    [
+      112,
+      55,
+      0,
+      59,
+      0,
+      "IMAGE"
+    ],
+    [
+      113,
+      39,
+      0,
+      59,
+      1,
+      "IMAGE"
+    ],
+    [
+      115,
+      48,
+      0,
+      55,
+      6,
+      "INT"
+    ],
+    [
+      119,
+      47,
+      0,
+      60,
+      0,
+      "MODEL"
+    ],
+    [
+      120,
+      47,
+      1,
+      60,
+      1,
+      "CLIP"
+    ],
+    [
+      122,
+      60,
+      1,
+      57,
+      0,
+      "CLIP"
+    ],
+    [
+      123,
+      60,
+      1,
+      58,
+      0,
+      "CLIP"
+    ],
+    [
+      128,
+      45,
+      0,
+      55,
+      0,
+      "IMAGE"
+    ],
+    [
+      129,
+      60,
+      0,
+      55,
+      1,
+      "MODEL"
+    ],
+    [
+      130,
+      57,
+      0,
+      55,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      131,
+      58,
+      0,
+      55,
+      3,
+      "CONDITIONING"
+    ],
+    [
+      132,
+      47,
+      2,
+      55,
+      4,
+      "VAE"
+    ],
+    [
+      133,
+      56,
+      0,
+      55,
+      5,
+      "UPSCALE_MODEL"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "最终结果",
+      "bounding": [
+        859,
+        1213,
+        1077,
+        725
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "初次结果",
+      "bounding": [
+        -198,
+        1214,
+        1048,
+        724
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "火苗AI",
+      "bounding": [
+        1221,
+        477,
+        711,
+        718
+      ],
+      "color": "#3f789e",
+      "font_size": 36,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "8K超分王炸 火苗AI  huomiao765",
+      "bounding": [
+        -196,
+        476,
+        1411,
+        719
+      ],
+      "color": "#3f789e",
+      "font_size": 36,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.5989500000000022,
+      "offset": [
+        961.0926603531844,
+        -153.3652377777176
+      ]
+    },
+    "workspace_info": {
+      "id": "NioQvjGYN2uaxdOcVVosU"
+    },
+    "ue_links": [],
+    "frontendVersion": "1.23.4",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "links_added_by_ue": []
+  },
+  "version": 0.4
+}

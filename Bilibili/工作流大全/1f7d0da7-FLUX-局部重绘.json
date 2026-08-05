@@ -1,0 +1,2998 @@
+{
+  "id": "9f50704d-1a51-4968-bcf2-4fdd2280ce81",
+  "revision": 0,
+  "last_node_id": 178,
+  "last_link_id": 391,
+  "nodes": [
+    {
+      "id": 56,
+      "type": "CLIPTextEncode",
+      "pos": [
+        970,
+        40
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 266
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            144,
+            299
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "",
+        true
+      ]
+    },
+    {
+      "id": 129,
+      "type": "DualCLIPLoader",
+      "pos": [
+        590,
+        920
+      ],
+      "size": [
+        270,
+        130
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            324,
+            325
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "widgets_values": [
+        "clip_l.safetensors",
+        "t5xxl_fp8_e4m3fn.safetensors",
+        "flux",
+        "default"
+      ]
+    },
+    {
+      "id": 130,
+      "type": "VAELoader",
+      "pos": [
+        610,
+        1150
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            337,
+            359
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "ae.sft"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [
+        940,
+        1010
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 325
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            356
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "text, watermark，nsfw",
+        true
+      ]
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [
+        950,
+        910
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 324
+        },
+        {
+          "label": "文本",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 326
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            342
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "",
+        true
+      ]
+    },
+    {
+      "id": 136,
+      "type": "FluxGuidance",
+      "pos": [
+        1140,
+        890
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "条件",
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 342
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            355
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxGuidance"
+      },
+      "widgets_values": [
+        3.5
+      ]
+    },
+    {
+      "id": 128,
+      "type": "UNETLoader",
+      "pos": [
+        590,
+        750
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            360
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "flux1-krea-dev-fp8.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 133,
+      "type": "KSampler",
+      "pos": [
+        1780,
+        750
+      ],
+      "size": [
+        270,
+        474
+      ],
+      "flags": {},
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 360
+        },
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 355
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 356
+        },
+        {
+          "label": "Latent",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 357
+        }
+      ],
+      "outputs": [
+        {
+          "label": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            336
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        244060469368976,
+        "randomize",
+        8,
+        1,
+        "euler",
+        "simple",
+        0.30000000000000004
+      ]
+    },
+    {
+      "id": 153,
+      "type": "VAELoader",
+      "pos": [
+        4690,
+        440
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            363,
+            373
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "ae.sft"
+      ]
+    },
+    {
+      "id": 154,
+      "type": "InpaintModelConditioning",
+      "pos": [
+        4690,
+        250
+      ],
+      "size": [
+        315,
+        138
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 384
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 362
+        },
+        {
+          "label": "VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 363
+        },
+        {
+          "label": "图像",
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 364
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 365
+        }
+      ],
+      "outputs": [
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            369
+          ]
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "slot_index": 1,
+          "links": [
+            370
+          ]
+        },
+        {
+          "label": "Latent",
+          "name": "latent",
+          "type": "LATENT",
+          "slot_index": 2,
+          "links": [
+            371
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InpaintModelConditioning"
+      },
+      "widgets_values": [
+        false
+      ]
+    },
+    {
+      "id": 155,
+      "type": "DualCLIPLoader",
+      "pos": [
+        3860,
+        220
+      ],
+      "size": [
+        315,
+        130
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 0,
+          "links": [
+            366,
+            376
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "widgets_values": [
+        "clip_l.safetensors",
+        "t5xxl_fp8_e4m3fn.safetensors",
+        "flux",
+        "default"
+      ]
+    },
+    {
+      "id": 156,
+      "type": "CLIPTextEncode",
+      "pos": [
+        4250,
+        460
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 366
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            362
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "",
+        true
+      ]
+    },
+    {
+      "id": 92,
+      "type": "LoadImage",
+      "pos": [
+        580.4012451171875,
+        231.90089416503906
+      ],
+      "size": [
+        276.54351806640625,
+        375.0729064941406
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            351,
+            352
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            339
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "clipspace/clipspace-mask-61900973.6.png [input]",
+        "image"
+      ]
+    },
+    {
+      "id": 163,
+      "type": "CLIPTextEncode",
+      "pos": [
+        4190,
+        230
+      ],
+      "size": [
+        265.40570068359375,
+        183.21131896972656
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 376
+        },
+        {
+          "label": "文本",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 377
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            375
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "White mask",
+        true
+      ]
+    },
+    {
+      "id": 58,
+      "type": "VAEDecode",
+      "pos": [
+        2125.920654296875,
+        0.8157453536987305
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "Latent",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 253
+        },
+        {
+          "label": "VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 276
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            391
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 11,
+      "type": "ChinesePrompt_Mix",
+      "pos": [
+        447.7420654296875,
+        -24.870574951171875
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "提示词",
+          "name": "prompt",
+          "shape": 6,
+          "type": "STRING",
+          "links": [
+            326
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ChinesePrompt_Mix"
+      },
+      "widgets_values": [
+        "一个女人穿着白色博朋克的机甲，白色，紧身，未来风格，连体服，黑色装饰，高领，长袖，手套，",
+        "off",
+        101958918249688,
+        "randomize",
+        true
+      ]
+    },
+    {
+      "id": 118,
+      "type": "ControlNetApplyAdvanced",
+      "pos": [
+        1231.868896484375,
+        9.492785453796387
+      ],
+      "size": [
+        278.8169860839844,
+        186
+      ],
+      "flags": {},
+      "order": 37,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 296
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 299
+        },
+        {
+          "label": "ControlNet",
+          "name": "control_net",
+          "type": "CONTROL_NET",
+          "link": 300
+        },
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 301
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            297
+          ]
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            298
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ControlNetApplyAdvanced"
+      },
+      "widgets_values": [
+        0.6000000000000001,
+        0,
+        0.5000000000000001
+      ]
+    },
+    {
+      "id": 164,
+      "type": "LoadImage",
+      "pos": [
+        4176.22412109375,
+        524.5921630859375
+      ],
+      "size": [
+        315,
+        314
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            364
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": [
+            365
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "clipspace/clipspace-mask-61594293.300000004.png [input]",
+        "image"
+      ]
+    },
+    {
+      "id": 175,
+      "type": "StyleModelLoader",
+      "pos": [
+        4620,
+        -250
+      ],
+      "size": [
+        280,
+        60
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "风格模型",
+          "name": "STYLE_MODEL",
+          "type": "STYLE_MODEL",
+          "links": [
+            380
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StyleModelLoader"
+      },
+      "widgets_values": [
+        "flux1-redux-dev.safetensors"
+      ]
+    },
+    {
+      "id": 174,
+      "type": "CLIPVisionLoader",
+      "pos": [
+        4630,
+        -370
+      ],
+      "size": [
+        280,
+        60
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "CLIP视觉",
+          "name": "CLIP_VISION",
+          "type": "CLIP_VISION",
+          "slot_index": 0,
+          "links": [
+            381
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPVisionLoader"
+      },
+      "widgets_values": [
+        "sigclip_vision_patch14_384.safetensors"
+      ]
+    },
+    {
+      "id": 176,
+      "type": "ReduxAdvanced",
+      "pos": [
+        4940,
+        -320
+      ],
+      "size": [
+        315,
+        234
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "conditioning",
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 383
+        },
+        {
+          "label": "style_model",
+          "name": "style_model",
+          "type": "STYLE_MODEL",
+          "link": 380
+        },
+        {
+          "label": "clip_vision",
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 381
+        },
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 386
+        },
+        {
+          "label": "mask",
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "CONDITIONING",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            384
+          ]
+        },
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "label": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ReduxAdvanced"
+      },
+      "widgets_values": [
+        1,
+        "area",
+        "center crop (square)",
+        1,
+        0.1
+      ]
+    },
+    {
+      "id": 14,
+      "type": "LoadImage",
+      "pos": [
+        726.8098754882812,
+        -408.4056091308594
+      ],
+      "size": [
+        270,
+        314
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            254
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "image (9).png",
+        "image"
+      ]
+    },
+    {
+      "id": 177,
+      "type": "LoadImage",
+      "pos": [
+        4311.822265625,
+        -369.15582275390625
+      ],
+      "size": [
+        270,
+        314
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            386
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "image (9).png",
+        "image"
+      ]
+    },
+    {
+      "id": 55,
+      "type": "CLIPTextEncode",
+      "pos": [
+        970.0735473632812,
+        -16.568546295166016
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 33,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 265
+        },
+        {
+          "label": "文本",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 203
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            143,
+            296
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "",
+        true
+      ]
+    },
+    {
+      "id": 74,
+      "type": "InpaintModelConditioning",
+      "pos": [
+        1530.3424072265625,
+        23.605247497558594
+      ],
+      "size": [
+        270,
+        138
+      ],
+      "flags": {},
+      "order": 35,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 297
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 298
+        },
+        {
+          "label": "VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 264
+        },
+        {
+          "label": "图像",
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 351
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 339
+        }
+      ],
+      "outputs": [
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            272
+          ]
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            273
+          ]
+        },
+        {
+          "label": "Latent",
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            274
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InpaintModelConditioning"
+      },
+      "widgets_values": [
+        false
+      ]
+    },
+    {
+      "id": 159,
+      "type": "KSampler",
+      "pos": [
+        5020,
+        140
+      ],
+      "size": [
+        315,
+        474
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 368
+        },
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 369
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 370
+        },
+        {
+          "label": "Latent",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 371
+        }
+      ],
+      "outputs": [
+        {
+          "label": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            372
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        412502253845288,
+        "randomize",
+        15,
+        1,
+        "euler",
+        "normal",
+        1
+      ]
+    },
+    {
+      "id": 160,
+      "type": "VAEDecode",
+      "pos": [
+        5371.6689453125,
+        141.3543243408203
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "Latent",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 372
+        },
+        {
+          "label": "VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 373
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            374
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 108,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        127.69979095458984,
+        -23.071313858032227
+      ],
+      "size": [
+        270,
+        98
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            387
+          ]
+        },
+        {
+          "label": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            265,
+            266
+          ]
+        },
+        {
+          "label": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            264,
+            276
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "XL\\juggernautXL_v9rdphoto2Inpaint.safetensors"
+      ]
+    },
+    {
+      "id": 82,
+      "type": "KSampler",
+      "pos": [
+        1831.3367919921875,
+        -9.419384956359863
+      ],
+      "size": [
+        263.57427978515625,
+        486
+      ],
+      "flags": {},
+      "order": 36,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 275
+        },
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 272
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 273
+        },
+        {
+          "label": "Latent",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 274
+        }
+      ],
+      "outputs": [
+        {
+          "label": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            253
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        383192300135676,
+        "randomize",
+        20,
+        3,
+        "euler",
+        "simple",
+        1
+      ]
+    },
+    {
+      "id": 119,
+      "type": "ControlNetLoader",
+      "pos": [
+        896.1760864257812,
+        105.58522033691406
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "ControlNet",
+          "name": "CONTROL_NET",
+          "type": "CONTROL_NET",
+          "links": [
+            300
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ControlNetLoader"
+      },
+      "widgets_values": [
+        "万能 controlnet-union-sdxl-pro增强版(1).safetensors"
+      ]
+    },
+    {
+      "id": 120,
+      "type": "AIO_Preprocessor",
+      "pos": [
+        906.9588012695312,
+        224.1478271484375
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 352
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            301
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AIO_Preprocessor"
+      },
+      "widgets_values": [
+        "DWPreprocessor",
+        512
+      ]
+    },
+    {
+      "id": 91,
+      "type": "easy ipadapterApply",
+      "pos": [
+        1017.2723388671875,
+        -391.87408447265625
+      ],
+      "size": [
+        270,
+        310
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 387
+        },
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 254
+        },
+        {
+          "label": "关注层遮罩",
+          "name": "attn_mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "label": "IPAdapter(可选)",
+          "name": "optional_ipadapter",
+          "shape": 7,
+          "type": "IPADAPTER",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            275
+          ]
+        },
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "label": "遮罩",
+          "name": "masks",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "label": "IPAdapter",
+          "name": "ipadapter",
+          "type": "IPADAPTER",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy ipadapterApply"
+      },
+      "widgets_values": [
+        "STANDARD (medium strength)",
+        0.8000000000000002,
+        "CUDA",
+        1.0000000000000002,
+        0.8000000000000002,
+        0,
+        1,
+        "all",
+        false
+      ]
+    },
+    {
+      "id": 134,
+      "type": "VAEDecode",
+      "pos": [
+        2100,
+        780
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 39,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "Latent",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 336
+        },
+        {
+          "label": "VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 337
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            338
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 135,
+      "type": "SaveImage",
+      "pos": [
+        2848.87158203125,
+        -33.45237731933594
+      ],
+      "size": [
+        522.9657592773438,
+        749.7189331054688
+      ],
+      "flags": {},
+      "order": 40,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 338
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 38,
+      "type": "PreviewImage",
+      "pos": [
+        2305.38232421875,
+        -26.12592887878418
+      ],
+      "size": [
+        506.5301513671875,
+        754.099609375
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 125
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 140,
+      "type": "VAEEncode",
+      "pos": [
+        1530,
+        1040
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 41,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 391
+        },
+        {
+          "label": "VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 359
+        }
+      ],
+      "outputs": [
+        {
+          "label": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            357
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEEncode"
+      }
+    },
+    {
+      "id": 178,
+      "type": "LoadImage",
+      "pos": [
+        2875.361328125,
+        -759.1602783203125
+      ],
+      "size": [
+        488.1175537109375,
+        678.8511352539062
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "ComfyUI_00033_ (1).png",
+        "image"
+      ]
+    },
+    {
+      "id": 162,
+      "type": "FluxGuidance",
+      "pos": [
+        4460,
+        230
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "条件",
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 375
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            383
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxGuidance"
+      },
+      "widgets_values": [
+        10
+      ]
+    },
+    {
+      "id": 157,
+      "type": "DifferentialDiffusion",
+      "pos": [
+        4718.1767578125,
+        122.24163818359375
+      ],
+      "size": [
+        210,
+        26
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 367
+        }
+      ],
+      "outputs": [
+        {
+          "label": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            368
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DifferentialDiffusion"
+      }
+    },
+    {
+      "id": 158,
+      "type": "UNETLoader",
+      "pos": [
+        4344.6259765625,
+        93.06041717529297
+      ],
+      "size": [
+        315,
+        82
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            367
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "flux1-fill-dev.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 165,
+      "type": "ChinesePrompt_Mix",
+      "pos": [
+        3862.029052734375,
+        -36.888919830322266
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "提示词",
+          "name": "prompt",
+          "shape": 6,
+          "type": "STRING",
+          "links": [
+            377
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ChinesePrompt_Mix"
+      },
+      "widgets_values": [
+        "一个女人穿着白色博朋克的机甲套装，白色，紧身，未来风格，连体服，黑色装饰，高领，长袖，手套，",
+        "off",
+        13253186940138,
+        "randomize",
+        true
+      ]
+    },
+    {
+      "id": 161,
+      "type": "SaveImage",
+      "pos": [
+        3407.048583984375,
+        -39.88748550415039
+      ],
+      "size": [
+        545.1448364257812,
+        760.3578491210938
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 374
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    }
+  ],
+  "links": [
+    [
+      7,
+      3,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      10,
+      11,
+      0,
+      6,
+      1,
+      "STRING"
+    ],
+    [
+      19,
+      15,
+      1,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      20,
+      15,
+      1,
+      7,
+      0,
+      "CLIP"
+    ],
+    [
+      22,
+      8,
+      0,
+      16,
+      0,
+      "IMAGE"
+    ],
+    [
+      23,
+      15,
+      2,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      40,
+      15,
+      2,
+      26,
+      2,
+      "VAE"
+    ],
+    [
+      43,
+      26,
+      0,
+      3,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      44,
+      26,
+      1,
+      3,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      45,
+      26,
+      2,
+      3,
+      3,
+      "LATENT"
+    ],
+    [
+      49,
+      6,
+      0,
+      28,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      50,
+      7,
+      0,
+      28,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      51,
+      12,
+      0,
+      28,
+      2,
+      "CONTROL_NET"
+    ],
+    [
+      54,
+      15,
+      2,
+      28,
+      8,
+      "VAE"
+    ],
+    [
+      57,
+      14,
+      0,
+      29,
+      0,
+      "IMAGE"
+    ],
+    [
+      59,
+      29,
+      0,
+      27,
+      0,
+      "IMAGE"
+    ],
+    [
+      60,
+      29,
+      0,
+      26,
+      3,
+      "IMAGE"
+    ],
+    [
+      62,
+      30,
+      0,
+      26,
+      4,
+      "MASK"
+    ],
+    [
+      63,
+      30,
+      0,
+      28,
+      4,
+      "MASK"
+    ],
+    [
+      66,
+      28,
+      0,
+      26,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      67,
+      28,
+      1,
+      26,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      84,
+      30,
+      0,
+      39,
+      0,
+      "MASK"
+    ],
+    [
+      91,
+      29,
+      0,
+      44,
+      0,
+      "IMAGE"
+    ],
+    [
+      92,
+      44,
+      1,
+      45,
+      1,
+      "MASK"
+    ],
+    [
+      93,
+      27,
+      1,
+      45,
+      0,
+      "MASK"
+    ],
+    [
+      94,
+      45,
+      0,
+      30,
+      0,
+      "MASK"
+    ],
+    [
+      110,
+      60,
+      1,
+      55,
+      0,
+      "CLIP"
+    ],
+    [
+      111,
+      60,
+      1,
+      56,
+      0,
+      "CLIP"
+    ],
+    [
+      116,
+      57,
+      0,
+      58,
+      0,
+      "LATENT"
+    ],
+    [
+      117,
+      60,
+      2,
+      58,
+      1,
+      "VAE"
+    ],
+    [
+      121,
+      60,
+      2,
+      61,
+      2,
+      "VAE"
+    ],
+    [
+      122,
+      60,
+      0,
+      57,
+      0,
+      "MODEL"
+    ],
+    [
+      123,
+      8,
+      0,
+      61,
+      3,
+      "IMAGE"
+    ],
+    [
+      124,
+      39,
+      0,
+      61,
+      4,
+      "MASK"
+    ],
+    [
+      125,
+      58,
+      0,
+      38,
+      0,
+      "IMAGE"
+    ],
+    [
+      140,
+      29,
+      0,
+      64,
+      0,
+      "IMAGE"
+    ],
+    [
+      141,
+      64,
+      0,
+      47,
+      0,
+      "IMAGE"
+    ],
+    [
+      142,
+      64,
+      0,
+      28,
+      3,
+      "IMAGE"
+    ],
+    [
+      143,
+      55,
+      0,
+      65,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      144,
+      56,
+      0,
+      65,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      145,
+      65,
+      0,
+      61,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      146,
+      65,
+      1,
+      61,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      147,
+      66,
+      0,
+      65,
+      2,
+      "CONTROL_NET"
+    ],
+    [
+      148,
+      39,
+      0,
+      65,
+      4,
+      "MASK"
+    ],
+    [
+      169,
+      27,
+      1,
+      73,
+      0,
+      "MASK"
+    ],
+    [
+      170,
+      30,
+      0,
+      46,
+      0,
+      "MASK"
+    ],
+    [
+      173,
+      80,
+      2,
+      74,
+      2,
+      "VAE"
+    ],
+    [
+      174,
+      81,
+      0,
+      74,
+      4,
+      "MASK"
+    ],
+    [
+      175,
+      82,
+      0,
+      75,
+      0,
+      "LATENT"
+    ],
+    [
+      176,
+      80,
+      2,
+      75,
+      1,
+      "VAE"
+    ],
+    [
+      177,
+      80,
+      1,
+      76,
+      0,
+      "CLIP"
+    ],
+    [
+      178,
+      80,
+      1,
+      77,
+      0,
+      "CLIP"
+    ],
+    [
+      184,
+      74,
+      0,
+      82,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      185,
+      74,
+      1,
+      82,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      189,
+      8,
+      0,
+      84,
+      0,
+      "IMAGE"
+    ],
+    [
+      190,
+      84,
+      0,
+      65,
+      3,
+      "IMAGE"
+    ],
+    [
+      191,
+      76,
+      0,
+      74,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      192,
+      77,
+      0,
+      74,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      195,
+      58,
+      0,
+      74,
+      3,
+      "IMAGE"
+    ],
+    [
+      196,
+      80,
+      0,
+      86,
+      0,
+      "MODEL"
+    ],
+    [
+      197,
+      86,
+      0,
+      82,
+      0,
+      "MODEL"
+    ],
+    [
+      202,
+      74,
+      2,
+      82,
+      3,
+      "LATENT"
+    ],
+    [
+      203,
+      11,
+      0,
+      55,
+      1,
+      "STRING"
+    ],
+    [
+      205,
+      11,
+      0,
+      76,
+      1,
+      "STRING"
+    ],
+    [
+      206,
+      75,
+      0,
+      89,
+      0,
+      "IMAGE"
+    ],
+    [
+      209,
+      91,
+      0,
+      3,
+      0,
+      "MODEL"
+    ],
+    [
+      210,
+      15,
+      0,
+      91,
+      0,
+      "MODEL"
+    ],
+    [
+      211,
+      92,
+      0,
+      91,
+      1,
+      "IMAGE"
+    ],
+    [
+      217,
+      14,
+      0,
+      94,
+      0,
+      "IMAGE"
+    ],
+    [
+      218,
+      94,
+      0,
+      95,
+      0,
+      "IMAGE"
+    ],
+    [
+      220,
+      39,
+      0,
+      96,
+      2,
+      "MASK"
+    ],
+    [
+      221,
+      29,
+      0,
+      96,
+      0,
+      "IMAGE"
+    ],
+    [
+      222,
+      96,
+      0,
+      97,
+      0,
+      "IMAGE"
+    ],
+    [
+      223,
+      96,
+      0,
+      98,
+      1,
+      "IMAGE"
+    ],
+    [
+      224,
+      29,
+      0,
+      98,
+      0,
+      "IMAGE"
+    ],
+    [
+      243,
+      39,
+      0,
+      81,
+      0,
+      "MASK"
+    ],
+    [
+      248,
+      75,
+      0,
+      96,
+      1,
+      "IMAGE"
+    ],
+    [
+      253,
+      82,
+      0,
+      58,
+      0,
+      "LATENT"
+    ],
+    [
+      254,
+      14,
+      0,
+      91,
+      1,
+      "IMAGE"
+    ],
+    [
+      264,
+      108,
+      2,
+      74,
+      2,
+      "VAE"
+    ],
+    [
+      265,
+      108,
+      1,
+      55,
+      0,
+      "CLIP"
+    ],
+    [
+      266,
+      108,
+      1,
+      56,
+      0,
+      "CLIP"
+    ],
+    [
+      272,
+      74,
+      0,
+      82,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      273,
+      74,
+      1,
+      82,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      274,
+      74,
+      2,
+      82,
+      3,
+      "LATENT"
+    ],
+    [
+      275,
+      91,
+      0,
+      82,
+      0,
+      "MODEL"
+    ],
+    [
+      276,
+      108,
+      2,
+      58,
+      1,
+      "VAE"
+    ],
+    [
+      296,
+      55,
+      0,
+      118,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      297,
+      118,
+      0,
+      74,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      298,
+      118,
+      1,
+      74,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      299,
+      56,
+      0,
+      118,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      300,
+      119,
+      0,
+      118,
+      2,
+      "CONTROL_NET"
+    ],
+    [
+      301,
+      120,
+      0,
+      118,
+      3,
+      "IMAGE"
+    ],
+    [
+      324,
+      129,
+      0,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      325,
+      129,
+      0,
+      7,
+      0,
+      "CLIP"
+    ],
+    [
+      326,
+      11,
+      0,
+      6,
+      1,
+      "STRING"
+    ],
+    [
+      336,
+      133,
+      0,
+      134,
+      0,
+      "LATENT"
+    ],
+    [
+      337,
+      130,
+      0,
+      134,
+      1,
+      "VAE"
+    ],
+    [
+      338,
+      134,
+      0,
+      135,
+      0,
+      "IMAGE"
+    ],
+    [
+      339,
+      92,
+      1,
+      74,
+      4,
+      "MASK"
+    ],
+    [
+      342,
+      6,
+      0,
+      136,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      351,
+      92,
+      0,
+      74,
+      3,
+      "IMAGE"
+    ],
+    [
+      352,
+      92,
+      0,
+      120,
+      0,
+      "IMAGE"
+    ],
+    [
+      355,
+      136,
+      0,
+      133,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      356,
+      7,
+      0,
+      133,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      357,
+      140,
+      0,
+      133,
+      3,
+      "LATENT"
+    ],
+    [
+      359,
+      130,
+      0,
+      140,
+      1,
+      "VAE"
+    ],
+    [
+      360,
+      128,
+      0,
+      133,
+      0,
+      "MODEL"
+    ],
+    [
+      362,
+      156,
+      0,
+      154,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      363,
+      153,
+      0,
+      154,
+      2,
+      "VAE"
+    ],
+    [
+      364,
+      164,
+      0,
+      154,
+      3,
+      "IMAGE"
+    ],
+    [
+      365,
+      164,
+      1,
+      154,
+      4,
+      "MASK"
+    ],
+    [
+      366,
+      155,
+      0,
+      156,
+      0,
+      "CLIP"
+    ],
+    [
+      367,
+      158,
+      0,
+      157,
+      0,
+      "MODEL"
+    ],
+    [
+      368,
+      157,
+      0,
+      159,
+      0,
+      "MODEL"
+    ],
+    [
+      369,
+      154,
+      0,
+      159,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      370,
+      154,
+      1,
+      159,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      371,
+      154,
+      2,
+      159,
+      3,
+      "LATENT"
+    ],
+    [
+      372,
+      159,
+      0,
+      160,
+      0,
+      "LATENT"
+    ],
+    [
+      373,
+      153,
+      0,
+      160,
+      1,
+      "VAE"
+    ],
+    [
+      374,
+      160,
+      0,
+      161,
+      0,
+      "IMAGE"
+    ],
+    [
+      375,
+      163,
+      0,
+      162,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      376,
+      155,
+      0,
+      163,
+      0,
+      "CLIP"
+    ],
+    [
+      377,
+      165,
+      0,
+      163,
+      1,
+      "STRING"
+    ],
+    [
+      380,
+      175,
+      0,
+      176,
+      1,
+      "STYLE_MODEL"
+    ],
+    [
+      381,
+      174,
+      0,
+      176,
+      2,
+      "CLIP_VISION"
+    ],
+    [
+      383,
+      162,
+      0,
+      176,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      384,
+      176,
+      0,
+      154,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      386,
+      177,
+      0,
+      176,
+      3,
+      "IMAGE"
+    ],
+    [
+      387,
+      108,
+      0,
+      91,
+      0,
+      "MODEL"
+    ],
+    [
+      391,
+      58,
+      0,
+      140,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "frontendVersion": "1.23.4",
+    "ue_links": [],
+    "links_added_by_ue": [],
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "ds": {
+      "scale": 0.430567643134263,
+      "offset": [
+        -96.68168539898122,
+        922.231872315236
+      ]
+    },
+    "workspace_info": {
+      "id": "KP55WA20ZkBmj1R82f-K9",
+      "saveLock": false,
+      "cloudID": null,
+      "coverMediaPath": null
+    }
+  },
+  "version": 0.4
+}

@@ -1,0 +1,1268 @@
+{
+  "id": "766a5b44-ac61-43ba-81ce-a19b669b96d8",
+  "revision": 0,
+  "last_node_id": 27,
+  "last_link_id": 51,
+  "nodes": [
+    {
+      "id": 16,
+      "type": "CLIPTextEncode",
+      "pos": [
+        1251.367919921875,
+        1146.1343994140625
+      ],
+      "size": [
+        399.17059326171875,
+        136.9696807861328
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 21
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            19
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.33",
+        "Node name for S&R": "CLIPTextEncode",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "1girl,",
+        null,
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 14,
+      "type": "ImageRandomTransform+",
+      "pos": [
+        1674.1978759765625,
+        1344.3768310546875
+      ],
+      "size": [
+        320,
+        130
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            17
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_essentials",
+        "ver": "9d9f4bedfc9f0321c19faf71855e228c93bd0dc9",
+        "Node name for S&R": "ImageRandomTransform+",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        946641687793438,
+        "fixed",
+        9,
+        0.1
+      ]
+    },
+    {
+      "id": 27,
+      "type": "LayerUtility: ImageScaleByAspectRatio V2",
+      "pos": [
+        918.477783203125,
+        989.1649780273438
+      ],
+      "size": [
+        315,
+        330
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 50
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            51
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "label": "原始大小",
+          "name": "original_size",
+          "type": "BOX",
+          "links": null
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_layerstyle",
+        "ver": "c0fb64d0ebcb81c6c445a8af79ecee24bc3845b0",
+        "Node name for S&R": "LayerUtility: ImageScaleByAspectRatio V2",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "original",
+        1,
+        1,
+        "letterbox",
+        "lanczos",
+        "8",
+        "height",
+        1024,
+        "#000000"
+      ],
+      "color": "rgba(38, 73, 116, 0.7)"
+    },
+    {
+      "id": 12,
+      "type": "FaceBoundingBox",
+      "pos": [
+        1673.3873291015625,
+        1121.8087158203125
+      ],
+      "size": [
+        320,
+        398.0000305175781
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "面部分析模型",
+          "name": "analysis_models",
+          "type": "ANALYSIS_MODELS",
+          "link": 12
+        },
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 51
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "shape": 6,
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            14
+          ]
+        },
+        {
+          "label": "X",
+          "name": "x",
+          "shape": 6,
+          "type": "INT",
+          "links": null
+        },
+        {
+          "label": "Y",
+          "name": "y",
+          "shape": 6,
+          "type": "INT",
+          "links": null
+        },
+        {
+          "label": "宽度",
+          "name": "width",
+          "shape": 6,
+          "type": "INT",
+          "links": null
+        },
+        {
+          "label": "高度",
+          "name": "height",
+          "shape": 6,
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_faceanalysis",
+        "ver": "8251fab13bf339eb389b1691153755118fd7a026",
+        "Node name for S&R": "FaceBoundingBox",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        0,
+        0.2,
+        -1
+      ]
+    },
+    {
+      "id": 22,
+      "type": "VAEDecode",
+      "pos": [
+        1248.691650390625,
+        1522.1878662109375
+      ],
+      "size": [
+        210,
+        50
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "Latent",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 32
+        },
+        {
+          "label": "VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 33
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            34
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.33",
+        "Node name for S&R": "VAEDecode",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 21,
+      "type": "VAEEncode",
+      "pos": [
+        1463.41162109375,
+        1505.036376953125
+      ],
+      "size": [
+        210,
+        50
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 49
+        },
+        {
+          "label": "VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 29
+        }
+      ],
+      "outputs": [
+        {
+          "label": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            30
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.33",
+        "Node name for S&R": "VAEEncode",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 6,
+      "type": "LoadImage",
+      "pos": [
+        937.752685546875,
+        462.4810791015625
+      ],
+      "size": [
+        497.631591796875,
+        463.9473876953125
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            47
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.33",
+        "Node name for S&R": "LoadImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "04a626adf6ee705f01c5714a8b461dfabd5367567104a1db61d7e0c6c770aada.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "ControlNetLoader",
+      "pos": [
+        1585.825439453125,
+        1695.251708984375
+      ],
+      "size": [
+        320,
+        60
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "ControlNet",
+          "name": "CONTROL_NET",
+          "type": "CONTROL_NET",
+          "links": [
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.33",
+        "Node name for S&R": "ControlNetLoader",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "yiqian\\control_instant_id_sdxl.safetensors"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "InstantIDModelLoader",
+      "pos": [
+        1252.3387451171875,
+        1689.5999755859375
+      ],
+      "size": [
+        320,
+        60
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INSTANTID",
+          "type": "INSTANTID",
+          "links": [
+            8
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_zenid",
+        "ver": "21b90a97c530df6e218cdbe5117a0b331708eab6",
+        "Node name for S&R": "InstantIDModelLoader",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "ip-adapter.bin"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "InstantIDFaceAnalysis",
+      "pos": [
+        1564.98876953125,
+        1586.25146484375
+      ],
+      "size": [
+        320,
+        60
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "面部分析",
+          "name": "FACEANALYSIS",
+          "type": "FACEANALYSIS",
+          "links": [
+            9
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_zenid",
+        "ver": "21b90a97c530df6e218cdbe5117a0b331708eab6",
+        "Node name for S&R": "InstantIDFaceAnalysis",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "CUDA"
+      ]
+    },
+    {
+      "id": 26,
+      "type": "LayerUtility: ImageScaleByAspectRatio V2",
+      "pos": [
+        912.6570434570312,
+        1408.1468505859375
+      ],
+      "size": [
+        315,
+        330
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 47
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            48,
+            49
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "label": "原始大小",
+          "name": "original_size",
+          "type": "BOX",
+          "links": null
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_layerstyle",
+        "ver": "c0fb64d0ebcb81c6c445a8af79ecee24bc3845b0",
+        "Node name for S&R": "LayerUtility: ImageScaleByAspectRatio V2",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "original",
+        1,
+        1,
+        "letterbox",
+        "lanczos",
+        "8",
+        "height",
+        1024,
+        "#000000"
+      ],
+      "color": "rgba(38, 73, 116, 0.7)"
+    },
+    {
+      "id": 13,
+      "type": "FaceAnalysisModels",
+      "pos": [
+        1674.56298828125,
+        987.12939453125
+      ],
+      "size": [
+        320,
+        82
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "面部分析模型",
+          "name": "ANALYSIS_MODELS",
+          "type": "ANALYSIS_MODELS",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_faceanalysis",
+        "ver": "8251fab13bf339eb389b1691153755118fd7a026",
+        "Node name for S&R": "FaceAnalysisModels",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "insightface",
+        "CUDA"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "LoadImage",
+      "pos": [
+        1479.095947265625,
+        458.5973205566406
+      ],
+      "size": [
+        497.1402587890625,
+        462.14031982421875
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            50
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "火苗AI",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.33",
+        "Node name for S&R": "LoadImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "d301d3750ae6cefe5cbbd55ca493c00ea2ba86f4172d7025904727ef4a13904b.png",
+        "image"
+      ]
+    },
+    {
+      "id": 20,
+      "type": "KSampler",
+      "pos": [
+        2288.06591796875,
+        1274.3953857421875
+      ],
+      "size": [
+        352.7713928222656,
+        474.0000305175781
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 25
+        },
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 26
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 27
+        },
+        {
+          "label": "Latent",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 30
+        }
+      ],
+      "outputs": [
+        {
+          "label": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            32
+          ]
+        }
+      ],
+      "title": "火苗AI",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.33",
+        "Node name for S&R": "KSampler",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        634829292328907,
+        "randomize",
+        8,
+        1,
+        "euler_ancestral_cfg_pp",
+        "sgm_uniform",
+        0.3
+      ]
+    },
+    {
+      "id": 23,
+      "type": "PreviewImage",
+      "pos": [
+        2037.1436767578125,
+        463.2850646972656
+      ],
+      "size": [
+        584.8240356445312,
+        770.3973999023438
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 34
+        }
+      ],
+      "outputs": [],
+      "title": "火苗AI",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.33",
+        "Node name for S&R": "PreviewImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 18,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        1256.521240234375,
+        980.9312744140625
+      ],
+      "size": [
+        389.0018310546875,
+        98
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            23
+          ]
+        },
+        {
+          "label": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 1,
+          "links": [
+            21,
+            22
+          ]
+        },
+        {
+          "label": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            29,
+            33
+          ]
+        }
+      ],
+      "title": "火苗AI  huomiao765",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.33",
+        "Node name for S&R": "CheckpointLoaderSimple",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "DreamShaper XL v2.1 Turbo 闪电_v2.1 .safetensors"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "ApplyInstantID",
+      "pos": [
+        1929.135009765625,
+        1327.16552734375
+      ],
+      "size": [
+        348.175048828125,
+        421.9512939453125
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "InstantID",
+          "name": "instantid",
+          "type": "INSTANTID",
+          "link": 8
+        },
+        {
+          "label": "InsightFace",
+          "name": "insightface",
+          "type": "FACEANALYSIS",
+          "link": 9
+        },
+        {
+          "label": "ControlNet",
+          "name": "control_net",
+          "type": "CONTROL_NET",
+          "link": 10
+        },
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 17
+        },
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 23
+        },
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 19
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 20
+        },
+        {
+          "label": "图像_kps",
+          "name": "image_kps",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 48
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            25
+          ]
+        },
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            26
+          ]
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            27
+          ]
+        }
+      ],
+      "title": "火苗AI  huomiao765",
+      "properties": {
+        "cnr_id": "comfyui_instantid",
+        "ver": "72495e806bc2ab9c41581e15ccaa1bcf83c477e8",
+        "Node name for S&R": "ApplyInstantID",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "id": 17,
+      "type": "CLIPTextEncode",
+      "pos": [
+        1252.19091796875,
+        1338.9326171875
+      ],
+      "size": [
+        389.2185974121094,
+        136.9696807861328
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 22
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            20
+          ]
+        }
+      ],
+      "title": "火苗AI  huomiao765",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.33",
+        "Node name for S&R": "CLIPTextEncode",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "",
+        null,
+        [
+          false,
+          true
+        ]
+      ]
+    }
+  ],
+  "links": [
+    [
+      8,
+      8,
+      0,
+      7,
+      0,
+      "INSTANTID"
+    ],
+    [
+      9,
+      9,
+      0,
+      7,
+      1,
+      "FACEANALYSIS"
+    ],
+    [
+      10,
+      10,
+      0,
+      7,
+      2,
+      "CONTROL_NET"
+    ],
+    [
+      12,
+      13,
+      0,
+      12,
+      0,
+      "ANALYSIS_MODELS"
+    ],
+    [
+      14,
+      12,
+      0,
+      14,
+      0,
+      "IMAGE"
+    ],
+    [
+      17,
+      14,
+      0,
+      7,
+      3,
+      "IMAGE"
+    ],
+    [
+      19,
+      16,
+      0,
+      7,
+      5,
+      "CONDITIONING"
+    ],
+    [
+      20,
+      17,
+      0,
+      7,
+      6,
+      "CONDITIONING"
+    ],
+    [
+      21,
+      18,
+      1,
+      16,
+      0,
+      "CLIP"
+    ],
+    [
+      22,
+      18,
+      1,
+      17,
+      0,
+      "CLIP"
+    ],
+    [
+      23,
+      18,
+      0,
+      7,
+      4,
+      "MODEL"
+    ],
+    [
+      25,
+      7,
+      0,
+      20,
+      0,
+      "MODEL"
+    ],
+    [
+      26,
+      7,
+      1,
+      20,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      27,
+      7,
+      2,
+      20,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      29,
+      18,
+      2,
+      21,
+      1,
+      "VAE"
+    ],
+    [
+      30,
+      21,
+      0,
+      20,
+      3,
+      "LATENT"
+    ],
+    [
+      32,
+      20,
+      0,
+      22,
+      0,
+      "LATENT"
+    ],
+    [
+      33,
+      18,
+      2,
+      22,
+      1,
+      "VAE"
+    ],
+    [
+      34,
+      22,
+      0,
+      23,
+      0,
+      "IMAGE"
+    ],
+    [
+      47,
+      6,
+      0,
+      26,
+      0,
+      "IMAGE"
+    ],
+    [
+      48,
+      26,
+      0,
+      7,
+      7,
+      "IMAGE"
+    ],
+    [
+      49,
+      26,
+      0,
+      21,
+      0,
+      "IMAGE"
+    ],
+    [
+      50,
+      5,
+      0,
+      27,
+      0,
+      "IMAGE"
+    ],
+    [
+      51,
+      27,
+      0,
+      12,
+      1,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 11,
+      "title": "Group",
+      "bounding": [
+        902.6570434570312,
+        297.6136169433594,
+        1748.180419921875,
+        1467.6380615234375
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "被换人脸图",
+      "bounding": [
+        926.6123046875,
+        341.58782958984375,
+        526.9908447265625,
+        598.7166137695312
+      ],
+      "color": "#3f789e",
+      "font_size": 60,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "参考人脸图",
+      "bounding": [
+        1471.54052734375,
+        341.213623046875,
+        520.1052856445312,
+        605.9508666992188
+      ],
+      "color": "#3f789e",
+      "font_size": 60,
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "最终结果",
+      "bounding": [
+        2024.5087890625,
+        341.5043640136719,
+        614.7166137695312,
+        918.985595703125
+      ],
+      "color": "#3f789e",
+      "font_size": 60,
+      "flags": {}
+    },
+    {
+      "id": 12,
+      "title": "huan脸工作流 火苗AI  huomiao765",
+      "bounding": [
+        908.3370971679688,
+        136.76083374023438,
+        1740.6488037109375,
+        121.531494140625
+      ],
+      "color": "#3f789e",
+      "font_size": 80,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7247295000000012,
+      "offset": [
+        -585.3352740483339,
+        87.6684437810263
+      ]
+    },
+    "workspace_info": {
+      "id": "EDTFuPYZtBZkLsssJ4pQS",
+      "saveLock": false,
+      "cloudID": null,
+      "coverMediaPath": null
+    },
+    "ue_links": [],
+    "links_added_by_ue": [],
+    "frontendVersion": "1.23.4",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

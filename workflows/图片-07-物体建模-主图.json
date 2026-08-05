@@ -1,0 +1,3208 @@
+{
+  "id": "481f3869-753b-4db9-82a7-94ae7081445f",
+  "revision": 0,
+  "last_node_id": 5100,
+  "last_link_id": 11000,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [
+        2160,
+        200
+      ],
+      "size": [
+        270,
+        120
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "UNet名称",
+          "name": "unet_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "unet_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "数据类型",
+          "name": "weight_dtype",
+          "type": "COMBO",
+          "widget": {
+            "name": "weight_dtype"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            1,
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "qwen_image_2512_fp8_e4m3fn.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        2160,
+        360
+      ],
+      "size": [
+        270,
+        120
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        },
+        {
+          "localized_name": "LoRA名称",
+          "name": "lora_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "lora_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "模型强度",
+          "name": "strength_model",
+          "type": "FLOAT",
+          "widget": {
+            "name": "strength_model"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors",
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "type": "ComfySwitchNode",
+      "pos": [
+        2520,
+        200
+      ],
+      "size": [
+        320,
+        110
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "为假时",
+          "name": "on_false",
+          "type": "MODEL",
+          "link": 2
+        },
+        {
+          "localized_name": "为真时",
+          "name": "on_true",
+          "type": "MODEL",
+          "link": 3
+        },
+        {
+          "localized_name": "切换",
+          "name": "switch",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "switch"
+          },
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "输出",
+          "name": "output",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfySwitchNode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        false
+      ]
+    },
+    {
+      "id": 4,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [
+        2520,
+        360
+      ],
+      "size": [
+        270,
+        90
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 4
+        },
+        {
+          "localized_name": "移位",
+          "name": "shift",
+          "type": "FLOAT",
+          "widget": {
+            "name": "shift"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            19
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingAuraFlow",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        3.1
+      ]
+    },
+    {
+      "id": 5,
+      "type": "CLIPLoader",
+      "pos": [
+        2160,
+        560
+      ],
+      "size": [
+        270,
+        150
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "CLIP名称",
+          "name": "clip_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "clip_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "类型",
+          "name": "type",
+          "type": "COMBO",
+          "widget": {
+            "name": "type"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "设备",
+          "name": "device",
+          "shape": 7,
+          "type": "COMBO",
+          "widget": {
+            "name": "device"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 0,
+          "links": [
+            10001,
+            10004
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+        "qwen_image",
+        "default"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "PrimitiveInt",
+      "pos": [
+        1200,
+        1080
+      ],
+      "size": [
+        230,
+        90
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "数值",
+          "name": "value",
+          "type": "INT",
+          "widget": {
+            "name": "value"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "整数",
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveInt",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        20,
+        "fixed"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "PrimitiveInt",
+      "pos": [
+        1200,
+        1210
+      ],
+      "size": [
+        230,
+        90
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "数值",
+          "name": "value",
+          "type": "INT",
+          "widget": {
+            "name": "value"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "整数",
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveInt",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        4,
+        "fixed"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "PrimitiveFloat",
+      "pos": [
+        1200,
+        1340
+      ],
+      "size": [
+        230,
+        90
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "值",
+          "name": "value",
+          "type": "FLOAT",
+          "widget": {
+            "name": "value"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "浮点",
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            14
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        2.5
+      ]
+    },
+    {
+      "id": 12,
+      "type": "PrimitiveFloat",
+      "pos": [
+        1200,
+        1470
+      ],
+      "size": [
+        230,
+        90
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "值",
+          "name": "value",
+          "type": "FLOAT",
+          "widget": {
+            "name": "value"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "浮点",
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            15
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        1
+      ]
+    },
+    {
+      "id": 13,
+      "type": "PrimitiveBoolean",
+      "pos": [
+        1200,
+        1600
+      ],
+      "size": [
+        230,
+        90
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "值",
+          "name": "value",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "value"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "布尔",
+          "name": "BOOLEAN",
+          "type": "BOOLEAN",
+          "links": [
+            10,
+            13,
+            16
+          ]
+        }
+      ],
+      "title": "是否4步生成",
+      "properties": {
+        "Node name for S&R": "PrimitiveBoolean",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        true
+      ]
+    },
+    {
+      "id": 14,
+      "type": "ComfySwitchNode",
+      "pos": [
+        1500,
+        1080
+      ],
+      "size": [
+        320,
+        110
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "为假时",
+          "name": "on_false",
+          "type": "INT",
+          "link": 11
+        },
+        {
+          "localized_name": "为真时",
+          "name": "on_true",
+          "type": "INT",
+          "link": 12
+        },
+        {
+          "localized_name": "切换",
+          "name": "switch",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "switch"
+          },
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "输出",
+          "name": "output",
+          "type": "INT",
+          "slot_index": 0,
+          "links": [
+            17
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfySwitchNode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        false
+      ]
+    },
+    {
+      "id": 15,
+      "type": "ComfySwitchNode",
+      "pos": [
+        1500,
+        1240
+      ],
+      "size": [
+        320,
+        110
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "为假时",
+          "name": "on_false",
+          "type": "FLOAT",
+          "link": 14
+        },
+        {
+          "localized_name": "为真时",
+          "name": "on_true",
+          "type": "FLOAT",
+          "link": 15
+        },
+        {
+          "localized_name": "切换",
+          "name": "switch",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "switch"
+          },
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "输出",
+          "name": "output",
+          "type": "FLOAT",
+          "slot_index": 0,
+          "links": [
+            18
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfySwitchNode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        false
+      ]
+    },
+    {
+      "id": 16,
+      "type": "KSampler",
+      "pos": [
+        3800,
+        480
+      ],
+      "size": [
+        300,
+        560
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 33,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 19
+        },
+        {
+          "localized_name": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 10003
+        },
+        {
+          "localized_name": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 10006
+        },
+        {
+          "localized_name": "Latent图像",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 9908
+        },
+        {
+          "localized_name": "种子",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "步数",
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": 17
+        },
+        {
+          "localized_name": "cfg",
+          "name": "cfg",
+          "type": "FLOAT",
+          "widget": {
+            "name": "cfg"
+          },
+          "link": 18
+        },
+        {
+          "localized_name": "采样器名称",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "调度器",
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "降噪",
+          "name": "denoise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "denoise"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            21
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        123456789,
+        "randomize",
+        20,
+        3,
+        "euler",
+        "simple",
+        1
+      ]
+    },
+    {
+      "id": 17,
+      "type": "VAELoader",
+      "pos": [
+        4220,
+        560
+      ],
+      "size": [
+        270,
+        90
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "vae名称",
+          "name": "vae_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "vae_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            20
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "qwen_image_vae.safetensors"
+      ]
+    },
+    {
+      "id": 18,
+      "type": "VAEDecode",
+      "pos": [
+        4220,
+        700
+      ],
+      "size": [
+        230,
+        80
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Latent",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 21
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            27
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 19,
+      "type": "PreviewImage",
+      "pos": [
+        4540,
+        500
+      ],
+      "size": [
+        560,
+        500
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 35,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 27
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            24
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 23,
+      "type": "UpscaleModelLoader",
+      "pos": [
+        5220,
+        400
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "模型名称",
+          "name": "model_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "model_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "放大模型",
+          "name": "UPSCALE_MODEL",
+          "type": "UPSCALE_MODEL",
+          "links": [
+            44
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UpscaleModelLoader",
+        "models": [
+          {
+            "name": "4xNomos8kDAT.safetensors",
+            "url": "https://huggingface.co/Phips/4xNomos8kDAT/resolve/main/4xNomos8kDAT.safetensors",
+            "directory": "upscale_models"
+          }
+        ]
+      },
+      "widgets_values": [
+        "4xNomos8kDAT.safetensors"
+      ]
+    },
+    {
+      "id": 26,
+      "type": "UNETLoader",
+      "pos": [
+        5220,
+        560
+      ],
+      "size": [
+        270,
+        120
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "UNet名称",
+          "name": "unet_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "unet_name"
+          }
+        },
+        {
+          "localized_name": "数据类型",
+          "name": "weight_dtype",
+          "type": "COMBO",
+          "widget": {
+            "name": "weight_dtype"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            29
+          ]
+        }
+      ],
+      "title": "Klein 9B 蒸馏",
+      "properties": {
+        "Node name for S&R": "UNETLoader",
+        "cnr_id": "comfy-core",
+        "models": [
+          {
+            "name": "flux-2-klein-9b-fp8.safetensors",
+            "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-9b-fp8/resolve/main/flux-2-klein-9b-fp8.safetensors",
+            "directory": "diffusion_models"
+          }
+        ]
+      },
+      "widgets_values": [
+        "flux-2-klein-9b-fp8.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 27,
+      "type": "CLIPLoader",
+      "pos": [
+        5220,
+        720
+      ],
+      "size": [
+        270,
+        150
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "CLIP名称",
+          "name": "clip_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "clip_name"
+          }
+        },
+        {
+          "localized_name": "类型",
+          "name": "type",
+          "type": "COMBO",
+          "widget": {
+            "name": "type"
+          }
+        },
+        {
+          "localized_name": "设备",
+          "name": "device",
+          "shape": 7,
+          "type": "COMBO",
+          "widget": {
+            "name": "device"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 0,
+          "links": [
+            30,
+            31
+          ]
+        }
+      ],
+      "title": "Klein 文本编码器 (9B)",
+      "properties": {
+        "Node name for S&R": "CLIPLoader",
+        "cnr_id": "comfy-core",
+        "models": [
+          {
+            "name": "qwen_3_8b_fp8mixed.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen_3_8b_fp8mixed.safetensors",
+        "flux2",
+        "default"
+      ]
+    },
+    {
+      "id": 28,
+      "type": "VAELoader",
+      "pos": [
+        5220,
+        900
+      ],
+      "size": [
+        270,
+        90
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "vae名称",
+          "name": "vae_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "vae_name"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 0,
+          "links": [
+            36
+          ]
+        }
+      ],
+      "title": "Flux2 VAE (9B)",
+      "properties": {
+        "Node name for S&R": "VAELoader",
+        "cnr_id": "comfy-core",
+        "models": [
+          {
+            "name": "full_encoder_small_decoder.safetensors",
+            "url": "https://huggingface.co/black-forest-labs/FLUX.2-small-decoder/resolve/main/full_encoder_small_decoder.safetensors",
+            "directory": "vae"
+          }
+        ]
+      },
+      "widgets_values": [
+        "full_encoder_small_decoder.safetensors"
+      ]
+    },
+    {
+      "id": 30,
+      "type": "CLIPTextEncode",
+      "pos": [
+        5600,
+        560
+      ],
+      "size": [
+        400,
+        300
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 30
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            32
+          ]
+        }
+      ],
+      "title": "重绘提示词 (正)",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "一个精致的中国风青花瓷花瓶,工业产品摄影,纯黑背景,柔光打光,高精度细节,4K"
+      ]
+    },
+    {
+      "id": 31,
+      "type": "CLIPTextEncode",
+      "pos": [
+        5600,
+        900
+      ],
+      "size": [
+        400,
+        220
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 31
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            33
+          ]
+        }
+      ],
+      "title": "重绘提示词 (负)",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 32,
+      "type": "UltimateSDUpscaleGuider",
+      "pos": [
+        6520,
+        560
+      ],
+      "size": [
+        420,
+        700
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 37,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 48
+        },
+        {
+          "localized_name": "guider",
+          "name": "guider",
+          "type": "GUIDER",
+          "link": 35
+        },
+        {
+          "localized_name": "sampler",
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 37
+        },
+        {
+          "localized_name": "sigmas",
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 45
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 36
+        },
+        {
+          "localized_name": "upscale_model",
+          "name": "upscale_model",
+          "type": "UPSCALE_MODEL",
+          "link": 44
+        },
+        {
+          "localized_name": "upscale_by",
+          "name": "upscale_by",
+          "type": "FLOAT",
+          "widget": {
+            "name": "upscale_by"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "seed",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "mode_type",
+          "name": "mode_type",
+          "type": "COMBO",
+          "widget": {
+            "name": "mode_type"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "tile_width",
+          "name": "tile_width",
+          "type": "INT",
+          "widget": {
+            "name": "tile_width"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "tile_height",
+          "name": "tile_height",
+          "type": "INT",
+          "widget": {
+            "name": "tile_height"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "mask_blur",
+          "name": "mask_blur",
+          "type": "INT",
+          "widget": {
+            "name": "mask_blur"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "tile_padding",
+          "name": "tile_padding",
+          "type": "INT",
+          "widget": {
+            "name": "tile_padding"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "seam_fix_mode",
+          "name": "seam_fix_mode",
+          "type": "COMBO",
+          "widget": {
+            "name": "seam_fix_mode"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "seam_fix_denoise",
+          "name": "seam_fix_denoise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "seam_fix_denoise"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "seam_fix_width",
+          "name": "seam_fix_width",
+          "type": "INT",
+          "widget": {
+            "name": "seam_fix_width"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "seam_fix_mask_blur",
+          "name": "seam_fix_mask_blur",
+          "type": "INT",
+          "widget": {
+            "name": "seam_fix_mask_blur"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "seam_fix_padding",
+          "name": "seam_fix_padding",
+          "type": "INT",
+          "widget": {
+            "name": "seam_fix_padding"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "force_uniform_tiles",
+          "name": "force_uniform_tiles",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "force_uniform_tiles"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "tiled_decode",
+          "name": "tiled_decode",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "tiled_decode"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "batch_size",
+          "name": "batch_size",
+          "type": "INT",
+          "widget": {
+            "name": "batch_size"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            47
+          ]
+        }
+      ],
+      "title": "分块重绘 (Flux.2 Klein)",
+      "properties": {
+        "Node name for S&R": "UltimateSDUpscaleGuider"
+      },
+      "widgets_values": [
+        4,
+        123456789,
+        "fixed",
+        "Linear",
+        1024,
+        1024,
+        0,
+        192,
+        "None",
+        0.5,
+        192,
+        8,
+        16,
+        true,
+        true,
+        1
+      ]
+    },
+    {
+      "id": 33,
+      "type": "PreviewImage",
+      "pos": [
+        7480,
+        600
+      ],
+      "size": [
+        780,
+        700
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 40,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 39
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "title": "重绘后预览",
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 35,
+      "type": "MarkdownNote",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        800,
+        2460
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "模型下载与说明",
+      "properties": {
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "**《七纹刻印》文生图工作流 · Qwen-Image-2512 + Flux.2 Klein 分块重绘**\n\n---\n\n## 一、文生图(主生成)\n\n- 模型:qwen_image_2512_fp8_e4m3fn + LoRA Qwen-Image-2512-Lightning-4steps-V1.0-fp32\n- 文本编码:qwen_2.5_vl_7b_fp8_scaled(qwen_image)· VAE:qwen_image_vae\n- 采样:euler / simple · ModelSamplingAuraFlow shift 3.1\n\n### 4步/20步一键切换(「是否4步生成」开关)\n\n| 模式 | 步数 | CFG | LoRA |\n|---|---|---|---|\n| 20步标准 | 20 | 2.5 | 关 |\n| 4步加速 | 4 | 1.0 | Lightning-4steps |\n\n- 种子在 KSampler 手动设置:randomize 随机 / fixed 固定\n- 提示:4步模式 CFG=1,负面提示词不生效属正常现象\n\n## 二、元素选择(当前 50 个)\n\n- 元素选择器:50 项下拉(33 人物 + 17 场景),选中即输出索引\n- 「表格查找」节点:50 行表格(横向五列: 正|负|宽|高|批次,底部加行/总数),按索引取行,只编码选中那一个\n  - 人物 9:16 = 928×1664 · 场景 16:9 = 1664×928\n  - 输出 正/负 + 宽高/批次;宽高/批次接官方 EmptySD3LatentImage(16ch,/8,兼容 Qwen/Flux)生成潜空间后进 KSampler\n\n## 三、分块重绘(Flux.2 Klein 9B 蒸馏)\n\n- 模型:flux-2-klein-9b-fp8 · 文本编码:qwen_3_8b_fp8mixed(flux2)· VAE:full_encoder_small_decoder\n- 重绘提示词(正):中文保持国漫3D赛璐璐风格、肤色与整体色调;负向清零(ConditioningZeroOut)\n- 链路:Flux2Scheduler(8步/1024)→ SplitSigmasDenoise(denoise 0.3)→ UltimateSDUpscaleGuider → ColorMatch → 重绘后预览\n- KSamplerSelect euler · CFGGuider=1(蒸馏模型)\n- 分块参数:4x(4xNomos8kDAT)· tile 1024×1024 · tile_padding 192 · mask_blur 16\n- 颜色匹配回原图:ColorMatch(mkl / strength 1.0,参考图经 4x lanczos 缩放)\n\n### 分段执行\n\n- 「继续: 分块重绘前」:运行到此处暂停,点「▶ 继续」才进入分块重绘;支持「↻ 重跑(从本节点)」\n\n### 参数速调\n\n- denoise(0.3):越低越保真;0.2 更强保真,0.5 重绘更强\n- tile 1024:显存紧张降 768;充裕可 1536\n- 方块格子/接缝明显 → 降 denoise、加大 tile_padding、提高 mask_blur\n- 风格被改写成写实 → 降低 denoise,或加强重绘提示词(30)\n\n## 四、模型清单与下载\n\n| 文件 | 目录 | 下载 |\n|---|---|---|\n| qwen_image_2512_fp8_e4m3fn.safetensors | models/diffusion_models/ | https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_2512_fp8_e4m3fn.safetensors |\n| qwen_2.5_vl_7b_fp8_scaled.safetensors | models/text_encoders/ | https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors |\n| qwen_image_vae.safetensors | models/vae/ | https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors |\n| Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors | models/loras/ | https://huggingface.co/lightx2v/Qwen-Image-2512-Lightning/resolve/main/Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors |\n| 4xNomos8kDAT.safetensors(~147MB) | models/upscale_models/ | [HF 直链](https://huggingface.co/Phips/4xNomos8kDAT/resolve/main/4xNomos8kDAT.safetensors) · [GitHub 镜像](https://github.com/Phhofm/models/releases/download/4xNomos8kDAT/4xNomos8kDAT.safetensors) |\n| flux-2-klein-9b-fp8.safetensors(~10GB,需 HF 登录接受 BFL 协议) | models/diffusion_models/ | https://huggingface.co/black-forest-labs/FLUX.2-klein-9b-fp8/resolve/main/flux-2-klein-9b-fp8.safetensors |\n| qwen_3_8b_fp8mixed.safetensors(~8.1GB) | models/text_encoders/ | https://huggingface.co/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors |\n| full_encoder_small_decoder.safetensors(~238MB) | models/vae/ | https://huggingface.co/black-forest-labs/FLUX.2-small-decoder/resolve/main/full_encoder_small_decoder.safetensors |\n\n- HF 下载慢/被墙:把 huggingface.co 换成 hf-mirror.com,或走代理 7890;门控的扩散模型需登录后下载\n- 显存:9B 蒸馏约 19.6GB,24G 卡跑 1024 tile 偏紧;爆显存把 tile 降到 768\n"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 36,
+      "type": "KSamplerSelect",
+      "pos": [
+        6120,
+        560
+      ],
+      "size": [
+        270,
+        90
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "采样器名称",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "采样器",
+          "name": "SAMPLER",
+          "type": "SAMPLER",
+          "slot_index": 0,
+          "links": [
+            37
+          ]
+        }
+      ],
+      "title": "采样器 euler",
+      "properties": {
+        "Node name for S&R": "KSamplerSelect",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "euler"
+      ]
+    },
+    {
+      "id": 37,
+      "type": "Flux2Scheduler",
+      "pos": [
+        6120,
+        900
+      ],
+      "size": [
+        270,
+        150
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "步数",
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          }
+        },
+        {
+          "localized_name": "宽度",
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          }
+        },
+        {
+          "localized_name": "高度",
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Sigmas",
+          "name": "SIGMAS",
+          "type": "SIGMAS",
+          "slot_index": 0,
+          "links": [
+            38
+          ]
+        }
+      ],
+      "title": "Klein 调度器 (4步)",
+      "properties": {
+        "Node name for S&R": "Flux2Scheduler",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        8,
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": 38,
+      "type": "CFGGuider",
+      "pos": [
+        6120,
+        700
+      ],
+      "size": [
+        270,
+        130
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 29
+        },
+        {
+          "localized_name": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 32
+        },
+        {
+          "localized_name": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 34
+        },
+        {
+          "localized_name": "CFG",
+          "name": "cfg",
+          "type": "FLOAT",
+          "widget": {
+            "name": "cfg"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "引导器",
+          "name": "GUIDER",
+          "type": "GUIDER",
+          "slot_index": 0,
+          "links": [
+            35
+          ]
+        }
+      ],
+      "title": "CFG=1 (蒸馏)",
+      "properties": {
+        "Node name for S&R": "CFGGuider",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        1
+      ]
+    },
+    {
+      "id": 39,
+      "type": "ConditioningZeroOut",
+      "pos": [
+        5600,
+        1160
+      ],
+      "size": [
+        270,
+        80
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "条件",
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 33
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            34
+          ]
+        }
+      ],
+      "title": "负向清零",
+      "properties": {
+        "Node name for S&R": "ConditioningZeroOut",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 41,
+      "type": "SplitSigmasDenoise",
+      "pos": [
+        6120,
+        1100
+      ],
+      "size": [
+        270,
+        110
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Sigmas",
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 38
+        },
+        {
+          "localized_name": "降噪",
+          "name": "denoise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "denoise"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "高方差",
+          "name": "high_sigmas",
+          "type": "SIGMAS",
+          "slot_index": 0,
+          "links": []
+        },
+        {
+          "localized_name": "低方差",
+          "name": "low_sigmas",
+          "type": "SIGMAS",
+          "slot_index": 1,
+          "links": [
+            45
+          ]
+        }
+      ],
+      "title": "裁剪重绘段 (denoise 0.5)",
+      "properties": {
+        "Node name for S&R": "SplitSigmasDenoise",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        0.3
+      ]
+    },
+    {
+      "id": 42,
+      "type": "ColorMatch",
+      "pos": [
+        7060,
+        700
+      ],
+      "size": [
+        300,
+        170
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 39,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image_ref",
+          "name": "image_ref",
+          "type": "IMAGE",
+          "link": 67
+        },
+        {
+          "localized_name": "image_target",
+          "name": "image_target",
+          "type": "IMAGE",
+          "link": 47
+        },
+        {
+          "localized_name": "method",
+          "name": "method",
+          "type": "COMBO",
+          "widget": {
+            "name": "method"
+          }
+        },
+        {
+          "localized_name": "strength",
+          "name": "strength",
+          "shape": 7,
+          "type": "FLOAT",
+          "widget": {
+            "name": "strength"
+          }
+        },
+        {
+          "localized_name": "multithread",
+          "name": "multithread",
+          "shape": 7,
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "multithread"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            39
+          ]
+        }
+      ],
+      "title": "颜色匹配回原图",
+      "properties": {
+        "Node name for S&R": "ColorMatch",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "mkl",
+        1,
+        true
+      ]
+    },
+    {
+      "id": 43,
+      "type": "FallingTSContinue",
+      "pos": [
+        4540,
+        1080
+      ],
+      "size": [
+        230,
+        90
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 36,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "输入",
+          "name": "any",
+          "type": "*",
+          "link": 24
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "输出",
+          "name": "any",
+          "type": "*",
+          "slot_index": 0,
+          "links": [
+            48,
+            66
+          ]
+        }
+      ],
+      "title": "继续: 分块重绘前",
+      "properties": {
+        "Node name for S&R": "FallingTSContinue"
+      },
+      "widgets_values": [
+        null
+      ]
+    },
+    {
+      "id": 49,
+      "type": "FallingTSSelector",
+      "pos": [
+        1200,
+        200
+      ],
+      "size": [
+        420,
+        130
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "选项列表",
+          "name": "items",
+          "type": "STRING",
+          "widget": {
+            "name": "items"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "选择项",
+          "name": "selection",
+          "type": "COMBO",
+          "widget": {
+            "name": "selection"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "索引",
+          "name": "index",
+          "type": "INT",
+          "slot_index": 0,
+          "links": [
+            9904
+          ]
+        }
+      ],
+      "title": "元素选择器",
+      "properties": {
+        "Node name for S&R": "FallingTSSelector",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "人物:陈落[P-01],人物:石翠[P-02],人物:铁柱[P-03],人物:方沿[P-04],人物:阿蕊[P-05],人物:马队[P-06],人物:中年魂修[P-07],人物:章长老[P-08],人物:灰衣老者[P-09],人物:蓝袍中年人[P-10],人物:老刘头[P-11],人物:书店老板[P-12],人物:编辑赵姐[P-13],人物:苏婉[P-14],人物:首席长老[P-15],人物:三个铁锹汉子[P-16],人物:佟老四[P-17],人物:阿七[P-18],人物:季老三[P-19],人物:石伯[P-20],人物:冯三娘[P-21],人物:宿方[P-22],人物:尺(遗骸)[P-23],人物:结账阿姨[P-24],人物:独眼摊主[P-25],人物:哨站看门人[P-26],人物:大萨满·艾琳·裂隙语者[P-27],人物:守夜人初代议长·铁手[P-28],人物:隐修会初代会长·默[P-29],人物:真衡院首任院长·殷墟[P-30],人物:封印部长·无名[P-31],人物:公输·大匠[P-32],人物:深渊裂口惊扰者[P-33],场景:地球书房[S-01],场景:北荒原焦土[S-02],场景:渊坑[S-03],场景:灰垒[S-04],场景:北境矿道[S-05],场景:封印空腔[S-06],场景:渊界浮陆[S-07],场景:渊界洞穴[S-08],场景:灰垒出租屋[S-09],场景:灰垒书店[S-10],场景:渊坑岩洞[S-11],场景:干涸水道[S-12],场景:第一废墟[S-13],场景:灰垒废弃广场[S-14],场景:楼下小超市[S-15],场景:巨兽骸骨[S-16],场景:双星[S-17]",
+        "人物:陈落[P-01]"
+      ]
+    },
+    {
+      "id": 58,
+      "type": "ImageScaleBy",
+      "pos": [
+        5220,
+        1080
+      ],
+      "size": [
+        270,
+        120
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 66
+        },
+        {
+          "localized_name": "缩放算法",
+          "name": "upscale_method",
+          "type": "COMBO",
+          "widget": {
+            "name": "upscale_method"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "缩放系数",
+          "name": "scale_by",
+          "type": "FLOAT",
+          "widget": {
+            "name": "scale_by"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            67
+          ]
+        }
+      ],
+      "title": "参考图 4x 缩放",
+      "properties": {
+        "Node name for S&R": "ImageScaleBy",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        "lanczos",
+        4
+      ]
+    },
+    {
+      "id": 4000,
+      "type": "FallingTSTable",
+      "pos": [
+        1200,
+        380
+      ],
+      "size": [
+        860,
+        630
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "索引(数值)",
+          "name": "index",
+          "type": "INT",
+          "widget": {
+            "name": "index"
+          },
+          "link": 9904
+        },
+        {
+          "localized_name": "表格数据 (索引 + A/B/C... 列)",
+          "name": "rows",
+          "type": "FALLINGTS_TABLE",
+          "widget": {
+            "name": "rows"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "A",
+          "type": "STRING",
+          "slot_index": 0,
+          "links": [
+            10002
+          ]
+        },
+        {
+          "name": "B",
+          "type": "STRING",
+          "slot_index": 1,
+          "links": [
+            10005
+          ]
+        },
+        {
+          "name": "C",
+          "type": "STRING",
+          "slot_index": 3,
+          "links": [
+            10007
+          ]
+        },
+        {
+          "name": "D",
+          "type": "STRING",
+          "slot_index": 4,
+          "links": [
+            10009
+          ]
+        },
+        {
+          "name": "E",
+          "type": "STRING",
+          "slot_index": 5,
+          "links": [
+            10011
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FallingTSTable"
+      },
+      "widgets_values": [
+        0,
+        {
+          "row_count": 50,
+          "col_count": 5,
+          "data": [
+            [
+              "3D角色模型, PBR流程, 高精度, 4K, 男性, 中国青年, 27岁, 178cm, 匀称偏瘦, 俊朗清秀, 五官立体, 下颌线条分明, 黑发微乱, 白色圆领T恤, 灰色运动短裤, 蓝色塑料人字拖鞋, 站姿自然, 神情淡然, 看向镜头, 正面站立, 全身, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 高精度, 4K, 女性, 中国战士, 30岁, 170cm, 修长挺拔, 表情清冷, 眉眼锐利, 短发扎于脑后, 磨损荒原皮甲, 肩臂绑带, 白骨长矛, 戒备站姿, 重心微沉, 持矛斜指地面, 眼神冷厉, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国壮汉, 34岁, 186cm, 魁梧壮硕, 肩宽背厚, 国字脸, 浓眉大眼, 面容朴实豪爽, 粗麻荒原衣, 裸露双臂, 巨大骨锤扛右肩, 站姿随意, 咧嘴大笑, 白牙, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国青年, 25岁, 176cm, 精干削瘦, 目光锐利专注, 颧骨微高, 薄唇, 深灰荒原劲装, 绑腿束袖, 白骨短矛, 前倾微蹲, 短矛横握胸前, 戒备姿态, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 女性, 中国少女, 16岁, 156cm, 纤细瘦小, 眼睛又圆又亮, 神情怯生生, 打补丁宽大旧衣, 右臂绷带, 瑟缩站姿, 含胸, 双手攥衣角, 头低垂目光上抬, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国男子, 35岁, 178cm, 精壮横阔, 粗脖, 左眉竖疤, 鼻梁歪斜, 狡黠阴险笑容, 补丁旧皮甲, 缺口锈刀别腰间, 手按刀柄, 嚣张站姿, 斜睨人, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国男子, 42岁, 173cm, 清癯偏瘦, 长方脸, 眼神幽深, 神秘表情, 素黑深衣, 袖口扎紧, 飞梭悬浮掌心, 缓慢自旋, 纹路发光, 静立, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国长者, 68岁, 169cm, 偏瘦身板笔挺, 灰白长发束脑后, 长须, 面容清癯严峻, 双目炯炯, 深灰长老长袍, 紫边, 石木手杖, 端正站立, 双手交叠拄杖, 不怒自威, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国老人, 75岁, 166cm, 干瘦如枯木, 背微驼, 青筋突起, 皮肤粗糙, 洗白灰布衣, 战斗形态: 身体膨胀2倍, 暗紫能量纹路从胸口蔓延全身, 双目紫光, 猛兽气场, 双形态, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国男子, 45岁, 180cm, 修长匀称, 优雅从容, 眉骨高挺, 三绺墨髯, 目光平静含威, 深蓝锦缎长袍, 玉带, 暗红短杖在手, 杖端赤红粒子缭绕, 舒展站姿, 左手负后, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国老人, 63岁, 168cm, 干瘦精悍, 满脸褶子, 小眼睛精明光亮, 破旧灰布短褐, 挽裤腿, 露脚趾旧布鞋, 随意站姿, 双手拢袖, 笑眯眯, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国老人, 73岁, 164cm, 干瘦佝偻, 眼皮耷拉, 老花镜挂鼻尖, 半睡表情, 灰扑扑旧长衫, 靠木柜台, 撑下巴打盹, 指缝夹卷烟, 半身柜台后, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 女性, 中国职业女性, 36岁, 165cm, 干练挺拔, 细银框眼镜, 目光锐利审视, 嘴角微抿严肃, 燕麦色西装外套, 白衬衫, 坐办公书桌前, 笔记本手机摊开, 咖啡冒热气, 半身坐姿, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 女性, 中国女性, 26岁, 166cm, 纤细窈窕, 逆光剪影, 黄昏光染暖金色, 素色长裙, 裙摆微摆, 侧身回望, 轮廓清晰细节朦胧, 梦幻氛围, 半身剪影, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国长者, 65岁, 176cm, 健壮硬朗, 方面阔口, 浓眉如刀, 双目精光, 不怒自威, 深灰长老戎服, 半身皮甲, 阔刃佩剑悬腰, 站姿挺拔如松, 右手按剑柄, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 3名男性, 中国壮年, 30-35岁, 175-180cm, 敦实健壮, 面容朴实, 颧骨微红, 眼神坚定, 深色粗布荒原衣, 铁锹, 倒三角战斗阵型, 一人前突横锹, 两人侧后斜扛, 三人组, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国中年汉子, 43岁, 172cm, 身量不高但结实, 肩膀宽厚, 深灰短褂多处补丁, 腰间细绳挂晶片兽牙小皮袋, 脸上旧疤从眉梢斜拉到颧骨, 眼神精明, 站姿随意, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国老人, 58岁, 165cm, 瘦削, 颧骨突出, 眼角深纹, 左腿膝盖以下萎缩细一圈, 瘸腿, 灰褐旧短衣, 坐石头上削木桩, 双手沉稳, 面前整齐码放削尖木桩, 正面半身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国壮汉, 38岁, 178cm, 矮壮敦实, 肩宽背厚, 光着膀子, 肩上搭破布, 粗犷豪爽, 咧嘴大笑, 白牙, 端一碗稀粥, 正面站立全身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国老人, 60岁, 170cm, 精瘦, 颧骨高耸, 下巴尖削, 眼睛精明, 灰布短褐, 端稀粥, 从门后探身, 神情机敏, 半身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 女性, 中国中年妇人, 45岁, 158cm, 结实, 深色旧袄, 发髻松散, 手里拿干草喂鸡, 神情泼辣, 半身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国男子, 45岁, 175cm, 瘦削, 颧骨突出, 眼窝深陷, 皮肤灰白缺乏光照, 破败旧衣, 手臂小腿布满细密侵蚀伤口, 靠岩壁瘫坐, 虚弱神态, 半身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国男子, 40岁, 176cm, 枯瘦, 灰白长发, 隐修会观测者破旧长袍, 背靠暗河河床岩壁坐姿遗骸, 手中握暗紫色留影石, 衣物朽烂, 半身, CG动漫",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 女性, 中国中年妇女, 48岁, 162cm, 微胖和蔼, 圆脸, 黑色短发, 深色针织开衫, 超市围裙, 坐收银台后, 手持手机, 屏幕光映脸, 柜台堆日用货品, 半身, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国老人, 70岁, 165cm, 干瘦, 右眼戴黑色眼罩, 灰白发须, 旧灰布短衣, 蹲坐旧书摊后, 面前脏布摆泛黄旧书册, 神情淡漠, 半身, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国中年男子, 55岁, 170cm, 结实, 花白头发扎脑后, 脸上风沙深纹, 目光精明, 旧麻布短褐, 蹲陶盆前洗物, 双手沾水, 半身, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 女性, 中国老人, 70岁, 165cm, 枯瘦, 白发披散, 面容深邃苍老, 双眼半闭似见非见, 暗紫长袍, 颈间挂满骨饰, 手持木质法杖杖端缀骨铃, 静立, 神秘气场, 正面站立全身, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国男子, 45岁, 185cm, 魁梧, 铁灰色戎服, 披风, 右手完全紫晶化如晶石, 右手握长剑, 神色坚毅沧桑, 正面站立全身, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国男子, 60岁, 172cm, 清瘦, 兜帽长袍深灰近黑, 面容半隐于阴影, 目光平静深邃, 手中捻一枚旧书页残片, 静立, 正面站立全身, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国男子, 55岁, 180cm, 挺拔, 玄色大氅, 白发束冠, 长髯, 面容威严, 双瞳隐有蓝光, 负手而立, 身后蓝白灵光流动, 正面站立全身, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国男子, 50岁, 176cm, 清癯, 灰白长发, 素色麻袍, 双手紧握一叠泛黄书页, 神情决绝, 周身暗紫封印纹路环绕, 正面站立全身, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 中国老人, 70岁, 170cm, 干瘦矍铄, 花白胡须, 工匠短褐, 腰挂工具袋, 手持灵能设计图卷轴, 神情专注, 身后齿轮与光路结构, 正面站立全身, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D角色模型, PBR, 4K, 男性, 神秘人, 35岁, 178cm, 身披破烂黑斗篷, 兜帽深垂, 面容完全隐没只露一双平静眼睛, 从黑暗中走出, 周身缠绕暗紫光丝, 正面站立全身, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "928",
+              "1664",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR流程, 高品质, 4K, 室内场景, 超现实安静氛围, 右上侧视角, 深夜书房, 现代化书桌, 桌子靠近左侧墙壁, 桌面笔记本电脑冷白光, 桌右侧放手机, 书架在桌子左侧, 约30本书, 窗边放一个插着几支钢笔的笔筒, 窗外雨夜, 雨水玻璃流淌, 城市霓虹橘红光晕, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 大地形, 自定义天空球, 4K, 户外地形, 末日景观, 焦土荒原, 无边暗灰色焦土到地平线, 暗红天穹, 布满裂纹蓝色圆盘, 半埋巨兽肋骨, 远处废墟剪影, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 体积光雾, 4K, 户外地形, 史诗奇幻景观, 巨大塌陷盆地, 直径十公里, 百米垂直断崖, 坑底紫色发光雾气翻涌, 崖壁斜插巨兽肋骨, 紫色结晶沉积发光, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 建筑群, 4K, 户外城镇, 末日城镇, 碎石城墙, 狭窄蜿蜒巷子, 拼凑建筑, 铁皮屋顶, 交易摊怪物骨骼结晶碎片, 暗红天光, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 洞穴系统, 结晶光源, 4K, 地下洞穴系统, 地裂入口, 数十米宽, 粗糙石阶向下, 岩壁收窄, 暗紫色结晶簇发光, 能量光点飘浮, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 符文发光材质, 4K, 地下密室, 地下封闭空腔, 不规则穹顶, 巨大石门嵌岩壁, 密集紫色发光封印纹路覆盖门面, 黑色结晶印记石嵌中央, 裂纹从门边蔓延, 古老封印室, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 浮空地形, 自定义天空球体积云, 4K, 奇幻浮空地形, 浮空岛屿, 不规则椭圆, 深灰岩基暗红沉积, 黑色碳化枯木, 远处暗红山脉, 岛屿边缘混沌虚空, 散布浮空碎片, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 山体洞穴, 岩壁材质, 4K, 生存恐怖氛围, 暗红山腰浅洞, 三四米深, 崩塌巨岩半掩洞口, 洞内漆黑, 微弱红光渗入, 粗糙凹凸洞壁, 细碎暗红砂砾地面, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 极简陈设, 4K, 末日室内, 狭小房间十平米, 夯实焦土地面, 碎石垫木板床, 歪腿木桌, 墙角陶罐炉子, 干柴一捆, 无窗, 门缝一线暗红天光, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 室内书店, 尘埃粒子, 4K, 昏暗, 半地下旧书店, 柜台油灯照明, 昏黄光圈一米, 粗糙木板堆泛黄旧书叠到天花板, 窄通道, 尘埃在光中飘浮, 老人柜台打盹, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 崖壁岩洞, 结晶发光材质, 4K, 崖壁溶蚀岩洞, 洞口窄小侧身挤入, 两三米深卵形, 漆黑, 零星紫色结晶沉积发光, 窄缝透入暗红天光, 地面细长光斑, 孤独避难所, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 崖壁沟壑, 水文侵蚀材质, 4K, 地质裂隙, 崖壁蜿蜒干涸水沟, 宽窄不一, 几米深, 碎石暗灰底部, 中段渗水浅洼反射微光, 水流冲刷波纹痕迹, 光滑岩面, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 废墟建筑, 坍塌结构, 4K, 古老遗迹, 古老废墟足球场大小, 上层完全坍塌, 只剩残墙, 半圆形穹顶半埋焦土, 巨大石柱斜插, 柱身模糊纹路, 暗红天光长阴影, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 废弃广场, 4K, 灰垒东侧废弃广场, 铺石碎裂, 暗紫低矮灌木从石缝长出, 枝条扭曲叶片稀疏, 四周坍塌建筑轮廓围出边界, 暗红天光均匀洒下, 荒凉庄严, no_植被系统, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 零售室内, 4K, 夜晚社区小超市, 暖黄灯光, 货架方便面酱油罐头日用品, 收银台中年阿姨看手机, 屏幕光映脸, 店外漆黑, 玻璃门促销海报, no_写实中国市井, no_写实光照, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 巨型骸骨, 骨骼纹理, 4K, 户外景观, 巨兽肋骨一排, 数米高, 斜插焦土, 拱形如天然廊道, 骨面暗紫结晶沉积, 暗红天光下泛冷冽光泽, 骨骼根部埋焦土, 散落碎骨片, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ],
+            [
+              "3D场景模型, PBR, 天空球天体系统, 双星材质光照, 4K, 暗红混沌天穹全景, 蓝色灵星布满黑色裂纹为主导, 裂纹如伤疤纵横, 远端暗红渊星光斑对峙, 一蓝一红遥相对峙, 其余天穹漆黑虚空, 双星天空, CG动漫风格",
+              "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 背景杂乱, 过曝, 色彩过饱和",
+              "1664",
+              "928",
+              "1"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4001,
+      "type": "EmptySD3LatentImage",
+      "pos": [
+        3300,
+        640
+      ],
+      "size": [
+        230,
+        150
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "宽度",
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 10008
+        },
+        {
+          "localized_name": "高度",
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 10010
+        },
+        {
+          "localized_name": "批量大小",
+          "name": "batch_size",
+          "type": "INT",
+          "widget": {
+            "name": "batch_size"
+          },
+          "link": 10012
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            9908
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptySD3LatentImage",
+        "cnr_id": "comfy-core"
+      },
+      "widgets_values": [
+        928,
+        1664,
+        1
+      ]
+    },
+    {
+      "id": 5001,
+      "type": "ComfyNumberConvert",
+      "pos": [
+        2940,
+        200
+      ],
+      "size": [
+        230,
+        110
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "value",
+          "localized_name": "数值",
+          "name": "value",
+          "type": "INT,FLOAT,STRING,BOOLEAN",
+          "link": 10007
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "浮点",
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "localized_name": "整数",
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            10008
+          ]
+        }
+      ],
+      "title": "宽 (字符串→数值)",
+      "properties": {
+        "Node name for S&R": "ComfyNumberConvert"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 5002,
+      "type": "ComfyNumberConvert",
+      "pos": [
+        2940,
+        340
+      ],
+      "size": [
+        230,
+        110
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "value",
+          "localized_name": "数值",
+          "name": "value",
+          "type": "INT,FLOAT,STRING,BOOLEAN",
+          "link": 10009
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "浮点",
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "localized_name": "整数",
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            10010
+          ]
+        }
+      ],
+      "title": "高 (字符串→数值)",
+      "properties": {
+        "Node name for S&R": "ComfyNumberConvert"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 5003,
+      "type": "ComfyNumberConvert",
+      "pos": [
+        2940,
+        480
+      ],
+      "size": [
+        230,
+        110
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "value",
+          "localized_name": "数值",
+          "name": "value",
+          "type": "INT,FLOAT,STRING,BOOLEAN",
+          "link": 10011
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "浮点",
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "localized_name": "整数",
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            10012
+          ]
+        }
+      ],
+      "title": "批次 (字符串→数值)",
+      "properties": {
+        "Node name for S&R": "ComfyNumberConvert"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 5004,
+      "type": "CLIPTextEncode",
+      "pos": [
+        2560,
+        840
+      ],
+      "size": [
+        400,
+        280
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 10001
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 10002
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            10003
+          ]
+        }
+      ],
+      "title": "表格提示词 (正)",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 5005,
+      "type": "CLIPTextEncode",
+      "pos": [
+        2560,
+        1160
+      ],
+      "size": [
+        400,
+        280
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 10004
+        },
+        {
+          "localized_name": "文本",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 10005
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            10006
+          ]
+        }
+      ],
+      "title": "表格提示词 (负)",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      1,
+      0,
+      3,
+      0,
+      "MODEL"
+    ],
+    [
+      3,
+      2,
+      0,
+      3,
+      1,
+      "MODEL"
+    ],
+    [
+      4,
+      3,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      10,
+      13,
+      0,
+      3,
+      2,
+      "BOOLEAN"
+    ],
+    [
+      11,
+      9,
+      0,
+      14,
+      0,
+      "INT"
+    ],
+    [
+      12,
+      10,
+      0,
+      14,
+      1,
+      "INT"
+    ],
+    [
+      13,
+      13,
+      0,
+      14,
+      2,
+      "BOOLEAN"
+    ],
+    [
+      14,
+      11,
+      0,
+      15,
+      0,
+      "FLOAT"
+    ],
+    [
+      15,
+      12,
+      0,
+      15,
+      1,
+      "FLOAT"
+    ],
+    [
+      16,
+      13,
+      0,
+      15,
+      2,
+      "BOOLEAN"
+    ],
+    [
+      17,
+      14,
+      0,
+      16,
+      5,
+      "INT"
+    ],
+    [
+      18,
+      15,
+      0,
+      16,
+      6,
+      "FLOAT"
+    ],
+    [
+      19,
+      4,
+      0,
+      16,
+      0,
+      "MODEL"
+    ],
+    [
+      20,
+      17,
+      0,
+      18,
+      1,
+      "VAE"
+    ],
+    [
+      21,
+      16,
+      0,
+      18,
+      0,
+      "LATENT"
+    ],
+    [
+      24,
+      19,
+      0,
+      43,
+      0,
+      "IMAGE"
+    ],
+    [
+      27,
+      18,
+      0,
+      19,
+      0,
+      "IMAGE"
+    ],
+    [
+      29,
+      26,
+      0,
+      38,
+      0,
+      "MODEL"
+    ],
+    [
+      30,
+      27,
+      0,
+      30,
+      0,
+      "CLIP"
+    ],
+    [
+      31,
+      27,
+      0,
+      31,
+      0,
+      "CLIP"
+    ],
+    [
+      32,
+      30,
+      0,
+      38,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      33,
+      31,
+      0,
+      39,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      34,
+      39,
+      0,
+      38,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      35,
+      38,
+      0,
+      32,
+      1,
+      "GUIDER"
+    ],
+    [
+      36,
+      28,
+      0,
+      32,
+      4,
+      "VAE"
+    ],
+    [
+      37,
+      36,
+      0,
+      32,
+      2,
+      "SAMPLER"
+    ],
+    [
+      38,
+      37,
+      0,
+      41,
+      0,
+      "SIGMAS"
+    ],
+    [
+      39,
+      42,
+      0,
+      33,
+      0,
+      "IMAGE"
+    ],
+    [
+      44,
+      23,
+      0,
+      32,
+      5,
+      "UPSCALE_MODEL"
+    ],
+    [
+      45,
+      41,
+      1,
+      32,
+      3,
+      "SIGMAS"
+    ],
+    [
+      47,
+      32,
+      0,
+      42,
+      1,
+      "IMAGE"
+    ],
+    [
+      48,
+      43,
+      0,
+      32,
+      0,
+      "IMAGE"
+    ],
+    [
+      66,
+      43,
+      0,
+      58,
+      0,
+      "IMAGE"
+    ],
+    [
+      67,
+      58,
+      0,
+      42,
+      0,
+      "IMAGE"
+    ],
+    [
+      9904,
+      49,
+      0,
+      4000,
+      0,
+      "INT"
+    ],
+    [
+      9908,
+      4001,
+      0,
+      16,
+      3,
+      "LATENT"
+    ],
+    [
+      10001,
+      5,
+      0,
+      5004,
+      0,
+      "CLIP"
+    ],
+    [
+      10002,
+      4000,
+      0,
+      5004,
+      1,
+      "STRING"
+    ],
+    [
+      10003,
+      5004,
+      0,
+      16,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      10004,
+      5,
+      0,
+      5005,
+      0,
+      "CLIP"
+    ],
+    [
+      10005,
+      4000,
+      1,
+      5005,
+      1,
+      "STRING"
+    ],
+    [
+      10006,
+      5005,
+      0,
+      16,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      10007,
+      4000,
+      2,
+      5001,
+      0,
+      "STRING"
+    ],
+    [
+      10008,
+      5001,
+      1,
+      4001,
+      0,
+      "INT"
+    ],
+    [
+      10009,
+      4000,
+      3,
+      5002,
+      0,
+      "STRING"
+    ],
+    [
+      10010,
+      5002,
+      1,
+      4001,
+      1,
+      "INT"
+    ],
+    [
+      10011,
+      4000,
+      4,
+      5003,
+      0,
+      "STRING"
+    ],
+    [
+      10012,
+      5003,
+      1,
+      4001,
+      2,
+      "INT"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.1,
+      "offset": [
+        8364.04195001925,
+        3509.3736162626547
+      ]
+    }
+  },
+  "version": 0.4
+}

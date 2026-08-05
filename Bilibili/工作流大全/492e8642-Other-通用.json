@@ -1,0 +1,4100 @@
+{
+  "id": "73b6748b-00be-4396-a4d6-bf8375a6b8b7",
+  "revision": 0,
+  "last_node_id": 94,
+  "last_link_id": 106,
+  "nodes": [
+    {
+      "id": 11,
+      "type": "EmptyLatentImage",
+      "pos": [
+        272.78402593765145,
+        2785.6347201239405
+      ],
+      "size": [
+        305,
+        106
+      ],
+      "flags": {},
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 8
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            6
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        512,
+        512,
+        1
+      ]
+    },
+    {
+      "id": 9,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [
+        272.78402593765145,
+        2465.4836903465184
+      ],
+      "size": [
+        305,
+        58
+      ],
+      "flags": {},
+      "order": 46,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            5
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "ModelSamplingAuraFlow"
+      },
+      "widgets_values": [
+        3
+      ]
+    },
+    {
+      "id": 14,
+      "type": "ConditioningKrea2Rebalance",
+      "pos": [
+        272.78402593765145,
+        2589.5592052352295
+      ],
+      "size": [
+        305,
+        130
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 44,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConditioningKrea2Rebalance"
+      },
+      "widgets_values": [
+        "balanced",
+        "1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0",
+        6,
+        true
+      ]
+    },
+    {
+      "id": 13,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -162.68373758461178,
+        2708.0856562406852
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 36,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            7
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "泛黄，发绿，模糊，低分辨率，低质量图像，扭曲的肢体，诡异的外观，丑陋，AI感，噪点，网格感，JPEG压缩条纹，异常的肢体，水印，乱码，意义不明的字符，泛蓝,模糊，低分辨率，畸形，多余的肢体，手的结构错误，卡通，插画，文字，水印，logo，过度曝光，曝光不足，平光，生硬的阴影，面部丑陋，比例失调，手指畸形，眼睛畸形，耳朵畸形，鼻子畸形，嘴巴畸形，牙齿畸形，头发杂乱，衣服褶皱不自然，背景杂乱，构图混乱，透视错误，景深错误，对焦模糊，色彩失真，对比度低，饱和度低，质感差，塑料感，不真实。"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 16,
+      "type": "VAEDecode",
+      "pos": [
+        918.7195529821779,
+        2465.4836903465184
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 50,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 12
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            15
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 17,
+      "type": "Seed (rgthree)",
+      "pos": [
+        614.4186451625537,
+        2994.4555699954767
+      ],
+      "size": [
+        273.11004920139817,
+        130
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "SEED",
+          "shape": 3,
+          "type": "INT",
+          "links": [
+            14
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "1.0.2606200020",
+        "randomMax": 1125899906842624,
+        "randomMin": 0
+      },
+      "widgets_values": [
+        -1,
+        "",
+        "",
+        "okay"
+      ]
+    },
+    {
+      "id": 25,
+      "type": "VAELoader",
+      "pos": [
+        1674.832093115413,
+        2851.5289712417907
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            26,
+            27
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "ae.safetensors"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 27,
+      "type": "ConditioningZeroOut",
+      "pos": [
+        1967.7967423905513,
+        2718.864911570394
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 45,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 21
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            23
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "ConditioningZeroOut"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 30,
+      "type": "VAEEncode",
+      "pos": [
+        1967.7967423905513,
+        2796.8234782187715
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 55,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 25
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            28
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "VAEEncode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 29,
+      "type": "VAEDecode",
+      "pos": [
+        2679.3603959875636,
+        2471.1015955656944
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 60,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 29
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 27
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            33
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 23,
+      "type": "DiffusionModelLoaderKJ",
+      "pos": [
+        1674.832093115413,
+        2460.7174652753047
+      ],
+      "size": [
+        270,
+        178
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "extra_state_dict",
+          "shape": 7,
+          "type": "STRING",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            24
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "1.4.4",
+        "Node name for S&R": "DiffusionModelLoaderKJ"
+      },
+      "widgets_values": [
+        "z_image_turbo_bf16.safetensors",
+        "default",
+        "default",
+        false,
+        "disabled",
+        false
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 28,
+      "type": "KSampler",
+      "pos": [
+        2387.8509616968468,
+        2467.4349624055
+      ],
+      "size": [
+        270,
+        474
+      ],
+      "flags": {},
+      "order": 58,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 24
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 22
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 23
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            29
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        593746694084276,
+        "randomize",
+        6,
+        1,
+        "euler",
+        "simple",
+        0.5
+      ]
+    },
+    {
+      "id": 38,
+      "type": "SeedVR2LoadVAEModel",
+      "pos": [
+        3334.6381007805753,
+        2716.7933806465126
+      ],
+      "size": [
+        321.7833312988281,
+        298
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "torch_compile_args",
+          "shape": 7,
+          "type": "TORCH_COMPILE_ARGS",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SEEDVR2_VAE",
+          "type": "SEEDVR2_VAE",
+          "links": [
+            37
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "seedvr2_videoupscaler",
+        "ver": "2.5.24",
+        "Node name for S&R": "SeedVR2LoadVAEModel"
+      },
+      "widgets_values": [
+        "ema_vae_fp16.safetensors",
+        "cuda:0",
+        false,
+        1024,
+        128,
+        false,
+        1024,
+        128,
+        "false",
+        "none",
+        false
+      ]
+    },
+    {
+      "id": 18,
+      "type": "easy cleanGpuUsed",
+      "pos": [
+        918.7195529821779,
+        2560.6398866394766
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 52,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            25,
+            32,
+            43
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "Node name for S&R": "easy cleanGpuUsed"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 53,
+      "type": "EmptyLatentImage",
+      "pos": [
+        768.6389218406163,
+        4112.272337754808
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 55
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 56
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            54
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        512,
+        512,
+        1
+      ]
+    },
+    {
+      "id": 61,
+      "type": "VAELoader",
+      "pos": [
+        2138.515837159778,
+        4364.647106106877
+      ],
+      "size": [
+        310,
+        58
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            70,
+            72
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "Krea2\\krea2RealVae_v10.safetensors"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 66,
+      "type": "VAEDecodeTiled",
+      "pos": [
+        3088.373596728719,
+        3727.962255370423
+      ],
+      "size": [
+        270,
+        150
+      ],
+      "flags": {},
+      "order": 63,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 71
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 72
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            73
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "VAEDecodeTiled"
+      },
+      "widgets_values": [
+        512,
+        64,
+        64,
+        8
+      ]
+    },
+    {
+      "id": 63,
+      "type": "ImageUpscaleWithModel",
+      "pos": [
+        2481.801757016091,
+        3727.962255370423
+      ],
+      "size": [
+        270,
+        53.64750267360614
+      ],
+      "flags": {},
+      "order": 53,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "upscale_model",
+          "type": "UPSCALE_MODEL",
+          "link": 60
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 86
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            68
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "ImageUpscaleWithModel"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 60,
+      "type": "CLIPLoader",
+      "pos": [
+        2138.515837159778,
+        4216.47589342276
+      ],
+      "size": [
+        310,
+        106
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            63
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen3VLInstruct4bHeretic_v10(1).safetensors",
+        "krea2",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 68,
+      "type": "CLIPTextEncode",
+      "pos": [
+        2481.801757016091,
+        4038.7829340532435
+      ],
+      "size": [
+        270,
+        200
+      ],
+      "flags": {},
+      "order": 33,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 63
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 106
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            64,
+            66
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 69,
+      "type": "ConditioningZeroOut",
+      "pos": [
+        2487.6182083022804,
+        4293.823574366502
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 42,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 64
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            65
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "ConditioningZeroOut"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 41,
+      "type": "SaveImage",
+      "pos": [
+        4115.6189677709335,
+        2459.0739701573225
+      ],
+      "size": [
+        545.3279436040111,
+        443.4088039567405
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 71,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 45
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Krea2+ZIT/Krea2+ZIT-%date:yyyyMMdd-hhmmss%"
+      ]
+    },
+    {
+      "id": 36,
+      "type": "SeedVR2LoadDiTModel",
+      "pos": [
+        3333.078784129535,
+        2456.6704978945663
+      ],
+      "size": [
+        317.51666870117185,
+        202
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "torch_compile_args",
+          "shape": 7,
+          "type": "TORCH_COMPILE_ARGS",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SEEDVR2_DIT",
+          "type": "SEEDVR2_DIT",
+          "links": [
+            36
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "seedvr2_videoupscaler",
+        "ver": "2.5.24",
+        "Node name for S&R": "SeedVR2LoadDiTModel"
+      },
+      "widgets_values": [
+        "seedvr2_ema_7b_fp8_e4m3fn_mixed_block35_fp16.safetensors",
+        "cuda:0",
+        0,
+        false,
+        "none",
+        false,
+        "sdpa"
+      ]
+    },
+    {
+      "id": 43,
+      "type": "easy cleanGpuUsed",
+      "pos": [
+        3681.042801519968,
+        2900.351404093791
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 68,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 44
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            45,
+            46
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "Node name for S&R": "easy cleanGpuUsed"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 55,
+      "type": "VAEDecode",
+      "pos": [
+        1354.4866446833353,
+        3726.321392191995
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 49,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 57
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 58
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            88
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 80,
+      "type": "easy cleanGpuUsed",
+      "pos": [
+        1357.7810658965711,
+        3832.6434465865627
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 51,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 88
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            85,
+            86,
+            93,
+            96
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "Node name for S&R": "easy cleanGpuUsed"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 67,
+      "type": "LayerColor: ColorAdapter",
+      "pos": [
+        3391.6595165850317,
+        3727.962255370423
+      ],
+      "size": [
+        270,
+        78
+      ],
+      "flags": {},
+      "order": 67,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 73
+        },
+        {
+          "name": "color_ref_image",
+          "type": "IMAGE",
+          "link": 85
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            75,
+            89
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_layerstyle",
+        "ver": "1.0.90",
+        "Node name for S&R": "LayerColor: ColorAdapter"
+      },
+      "widgets_values": [
+        100
+      ],
+      "color": "rgba(27, 89, 123, 0.7)"
+    },
+    {
+      "id": 59,
+      "type": "DiffusionModelLoaderKJ",
+      "pos": [
+        2138.515837159778,
+        3996.30468073865
+      ],
+      "size": [
+        310,
+        178
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "extra_state_dict",
+          "shape": 7,
+          "type": "STRING",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            91
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "1.4.4",
+        "Node name for S&R": "DiffusionModelLoaderKJ"
+      },
+      "widgets_values": [
+        "Krea2\\Krea2-MuseByStable_v15Turbo_fp8.safetensors",
+        "default",
+        "default",
+        false,
+        "disabled",
+        false
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 62,
+      "type": "KSamplerAdvanced",
+      "pos": [
+        2785.087676872405,
+        3727.962255370423
+      ],
+      "size": [
+        270,
+        546
+      ],
+      "flags": {},
+      "order": 61,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 92
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 66
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 65
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 67
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            71
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "enable",
+        0,
+        "fixed",
+        9,
+        1,
+        "euler_ancestral",
+        "simple",
+        6,
+        9,
+        "disable"
+      ]
+    },
+    {
+      "id": 81,
+      "type": "easy cleanGpuUsed",
+      "pos": [
+        3705.3043096255806,
+        3742.415096717897
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 70,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 89
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            95
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "Node name for S&R": "easy cleanGpuUsed"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 49,
+      "type": "CLIPTextEncode",
+      "pos": [
+        768.6389218406163,
+        3726.321392191995
+      ],
+      "size": [
+        270,
+        169.3016765133998
+      ],
+      "flags": {},
+      "order": 35,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 49
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 105
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            50,
+            52
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "A stunning adult East Asian woman with long black hair standing in an elegant luxury interior. She has refined facial features, fair skin, deep expressive eyes, soft lips, and a confident yet mysterious expression.\nShe wears a fitted black evening dress with delicate silk texture, an elegant neckline, long gloves, and subtle jewelry. The dress follows her graceful figure with flowing fabric folds and refined details. A diamond necklace rests on her collarbone, reflecting the surrounding light.\nShe poses in a seductive and elegant manner, with her body slightly turned sideways and her shoulders relaxed. One hand gently touches her hair near her neck, while the other rests naturally along her waist. Her hips are slightly angled, creating a graceful silhouette. Her head is tilted slightly downward, and she looks toward the viewer with a calm, confident gaze.\nHer long hair flows softly around her shoulders, with a few strands crossing her face. Warm golden lighting highlights her skin, jewelry, and dress texture. The background features blurred candles, dark velvet curtains, and luxurious decorations, creating an intimate and mysterious atmosphere."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 50,
+      "type": "ConditioningZeroOut",
+      "pos": [
+        768.6389218406163,
+        3963.7632924524196
+      ],
+      "size": [
+        270,
+        26
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 43,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 50
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "ConditioningZeroOut"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 88,
+      "type": "CLIPTextEncode",
+      "pos": [
+        784.0718566420169,
+        3961.6910925133325
+      ],
+      "size": [
+        270,
+        169.3016765133998
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 101
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            100
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "大额头晶体， oversized forehead crystal，宽厚头冠，厚重头冠，臃肿头冠，圆眼睛，椭圆大眼，夸张发光额头宝石，张大嘴，夸张嘴型，怪兽嘴，人类嘴唇，牙齿明显，错误奥特曼头型，赛罗头型，其他奥特曼造型，卡通风，动漫风，低清晰度，模糊，畸形"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 58,
+      "type": "Seed (rgthree)",
+      "pos": [
+        770.1148397372178,
+        3940.650806033087
+      ],
+      "size": [
+        270,
+        130
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "SEED",
+          "shape": 3,
+          "type": "INT",
+          "links": [
+            76
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "1.0.2606200020",
+        "randomMax": 1125899906842624,
+        "randomMin": 0
+      },
+      "widgets_values": [
+        -1,
+        "",
+        "",
+        "okay"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "KSampler",
+      "pos": [
+        613.2517894599147,
+        2465.4836903465184
+      ],
+      "size": [
+        270,
+        474
+      ],
+      "flags": {},
+      "order": 48,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 5
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 4
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 7
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 6
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        461819316698884,
+        "randomize",
+        8,
+        1,
+        "euler",
+        "simple",
+        1
+      ]
+    },
+    {
+      "id": 89,
+      "type": "easy promptList",
+      "pos": [
+        -1381.3149168573723,
+        2375.5703374400946
+      ],
+      "size": [
+        386.095482749251,
+        495.8203894405279
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "optional_prompt_list",
+          "shape": 7,
+          "type": "LIST",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prompt_list",
+          "type": "LIST",
+          "links": null
+        },
+        {
+          "name": "prompt_strings",
+          "shape": 6,
+          "type": "STRING",
+          "links": [
+            103
+          ]
+        }
+      ],
+      "title": "中文提示词",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "Node name for S&R": "easy promptList"
+      },
+      "widgets_values": [
+        "18岁成年亚洲美女少女，时尚杂志封面风格，精致漂亮的脸庞，柔和立体五官，大眼睛，白皙细腻皮肤，长黑发自然披散，气质清纯又带有微妙性感。\n\n她穿着高级时尚白色丝绸礼服，露肩设计，精致布料纹理，优雅剪裁，修长锁骨和肩颈线条，佩戴简约高级珠宝。\n\n她站在摄影棚中央，身体微微侧转，一只手轻轻整理头发，另一只手自然垂落，眼神直视镜头，温柔自信，带有轻微挑逗感。\n\n高级时尚杂志封面摄影，奢华女性魅力，现代女性气质，电影级灯光，柔和阴影，浅景深，商业时尚摄影，3:4竖版构图",
+        "18岁成年亚洲女性，成熟御姐气质，高级性感时尚摄影，冷艳漂亮的脸庞，精致五官，深邃眼神，黑色长卷发，优雅妩媚。\n\n她穿着黑色高级晚礼服，贴身剪裁，露肩设计，黑色丝绒材质，展现优雅肩颈线条，佩戴钻石项链和耳饰。\n\n她坐在豪华酒店套房内，身体微微后仰，一只手轻触脸颊，另一只手搭在腿侧，姿态自信慵懒，眼神充满魅力和压迫感。\n\n黑色电影美学，高级女性魅力，奢华杂志大片，性感但优雅，Vogue风格摄影，暗色背景，柔和轮廓光，电影级摄影",
+        "18岁成年东亚女性，长发披肩，皮肤白皙透亮，五官精致立体，眼神自信，嘴唇轻启，穿时尚感强的一体式泳装，剪裁高级，搭配轻薄罩衫与金属饰品，露出肩颈、腰线与腿部线条，站在泳池边或浅水中，身体微微扭转，一只手抬起整理头发，另一只手自然垂落，姿态性感利落，具有明显性张力与时尚感，商业杂志封面风格，阳光高光，清爽背景，高级摄影质感，3:4竖版构图",
+        "18岁成年亚洲美女少女，未来都市时尚摄影，酷飒性感风格。\n\n黑色短发或者高马尾发型，精致漂亮五官，冷酷自信眼神。\n\n她穿着黑色皮革机车夹克，短款设计，搭配贴身黑色时尚服装，金属配饰，长靴。\n\n她站在城市街道中央，一只手插入衣服口袋，另一只手调整墨镜，身体微微倾斜，姿态帅气自信。\n\n高级街拍杂志风格，都市女性魅力，电影夜景，霓虹灯背景，时尚大片摄影",
+        "18岁成年美女，兼具年轻少女感与高贵御姐气质，乌黑卷发或柔顺长发，白皙光滑肌肤，精致妆容，眼神成熟而有吸引力，穿高开衩贴身礼服，露出肩部、背部与腿部线条，搭配钻石耳坠、项链与高跟鞋，站在华丽背景前，身体侧转，腰部轻轻扭动，一只手扶在腰间，另一只手轻提裙摆，神态自信优雅，性感、华丽、充满性张力，时尚杂志封面，奢华红毯摄影，高级打光，电影感构图，3:4竖版构图"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 90,
+      "type": "easy promptList",
+      "pos": [
+        -962.6957923179609,
+        2373.272031153491
+      ],
+      "size": [
+        386.095482749251,
+        495.8203894405279
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "optional_prompt_list",
+          "shape": 7,
+          "type": "LIST",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prompt_list",
+          "type": "LIST",
+          "links": null
+        },
+        {
+          "name": "prompt_strings",
+          "shape": 6,
+          "type": "STRING",
+          "links": [
+            102
+          ]
+        }
+      ],
+      "title": "英文提示词",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "Node name for S&R": "easy promptList"
+      },
+      "widgets_values": [
+        "semireal，18-year-old adult Asian beautiful woman, young fashion magazine cover style, delicate elegant face, soft feminine facial features, large expressive eyes, fair flawless skin, long black hair naturally flowing over shoulders, innocent yet subtly sensual atmosphere.\n\nShe wears a luxurious white silk evening dress with off-shoulder design, elegant tailoring, delicate fabric texture, graceful collarbone and shoulder lines, minimal high-end jewelry.\n\nStanding in a professional studio, slightly turning her body, one hand gently touching her hair, the other hand naturally lowered, looking directly at the camera with a confident and gentle gaze, subtle seductive expression.\n\nLuxury fashion magazine cover photography, feminine elegance, modern beauty, cinematic lighting, soft shadows, shallow depth of field, high-end editorial photography, vertical 3:4 composition.",
+        "semireal，18-year-old adult Asian woman with mature elegant aura, high-fashion sensual editorial photography, beautiful cold facial features, refined face, deep captivating eyes, long black wavy hair, graceful and seductive presence.\n\nShe wears a luxurious black evening gown with fitted silhouette, off-shoulder design, velvet texture, elegant shoulder and neck lines, diamond necklace and earrings.\n\nSitting inside a luxury hotel suite, slightly leaning backward, one hand touching her cheek, the other resting beside her leg, confident relaxed pose, powerful feminine gaze.\n\nDark cinematic fashion aesthetic, luxury magazine photoshoot, sensual yet elegant, Vogue style editorial photography, soft rim lighting, dramatic shadows, cinematic atmosphere.",
+        "18-year-old adult East Asian woman with long flowing hair, fair luminous skin, refined facial features, confident eyes, and slightly parted lips. She wears a stylish one-piece swimsuit with elegant tailoring, layered with a lightweight cover-up and metallic accessories, revealing her shoulders, waistline, and legs. She stands beside a pool or in shallow water, her body slightly twisted, one hand lifting her hair while the other hangs naturally. Her pose is clean, sensual, and filled with visible tension and fashion energy. Commercial magazine cover style, bright sunlight highlights, fresh background, premium editorial photography, 3:4 vertical composition.",
+        "semireal，18-year-old adult Asian beautiful woman, futuristic urban fashion photography, cool and sensual style.\n\nShort black hair or stylish ponytail, beautiful refined facial features, confident cold expression.\n\nShe wears a black leather motorcycle jacket, cropped design, fitted black fashion outfit, metallic accessories and stylish boots.\n\nStanding in the middle of a city street, one hand inside her pocket, the other adjusting sunglasses, slightly leaning her body with a powerful confident pose.\n\nHigh-end street fashion magazine style, urban feminine charm, cinematic night scene, neon lights, luxury editorial photography.",
+        "18-year-old adult beauty with both youthful charm and elegant mature presence, black wavy or silky long hair, fair smooth skin, refined makeup, and a mature attractive gaze. She wears a fitted high-slit evening gown, revealing her shoulders, back, and legs, paired with diamond earrings, a necklace, and high heels. She stands before a luxurious backdrop, body turned sideways with a gentle twist at the waist, one hand resting on her waist while the other lightly lifts the hem of her dress. Confident, elegant, sensual, glamorous, and full of tension. Fashion magazine cover, luxury red carpet photography, premium lighting, cinematic composition, 3:4 vertical composition."
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 85,
+      "type": "Note",
+      "pos": [
+        -3115.4686071457927,
+        3246.643239170608
+      ],
+      "size": [
+        558.8934097677363,
+        858.6030821661532
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "▶▶特调大模型方式：\nKrea2-MuseByStable_v15Turbo_fp8(euler+simple)--------------------98分，各方面（优秀）\nKrea2-moodyKrea2Mix_v20_fp8(euler_ancestral+beta57)--------------95分，各方面（优秀）\nKrea2-moodyKrea2Mix_v20_东方版_fp8(euler_ancestral+beta57)--------95分，各方面（优秀）\nKrea2-moodyKrea2Mix_有料东方版_fp8(euler_ancestral+beta57)--------95分，各方面（优秀）\nKrea2-红redcraft2KREA2RedMix_2Krea2Edition_fp8(euler+simple)------98分，各方面（优秀）\nKrea2-黑darkBeastKrea2_darkBeastKREA2_fp8(euler+simple)-----------75分，偶有肢体崩坏（良好）\nKrea2-unstableDissolution_Fp8E4m3(euler+simple)-------------------95分，各方面（优秀）\nKrea2-turbobadmilkmela_v10(euler+simple)--------------------------95分，各方面（优秀）\nKrea2-kreamania_v1_fp8(er_sde+simple)-----------------------------75分，略回避W（良好）\nKrea2-kreamania_v2_fp8(er_sde+simple)-----------------------------75分，略回避W（良好）\nKrea2-kreamania_v3_int8(er_sde+simple)----------------------------75分，略回避W（良好）\n♥GGUF版本经测试几乎无损\n\n▶▶Lora方式：\nKrea2-realism_engine_v2(er_sde+simple)---90分，部位表现好，BAI（优秀）\nKrea2-realism_engine_v2_轻量--------------60分，偶尔带M（勉强）\nKrea2-MysticXXX_v2(euler+beta)-----------80分，部位表现好，MAO（优秀）\nKrea2-MysticXXX_v2_轻量------------------70分，真实，标准部位（合格）\nKrea2-snofs_v1(euler+simple)---------------70分，半真实（可以）\nKrea2-snofs_v1_轻量------------------------70分，真实，标准部位（合格）\nKrea2-NSW+(euler+beta57)----------------85分，权重0.7-1，画面精细干净，BAI（优秀）\nKrea2-KREA2turboNSW(euler+simple)-----80分，权重1.7-2，unStableDissolution的lora版（优秀）\nKrea2-realism-V2(er_sde+sgm_uniform)---75分，表情优化，破需搭配“轻量lora或节点”（良好）\nKrea2-nud3(er_sde+simple)----------------75分，身材优化，破需搭配“轻量lora或节点”（良好）\n\n\n▶▶官方风格lora（权重=1）：\nkrea2_单色水墨画风darkbrush-------------触发词：monochrome ink wash style\nkrea2_单色点刻版画dotmatrix--------------触发词：monochrome stippling style\nkrea2_童趣写意手绘速写kidsdrawing-------触发词：naive expressive sketch style\nkrea2_肌理质感抽象流体neondrip----------触发词：textured abstract style\nkrea2_雨雾玻璃朦胧质感rainywindow------触发词：rainy window style\nkrea2_紫调复古旧动漫retroanime----------触发词：purple retro anime style\nkrea2_装饰艺术柔和水彩softwatercolor----触发词：art deco watercolor style\nkrea2_梦幻柔光动态模糊sunsetblur--------触发词：ethereal motion blur style\nkrea2_复古塔罗牌插画vintagetarot---------触发词：vintage tarot style\n\n▶▶风格lora：\nKrea2-2D动漫Anime_Flat_V10_nnegret(权重0.8=0.8-1)----------触发词：线条动漫，平涂\nKrea2-2D动漫Anime_Flat_V20_nnegret(权重0.8=0.8-1)---------触发词：线条动漫，平涂\nKrea2-25D动漫Semi_Real_Anime_V1_nnegret(权重0.8=0.8-1)---触发词：semireal\nKrea2-25D动漫Semi_Real_Anime_V2_NSW(权重0.8=0.8-1)-----触发词：semireal\nKrea2-gpt anime render(权重1=0.8-1)--------------------------触发词：gpt anime render style\nKrea2-Nikki_Style_Anime_NSW(权重1)-------------------------触发词：Nikke style\nKrea2-动漫umina_krea2_v1(权重1)------------------------------触发词：无\nKrea2-动漫yukan-style(权重1)----------------------------------触发词：yukan style\nKrea2-MISSILE228风格_c1-st5000(权重0.9=0.8-1) -------------触发词：MISSILE228 风格\nKrea2-绘画美学风格painterly render style(权重1)----------------触发词：Painterly render style\nKrea2-asia_cosplay_krea_2(权重1)----------------触发词：realistic, photography, cosplay photo, movie stills.\nKrea2-动漫角色融合Anime Character Fusion(权重1)-------------触发词：无\nKrea2-更好的动漫BetterAnimeStyle_Krea2_v1(权重1)------------触发词：A high-quality anime screencap\nKrea2-漫画白鲸记风格_NSW(权重1)-----------------------------触发词：moby_d1ck\nKrea2-漫画风格ogipote-ep63(权重1)----------------------------触发词：Ogipote style.\nKrea2-漫画书Comic Book V2T2(权重1)-------------------------触发词：A cinematic illustration\nKrea2-朋克现实CYPERPUNK_KREA_2(权重1)-------------------触发词：无\nKrea2-奇幻现实FantasyRealism(权重1)-------------------------触发词：f4nt4sy\nKrea2-炭笔素描(权重1)-----------------------------------------触发词：炭笔素描\n\n"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 26,
+      "type": "CLIPTextEncode",
+      "pos": [
+        1966.34152740613,
+        2463.8296939985753
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 39,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 20
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 103
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            21,
+            22
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 33,
+      "type": "easy cleanGpuUsed",
+      "pos": [
+        2680.910791288733,
+        2589.0352656010637
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 62,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 33
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            35,
+            38,
+            39,
+            104
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "Node name for S&R": "easy cleanGpuUsed"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 91,
+      "type": "PreviewImage",
+      "pos": [
+        2696.823863663327,
+        2667.2859929120154
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 66,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 104
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 78,
+      "type": "easy promptList",
+      "pos": [
+        11.55823518967858,
+        3645.87501919872
+      ],
+      "size": [
+        386.095482749251,
+        495.82038944052795
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "optional_prompt_list",
+          "shape": 7,
+          "type": "LIST",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prompt_list",
+          "type": "LIST",
+          "links": null
+        },
+        {
+          "name": "prompt_strings",
+          "shape": 6,
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "title": "英文提示词",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "Node name for S&R": "easy promptList"
+      },
+      "widgets_values": [
+        "Ultraman Tiga, realistic live-action tokusatsu movie style, full body character portrait, low angle heroic perspective.\nClassic Ultraman Tiga silver metallic helmet design, a thin elongated sharp central forehead crest, smoothly tapering upward, slim silhouette, not wide, not bulky. A tiny inset transparent crystal ornament on the forehead, very small size, embedded into the helmet surface, low visual prominence. Sleek silver facial armor, narrow almond-shaped glowing white eyes with soft light emission.\nWearing the classic Ultraman Tiga battle suit with silver, deep purple and dark red color patterns. Layered gold and silver chest armor lines, blue Color Timer glowing softly in the center of the chest. Tall heroic body proportions, smooth muscular silhouette, realistic suit material texture.\nUltraman Tiga is standing in a dynamic fighting stance, legs spread for balance, one arm extended forward preparing to attack, the other hand clenched into a fist near the chest in a defensive pose. Body slightly turned, powerful heroic energy and strong motion feeling.\nDark battlefield atmosphere with cinematic smoke, subtle fog on the ground, dramatic side back lighting creating strong rim light, metallic reflections, realistic Japanese tokusatsu movie photography, live-action VFX suit, superhero movie still, shallow depth of field.",
+        "18-year-old adult East Asian beauty, youthful and delicate, long black hair, fair smooth skin, refined facial features, clear eyes with a shy yet alluring expression, slightly parted lips, slender figure, wearing a white cropped knit top and a light pleated mini skirt, revealing elegant shoulders, neck and collarbone. She poses naturally and lightly, one hand gently brushing her hair while the other rests on her waist, creating subtle sensuality and restrained tension. Fashion magazine cover style, high-end portrait photography, soft natural light, clean background, shallow depth of field, luminous image quality, 3:4 vertical composition.",
+        "18-year-old adult East Asian woman with long flowing hair, fair luminous skin, refined facial features, confident eyes, and slightly parted lips. She wears a stylish one-piece swimsuit with elegant tailoring, layered with a lightweight cover-up and metallic accessories, revealing her shoulders, waistline, and legs. She stands beside a pool or in shallow water, her body slightly twisted, one hand lifting her hair while the other hangs naturally. Her pose is clean, sensual, and filled with visible tension and fashion energy. Commercial magazine cover style, bright sunlight highlights, fresh background, premium editorial photography, 3:4 vertical composition.",
+        "18-year-old adult East Asian beauty with a youthful playful vibe, long hair or twin ponytails, fair smooth skin, large expressive eyes, a teasing and flirtatious expression. She wears a Y2K-inspired cropped top with a low-rise skirt or shorts, accessorized with a waist chain, bracelets, and trendy fashion pieces, revealing her waist and legs. She stands with her legs crossed lightly, leaning slightly forward, one hand near her lips and the other resting beside her thigh. Sweet, cute, fashionable, yet charged with youthful sensual tension. Magazine cover style, bright background, trendy editorial photography, clean sharp image, 3:4 vertical composition.",
+        "18-year-old adult woman with a youthful yet elegant mature aura, long straight black hair, cool fair skin, refined three-dimensional features, deep eyes, calm and confident expression. She wears a fitted black slip dress, revealing her shoulders, collarbone and legs, accessorized with metallic earrings and a delicate necklace. She stands gracefully with one leg slightly forward and her body gently turned to create an S-shaped silhouette, one hand touching the side of her neck while the other hangs naturally. Cold, alluring, sensual, and full of tension. Fashion magazine cover, cinematic lighting, dark minimal background, luxurious texture, 3:4 vertical composition."
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 56,
+      "type": "VAELoader",
+      "pos": [
+        476.17495584759905,
+        4368.54282119837
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            58
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "ae.safetensors"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 48,
+      "type": "CLIPLoader",
+      "pos": [
+        476.17495584759905,
+        4213.9874639467735
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            49,
+            101
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen_3_4b_fp4_mixed.safetensors",
+        "lumina2",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 44,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -476.85458840444096,
+        2111.424064149591
+      ],
+      "size": [
+        383.4974595462601,
+        202
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "matchColors": "",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      }
+    },
+    {
+      "id": 73,
+      "type": "Label (rgthree)",
+      "pos": [
+        753.1182206194677,
+        3372.165011345866
+      ],
+      "size": [
+        2870.945556640625,
+        168
+      ],
+      "flags": {
+        "allow_interaction": true
+      },
+      "order": 16,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Z-Image-Base+Krea2 4K直出高效出图",
+      "properties": {
+        "fontSize": 168,
+        "fontFamily": "Arial",
+        "fontColor": "#ffffff",
+        "textAlign": "left",
+        "backgroundColor": "transparent",
+        "padding": 0,
+        "borderRadius": 0,
+        "angle": 0
+      },
+      "color": "#fff0",
+      "bgcolor": "#fff0"
+    },
+    {
+      "id": 35,
+      "type": "Label (rgthree)",
+      "pos": [
+        87.99727890360262,
+        2099.731673225958
+      ],
+      "size": [
+        4027.01806640625,
+        168
+      ],
+      "flags": {
+        "allow_interaction": true
+      },
+      "order": 17,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Krea2+Z-Image-Turbo+SeedVR2 超清放大支持NSFW",
+      "properties": {
+        "fontSize": 168,
+        "fontFamily": "Arial",
+        "fontColor": "#ffffff",
+        "textAlign": "left",
+        "backgroundColor": "transparent",
+        "padding": 0,
+        "borderRadius": 0,
+        "angle": 0
+      },
+      "color": "#fff0",
+      "bgcolor": "#fff0"
+    },
+    {
+      "id": 46,
+      "type": "DiffusionModelLoaderKJ",
+      "pos": [
+        476.17495584759905,
+        3726.321392191995
+      ],
+      "size": [
+        270,
+        178
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "extra_state_dict",
+          "shape": 7,
+          "type": "STRING",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            47
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "1.4.4",
+        "Node name for S&R": "DiffusionModelLoaderKJ"
+      },
+      "widgets_values": [
+        "Z-Image-Base-8steps-White_Marble-AIO_v2-bf16.safetensors",
+        "default",
+        "default",
+        false,
+        "disabled",
+        false
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 42,
+      "type": "PreviewImage",
+      "pos": [
+        1093.1877461706877,
+        2465.4836903465184
+      ],
+      "size": [
+        536.39273462292,
+        348.72586756133023
+      ],
+      "flags": {},
+      "order": 56,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 43
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 32,
+      "type": "Image Comparer (rgthree)",
+      "pos": [
+        2842.071526401132,
+        2471.28352869865
+      ],
+      "size": [
+        447.4449708447877,
+        644.1319431023026
+      ],
+      "flags": {},
+      "order": 64,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "image_a",
+          "type": "IMAGE",
+          "link": 32
+        },
+        {
+          "dir": 3,
+          "name": "image_b",
+          "type": "IMAGE",
+          "link": 35
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "images",
+          "shape": 3,
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "1.0.2606200020",
+        "comparer_mode": "Slide"
+      },
+      "widgets_values": [
+        [
+          {
+            "name": "A1",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_ublap_00001_.png&type=temp&subfolder=&rand=0.39237623719827064"
+          },
+          {
+            "name": "A2",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_ublap_00003_.png&type=temp&subfolder=&rand=0.7037383617409693"
+          },
+          {
+            "name": "A3",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_ublap_00005_.png&type=temp&subfolder=&rand=0.883606899779196"
+          },
+          {
+            "name": "A4",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_ublap_00007_.png&type=temp&subfolder=&rand=0.9344568655576265"
+          },
+          {
+            "name": "A5",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_ublap_00009_.png&type=temp&subfolder=&rand=0.8367232494740227"
+          },
+          {
+            "name": "B1",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_ublap_00002_.png&type=temp&subfolder=&rand=0.7292155911885266"
+          },
+          {
+            "name": "B2",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_ublap_00004_.png&type=temp&subfolder=&rand=0.12154467211918374"
+          },
+          {
+            "name": "B3",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_ublap_00006_.png&type=temp&subfolder=&rand=0.6413534077313199"
+          },
+          {
+            "name": "B4",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_ublap_00008_.png&type=temp&subfolder=&rand=0.12910502499233611"
+          },
+          {
+            "name": "B5",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_ublap_00010_.png&type=temp&subfolder=&rand=0.1555983231571858"
+          }
+        ]
+      ]
+    },
+    {
+      "id": 39,
+      "type": "Image Comparer (rgthree)",
+      "pos": [
+        4029.5419683072932,
+        2463.944174780544
+      ],
+      "size": [
+        513.1557873080072,
+        664.9677757443355
+      ],
+      "flags": {},
+      "order": 72,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "image_a",
+          "type": "IMAGE",
+          "link": 39
+        },
+        {
+          "dir": 3,
+          "name": "image_b",
+          "type": "IMAGE",
+          "link": 46
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "images",
+          "shape": 3,
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "1.0.2606200020",
+        "comparer_mode": "Slide"
+      },
+      "widgets_values": [
+        [
+          {
+            "name": "A1",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_imvue_00001_.png&type=temp&subfolder=&rand=0.1319372326946625"
+          },
+          {
+            "name": "A2",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_imvue_00003_.png&type=temp&subfolder=&rand=0.998161380804841"
+          },
+          {
+            "name": "A3",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_imvue_00005_.png&type=temp&subfolder=&rand=0.13608799916272973"
+          },
+          {
+            "name": "A4",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_imvue_00007_.png&type=temp&subfolder=&rand=0.6023500017103818"
+          },
+          {
+            "name": "A5",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_imvue_00009_.png&type=temp&subfolder=&rand=0.33779015339627727"
+          },
+          {
+            "name": "B1",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_imvue_00002_.png&type=temp&subfolder=&rand=0.43333849172722994"
+          },
+          {
+            "name": "B2",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_imvue_00004_.png&type=temp&subfolder=&rand=0.7899696071212426"
+          },
+          {
+            "name": "B3",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_imvue_00006_.png&type=temp&subfolder=&rand=0.10348894436331546"
+          },
+          {
+            "name": "B4",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_imvue_00008_.png&type=temp&subfolder=&rand=0.6828617209920853"
+          },
+          {
+            "name": "B5",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_imvue_00010_.png&type=temp&subfolder=&rand=0.7736475873795484"
+          }
+        ]
+      ]
+    },
+    {
+      "id": 21,
+      "type": "CR Prompt Text",
+      "pos": [
+        14.268149921309416,
+        4220.20977518443
+      ],
+      "size": [
+        400,
+        360
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "links": [
+            106
+          ]
+        },
+        {
+          "name": "show_help",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "title": "英文提示词",
+      "properties": {
+        "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+        "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca",
+        "Node name for S&R": "CR Prompt Text"
+      },
+      "widgets_values": [
+        "18-year-old adult East Asian beauty, youthful and delicate, long black hair, fair smooth skin, refined facial features, clear eyes with a shy yet alluring expression, slightly parted lips, slender figure, wearing a white cropped knit top and a light pleated mini skirt, revealing elegant shoulders, neck and collarbone. She poses naturally and lightly, one hand gently brushing her hair while the other rests on her waist, creating subtle sensuality and restrained tension. Fashion magazine cover style, high-end portrait photography, soft natural light, clean background, shallow depth of field, luminous image quality, 3:4 vertical composition."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 87,
+      "type": "easy promptList",
+      "pos": [
+        -411.0503922667498,
+        3646.662679921822
+      ],
+      "size": [
+        386.095482749251,
+        495.8203894405279
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "optional_prompt_list",
+          "shape": 7,
+          "type": "LIST",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prompt_list",
+          "type": "LIST",
+          "links": null
+        },
+        {
+          "name": "prompt_strings",
+          "shape": 6,
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "title": "中文提示词",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "Node name for S&R": "easy promptList"
+      },
+      "widgets_values": [
+        "迪迦奥特曼，真人特摄电影风格，全身角色写真，低角度英雄视角。\n经典迪迦奥特曼银灰色金属头部设计，头顶中央拥有细长尖锐的流线型头冠，头冠向上自然收尖，轮廓纤细，不宽厚，不臃肿。额头中央只有一个小型嵌入式透明晶体装饰，尺寸很小，贴合头部装甲表面，低存在感。银色面部装甲流线简洁，双眼为细长杏仁形白色发光眼部，具有柔和光芒。\n身体穿着经典迪迦奥特曼战斗装甲，银色、深紫色、暗红色三色组合，胸肩区域具有金色和银色层叠装饰线条，胸口中央蓝色彩色计时器微微发光。身体比例修长挺拔，肌肉线条流畅，真实皮套质感。\n迪迦正在摆出战斗姿势，双腿分开站立保持稳定重心，左手向前伸出准备攻击，右手握拳靠近胸前防御，身体微微侧转，充满力量感和英雄气势。\n烟雾弥漫的黑暗战场背景，地面有轻微雾气，电影级舞台灯光，从侧后方照射形成轮廓光，金属装甲反射冷光，真实日本特摄电影质感，真人影视特效服装，超级英雄电影剧照，浅景深。",
+        "18岁成年东亚美女，少女感，黑色长发，白皙细腻肌肤，五官精致，眼神清澈又带一点羞涩，嘴唇微张，身材纤细修长，穿白色短款针织上衣与浅色百褶短裙，露出肩颈与锁骨线条，姿态自然轻盈，一只手轻轻拨动发丝，另一只手扶在腰间，带有含蓄的性感与微妙性张力，时尚杂志封面风格，高级人像摄影，柔和自然光，干净背景，浅景深，画面通透，3:4竖版构图",
+        "18岁成年东亚女性，长发披肩，皮肤白皙透亮，五官精致立体，眼神自信，嘴唇轻启，穿时尚感强的一体式泳装，剪裁高级，搭配轻薄罩衫与金属饰品，露出肩颈、腰线与腿部线条，站在泳池边或浅水中，身体微微扭转，一只手抬起整理头发，另一只手自然垂落，姿态性感利落，具有明显性张力与时尚感，商业杂志封面风格，阳光高光，清爽背景，高级摄影质感，3:4竖版构图",
+        "18岁成年少女风美女，东亚面孔，长发或双马尾，白皙细腻肌肤，大眼睛，带一点俏皮又撩人的表情，穿Y2K风格短款上衣、低腰短裙或热裤，搭配腰链、手链和时尚配饰，露出腰部与腿部线条，双腿交错站立，身体微微前倾，一只手放在唇边，另一只手搭在大腿侧面，甜美、可爱、时尚，同时带有年轻又直接的性感张力，杂志封面感，亮色背景，潮流摄影，画面利落，3:4竖版构图",
+        "18岁成年女性，兼具少女感与轻熟御姐气质，长直黑发，冷白皮肤，立体精致五官，深邃眼眸，表情冷静自信，穿黑色修身吊带连衣裙，露出肩部、锁骨与腿部线条，搭配金属耳饰与细项链，站姿优雅，一条腿微微向前，身体轻微侧转形成S形轮廓，一只手轻触颈侧，另一只手自然垂落，气质冷艳，性感且富有性张力，时尚杂志封面，电影级光影，深色极简背景，高级质感，3:4竖版构图"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 47,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        476.17495584759905,
+        3952.8767494435892
+      ],
+      "size": [
+        270.9931372916126,
+        82
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 47
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            79
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "Z-Image-Fun-Lora-Distill-8-Steps-2603-ComfyUI.safetensors",
+        0.45
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 75,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        476.17495584759905,
+        4083.4321066951784
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 41,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 79
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            80
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "RadianceChromeVoluptuous_z-image_v1.0.safetensors",
+        0.4
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 54,
+      "type": "ResolutionSelector",
+      "pos": [
+        768.6389218406163,
+        4260.0874822554415
+      ],
+      "size": [
+        270,
+        126
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            55
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            56
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "ResolutionSelector"
+      },
+      "widgets_values": [
+        "3:4 (Portrait Standard)",
+        1,
+        8
+      ]
+    },
+    {
+      "id": 52,
+      "type": "KSamplerAdvanced",
+      "pos": [
+        1069.0880096162996,
+        3726.321392191995
+      ],
+      "size": [
+        270,
+        546
+      ],
+      "flags": {},
+      "order": 47,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 80
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 52
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 100
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 54
+        },
+        {
+          "name": "noise_seed",
+          "type": "INT",
+          "widget": {
+            "name": "noise_seed"
+          },
+          "link": 76
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            57
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "enable",
+        276031570632614,
+        "randomize",
+        8,
+        1,
+        "euler",
+        "simple",
+        0,
+        8,
+        "disable"
+      ]
+    },
+    {
+      "id": 64,
+      "type": "Upscale Model Loader",
+      "pos": [
+        2140.321601444344,
+        3727.962255370423
+      ],
+      "size": [
+        310,
+        78
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "UPSCALE_MODEL",
+          "type": "UPSCALE_MODEL",
+          "links": [
+            60
+          ]
+        },
+        {
+          "name": "MODEL_NAME_TEXT",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "was-ns",
+        "ver": "3.0.1",
+        "Node name for S&R": "Upscale Model Loader"
+      },
+      "widgets_values": [
+        "4xPurePhoto-RealPLSKR.pth"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 65,
+      "type": "ImageScaleToTotalPixels",
+      "pos": [
+        2138.515837159778,
+        3848.1334680545388
+      ],
+      "size": [
+        310,
+        106
+      ],
+      "flags": {},
+      "order": 57,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 68
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            69
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "ImageScaleToTotalPixels"
+      },
+      "widgets_values": [
+        "nearest-exact",
+        12,
+        8
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 71,
+      "type": "SaveImage",
+      "pos": [
+        3094.5378743626557,
+        3938.7303582290397
+      ],
+      "size": [
+        735.9510484057414,
+        475.38992112395863
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 69,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 75
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Krea2+ZIT/Krea2+ZIT-%date:yyyyMMdd-hhmmss%"
+      ]
+    },
+    {
+      "id": 82,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        2483.703882667091,
+        4294.254298430051
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 91
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            92
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "Krea2-风格\\Krea2-25D动漫Semi_Real_Anime_V2_NSW.safetensors",
+        1
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 70,
+      "type": "VAEEncodeTiled",
+      "pos": [
+        2481.801757016091,
+        3835.19634604864
+      ],
+      "size": [
+        270,
+        150
+      ],
+      "flags": {},
+      "order": 59,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 69
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 70
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            67
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "VAEEncodeTiled"
+      },
+      "widgets_values": [
+        512,
+        64,
+        64,
+        8
+      ]
+    },
+    {
+      "id": 86,
+      "type": "CR Prompt Text",
+      "pos": [
+        -416.98393046237396,
+        4220.865274894006
+      ],
+      "size": [
+        386.78070251220186,
+        360
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "links": [
+            105
+          ]
+        },
+        {
+          "name": "show_help",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "title": "中文提示词",
+      "properties": {
+        "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+        "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca",
+        "Node name for S&R": "CR Prompt Text"
+      },
+      "widgets_values": [
+        "18岁成年东亚美女，少女感，黑色长发，白皙细腻肌肤，五官精致，眼神清澈又带一点羞涩，嘴唇微张，身材纤细修长，穿白色短款针织上衣与浅色百褶短裙，露出肩颈与锁骨线条，姿态自然轻盈，一只手轻轻拨动发丝，另一只手扶在腰间，带有含蓄的性感与微妙性张力，时尚杂志封面风格，高级人像摄影，柔和自然光，干净背景，浅景深，画面通透，3:4竖版构图"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 7,
+      "type": "CLIPLoader",
+      "pos": [
+        -468.94410451778776,
+        2823.0656669008804
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            10,
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen3VLInstruct4bHeretic_v10(1).safetensors",
+        "krea2",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 8,
+      "type": "VAELoader",
+      "pos": [
+        -468.9441045177874,
+        2979.510566122728
+      ],
+      "size": [
+        270,
+        60
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            13
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "Krea2\\krea2RealVae_v10.safetensors"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 15,
+      "type": "ResolutionSelector",
+      "pos": [
+        272.78402593765145,
+        2957.7102350126515
+      ],
+      "size": [
+        305,
+        126
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            8
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            9
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "ResolutionSelector"
+      },
+      "widgets_values": [
+        "3:4 (Portrait Standard)",
+        1,
+        8
+      ]
+    },
+    {
+      "id": 24,
+      "type": "ClipLoaderGGUF",
+      "pos": [
+        1674.832093115413,
+        2692.1232182585477
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            20
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "gguf",
+        "ver": "2.9.9",
+        "Node name for S&R": "ClipLoaderGGUF"
+      },
+      "widgets_values": [
+        "Z-Image-Engineer-V6-Q8_0.gguf",
+        "lumina2",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 94,
+      "type": "CR Prompt Text",
+      "pos": [
+        -969.3545203963712,
+        2927.1427452026774
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "show_help",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+        "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca",
+        "Node name for S&R": "CR Prompt Text"
+      },
+      "widgets_values": [
+        "prompt"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 12,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -162.68373758461178,
+        2457.9724503055627
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 37,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 11
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 102
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 4,
+      "type": "DiffusionModelLoaderKJ",
+      "pos": [
+        -468.151501106875,
+        2458.3417151005524
+      ],
+      "size": [
+        270,
+        178
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "extra_state_dict",
+          "shape": 7,
+          "type": "STRING",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "1.4.4",
+        "Node name for S&R": "DiffusionModelLoaderKJ"
+      },
+      "widgets_values": [
+        "Krea2\\Krea2-MuseByStable_v15Turbo_fp8.safetensors",
+        "default",
+        "default",
+        false,
+        "disabled",
+        false
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 6,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        -468.151501106875,
+        2687.3544290216873
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 40,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "Krea2-风格\\Krea2-2D动漫Anime_Flat_V20_nnegret.safetensors",
+        1
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 37,
+      "type": "SeedVR2VideoUpscaler",
+      "pos": [
+        3679.684583784389,
+        2459.0739701573225
+      ],
+      "size": [
+        329.93334045410154,
+        386
+      ],
+      "flags": {},
+      "order": 65,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 38
+        },
+        {
+          "name": "dit",
+          "type": "SEEDVR2_DIT",
+          "link": 36
+        },
+        {
+          "name": "vae",
+          "type": "SEEDVR2_VAE",
+          "link": 37
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            44
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "seedvr2_videoupscaler",
+        "ver": "2.5.24",
+        "Node name for S&R": "SeedVR2VideoUpscaler"
+      },
+      "widgets_values": [
+        515522814,
+        "randomize",
+        4096,
+        4096,
+        5,
+        false,
+        "lab",
+        0,
+        0,
+        0,
+        0,
+        "cpu",
+        false
+      ]
+    },
+    {
+      "id": 83,
+      "type": "PreviewImage",
+      "pos": [
+        1518.936030116692,
+        3734.2356416504126
+      ],
+      "size": [
+        573.3880524400734,
+        882.7731532040634
+      ],
+      "flags": {},
+      "order": 54,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 93
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.2",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 84,
+      "type": "Image Comparer (rgthree)",
+      "pos": [
+        3406.380179485495,
+        3856.6397628511518
+      ],
+      "size": [
+        572.8103472060542,
+        763.4035433151498
+      ],
+      "flags": {},
+      "order": 73,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "image_a",
+          "type": "IMAGE",
+          "link": 96
+        },
+        {
+          "dir": 3,
+          "name": "image_b",
+          "type": "IMAGE",
+          "link": 95
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "images",
+          "shape": 3,
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "1.0.2606200020",
+        "comparer_mode": "Slide"
+      },
+      "widgets_values": [
+        [
+          {
+            "name": "A1",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_jplll_00001_.png&type=temp&subfolder=&rand=0.26146699822372055"
+          },
+          {
+            "name": "A2",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_jplll_00003_.png&type=temp&subfolder=&rand=0.6423252174734047"
+          },
+          {
+            "name": "A3",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_jplll_00005_.png&type=temp&subfolder=&rand=0.977794596405435"
+          },
+          {
+            "name": "A4",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_jplll_00007_.png&type=temp&subfolder=&rand=0.9310561390134157"
+          },
+          {
+            "name": "A5",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_jplll_00009_.png&type=temp&subfolder=&rand=0.5320890186106642"
+          },
+          {
+            "name": "B1",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_jplll_00002_.png&type=temp&subfolder=&rand=0.552918603405084"
+          },
+          {
+            "name": "B2",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_jplll_00004_.png&type=temp&subfolder=&rand=0.6958236023751408"
+          },
+          {
+            "name": "B3",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_jplll_00006_.png&type=temp&subfolder=&rand=0.8155802444868842"
+          },
+          {
+            "name": "B4",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_jplll_00008_.png&type=temp&subfolder=&rand=0.5564675698718178"
+          },
+          {
+            "name": "B5",
+            "selected": false,
+            "url": "/api/view?filename=rgthree.compare._temp_jplll_00010_.png&type=temp&subfolder=&rand=0.6929972459940369"
+          }
+        ]
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      4,
+      0,
+      6,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      6,
+      0,
+      9,
+      0,
+      "MODEL"
+    ],
+    [
+      3,
+      12,
+      0,
+      14,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      4,
+      14,
+      0,
+      10,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      5,
+      9,
+      0,
+      10,
+      0,
+      "MODEL"
+    ],
+    [
+      6,
+      11,
+      0,
+      10,
+      3,
+      "LATENT"
+    ],
+    [
+      7,
+      13,
+      0,
+      10,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      8,
+      15,
+      0,
+      11,
+      0,
+      "INT"
+    ],
+    [
+      9,
+      15,
+      1,
+      11,
+      1,
+      "INT"
+    ],
+    [
+      10,
+      7,
+      0,
+      13,
+      0,
+      "CLIP"
+    ],
+    [
+      11,
+      7,
+      0,
+      12,
+      0,
+      "CLIP"
+    ],
+    [
+      12,
+      10,
+      0,
+      16,
+      0,
+      "LATENT"
+    ],
+    [
+      13,
+      8,
+      0,
+      16,
+      1,
+      "VAE"
+    ],
+    [
+      14,
+      17,
+      0,
+      10,
+      4,
+      "INT"
+    ],
+    [
+      15,
+      16,
+      0,
+      18,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      24,
+      0,
+      26,
+      0,
+      "CLIP"
+    ],
+    [
+      21,
+      26,
+      0,
+      27,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      22,
+      26,
+      0,
+      28,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      23,
+      27,
+      0,
+      28,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      24,
+      23,
+      0,
+      28,
+      0,
+      "MODEL"
+    ],
+    [
+      25,
+      18,
+      0,
+      30,
+      0,
+      "IMAGE"
+    ],
+    [
+      26,
+      25,
+      0,
+      30,
+      1,
+      "VAE"
+    ],
+    [
+      27,
+      25,
+      0,
+      29,
+      1,
+      "VAE"
+    ],
+    [
+      28,
+      30,
+      0,
+      28,
+      3,
+      "LATENT"
+    ],
+    [
+      29,
+      28,
+      0,
+      29,
+      0,
+      "LATENT"
+    ],
+    [
+      32,
+      18,
+      0,
+      32,
+      0,
+      "IMAGE"
+    ],
+    [
+      33,
+      29,
+      0,
+      33,
+      0,
+      "IMAGE"
+    ],
+    [
+      35,
+      33,
+      0,
+      32,
+      1,
+      "IMAGE"
+    ],
+    [
+      36,
+      36,
+      0,
+      37,
+      1,
+      "SEEDVR2_DIT"
+    ],
+    [
+      37,
+      38,
+      0,
+      37,
+      2,
+      "SEEDVR2_VAE"
+    ],
+    [
+      38,
+      33,
+      0,
+      37,
+      0,
+      "IMAGE"
+    ],
+    [
+      39,
+      33,
+      0,
+      39,
+      0,
+      "IMAGE"
+    ],
+    [
+      43,
+      18,
+      0,
+      42,
+      0,
+      "IMAGE"
+    ],
+    [
+      44,
+      37,
+      0,
+      43,
+      0,
+      "IMAGE"
+    ],
+    [
+      45,
+      43,
+      0,
+      41,
+      0,
+      "IMAGE"
+    ],
+    [
+      46,
+      43,
+      0,
+      39,
+      1,
+      "IMAGE"
+    ],
+    [
+      47,
+      46,
+      0,
+      47,
+      0,
+      "MODEL"
+    ],
+    [
+      49,
+      48,
+      0,
+      49,
+      0,
+      "CLIP"
+    ],
+    [
+      50,
+      49,
+      0,
+      50,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      52,
+      49,
+      0,
+      52,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      54,
+      53,
+      0,
+      52,
+      3,
+      "LATENT"
+    ],
+    [
+      55,
+      54,
+      0,
+      53,
+      0,
+      "INT"
+    ],
+    [
+      56,
+      54,
+      1,
+      53,
+      1,
+      "INT"
+    ],
+    [
+      57,
+      52,
+      0,
+      55,
+      0,
+      "LATENT"
+    ],
+    [
+      58,
+      56,
+      0,
+      55,
+      1,
+      "VAE"
+    ],
+    [
+      60,
+      64,
+      0,
+      63,
+      0,
+      "UPSCALE_MODEL"
+    ],
+    [
+      63,
+      60,
+      0,
+      68,
+      0,
+      "CLIP"
+    ],
+    [
+      64,
+      68,
+      0,
+      69,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      65,
+      69,
+      0,
+      62,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      66,
+      68,
+      0,
+      62,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      67,
+      70,
+      0,
+      62,
+      3,
+      "LATENT"
+    ],
+    [
+      68,
+      63,
+      0,
+      65,
+      0,
+      "IMAGE"
+    ],
+    [
+      69,
+      65,
+      0,
+      70,
+      0,
+      "IMAGE"
+    ],
+    [
+      70,
+      61,
+      0,
+      70,
+      1,
+      "VAE"
+    ],
+    [
+      71,
+      62,
+      0,
+      66,
+      0,
+      "LATENT"
+    ],
+    [
+      72,
+      61,
+      0,
+      66,
+      1,
+      "VAE"
+    ],
+    [
+      73,
+      66,
+      0,
+      67,
+      0,
+      "IMAGE"
+    ],
+    [
+      75,
+      67,
+      0,
+      71,
+      0,
+      "IMAGE"
+    ],
+    [
+      76,
+      58,
+      0,
+      52,
+      4,
+      "INT"
+    ],
+    [
+      79,
+      47,
+      0,
+      75,
+      0,
+      "MODEL"
+    ],
+    [
+      80,
+      75,
+      0,
+      52,
+      0,
+      "MODEL"
+    ],
+    [
+      85,
+      80,
+      0,
+      67,
+      1,
+      "IMAGE"
+    ],
+    [
+      86,
+      80,
+      0,
+      63,
+      1,
+      "IMAGE"
+    ],
+    [
+      88,
+      55,
+      0,
+      80,
+      0,
+      "IMAGE"
+    ],
+    [
+      89,
+      67,
+      0,
+      81,
+      0,
+      "IMAGE"
+    ],
+    [
+      91,
+      59,
+      0,
+      82,
+      0,
+      "MODEL"
+    ],
+    [
+      92,
+      82,
+      0,
+      62,
+      0,
+      "MODEL"
+    ],
+    [
+      93,
+      80,
+      0,
+      83,
+      0,
+      "IMAGE"
+    ],
+    [
+      95,
+      81,
+      0,
+      84,
+      1,
+      "IMAGE"
+    ],
+    [
+      96,
+      80,
+      0,
+      84,
+      0,
+      "IMAGE"
+    ],
+    [
+      100,
+      88,
+      0,
+      52,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      101,
+      48,
+      0,
+      88,
+      0,
+      "CLIP"
+    ],
+    [
+      102,
+      90,
+      1,
+      12,
+      1,
+      "STRING"
+    ],
+    [
+      103,
+      89,
+      1,
+      26,
+      1,
+      "STRING"
+    ],
+    [
+      104,
+      33,
+      0,
+      91,
+      0,
+      "IMAGE"
+    ],
+    [
+      105,
+      86,
+      0,
+      49,
+      1,
+      "STRING"
+    ],
+    [
+      106,
+      21,
+      0,
+      68,
+      1,
+      "STRING"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 5,
+      "title": "Krea2+Z-Image-Turbo+SeedVR2",
+      "bounding": [
+        -478.94410451778776,
+        2347.779108583187,
+        5060.943906173661,
+        798.288207985885
+      ],
+      "color": "#A88",
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "Krea2",
+      "bounding": [
+        -478.94410451778776,
+        2387.9724503055627,
+        2124.4645915395677,
+        749.4386988909223
+      ],
+      "color": "#88A",
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "Z-Image-Turbo",
+      "bounding": [
+        1664.832093115413,
+        2389.0841142263293,
+        1633.0421803606373,
+        746.6535658114726
+      ],
+      "color": "#b06634",
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "SeedVR2超清放大",
+      "bounding": [
+        3323.078784129535,
+        2389.0739701573225,
+        1236.8506655226383,
+        742.5765319638058
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 8,
+      "title": "Z-Image-Base+Krea2",
+      "bounding": [
+        454.3691915630337,
+        3614.992085309214,
+        3571.7561295274513,
+        1052.9294132986265
+      ],
+      "color": "#8AA",
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "Z-Image-Base",
+      "bounding": [
+        464.36919156303355,
+        3656.321392191995,
+        1636.7245378083946,
+        991.6291191384689
+      ],
+      "color": "#b06634",
+      "flags": {}
+    },
+    {
+      "id": 7,
+      "title": "Krea2",
+      "bounding": [
+        2128.515837159778,
+        3657.962255370423,
+        1880.014175654559,
+        990.4227841728298
+      ],
+      "color": "#A88",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.26734863064138503,
+      "offset": [
+        1498.1333097000086,
+        -1771.7998648454554
+      ]
+    },
+    "frontendVersion": "1.45.19",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

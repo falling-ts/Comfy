@@ -1,0 +1,1092 @@
+{
+  "last_node_id": 376,
+  "last_link_id": 672,
+  "nodes": [
+    {
+      "id": 372,
+      "type": "PreviewImage",
+      "pos": [
+        -4381.03515625,
+        2190.291015625
+      ],
+      "size": [
+        210,
+        246
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 671,
+          "label": "图像"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 371,
+      "type": "MaskPreview+",
+      "pos": [
+        -4366.02099609375,
+        2237.207763671875
+      ],
+      "size": [
+        210,
+        246
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 672,
+          "label": "遮罩"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfyui_essentials",
+        "ver": "33ff89fd354d8ec3ab6affb605a79a931b445d99",
+        "Node name for S&R": "MaskPreview+"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 292,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -3854.932373046875,
+        1738.02685546875
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 440,
+          "label": "CLIP"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            598
+          ],
+          "slot_index": 0,
+          "label": "条件"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "",
+        [
+          false,
+          true
+        ]
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 287,
+      "type": "VAEDecode",
+      "pos": [
+        -3492.956787109375,
+        2255.177978515625
+      ],
+      "size": [
+        315.36846923828125,
+        46
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 442,
+          "label": "Latent"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 441,
+          "label": "VAE"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            652
+          ],
+          "slot_index": 0,
+          "label": "图像"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14",
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 289,
+      "type": "DualCLIPLoader",
+      "pos": [
+        -3864.05517578125,
+        1635.1510009765625
+      ],
+      "size": [
+        315,
+        122
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            439,
+            440
+          ],
+          "slot_index": 0,
+          "label": "CLIP"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14",
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "widgets_values": [
+        "clip_l.safetensors",
+        "t5xxl_fp16.safetensors",
+        "flux",
+        "default"
+      ]
+    },
+    {
+      "id": 367,
+      "type": "PreviewImage",
+      "pos": [
+        -4155.97705078125,
+        2019.1346435546875
+      ],
+      "size": [
+        277.0351867675781,
+        275.493408203125
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 611,
+          "label": "图像"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 373,
+      "type": "ImageCrop",
+      "pos": [
+        -3146.067138671875,
+        1640.5897216796875
+      ],
+      "size": [
+        315,
+        190
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 652,
+          "label": "图像"
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "link": 655,
+          "widget": {
+            "name": "width"
+          }
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "link": 656,
+          "widget": {
+            "name": "height"
+          }
+        },
+        {
+          "name": "x",
+          "type": "INT",
+          "link": 657,
+          "widget": {
+            "name": "x"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            658
+          ],
+          "slot_index": 0,
+          "label": "图像"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14",
+        "Node name for S&R": "ImageCrop"
+      },
+      "widgets_values": [
+        512,
+        512,
+        0,
+        0
+      ]
+    },
+    {
+      "id": 374,
+      "type": "PreviewImage",
+      "pos": [
+        -2811.241943359375,
+        1644.0706787109375
+      ],
+      "size": [
+        422.6286926269531,
+        665.8565673828125
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 658,
+          "label": "图像"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 286,
+      "type": "KSampler",
+      "pos": [
+        -3492.945556640625,
+        1637.403076171875
+      ],
+      "size": [
+        317.2386474609375,
+        485.9841613769531
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 438,
+          "label": "模型"
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 600,
+          "label": "正面条件"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 601,
+          "label": "负面条件"
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 602,
+          "label": "Latent"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            442
+          ],
+          "slot_index": 0,
+          "label": "Latent"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14",
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        274895842106056,
+        "randomize",
+        28,
+        1,
+        "euler",
+        "normal",
+        1
+      ]
+    },
+    {
+      "id": 364,
+      "type": "ACEPlusConditioning",
+      "pos": [
+        -3857.77294921875,
+        2026.5828857421875
+      ],
+      "size": [
+        311.4147033691406,
+        158
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 597,
+          "label": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 598,
+          "label": "negative"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 599,
+          "label": "vae"
+        },
+        {
+          "name": "ucpixels",
+          "type": "IMAGE",
+          "link": 606,
+          "label": "ucpixels"
+        },
+        {
+          "name": "cpixels",
+          "type": "IMAGE",
+          "link": 669,
+          "label": "cpixels"
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 670,
+          "label": "mask"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            600
+          ],
+          "slot_index": 0,
+          "label": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            601
+          ],
+          "slot_index": 1,
+          "label": "negative"
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            602
+          ],
+          "slot_index": 2,
+          "label": "latent"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ACEPlusConditioning"
+      },
+      "widgets_values": [
+        false
+      ]
+    },
+    {
+      "id": 295,
+      "type": "DifferentialDiffusion",
+      "pos": [
+        -3860.28515625,
+        1939.689208984375
+      ],
+      "size": [
+        307.0998229980469,
+        26
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 610,
+          "label": "模型"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            438
+          ],
+          "slot_index": 0,
+          "label": "模型"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14",
+        "Node name for S&R": "DifferentialDiffusion"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 290,
+      "type": "VAELoader",
+      "pos": [
+        -3849.5693359375,
+        2236.478515625
+      ],
+      "size": [
+        303.0624694824219,
+        58
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            441,
+            599
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "Flux_ae.sft"
+      ]
+    },
+    {
+      "id": 366,
+      "type": "ACEPlusLoader",
+      "pos": [
+        -3863.427001953125,
+        1804.3604736328125
+      ],
+      "size": [
+        315,
+        82
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            610
+          ],
+          "slot_index": 0,
+          "label": "MODEL"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ACEPlusLoader"
+      },
+      "widgets_values": [
+        "ace_plus_fft.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 365,
+      "type": "ACEPlusFFTProcessor",
+      "pos": [
+        -4465.4111328125,
+        2019.603515625
+      ],
+      "size": [
+        293.794677734375,
+        278
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "reference_image",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7,
+          "label": "reference_image"
+        },
+        {
+          "name": "edit_image",
+          "type": "IMAGE",
+          "link": 668,
+          "shape": 7,
+          "label": "edit_image"
+        },
+        {
+          "name": "edit_mask",
+          "type": "MASK",
+          "link": 667,
+          "shape": 7,
+          "label": "edit_mask"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "UC_IMAGE",
+          "type": "IMAGE",
+          "links": [
+            606,
+            611
+          ],
+          "slot_index": 0,
+          "label": "UC_IMAGE"
+        },
+        {
+          "name": "C_IMAGE",
+          "type": "IMAGE",
+          "links": [
+            669,
+            671
+          ],
+          "slot_index": 1,
+          "label": "C_IMAGE"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            670,
+            672
+          ],
+          "slot_index": 2,
+          "label": "MASK"
+        },
+        {
+          "name": "OUT_H",
+          "type": "INT",
+          "links": [
+            656
+          ],
+          "slot_index": 3,
+          "label": "OUT_H"
+        },
+        {
+          "name": "OUT_W",
+          "type": "INT",
+          "links": [
+            655
+          ],
+          "slot_index": 4,
+          "label": "OUT_W"
+        },
+        {
+          "name": "SLICE_W",
+          "type": "INT",
+          "links": [
+            657
+          ],
+          "slot_index": 5,
+          "label": "SLICE_W"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ACEPlusFFTProcessor"
+      },
+      "widgets_values": [
+        true,
+        1024,
+        1024,
+        "no_preprocess",
+        0.8,
+        3072
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 299,
+      "type": "LoadImage",
+      "pos": [
+        -4824.166015625,
+        1986.041748046875
+      ],
+      "size": [
+        315,
+        314.0001220703125
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            668
+          ],
+          "slot_index": 0,
+          "label": "图像"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            667
+          ],
+          "slot_index": 1,
+          "label": "遮罩"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "pasted/image (36).png",
+        "image"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 291,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -4443.8203125,
+        1642.2650146484375
+      ],
+      "size": [
+        389.0423278808594,
+        213.64186096191406
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 439,
+          "label": "CLIP"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            446
+          ],
+          "slot_index": 0,
+          "label": "条件"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "The face of a man, long beard, white T-shirt, white background",
+        [
+          false,
+          true
+        ]
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 294,
+      "type": "FluxGuidance",
+      "pos": [
+        -4023.60400390625,
+        1854.1358642578125
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 446,
+          "label": "条件"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            597
+          ],
+          "slot_index": 0,
+          "label": "条件"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14",
+        "Node name for S&R": "FluxGuidance"
+      },
+      "widgets_values": [
+        50
+      ]
+    }
+  ],
+  "links": [
+    [
+      438,
+      295,
+      0,
+      286,
+      0,
+      "MODEL"
+    ],
+    [
+      439,
+      289,
+      0,
+      291,
+      0,
+      "CLIP"
+    ],
+    [
+      440,
+      289,
+      0,
+      292,
+      0,
+      "CLIP"
+    ],
+    [
+      441,
+      290,
+      0,
+      287,
+      1,
+      "VAE"
+    ],
+    [
+      442,
+      286,
+      0,
+      287,
+      0,
+      "LATENT"
+    ],
+    [
+      446,
+      291,
+      0,
+      294,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      597,
+      294,
+      0,
+      364,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      598,
+      292,
+      0,
+      364,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      599,
+      290,
+      0,
+      364,
+      2,
+      "VAE"
+    ],
+    [
+      600,
+      364,
+      0,
+      286,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      601,
+      364,
+      1,
+      286,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      602,
+      364,
+      2,
+      286,
+      3,
+      "LATENT"
+    ],
+    [
+      606,
+      365,
+      0,
+      364,
+      3,
+      "IMAGE"
+    ],
+    [
+      610,
+      366,
+      0,
+      295,
+      0,
+      "MODEL"
+    ],
+    [
+      611,
+      365,
+      0,
+      367,
+      0,
+      "IMAGE"
+    ],
+    [
+      652,
+      287,
+      0,
+      373,
+      0,
+      "IMAGE"
+    ],
+    [
+      655,
+      365,
+      4,
+      373,
+      1,
+      "INT"
+    ],
+    [
+      656,
+      365,
+      3,
+      373,
+      2,
+      "INT"
+    ],
+    [
+      657,
+      365,
+      5,
+      373,
+      3,
+      "INT"
+    ],
+    [
+      658,
+      373,
+      0,
+      374,
+      0,
+      "IMAGE"
+    ],
+    [
+      667,
+      299,
+      1,
+      365,
+      2,
+      "MASK"
+    ],
+    [
+      668,
+      299,
+      0,
+      365,
+      1,
+      "IMAGE"
+    ],
+    [
+      669,
+      365,
+      1,
+      364,
+      4,
+      "IMAGE"
+    ],
+    [
+      670,
+      365,
+      2,
+      364,
+      5,
+      "MASK"
+    ],
+    [
+      671,
+      365,
+      1,
+      372,
+      0,
+      "IMAGE"
+    ],
+    [
+      672,
+      365,
+      2,
+      371,
+      0,
+      "MASK"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 20,
+      "title": "ACE_Plus FFT",
+      "bounding": [
+        -4893.498046875,
+        1443.87890625,
+        2589.9365234375,
+        1050.511474609375
+      ],
+      "color": "#3f789e",
+      "font_size": 40,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6574872548010824,
+      "offset": [
+        5203.255636774791,
+        -1204.7955179074975
+      ]
+    },
+    "ue_links": [],
+    "groupNodes": {},
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

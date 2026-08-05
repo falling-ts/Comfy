@@ -1,0 +1,529 @@
+{
+  "id": "761c870a-8c0b-44e8-815d-f678f12a4f3e",
+  "revision": 0,
+  "last_node_id": 120,
+  "last_link_id": 119,
+  "nodes": [
+    {
+      "id": 118,
+      "type": "SaveImage",
+      "pos": [
+        -2387.258544921875,
+        1381.4324951171875
+      ],
+      "size": [
+        505.84954833984375,
+        603.8043212890625
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 115
+        },
+        {
+          "label": "filename_prefix",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "image_urls",
+          "name": "image_urls",
+          "type": "STRING"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 117,
+      "type": "MaskToImage",
+      "pos": [
+        -1698.985595703125,
+        2030.3524169921875
+      ],
+      "size": [
+        210,
+        26
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 114
+        }
+      ],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            115
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 3,
+      "type": "LoadImage",
+      "pos": [
+        -1867.2064208984375,
+        1373.6761474609375
+      ],
+      "size": [
+        545.7637939453125,
+        606.3413696289062
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          }
+        },
+        {
+          "label": "upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            111,
+            117,
+            119
+          ]
+        },
+        {
+          "label": "MASK",
+          "name": "MASK",
+          "type": "MASK"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "eae8dd6446edebcf02005f2eba79cb711d75ad67d3b7f0316f9156da587f227d.png",
+        "image"
+      ]
+    },
+    {
+      "id": 120,
+      "type": "easy imageRemBg",
+      "pos": [
+        -1310.5283203125,
+        1380.520263671875
+      ],
+      "size": [
+        348.696044921875,
+        362
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 117
+        },
+        {
+          "label": "rem_mode",
+          "name": "rem_mode",
+          "type": "COMBO",
+          "widget": {
+            "name": "rem_mode"
+          }
+        },
+        {
+          "label": "image_output",
+          "name": "image_output",
+          "type": "COMBO",
+          "widget": {
+            "name": "image_output"
+          }
+        },
+        {
+          "label": "save_prefix",
+          "name": "save_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "save_prefix"
+          }
+        },
+        {
+          "label": "torchscript_jit",
+          "name": "torchscript_jit",
+          "shape": 7,
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "torchscript_jit"
+          }
+        },
+        {
+          "label": "add_background",
+          "name": "add_background",
+          "shape": 7,
+          "type": "COMBO",
+          "widget": {
+            "name": "add_background"
+          }
+        },
+        {
+          "label": "refine_foreground",
+          "name": "refine_foreground",
+          "shape": 7,
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "refine_foreground"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": []
+        },
+        {
+          "label": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy imageRemBg",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "RMBG-2.0",
+        "Save",
+        "ComfyUI",
+        false,
+        "black",
+        false
+      ]
+    },
+    {
+      "id": 119,
+      "type": "easy imageRemBg",
+      "pos": [
+        -586.2200927734375,
+        1388.078125
+      ],
+      "size": [
+        352.46417236328125,
+        362
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 119
+        },
+        {
+          "label": "rem_mode",
+          "name": "rem_mode",
+          "type": "COMBO",
+          "widget": {
+            "name": "rem_mode"
+          }
+        },
+        {
+          "label": "image_output",
+          "name": "image_output",
+          "type": "COMBO",
+          "widget": {
+            "name": "image_output"
+          }
+        },
+        {
+          "label": "save_prefix",
+          "name": "save_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "save_prefix"
+          }
+        },
+        {
+          "label": "torchscript_jit",
+          "name": "torchscript_jit",
+          "shape": 7,
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "torchscript_jit"
+          }
+        },
+        {
+          "label": "add_background",
+          "name": "add_background",
+          "shape": 7,
+          "type": "COMBO",
+          "widget": {
+            "name": "add_background"
+          }
+        },
+        {
+          "label": "refine_foreground",
+          "name": "refine_foreground",
+          "shape": 7,
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "refine_foreground"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": []
+        },
+        {
+          "label": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy imageRemBg",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "RMBG-2.0",
+        "Save",
+        "ComfyUI",
+        false,
+        "white",
+        false
+      ]
+    },
+    {
+      "id": 114,
+      "type": "easy imageRemBg",
+      "pos": [
+        -952.3101196289062,
+        1384.120361328125
+      ],
+      "size": [
+        352.2405700683594,
+        362
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 111
+        },
+        {
+          "label": "rem_mode",
+          "name": "rem_mode",
+          "type": "COMBO",
+          "widget": {
+            "name": "rem_mode"
+          }
+        },
+        {
+          "label": "image_output",
+          "name": "image_output",
+          "type": "COMBO",
+          "widget": {
+            "name": "image_output"
+          }
+        },
+        {
+          "label": "save_prefix",
+          "name": "save_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "save_prefix"
+          }
+        },
+        {
+          "label": "torchscript_jit",
+          "name": "torchscript_jit",
+          "shape": 7,
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "torchscript_jit"
+          }
+        },
+        {
+          "label": "add_background",
+          "name": "add_background",
+          "shape": 7,
+          "type": "COMBO",
+          "widget": {
+            "name": "add_background"
+          }
+        },
+        {
+          "label": "refine_foreground",
+          "name": "refine_foreground",
+          "shape": 7,
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "refine_foreground"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": []
+        },
+        {
+          "label": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": [
+            114
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy imageRemBg",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "RMBG-2.0",
+        "Save",
+        "ComfyUI",
+        false,
+        "none",
+        false
+      ]
+    }
+  ],
+  "links": [
+    [
+      111,
+      3,
+      0,
+      114,
+      0,
+      "IMAGE"
+    ],
+    [
+      114,
+      114,
+      1,
+      117,
+      0,
+      "MASK"
+    ],
+    [
+      115,
+      117,
+      0,
+      118,
+      0,
+      "IMAGE"
+    ],
+    [
+      117,
+      3,
+      0,
+      120,
+      0,
+      "IMAGE"
+    ],
+    [
+      119,
+      3,
+      0,
+      119,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "VHS_KeepIntermediate": true,
+    "links_added_by_ue": [],
+    "ue_links": [],
+    "VHS_MetadataImage": true,
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "VHS_latentpreviewrate": 0,
+    "VHS_latentpreview": false,
+    "ds": {
+      "scale": 0.7972024500000006,
+      "offset": [
+        2509.6105783025573,
+        -1117.7053745037751
+      ]
+    },
+    "frontendVersion": "1.23.0"
+  },
+  "version": 0.4
+}

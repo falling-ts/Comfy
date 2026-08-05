@@ -1,0 +1,1774 @@
+{
+  "id": "cff3c9b6-230e-4a46-a631-034aab0083f8",
+  "revision": 0,
+  "last_node_id": 105,
+  "last_link_id": 104,
+  "nodes": [
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        131.26443034178087,
+        137.34404981096222
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            8
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "VAELoader",
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {}
+        }
+      },
+      "widgets_values": [
+        "Z-image-vae.safetensors"
+      ]
+    },
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [
+        136.93637522694948,
+        -171.8837258715459
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "UNETLoader",
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {}
+        }
+      },
+      "widgets_values": [
+        "z_image_turbo_bf16.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "VAEDecode",
+      "pos": [
+        1174.9740106999934,
+        -172.61066395602376
+      ],
+      "size": [
+        246.80804731596095,
+        46
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 7
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            21
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "VAEDecode",
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "pos": [
+        134.08545059053662,
+        -33.30512095633677
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "CLIPLoader",
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {}
+        }
+      },
+      "widgets_values": [
+        "qwen_3_4b.safetensors",
+        "qwen_image",
+        "default"
+      ]
+    },
+    {
+      "id": 78,
+      "type": "KSampler",
+      "pos": [
+        1379.843785705108,
+        838.6402913284842
+      ],
+      "size": [
+        270,
+        262
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 67
+        },
+        {
+          "label": "正面条件",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 68
+        },
+        {
+          "label": "负面条件",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 69
+        },
+        {
+          "label": "Latent",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 70
+        }
+      ],
+      "outputs": [
+        {
+          "label": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            74
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "KSampler",
+        "ue_properties": {
+          "version": "7.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        1049737778770365,
+        "randomize",
+        10,
+        1,
+        "euler",
+        "simple",
+        0.6000000000000001
+      ]
+    },
+    {
+      "id": 80,
+      "type": "VAEDecode",
+      "pos": [
+        1683.8075308222958,
+        849.0233250809256
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "Latent",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 74
+        },
+        {
+          "label": "VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 99
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            91
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "VAEDecode",
+        "ue_properties": {
+          "version": "7.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 81,
+      "type": "VAELoader",
+      "pos": [
+        -394.72994406878706,
+        1152.0519242006844
+      ],
+      "size": [
+        267.5206604003906,
+        58.41322326660156
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            98,
+            99
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "VAELoader",
+        "ue_properties": {
+          "version": "7.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "ae.sft"
+      ]
+    },
+    {
+      "id": 84,
+      "type": "ConditioningZeroOut",
+      "pos": [
+        1233.669469298858,
+        866.0244008255545
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 22,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "条件",
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 78
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            69
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "ConditioningZeroOut",
+        "ue_properties": {
+          "version": "7.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 92,
+      "type": "CLIPLoader",
+      "pos": [
+        -394.72994406878706,
+        982.0519242006844
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            103
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "CLIPLoader",
+        "ue_properties": {
+          "version": "7.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "qwen_3_4b.safetensors",
+        "qwen_image",
+        "default"
+      ]
+    },
+    {
+      "id": 77,
+      "type": "ImpactInt",
+      "pos": [
+        -381.8091615731088,
+        1322.0519242006844
+      ],
+      "size": [
+        246.74497985839844,
+        58
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "整数",
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            86
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-impact-pack",
+        "ver": "705698faf242851881abd7d1e1774baa3cf47136",
+        "Node name for S&R": "ImpactInt",
+        "ue_properties": {
+          "version": "7.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        1920
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 76,
+      "type": "UNETLoader",
+      "pos": [
+        -397.0256281826529,
+        834.3476083145504
+      ],
+      "size": [
+        272.10378050564714,
+        82
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            67
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "UNETLoader",
+        "ue_properties": {
+          "version": "7.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "z_image_turbo_bf16.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "EmptyLatentImage",
+      "pos": [
+        458.6248118432594,
+        148.67459726975468
+      ],
+      "size": [
+        320.9736497924712,
+        106
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            6
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "EmptyLatentImage",
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {}
+        }
+      },
+      "widgets_values": [
+        1080,
+        1920,
+        1
+      ]
+    },
+    {
+      "id": 5,
+      "type": "CLIPTextEncode",
+      "pos": [
+        472.7201452823047,
+        -146.37872219584898
+      ],
+      "size": [
+        320.9736497924712,
+        127.18286302306274
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 65
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            3,
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "CLIPTextEncode",
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {
+            "text": true
+          }
+        }
+      },
+      "widgets_values": [
+        "这是一张高分辨率的照片，照片中呈现的是一位二十岁的东亚女性。她撑着一把桐油纸伞，缓步穿行于湿润的青砖巷弄之中，雨珠沿着伞缘连成一串透明的珠帘，营造出柔和而静谧的氛围。  \n\n该女性具有标准的瓜子脸型，面部轮廓清晰流畅，伞沿投下的阴影将面部划分为明暗两个区域，增强了画面的层次感与光影对比。她拥有一双杏核眼型的眼睛，目光透过雨帘望向远方，眼神中流露出一丝沉静与思索，睫毛上挂满晶莹的水珠，如晨露般清透。鼻梁纤细而秀气，与整体五官比例协调。嘴唇呈自然的花瓣状，微微张开，呼出的白气在冷空气中清晰可见，唇珠因湿润而显得更加饱满，进一步强化了雨天氛围的细腻表达。整体神情柔和而略带疏离，展现出雨天特有的朦胧诗意，仿佛与外界的喧嚣隔绝，沉浸在自己的世界之中。  \n\n她的深棕色长发自然披散于肩头，发丝间点缀着一枚水晶材质的发箍，增添了一丝精致感。雨滴顺着下颌线条滑落，强化了画面的动态细节与真实感。身着一件灰紫色坑条针织连衣裙，外搭同色系斗篷式雨衣，整体造型兼具功能性与审美性。一手提着藤编篮，篮中盛放着新鲜采摘的莲蓬，为画面增添了一抹生活气息与自然意趣。  \n\n背景为典型的江南老街，青砖铺地，屋檐滴水，街道被雨水浸润得泛着光泽，营造出湿润而宁静的地域氛围。整张照片通过人物姿态、服饰与环境的协调搭配，巧妙地融合了传统与现代的视觉元素，捕捉并呈现了雨中独行所蕴含的静谧美学，传达出一种内敛而富有诗意的生活态度。\n真实摄影,镜头美学,电影质感,高级感,大师级作品,细节清晰，8K，"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "ConditioningZeroOut",
+      "pos": [
+        474.82298476720837,
+        44.53264359493187
+      ],
+      "size": [
+        320.9736497924712,
+        26
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            5
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "ConditioningZeroOut",
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 20,
+      "type": "SaveImage",
+      "pos": [
+        1182.9221879190097,
+        -73.47409290371331
+      ],
+      "size": [
+        383.91584985388135,
+        695.8565704670491
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 21
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "SaveImage",
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {}
+        }
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ],
+      "color": "#2384ae",
+      "bgcolor": "#124459"
+    },
+    {
+      "id": 4,
+      "type": "KSampler",
+      "pos": [
+        866.4287175227664,
+        -175.79523466908023
+      ],
+      "size": [
+        270,
+        720.4444444444445
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 3
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 5
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            7
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "KSampler",
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {}
+        }
+      },
+      "widgets_values": [
+        581493387965875,
+        "fixed",
+        9,
+        1,
+        "euler",
+        "simple",
+        1
+      ]
+    },
+    {
+      "id": 100,
+      "type": "LoadImage",
+      "pos": [
+        -788.6601552717262,
+        835.982135403623
+      ],
+      "size": [
+        341.04779052734375,
+        476.4586486816406
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            100,
+            102
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "LoadImage",
+        "ue_properties": {
+          "version": "7.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "555.png",
+        "image"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 105,
+      "type": "Qwen3_VQA",
+      "pos": [
+        -61.80916157310878,
+        843.2895767136497
+      ],
+      "size": [
+        311.88193929371687,
+        415.3843993636283
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source_path",
+          "shape": 7,
+          "type": "PATH",
+          "link": null
+        },
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 100
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            101
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "IuvenisSapiens/ComfyUI_Qwen3-VL-Instruct",
+        "ver": "70cc35edacfd5979cbe7a15caf56bd2f715bc3b5",
+        "Node name for S&R": "Qwen3_VQA",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "text": true,
+            "model": true,
+            "quantization": true,
+            "keep_model_loaded": true,
+            "temperature": true,
+            "max_new_tokens": true,
+            "min_pixels": true,
+            "max_pixels": true,
+            "seed": true,
+            "attention": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "",
+        "Qwen3-VL-4B-Instruct-FP8",
+        "none",
+        false,
+        0.7,
+        2048,
+        200704,
+        1003520,
+        229,
+        "randomize",
+        "eager"
+      ]
+    },
+    {
+      "id": 87,
+      "type": "TextInput_",
+      "pos": [
+        270.05538753161295,
+        837.1839533745535
+      ],
+      "size": [
+        262.8261367306334,
+        95.7431375473318
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 9,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            79
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-mixlab-nodes",
+        "ver": "32b22c39cbe13b46df29ef1b6ab088c2eb4389d2",
+        "Node name for S&R": "TextInput_",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.4.1"
+        },
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        ""
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 86,
+      "type": "JoinStrings",
+      "pos": [
+        541.3756792703084,
+        837.183953374554
+      ],
+      "size": [
+        210,
+        78
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "字符串1",
+          "name": "string1",
+          "shape": 7,
+          "type": "STRING",
+          "link": 79
+        },
+        {
+          "label": "字符串2",
+          "name": "string2",
+          "shape": 7,
+          "type": "STRING",
+          "link": 80
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            104
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "6c996e1877db08c7de020ee14421dd28d7574ec2",
+        "Node name for S&R": "JoinStrings",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.4.1"
+        },
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        ""
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 85,
+      "type": "easy showAnything",
+      "pos": [
+        263.94976419251725,
+        982.3159825484236
+      ],
+      "size": [
+        323.5193176269531,
+        363.92364501953125
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "输入任何",
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 101
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            80
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "125b3a4905ac9367f7aae5c2df67e2282f0a3d37",
+        "Node name for S&R": "easy showAnything",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.4.1"
+        },
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "一位身着华美汉服的女子立于古风庭院，衣袂飘然，如仙子临尘。她头戴繁复云纹发冠，垂落流苏与细链，发丝柔顺，妆容清雅，唇色淡粉，眼眸含笑，目光温婉凝视镜头。上身是浅米色抹胸襦裙，绣有立体花卉与金线纹样，腰间系带轻垂，缀以流苏与小花饰；外披轻纱长袖披风，半透明材质随风轻扬，袖口宽大，衣摆层叠如云，飘逸灵动。女子双臂微张，衣袖舒展，似欲翩然起舞，姿态优雅从容。\n\n前景为平整石阶，略带光影斑驳，地面干净无杂物，衬托人物主体。中景为庭院一角，可见木质格栅门扉与青苔石墙，背景虚化，仅留模糊的绿植与建筑轮廓，营造出纵深感与古韵氛围。构图采用中心对称式，人物居画面正中，姿态舒展，视线引导自然聚焦于人物面部与服饰细节。\n\n光线来自侧上方，柔和自然，如晨曦斜洒，勾勒出衣褶与发丝的立体轮廓，光影过渡细腻，明暗对比柔和，营造出温润如玉的视觉质感。整体氛围静谧而典雅，带有一丝仙气与古典诗意，仿佛置身于古代庭院中的一场静谧时光。\n\n图像风格为高精度摄影，细节丰富，色彩柔和，略带电影感的柔焦与景深虚化，适合日常业余设备拍摄，但质感细腻，光影层次丰富，具有艺术摄影的深度与氛围。画面不带任何水印或商业标识，纯为艺术表达，强调人物与服饰的美学呈现，背景环境烘托出东方古典意境，整体视觉和谐统一，富有故事性与情感共鸣。"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 91,
+      "type": "LayerUtility: ImageScaleByAspectRatio V2",
+      "pos": [
+        807.9298382696061,
+        1070.45487527867
+      ],
+      "size": [
+        303.68515625,
+        330
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 102
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "scale_to_length",
+          "type": "INT",
+          "widget": {
+            "name": "scale_to_length"
+          },
+          "link": 86
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            72
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "type": "MASK"
+        },
+        {
+          "label": "原始大小",
+          "name": "original_size",
+          "type": "BOX"
+        },
+        {
+          "name": "width",
+          "type": "INT"
+        },
+        {
+          "name": "height",
+          "type": "INT"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_layerstyle",
+        "ver": "89014d833d2ad0998d724090eff1456692692a1d",
+        "Node name for S&R": "LayerUtility: ImageScaleByAspectRatio V2",
+        "ue_properties": {
+          "version": "7.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "original",
+        1,
+        1,
+        "crop",
+        "lanczos",
+        "8",
+        "longest",
+        1536,
+        "#000000"
+      ],
+      "color": "rgba(38, 73, 116, 0.7)"
+    },
+    {
+      "id": 88,
+      "type": "CLIPTextEncode",
+      "pos": [
+        814.8117269876908,
+        844.7669828651527
+      ],
+      "size": [
+        329.02892591239834,
+        149.96883855092688
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 103
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 104
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            68,
+            78
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "CLIPTextEncode",
+        "ue_properties": {
+          "version": "7.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        ""
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 79,
+      "type": "VAEEncode",
+      "pos": [
+        1214.766700428845,
+        1051.3975926590501
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 72
+        },
+        {
+          "label": "VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 98
+        }
+      ],
+      "outputs": [
+        {
+          "label": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            70
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "VAEEncode",
+        "ue_properties": {
+          "version": "7.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 72,
+      "type": "CR Prompt List",
+      "pos": [
+        -203.00660627394868,
+        -163.42123590108093
+      ],
+      "size": [
+        295.03583945281,
+        224
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "multiline_text",
+          "type": "STRING",
+          "widget": {
+            "name": "multiline_text"
+          },
+          "link": 64
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prompt",
+          "shape": 6,
+          "type": "STRING",
+          "links": [
+            65
+          ]
+        },
+        {
+          "name": "body_text",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "label": "显示帮助",
+          "name": "show_help",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+        "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca",
+        "Node name for S&R": "CR Prompt List",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "prepend_text": true,
+            "multiline_text": true,
+            "append_text": true,
+            "start_index": true,
+            "max_rows": true
+          },
+          "version": "7.0.1"
+        }
+      },
+      "widgets_values": [
+        "",
+        "body_text",
+        "",
+        0,
+        100
+      ]
+    },
+    {
+      "id": 70,
+      "type": "Text Multiline",
+      "pos": [
+        -799.9237920844118,
+        -166.24671560055162
+      ],
+      "size": [
+        580.1236829143136,
+        586.1644425069454
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            64
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "was-node-suite-comfyui",
+        "ver": "ea935d1044ae5a26efa54ebeb18fe9020af49a45",
+        "Node name for S&R": "Text Multiline",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "text": true
+          },
+          "version": "7.0.1"
+        }
+      },
+      "widgets_values": [
+        "一位扎着双马尾的浅蓝发少女坐在河畔长椅上，脚边趴着一只圆滚滚的白色柴犬。她穿着宽松的米白色针织衫和藏青格裙，手里捧着一本摊开的绘本，嘴角带着温柔笑意。背景是铺满粉白绣球花的河岸，远处有木质拱桥和泛着粼粼波光的河水，天空飘着蓬松的棉花糖云朵。画面色调柔和清新，光影细腻，带有淡淡的水彩晕染质感，氛围治愈又温暖，1080P 高清分辨率。\n硝烟弥漫的二战战场特写，一名年轻士兵半蹲在弹坑中，沾满泥泞的双手紧握着步枪。他的军靴破损严重，军装被划破多处，脸上混合着尘土、汗水和细微伤口，眼神中交织着疲惫与坚定。背景是被炸毁的断壁残垣，灰蒙蒙的天空中飘着烧焦的木屑，远处传来隐约的炮火闪光。画面采用电影级运镜，景深极浅，突出士兵面部细节，色调偏冷暗，充满压抑的真实感，8K 超高清。\n暴雨中的古老哥特式教堂废墟，一位穿着黑色蕾丝长裙的银发少女站在残破的彩绘玻璃前。她的裙摆湿漉漉地贴在身上，手持一盏黄铜煤油灯，灯光在雨幕中投射出摇曳的光影。教堂尖顶断裂倾斜，墙壁爬满暗绿色藤蔓，地面散落着破碎的雕塑碎片和干枯的玫瑰花瓣。画面色调以墨黑、暗红和深紫为主，线条锐利，阴影厚重，氛围神秘又凄美，具有强烈的视觉冲击力。\n非洲大草原日落时分的全景镜头，一群角马正横渡湍急的河流。河面泛着金红色的落日余晖，角马群的身影在水中形成黑色剪影，部分角马奋力划水，溅起巨大的水花。岸边的猴面包树形态苍劲，天空被染成从橙红到深紫的渐变，远处有几只秃鹫盘旋。画面质感细腻，还原真实的自然光影，色彩浓郁且富有层次，带有轻微的颗粒感，仿佛出自 BBC 纪录片。\n未来东京的垂直街道夜景，一位戴着全息眼镜的紫发少女骑着悬浮滑板穿梭在楼宇之间。她的紧身作战服带有荧光蓝纹路，背后背着一把能量步枪，滑板底部发出耀眼的青色光芒。周围的摩天大楼布满巨型电子屏幕和流动的日文广告，空中漂浮着全息投影和无人机，地面的积水倒映着霓虹灯光，形成流光溢彩的效果。画面结合动漫的流畅线条与赛博朋克的科技感，色彩对比强烈，细节丰富，8K 分辨率。\n文艺复兴时期的意大利广场，阳光透过云层洒在大理石建筑上。广场中央有一座喷泉，水流清澈，周围聚集着穿着华丽服饰的贵族和商贩，有人在弹奏鲁特琴，有人在欣赏画作。远处的教堂圆顶线条优美，天空湛蓝，飘着几朵白云。画面采用古典油画的笔触，色彩浓郁饱满，以暖黄、赭石和宝蓝为主色调，光影柔和，充满复古的艺术氛围，仿佛出自古典大师之手。\n深山中的神秘湖泊旁，一只通体雪白的独角兽低头饮水。它的鬃毛泛着淡淡的银蓝色光泽，螺旋状的角晶莹剔透，带有彩虹般的折射效果。湖边开满蓝色的荧光花，周围的树木枝干扭曲，覆盖着青苔，湖面平静如镜，倒映着独角兽的身影和漫天繁星。画面光影细腻，独角兽的毛发质感柔软真实，荧光花发出微弱的光芒，营造出梦幻又写实的氛围，景深适中，突出主体。\n星际空间站的外部走廊，一名宇航员穿着白色舱外航天服正在进行维修作业。航天服上有磨损的痕迹和荧光标识，头盔的面罩反射着远处的星云和星球。空间站的金属结构庞大复杂，布满管道和太阳能板，背景是深邃的宇宙，点缀着闪烁的恒星和绚烂的紫色星云。画面采用电影级的构图和光影，色彩以冷蓝、银灰和星云紫为主，细节丰富，充满史诗感和科技感，4K 高清。\n冬日的森林里，一只穿着红色围巾的小狐狸坐在雪地上，面前摆放着一个由树枝搭建的微型雪屋。雪屋的屋顶覆盖着蓬松的白雪，门口挂着一串浆果，小狐狸正用爪子小心翼翼地将一颗松果放进雪屋。周围的松树挂满积雪，空中飘着细小的雪花，阳光透过树枝洒下，在雪地上形成斑驳的光影。画面风格类似皮克斯动画，质感柔软，色彩温暖，光影柔和，充满童趣和治愈感，细节精致。\n1960 年代的巴黎街头，一位穿着黑色风衣、戴着贝雷帽的女子正走过石板路。她的手里拿着一本诗集，嘴角带着慵懒的笑意，背景是充满欧式风情的咖啡馆和花店，橱窗里摆放着鲜艳的鲜花和法式面包。街道上有老式有轨电车驶过，留下模糊的运动轨迹，天空是淡淡的灰蓝色，带有复古胶片的颗粒感和暖黄色调。画面构图简洁，氛围怀旧浪漫，色彩饱和度适中，还原胶片摄影的质感。"
+      ]
+    },
+    {
+      "id": 97,
+      "type": "SaveImage",
+      "pos": [
+        1681.1388621798226,
+        941.9135228472885
+      ],
+      "size": [
+        413.412266587819,
+        612.4459661941498
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 91
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "Node name for S&R": "SaveImage",
+        "ue_properties": {
+          "version": "7.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 68,
+      "type": "Note",
+      "pos": [
+        -674.9566912439234,
+        -403.3061944478285
+      ],
+      "size": [
+        292.2347240171704,
+        88
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.0.1"
+        }
+      },
+      "widgets_values": [
+        "下面的文本是按照一段一段进行出图，自己书写的时候记得换行即可"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      2,
+      0,
+      5,
+      0,
+      "CLIP"
+    ],
+    [
+      3,
+      5,
+      0,
+      4,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      4,
+      5,
+      0,
+      6,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      5,
+      6,
+      0,
+      4,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      6,
+      7,
+      0,
+      4,
+      3,
+      "LATENT"
+    ],
+    [
+      7,
+      4,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      8,
+      3,
+      0,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      21,
+      8,
+      0,
+      20,
+      0,
+      "IMAGE"
+    ],
+    [
+      64,
+      70,
+      0,
+      72,
+      0,
+      "STRING"
+    ],
+    [
+      65,
+      72,
+      0,
+      5,
+      1,
+      "STRING"
+    ],
+    [
+      67,
+      76,
+      0,
+      78,
+      0,
+      "MODEL"
+    ],
+    [
+      68,
+      88,
+      0,
+      78,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      69,
+      84,
+      0,
+      78,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      70,
+      79,
+      0,
+      78,
+      3,
+      "LATENT"
+    ],
+    [
+      72,
+      91,
+      0,
+      79,
+      0,
+      "IMAGE"
+    ],
+    [
+      74,
+      78,
+      0,
+      80,
+      0,
+      "LATENT"
+    ],
+    [
+      78,
+      88,
+      0,
+      84,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      79,
+      87,
+      0,
+      86,
+      0,
+      "STRING"
+    ],
+    [
+      80,
+      85,
+      0,
+      86,
+      1,
+      "STRING"
+    ],
+    [
+      86,
+      77,
+      0,
+      91,
+      2,
+      "INT"
+    ],
+    [
+      91,
+      80,
+      0,
+      97,
+      0,
+      "IMAGE"
+    ],
+    [
+      98,
+      81,
+      0,
+      79,
+      1,
+      "VAE"
+    ],
+    [
+      99,
+      81,
+      0,
+      80,
+      1,
+      "VAE"
+    ],
+    [
+      100,
+      100,
+      0,
+      105,
+      1,
+      "IMAGE"
+    ],
+    [
+      101,
+      105,
+      0,
+      85,
+      0,
+      "*"
+    ],
+    [
+      102,
+      100,
+      0,
+      91,
+      0,
+      "IMAGE"
+    ],
+    [
+      103,
+      92,
+      0,
+      88,
+      0,
+      "CLIP"
+    ],
+    [
+      104,
+      86,
+      0,
+      88,
+      1,
+      "STRING"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 7,
+      "title": "模型加载",
+      "bounding": [
+        121.26443034178087,
+        -245.48372587154591,
+        295.6719448851686,
+        450.827775682508
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 8,
+      "title": "Group",
+      "bounding": [
+        432.94498045287673,
+        -249.39523466908025,
+        1154.0674083278677,
+        896.5554496477023
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 9,
+      "title": "最长边边长",
+      "bounding": [
+        -401.8091615731088,
+        1242.0519242006844,
+        296.031982421875,
+        175.39956665039062
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 12,
+      "title": "参考图片",
+      "bounding": [
+        -806.6575930007851,
+        756.8538815648064,
+        378.0328369140625,
+        590.095703125
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 13,
+      "title": "模型加载",
+      "bounding": [
+        -404.72994406878706,
+        752.0519242006844,
+        290.13671875,
+        470.95501708984375
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 14,
+      "title": "提示词",
+      "bounding": [
+        783.6269125345658,
+        763.6307409523109,
+        388.88145884640767,
+        258.11139528864703
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 15,
+      "title": "采样过程",
+      "bounding": [
+        1196.3529707955365,
+        755.8575316033671,
+        923.07944978615,
+        810.2195628870209
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 20,
+      "title": "Describe Image/反推图片",
+      "bounding": [
+        -74.72994406878715,
+        752.0519242006844,
+        842.929130684664,
+        643.3525206770275
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 22,
+      "title": "Z-image文生图",
+      "bounding": [
+        -819.9237920844118,
+        -292.9952346690803,
+        2416.9361808651556,
+        950.1554496477023
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      }
+    },
+    {
+      "id": 21,
+      "title": "多段文本区域",
+      "bounding": [
+        -809.9237920844118,
+        -239.84671560055165,
+        911.9530252632723,
+        669.7644425069454
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 23,
+      "title": "QWEN3反推提示词+Z-image",
+      "bounding": [
+        -816.6575930007851,
+        708.4519242006844,
+        2963.3796930855524,
+        879.1875789670536
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "workflowRendererVersion": "LG",
+    "ds": {
+      "scale": 0.598950000000001,
+      "offset": [
+        1540.0990728354818,
+        382.7855489698621
+      ]
+    },
+    "frontendVersion": "1.30.6",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "ue_links": [],
+    "links_added_by_ue": []
+  },
+  "version": 0.4
+}

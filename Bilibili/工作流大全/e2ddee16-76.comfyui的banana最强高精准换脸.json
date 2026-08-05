@@ -1,0 +1,2593 @@
+{
+  "id": "e7f72359-5260-4921-913e-40b450a5bd49",
+  "revision": 0,
+  "last_node_id": 38,
+  "last_link_id": 52,
+  "nodes": [
+    {
+      "id": 4,
+      "type": "LayerMask: SegmentAnythingUltra V2",
+      "pos": [
+        -308.360128642564,
+        622.898590429414
+      ],
+      "size": [
+        370.58088664946047,
+        366
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 2
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 30
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI_LayerStyle_Advance",
+        "ver": "64c8317ab33f0208f2e583070acf4f8ef6faca0a",
+        "Node name for S&R": "LayerMask: SegmentAnythingUltra V2",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "sam_model": true,
+            "grounding_dino_model": true,
+            "threshold": true,
+            "detail_method": true,
+            "detail_erode": true,
+            "detail_dilate": true,
+            "black_point": true,
+            "white_point": true,
+            "process_detail": true,
+            "prompt": true,
+            "device": true,
+            "max_megapixels": true,
+            "cache_model": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "sam_vit_h (2.56GB)",
+        "GroundingDINO_SwinT_OGC (694MB)",
+        0.3,
+        "VITMatte",
+        6,
+        6,
+        0.15,
+        0.99,
+        true,
+        "subject",
+        "cuda",
+        2,
+        false
+      ],
+      "color": "rgba(27, 80, 119, 0.7)"
+    },
+    {
+      "id": 6,
+      "type": "ImpactDilateMask",
+      "pos": [
+        120.93625352175306,
+        787.6157540889433
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            5
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-impact-pack",
+        "ver": "61bd8397a18e7e7668e6a24e95168967768c2bed",
+        "Node name for S&R": "ImpactDilateMask",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "dilation": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        100
+      ]
+    },
+    {
+      "id": 8,
+      "type": "SubtractMask",
+      "pos": [
+        137.11957533158025,
+        1066.5396269463527
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "遮罩1",
+          "name": "mask1",
+          "type": "MASK",
+          "link": 5
+        },
+        {
+          "label": "遮罩2",
+          "name": "mask2",
+          "type": "MASK",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            7,
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-impact-pack",
+        "ver": "61bd8397a18e7e7668e6a24e95168967768c2bed",
+        "Node name for S&R": "SubtractMask",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 5,
+      "type": "Mask Smooth Region",
+      "pos": [
+        117.1285115291448,
+        626.734732952101
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "遮罩",
+          "name": "masks",
+          "type": "MASK",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "label": "遮罩",
+          "name": "MASKS",
+          "type": "MASK",
+          "links": [
+            4,
+            15,
+            37
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "was-ns",
+        "ver": "ab9d53c71a83a33d9725a48b570a2f74056e04e2",
+        "Node name for S&R": "Mask Smooth Region",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "sigma": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        5
+      ]
+    },
+    {
+      "id": 18,
+      "type": "CR Color Panel",
+      "pos": [
+        796.1279050268313,
+        623.4455856169079
+      ],
+      "size": [
+        270,
+        150
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "panel_width",
+          "type": "INT",
+          "widget": {
+            "name": "panel_width"
+          },
+          "link": 21
+        },
+        {
+          "name": "panel_height",
+          "type": "INT",
+          "widget": {
+            "name": "panel_height"
+          },
+          "link": 22
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            24
+          ]
+        },
+        {
+          "label": "显示帮助",
+          "name": "show_help",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+        "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca",
+        "Node name for S&R": "CR Color Panel",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "panel_width": true,
+            "panel_height": true,
+            "fill_color": true,
+            "fill_color_hex": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        512,
+        512,
+        "custom",
+        "#000000"
+      ]
+    },
+    {
+      "id": 19,
+      "type": "ImageCompositeMasked",
+      "pos": [
+        786.1279050268313,
+        853.4455856169078
+      ],
+      "size": [
+        270,
+        146
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "destination",
+          "type": "IMAGE",
+          "link": 23
+        },
+        {
+          "name": "source",
+          "type": "IMAGE",
+          "link": 24
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            26
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.77",
+        "Node name for S&R": "ImageCompositeMasked",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "x": true,
+            "y": true,
+            "resize_source": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        0,
+        0,
+        false
+      ]
+    },
+    {
+      "id": 20,
+      "type": "Image Blend",
+      "pos": [
+        816.1279050268313,
+        1093.4455856169077
+      ],
+      "size": [
+        270,
+        78
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_a",
+          "type": "IMAGE",
+          "link": 26
+        },
+        {
+          "name": "image_b",
+          "type": "IMAGE",
+          "link": 27
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            29,
+            31
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "was-ns",
+        "ver": "ab9d53c71a83a33d9725a48b570a2f74056e04e2",
+        "Node name for S&R": "Image Blend",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "blend_percentage": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        0.5
+      ]
+    },
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [
+        -1213.8720949731683,
+        753.4455856169078
+      ],
+      "size": [
+        270,
+        314.00000000000006
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1,
+            28
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.77",
+        "Node name for S&R": "LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "image": true,
+            "upload": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "可爱女生原图.png",
+        "image"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "ImpactDilateMask",
+      "pos": [
+        132.6000111794386,
+        906.8508376705745
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 37
+        }
+      ],
+      "outputs": [
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            6
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-impact-pack",
+        "ver": "61bd8397a18e7e7668e6a24e95168967768c2bed",
+        "Node name for S&R": "ImpactDilateMask",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "dilation": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        90
+      ]
+    },
+    {
+      "id": 9,
+      "type": "ImageAndMaskPreview",
+      "pos": [
+        -268.41025510862374,
+        1221.6050150776282
+      ],
+      "size": [
+        270,
+        338.0000000000001
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 8
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "composite",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "9d7af919b91838fb22e31ad0107a6ddcf8bd7f3f",
+        "Node name for S&R": "ImageAndMaskPreview",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "mask_opacity": true,
+            "mask_color": true,
+            "pass_through": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        0.5,
+        "255, 255, 255",
+        false
+      ]
+    },
+    {
+      "id": 27,
+      "type": "LayerMask: SegmentAnythingUltra V2",
+      "pos": [
+        -633.8103904031586,
+        1816.8883511112592
+      ],
+      "size": [
+        473.3924553026387,
+        761.1359662938767
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 38
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 51
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": [
+            39
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI_LayerStyle_Advance",
+        "ver": "64c8317ab33f0208f2e583070acf4f8ef6faca0a",
+        "Node name for S&R": "LayerMask: SegmentAnythingUltra V2",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "sam_model": true,
+            "grounding_dino_model": true,
+            "threshold": true,
+            "detail_method": true,
+            "detail_erode": true,
+            "detail_dilate": true,
+            "black_point": true,
+            "white_point": true,
+            "process_detail": true,
+            "prompt": true,
+            "device": true,
+            "max_megapixels": true,
+            "cache_model": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "sam_vit_h (2.56GB)",
+        "GroundingDINO_SwinT_OGC (694MB)",
+        0.3,
+        "VITMatte",
+        6,
+        6,
+        0.15,
+        0.99,
+        true,
+        "subject",
+        "cuda",
+        2,
+        false
+      ],
+      "color": "rgba(27, 80, 119, 0.7)"
+    },
+    {
+      "id": 28,
+      "type": "GrowMaskWithBlur",
+      "pos": [
+        -128.41351748684022,
+        1928.039471971953
+      ],
+      "size": [
+        292.748046875,
+        246
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 39
+        }
+      ],
+      "outputs": [
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "links": [
+            40
+          ]
+        },
+        {
+          "label": "反转遮罩",
+          "name": "mask_inverted",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "9d7af919b91838fb22e31ad0107a6ddcf8bd7f3f",
+        "Node name for S&R": "GrowMaskWithBlur",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "expand": true,
+            "incremental_expandrate": true,
+            "tapered_corners": true,
+            "flip_input": true,
+            "blur_radius": true,
+            "lerp_alpha": true,
+            "decay_factor": true,
+            "fill_holes": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        50,
+        0,
+        true,
+        false,
+        0,
+        1,
+        1,
+        false
+      ]
+    },
+    {
+      "id": 26,
+      "type": "LoadImage",
+      "pos": [
+        -1216.2019765446532,
+        1802.7020477903939
+      ],
+      "size": [
+        500.0322765360204,
+        775.9194022482034
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            38,
+            41
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.77",
+        "Node name for S&R": "LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "image": true,
+            "upload": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "美女素材.png",
+        "image"
+      ]
+    },
+    {
+      "id": 22,
+      "type": "TextInput_",
+      "pos": [
+        -783.8720949731687,
+        1223.4455856169077
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-mixlab-nodes",
+        "ver": "32b22c39cbe13b46df29ef1b6ab088c2eb4389d2",
+        "Node name for S&R": "TextInput_",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "text": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Face, eyes, eyebrows, forehead"
+      ]
+    },
+    {
+      "id": 37,
+      "type": "TextInput_",
+      "pos": [
+        -1122.5996148010452,
+        2681.702584028824
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            51
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-mixlab-nodes",
+        "ver": "32b22c39cbe13b46df29ef1b6ab088c2eb4389d2",
+        "Node name for S&R": "TextInput_",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "text": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Face, eyes, eyebrows, forehead"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "LayerUtility: ImageScaleByAspectRatio V2",
+      "pos": [
+        -803.8720949731687,
+        323.44558561690786
+      ],
+      "size": [
+        415.6101207726306,
+        365.40342419003946
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 28
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            23,
+            27,
+            34,
+            50
+          ]
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "original_size",
+          "type": "BOX",
+          "links": null
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_layerstyle",
+        "ver": "89014d833d2ad0998d724090eff1456692692a1d",
+        "Node name for S&R": "LayerUtility: ImageScaleByAspectRatio V2",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "aspect_ratio": true,
+            "proportional_width": true,
+            "proportional_height": true,
+            "fit": true,
+            "method": true,
+            "round_to_multiple": true,
+            "scale_to_side": true,
+            "scale_to_length": true,
+            "background_color": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "original",
+        1,
+        1,
+        "fill",
+        "lanczos",
+        "8",
+        "None",
+        1536,
+        "#000000"
+      ],
+      "color": "rgba(38, 73, 116, 0.7)"
+    },
+    {
+      "id": 38,
+      "type": "PreviewImage",
+      "pos": [
+        1636.1279050268317,
+        333.44558561690786
+      ],
+      "size": [
+        471.9690637664298,
+        457.59855203629263
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 52
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.77",
+        "Node name for S&R": "PreviewImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 33,
+      "type": "InpaintStitch",
+      "pos": [
+        1526.29596478984,
+        1813.0150328399068
+      ],
+      "size": [
+        270,
+        78
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "接缝",
+          "name": "stitch",
+          "type": "STITCH",
+          "link": 46
+        },
+        {
+          "label": "修复图像",
+          "name": "inpainted_image",
+          "type": "IMAGE",
+          "link": 45
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            48,
+            49
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-inpaint-cropandstitch",
+        "ver": "b432b2411cbb7d3192d35953bd3aafea05a0e245",
+        "Node name for S&R": "InpaintStitch",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "rescale_algorithm": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "lanczos"
+      ]
+    },
+    {
+      "id": 23,
+      "type": "InpaintCrop",
+      "pos": [
+        1186.1279050268317,
+        793.4455856169078
+      ],
+      "size": [
+        310.46484375,
+        458
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 31
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 32
+        },
+        {
+          "label": "上下文遮罩(可选)",
+          "name": "optional_context_mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "接缝",
+          "name": "stitch",
+          "type": "STITCH",
+          "links": null
+        },
+        {
+          "label": "裁剪图像",
+          "name": "cropped_image",
+          "type": "IMAGE",
+          "links": [
+            33,
+            44
+          ]
+        },
+        {
+          "label": "裁剪遮罩",
+          "name": "cropped_mask",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-inpaint-cropandstitch",
+        "ver": "b432b2411cbb7d3192d35953bd3aafea05a0e245",
+        "Node name for S&R": "InpaintCrop",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "context_expand_pixels": true,
+            "context_expand_factor": true,
+            "fill_mask_holes": true,
+            "blur_mask_pixels": true,
+            "invert_mask": true,
+            "blend_pixels": true,
+            "rescale_algorithm": true,
+            "mode": true,
+            "force_width": true,
+            "force_height": true,
+            "rescale_factor": true,
+            "min_width": true,
+            "min_height": true,
+            "max_width": true,
+            "max_height": true,
+            "padding": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        20,
+        1,
+        true,
+        16,
+        false,
+        16,
+        "bicubic",
+        "ranged size",
+        1024,
+        1024,
+        1,
+        2048,
+        2048,
+        2048,
+        2048,
+        32
+      ]
+    },
+    {
+      "id": 25,
+      "type": "InpaintCrop",
+      "pos": [
+        1196.1279050268317,
+        243.44558561690803
+      ],
+      "size": [
+        310.46484375,
+        458
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 34
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 35
+        },
+        {
+          "label": "上下文遮罩(可选)",
+          "name": "optional_context_mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "接缝",
+          "name": "stitch",
+          "type": "STITCH",
+          "links": [
+            46
+          ]
+        },
+        {
+          "label": "裁剪图像",
+          "name": "cropped_image",
+          "type": "IMAGE",
+          "links": [
+            52
+          ]
+        },
+        {
+          "label": "裁剪遮罩",
+          "name": "cropped_mask",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-inpaint-cropandstitch",
+        "ver": "b432b2411cbb7d3192d35953bd3aafea05a0e245",
+        "Node name for S&R": "InpaintCrop",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "context_expand_pixels": true,
+            "context_expand_factor": true,
+            "fill_mask_holes": true,
+            "blur_mask_pixels": true,
+            "invert_mask": true,
+            "blend_pixels": true,
+            "rescale_algorithm": true,
+            "mode": true,
+            "force_width": true,
+            "force_height": true,
+            "rescale_factor": true,
+            "min_width": true,
+            "min_height": true,
+            "max_width": true,
+            "max_height": true,
+            "padding": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        20,
+        1,
+        true,
+        16,
+        false,
+        16,
+        "bicubic",
+        "ranged size",
+        1024,
+        1024,
+        1,
+        2048,
+        2048,
+        2048,
+        2048,
+        32
+      ]
+    },
+    {
+      "id": 29,
+      "type": "InpaintCrop",
+      "pos": [
+        250.27176712301022,
+        1814.5871714875577
+      ],
+      "size": [
+        310.46484375,
+        458
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 41
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 40
+        },
+        {
+          "label": "上下文遮罩(可选)",
+          "name": "optional_context_mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "接缝",
+          "name": "stitch",
+          "type": "STITCH",
+          "links": null
+        },
+        {
+          "label": "裁剪图像",
+          "name": "cropped_image",
+          "type": "IMAGE",
+          "links": [
+            42,
+            43
+          ]
+        },
+        {
+          "label": "裁剪遮罩",
+          "name": "cropped_mask",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-inpaint-cropandstitch",
+        "ver": "b432b2411cbb7d3192d35953bd3aafea05a0e245",
+        "Node name for S&R": "InpaintCrop",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "context_expand_pixels": true,
+            "context_expand_factor": true,
+            "fill_mask_holes": true,
+            "blur_mask_pixels": true,
+            "invert_mask": true,
+            "blend_pixels": true,
+            "rescale_algorithm": true,
+            "mode": true,
+            "force_width": true,
+            "force_height": true,
+            "rescale_factor": true,
+            "min_width": true,
+            "min_height": true,
+            "max_width": true,
+            "max_height": true,
+            "padding": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        20,
+        1,
+        true,
+        16,
+        false,
+        16,
+        "bicubic",
+        "ranged size",
+        1024,
+        1024,
+        1,
+        2048,
+        2048,
+        2048,
+        2048,
+        32
+      ]
+    },
+    {
+      "id": 30,
+      "type": "PreviewImage",
+      "pos": [
+        588.7396270843764,
+        2005.4033000462089
+      ],
+      "size": [
+        312.07345080245807,
+        346.27750951833696
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 42
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.77",
+        "Node name for S&R": "PreviewImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 34,
+      "type": "PreviewImage",
+      "pos": [
+        1383.4741840095162,
+        1964.8573600323252
+      ],
+      "size": [
+        424.6451296059597,
+        502.37895738008365
+      ],
+      "flags": {},
+      "order": 33,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 47
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.77",
+        "Node name for S&R": "PreviewImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 35,
+      "type": "PreviewImage",
+      "pos": [
+        1840.637733427058,
+        1804.7657700205395
+      ],
+      "size": [
+        567.3437414299472,
+        672.1919311142394
+      ],
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 48
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.77",
+        "Node name for S&R": "PreviewImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 11,
+      "type": "Convert Masks to Images",
+      "pos": [
+        301.6062558021874,
+        1078.6943649962484
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "遮罩",
+          "name": "masks",
+          "type": "MASK",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGES",
+          "type": "IMAGE",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "was-ns",
+        "ver": "ab9d53c71a83a33d9725a48b570a2f74056e04e2",
+        "Node name for S&R": "Convert Masks to Images",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 12,
+      "type": "ImageScale",
+      "pos": [
+        140.17424888546833,
+        1175.776822097606
+      ],
+      "size": [
+        270,
+        130
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 11
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 12
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            14
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.77",
+        "Node name for S&R": "ImageScale",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "upscale_method": true,
+            "width": true,
+            "height": true,
+            "crop": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "lanczos",
+        512,
+        512,
+        "disabled"
+      ]
+    },
+    {
+      "id": 13,
+      "type": "Image To Mask",
+      "pos": [
+        147.9114059176514,
+        1363.9496874368274
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            25
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "masquerade-nodes-comfyui",
+        "ver": "432cb4d146a391b387a0cd25ace824328b5b61cf",
+        "Node name for S&R": "Image To Mask",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "method": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "intensity"
+      ]
+    },
+    {
+      "id": 14,
+      "type": "ImpactDilateMask",
+      "pos": [
+        453.8666887085419,
+        627.2467684633152
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "type": "MASK",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            16
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-impact-pack",
+        "ver": "61bd8397a18e7e7668e6a24e95168967768c2bed",
+        "Node name for S&R": "ImpactDilateMask",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "dilation": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        10
+      ]
+    },
+    {
+      "id": 15,
+      "type": "Convert Masks to Images",
+      "pos": [
+        449.2467543234268,
+        791.9056190887899
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "遮罩",
+          "name": "masks",
+          "type": "MASK",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGES",
+          "type": "IMAGE",
+          "links": [
+            17
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "was-ns",
+        "ver": "ab9d53c71a83a33d9725a48b570a2f74056e04e2",
+        "Node name for S&R": "Convert Masks to Images",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 16,
+      "type": "ImageScale",
+      "pos": [
+        455.71851185709704,
+        952.0420718784476
+      ],
+      "size": [
+        270,
+        130
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 17
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 18
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 19
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            20
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.77",
+        "Node name for S&R": "ImageScale",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "upscale_method": true,
+            "width": true,
+            "height": true,
+            "crop": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "lanczos",
+        512,
+        512,
+        "disabled"
+      ]
+    },
+    {
+      "id": 17,
+      "type": "Image To Mask",
+      "pos": [
+        462.1902693907669,
+        1158.2409238328025
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            32,
+            35
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "masquerade-nodes-comfyui",
+        "ver": "432cb4d146a391b387a0cd25ace824328b5b61cf",
+        "Node name for S&R": "Image To Mask",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "method": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "intensity"
+      ]
+    },
+    {
+      "id": 21,
+      "type": "PreviewImage",
+      "pos": [
+        811.0766800383541,
+        1243.6760027508483
+      ],
+      "size": [
+        285.7114871008523,
+        347.83254137525023
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 29
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.77",
+        "Node name for S&R": "PreviewImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 36,
+      "type": "Image Comparer (rgthree)",
+      "pos": [
+        2462.5763781198707,
+        1725.485673984774
+      ],
+      "size": [
+        663.4179219786129,
+        742.9432241627899
+      ],
+      "flags": {},
+      "order": 35,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "label": "图像_A",
+          "name": "image_a",
+          "type": "IMAGE",
+          "link": 50
+        },
+        {
+          "dir": 3,
+          "label": "图像_B",
+          "name": "image_b",
+          "type": "IMAGE",
+          "link": 49
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "0fb1e239a903e93ef626a8c20589b38f46e39dff",
+        "comparer_mode": "Slide",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        [
+          {
+            "name": "A",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_brqgs_00005_.png&type=temp&subfolder=&rand=0.8813763958064927"
+          },
+          {
+            "name": "B",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_brqgs_00006_.png&type=temp&subfolder=&rand=0.6279066339363507"
+          }
+        ]
+      ]
+    },
+    {
+      "id": 32,
+      "type": "BananaImageNode",
+      "pos": [
+        952.047508701269,
+        1800.2175676367253
+      ],
+      "size": [
+        405.8641297475317,
+        712.0240230710451
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 44
+        },
+        {
+          "name": "image_2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 43
+        },
+        {
+          "name": "image_3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image_4",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image_5",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            45,
+            47
+          ]
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BananaImageNode",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "prompt": true,
+            "api_key": true,
+            "api_base_url": true,
+            "model_type": true,
+            "batch_size": true,
+            "aspect_ratio": true,
+            "seed": true,
+            "top_p": true,
+            "image_size": true,
+            "绕过代理": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "图1灰色选框内的人物的脸部，替换为图2人物的脸部，保持图2人物险部的一致性，更换脸部后脸部肤色与周围的皮肤融合，周围的环境气候融合，只更换面部特征，不需要更换头发，完成后消除灰色选框。",
+        "sk-y9iz4U7f4fAAGafc3dbvafYArm0orqzjErotcjI4LeUOAmoE",
+        "http://152.53.166.72:3000",
+        "「XXQ」gemini-3-pro-image-preview",
+        1,
+        "Auto",
+        13657,
+        "randomize",
+        0.95,
+        "2K",
+        true
+      ]
+    },
+    {
+      "id": 24,
+      "type": "PreviewImage",
+      "pos": [
+        1600.088436532283,
+        847.4636585747008
+      ],
+      "size": [
+        558.1288881179883,
+        609.7720882568774
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 33
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.77",
+        "Node name for S&R": "PreviewImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 2,
+      "type": "LayerUtility: ImageScaleByAspectRatio V2",
+      "pos": [
+        -803.8720949731687,
+        763.4455856169078
+      ],
+      "size": [
+        415.6101207726306,
+        365.40342419003946
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 1
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            2,
+            8
+          ]
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "original_size",
+          "type": "BOX",
+          "links": null
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            12,
+            18,
+            21
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            13,
+            19,
+            22
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_layerstyle",
+        "ver": "89014d833d2ad0998d724090eff1456692692a1d",
+        "Node name for S&R": "LayerUtility: ImageScaleByAspectRatio V2",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "aspect_ratio": true,
+            "proportional_width": true,
+            "proportional_height": true,
+            "fit": true,
+            "method": true,
+            "round_to_multiple": true,
+            "scale_to_side": true,
+            "scale_to_length": true,
+            "background_color": true
+          },
+          "version": "7.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "original",
+        1,
+        1,
+        "fill",
+        "lanczos",
+        "8",
+        "None",
+        1536,
+        "#000000"
+      ],
+      "color": "rgba(38, 73, 116, 0.7)"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      2,
+      0,
+      4,
+      0,
+      "IMAGE"
+    ],
+    [
+      3,
+      4,
+      1,
+      5,
+      0,
+      "MASK"
+    ],
+    [
+      4,
+      5,
+      0,
+      6,
+      0,
+      "MASK"
+    ],
+    [
+      5,
+      6,
+      0,
+      8,
+      0,
+      "MASK"
+    ],
+    [
+      6,
+      7,
+      0,
+      8,
+      1,
+      "MASK"
+    ],
+    [
+      7,
+      8,
+      0,
+      9,
+      1,
+      "MASK"
+    ],
+    [
+      8,
+      2,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      10,
+      8,
+      0,
+      11,
+      0,
+      "MASK"
+    ],
+    [
+      11,
+      11,
+      0,
+      12,
+      0,
+      "IMAGE"
+    ],
+    [
+      12,
+      2,
+      3,
+      12,
+      1,
+      "INT"
+    ],
+    [
+      13,
+      2,
+      4,
+      12,
+      2,
+      "INT"
+    ],
+    [
+      14,
+      12,
+      0,
+      13,
+      0,
+      "IMAGE"
+    ],
+    [
+      15,
+      5,
+      0,
+      14,
+      0,
+      "MASK"
+    ],
+    [
+      16,
+      14,
+      0,
+      15,
+      0,
+      "MASK"
+    ],
+    [
+      17,
+      15,
+      0,
+      16,
+      0,
+      "IMAGE"
+    ],
+    [
+      18,
+      2,
+      3,
+      16,
+      1,
+      "INT"
+    ],
+    [
+      19,
+      2,
+      4,
+      16,
+      2,
+      "INT"
+    ],
+    [
+      20,
+      16,
+      0,
+      17,
+      0,
+      "IMAGE"
+    ],
+    [
+      21,
+      2,
+      3,
+      18,
+      0,
+      "INT"
+    ],
+    [
+      22,
+      2,
+      4,
+      18,
+      1,
+      "INT"
+    ],
+    [
+      23,
+      3,
+      0,
+      19,
+      0,
+      "IMAGE"
+    ],
+    [
+      24,
+      18,
+      0,
+      19,
+      1,
+      "IMAGE"
+    ],
+    [
+      25,
+      13,
+      0,
+      19,
+      2,
+      "MASK"
+    ],
+    [
+      26,
+      19,
+      0,
+      20,
+      0,
+      "IMAGE"
+    ],
+    [
+      27,
+      3,
+      0,
+      20,
+      1,
+      "IMAGE"
+    ],
+    [
+      28,
+      1,
+      0,
+      3,
+      0,
+      "IMAGE"
+    ],
+    [
+      29,
+      20,
+      0,
+      21,
+      0,
+      "IMAGE"
+    ],
+    [
+      30,
+      22,
+      0,
+      4,
+      1,
+      "STRING"
+    ],
+    [
+      31,
+      20,
+      0,
+      23,
+      0,
+      "IMAGE"
+    ],
+    [
+      32,
+      17,
+      0,
+      23,
+      1,
+      "MASK"
+    ],
+    [
+      33,
+      23,
+      1,
+      24,
+      0,
+      "IMAGE"
+    ],
+    [
+      34,
+      3,
+      0,
+      25,
+      0,
+      "IMAGE"
+    ],
+    [
+      35,
+      17,
+      0,
+      25,
+      1,
+      "MASK"
+    ],
+    [
+      37,
+      5,
+      0,
+      7,
+      0,
+      "MASK"
+    ],
+    [
+      38,
+      26,
+      0,
+      27,
+      0,
+      "IMAGE"
+    ],
+    [
+      39,
+      27,
+      1,
+      28,
+      0,
+      "MASK"
+    ],
+    [
+      40,
+      28,
+      0,
+      29,
+      1,
+      "MASK"
+    ],
+    [
+      41,
+      26,
+      0,
+      29,
+      0,
+      "IMAGE"
+    ],
+    [
+      42,
+      29,
+      1,
+      30,
+      0,
+      "IMAGE"
+    ],
+    [
+      43,
+      29,
+      1,
+      32,
+      1,
+      "IMAGE"
+    ],
+    [
+      44,
+      23,
+      1,
+      32,
+      0,
+      "IMAGE"
+    ],
+    [
+      45,
+      32,
+      0,
+      33,
+      1,
+      "IMAGE"
+    ],
+    [
+      46,
+      25,
+      0,
+      33,
+      0,
+      "STITCH"
+    ],
+    [
+      47,
+      32,
+      0,
+      34,
+      0,
+      "IMAGE"
+    ],
+    [
+      48,
+      33,
+      0,
+      35,
+      0,
+      "IMAGE"
+    ],
+    [
+      49,
+      33,
+      0,
+      36,
+      1,
+      "IMAGE"
+    ],
+    [
+      50,
+      3,
+      0,
+      36,
+      0,
+      "IMAGE"
+    ],
+    [
+      51,
+      37,
+      0,
+      27,
+      1,
+      "STRING"
+    ],
+    [
+      52,
+      25,
+      1,
+      38,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "参考脸部图片处理/换脸模块",
+      "bounding": [
+        -1226.2019765446532,
+        1651.885673984774,
+        4362.196276643137,
+        1239.8169100440498
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "底图脸部处理",
+      "bounding": [
+        -1223.8720949731683,
+        169.845585616908,
+        3392.0894196234394,
+        1431.6629585091905
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "workflowRendererVersion": "LG",
+    "ue_links": [],
+    "links_added_by_ue": [],
+    "ds": {
+      "scale": 0.307356054914286,
+      "offset": [
+        2680.2928850109993,
+        -126.17786756756638
+      ]
+    },
+    "frontendVersion": "1.32.10",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

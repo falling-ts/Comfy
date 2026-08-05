@@ -1,0 +1,567 @@
+{
+  "id": "333ffdce-021b-49b8-bfbf-1a73ef1d2e11",
+  "revision": 0,
+  "last_node_id": 71,
+  "last_link_id": 131,
+  "nodes": [
+    {
+      "id": 68,
+      "type": "SONICTLoader",
+      "pos": [
+        25808.703125,
+        -1513.898681640625
+      ],
+      "size": [
+        315,
+        150
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 122
+        }
+      ],
+      "outputs": [
+        {
+          "label": "model",
+          "name": "model",
+          "type": "MODEL_SONIC",
+          "slot_index": 0,
+          "links": [
+            121
+          ]
+        },
+        {
+          "label": "dtype",
+          "name": "dtype",
+          "type": "DTYPE",
+          "links": [
+            128
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI_Sonic",
+        "ver": "6595df02e72406fe23baebc12ac2088832d7ff9b",
+        "Node name for S&R": "SONICTLoader"
+      },
+      "widgets_values": [
+        "unet.pth",
+        1,
+        true,
+        "fp16"
+      ]
+    },
+    {
+      "id": 54,
+      "type": "ImageOnlyCheckpointLoader",
+      "pos": [
+        25808.703125,
+        -1670.3629150390625
+      ],
+      "size": [
+        316.090576171875,
+        105.23220825195312
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            122
+          ]
+        },
+        {
+          "label": "CLIP视觉",
+          "name": "CLIP_VISION",
+          "type": "CLIP_VISION",
+          "slot_index": 1,
+          "links": [
+            124
+          ]
+        },
+        {
+          "label": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 2,
+          "links": [
+            125
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.28",
+        "Node name for S&R": "ImageOnlyCheckpointLoader"
+      },
+      "widgets_values": [
+        "svd_xt_1_1.safetensors"
+      ]
+    },
+    {
+      "id": 62,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        26233.962890625,
+        -1663.8978271484375
+      ],
+      "size": [
+        323.4723205566406,
+        765.2744140625
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 129
+        },
+        {
+          "label": "音频",
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 114
+        },
+        {
+          "label": "批次管理",
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "label": "vae",
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        },
+        {
+          "label": "frame_rate",
+          "name": "frame_rate",
+          "type": "FLOAT",
+          "widget": {
+            "name": "frame_rate"
+          },
+          "link": 130
+        }
+      ],
+      "outputs": [
+        {
+          "label": "文件名",
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "c9dcc3a229437df232d61da4f9697c87c1f22428",
+        "Node name for S&R": "VHS_VideoCombine"
+      },
+      "widgets_values": {
+        "frame_rate": 8,
+        "loop_count": 0,
+        "filename_prefix": "Zvideo",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "Zvideo_00006-audio.mp4",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/h264-mp4",
+            "frame_rate": 25,
+            "workflow": "Zvideo_00006.png",
+            "fullpath": "E:\\ai\\ComfyUI-BIUL_JX\\ComfyUI\\output\\Zvideo_00006-audio.mp4"
+          },
+          "muted": false
+        }
+      }
+    },
+    {
+      "id": 67,
+      "type": "SONICSampler",
+      "pos": [
+        25810.630859375,
+        -1075.434814453125
+      ],
+      "size": [
+        312.23541259765625,
+        174
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "model",
+          "name": "model",
+          "type": "MODEL_SONIC",
+          "link": 121
+        },
+        {
+          "label": "data_dict",
+          "name": "data_dict",
+          "type": "SONIC_PREDATA",
+          "link": 123
+        }
+      ],
+      "outputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            129
+          ]
+        },
+        {
+          "label": "fps",
+          "name": "fps",
+          "type": "FLOAT",
+          "slot_index": 1,
+          "links": [
+            130
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI_Sonic",
+        "ver": "6595df02e72406fe23baebc12ac2088832d7ff9b",
+        "Node name for S&R": "SONICSampler"
+      },
+      "widgets_values": [
+        878637512,
+        "randomize",
+        25,
+        1,
+        25
+      ]
+    },
+    {
+      "id": 69,
+      "type": "SONIC_PreData",
+      "pos": [
+        25808.703125,
+        -1312.666748046875
+      ],
+      "size": [
+        315,
+        186
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "clip_vision",
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 124
+        },
+        {
+          "label": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 125
+        },
+        {
+          "label": "audio",
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 126
+        },
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 127
+        },
+        {
+          "label": "weight_dtype",
+          "name": "weight_dtype",
+          "type": "DTYPE",
+          "link": 128
+        }
+      ],
+      "outputs": [
+        {
+          "label": "data_dict",
+          "name": "data_dict",
+          "type": "SONIC_PREDATA",
+          "links": [
+            123
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI_Sonic",
+        "ver": "6595df02e72406fe23baebc12ac2088832d7ff9b",
+        "Node name for S&R": "SONIC_PreData"
+      },
+      "widgets_values": [
+        512,
+        69.8,
+        0.5
+      ]
+    },
+    {
+      "id": 61,
+      "type": "VHS_LoadAudioUpload",
+      "pos": [
+        25307.607421875,
+        -1668.7425537109375
+      ],
+      "size": [
+        371.1549987792969,
+        130
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "音频",
+          "name": "audio",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            114,
+            126
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "c9dcc3a229437df232d61da4f9697c87c1f22428",
+        "Node name for S&R": "VHS_LoadAudioUpload"
+      },
+      "widgets_values": {
+        "audio": "4月17日 (1).WAV",
+        "start_time": 0,
+        "duration": 69.80000000000001,
+        "choose audio to upload": "image"
+      }
+    },
+    {
+      "id": 56,
+      "type": "LoadImage",
+      "pos": [
+        25307.619140625,
+        -1478.6151123046875
+      ],
+      "size": [
+        368.1850280761719,
+        328.51324462890625
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            127
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.28",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "@ (3).png",
+        "image",
+        ""
+      ]
+    },
+    {
+      "id": 71,
+      "type": "LoadImage",
+      "pos": [
+        26680,
+        -1230
+      ],
+      "size": [
+        356.5400390625,
+        326
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 2,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.28",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "工作流二维码.png",
+        "image",
+        ""
+      ]
+    }
+  ],
+  "links": [
+    [
+      114,
+      61,
+      0,
+      62,
+      1,
+      "AUDIO"
+    ],
+    [
+      121,
+      68,
+      0,
+      67,
+      0,
+      "MODEL_SONIC"
+    ],
+    [
+      122,
+      54,
+      0,
+      68,
+      0,
+      "MODEL"
+    ],
+    [
+      123,
+      69,
+      0,
+      67,
+      1,
+      "SONIC_PREDATA"
+    ],
+    [
+      124,
+      54,
+      1,
+      69,
+      0,
+      "CLIP_VISION"
+    ],
+    [
+      125,
+      54,
+      2,
+      69,
+      1,
+      "VAE"
+    ],
+    [
+      126,
+      61,
+      0,
+      69,
+      2,
+      "AUDIO"
+    ],
+    [
+      127,
+      56,
+      0,
+      69,
+      3,
+      "IMAGE"
+    ],
+    [
+      128,
+      68,
+      1,
+      69,
+      4,
+      "DTYPE"
+    ],
+    [
+      129,
+      67,
+      0,
+      62,
+      0,
+      "IMAGE"
+    ],
+    [
+      130,
+      67,
+      1,
+      62,
+      4,
+      "FLOAT"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8769226950000023,
+      "offset": [
+        -24967.74599208976,
+        1885.7170802318599
+      ]
+    },
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "node_versions": {
+      "ComfyUI-VideoHelperSuite": "0376e577442c236fbba6ef410a4e5ec64aed5017",
+      "comfy-core": "0.3.14",
+      "ComfyUI_Sonic": "df23ae9beed64aba7596f59789d6aaaf614f07a5"
+    },
+    "ue_links": []
+  },
+  "version": 0.4
+}

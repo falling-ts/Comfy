@@ -1,0 +1,379 @@
+{
+  "last_node_id": 29,
+  "last_link_id": 32,
+  "nodes": [
+    {
+      "id": 26,
+      "type": "LoadImage",
+      "pos": [
+        524.5820922851562,
+        441.6905822753906
+      ],
+      "size": [
+        315,
+        314
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            26
+          ],
+          "label": "图像"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "label": "遮罩"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "04591-2193201050-1 girl,Short hair,Van Gogh's style of painting,masterpiece,best quality,high resolution,aesthetic-1,.png",
+        "image"
+      ]
+    },
+    {
+      "id": 27,
+      "type": "ShowText|pysssss",
+      "pos": [
+        1301.7408447265625,
+        316.880859375
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 28,
+          "widget": {
+            "name": "text"
+          },
+          "label": "文本"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": null,
+          "shape": 6,
+          "label": "字符串"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 24,
+      "type": "JanusModelLoader",
+      "pos": [
+        526.0331420898438,
+        311.80133056640625
+      ],
+      "size": [
+        315,
+        78
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "JANUS_MODEL",
+          "links": [
+            25,
+            29
+          ],
+          "slot_index": 0,
+          "label": "model"
+        },
+        {
+          "name": "processor",
+          "type": "JANUS_PROCESSOR",
+          "links": [
+            27,
+            30
+          ],
+          "slot_index": 1,
+          "label": "processor"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JanusModelLoader"
+      },
+      "widgets_values": [
+        "deepseek-ai/Janus-Pro-1B"
+      ]
+    },
+    {
+      "id": 25,
+      "type": "JanusImageUnderstanding",
+      "pos": [
+        872.88818359375,
+        314.7038879394531
+      ],
+      "size": [
+        400,
+        236
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "JANUS_MODEL",
+          "link": 25,
+          "label": "model"
+        },
+        {
+          "name": "processor",
+          "type": "JANUS_PROCESSOR",
+          "link": 27,
+          "label": "processor"
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 26,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            28,
+            32
+          ],
+          "slot_index": 0,
+          "label": "text"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JanusImageUnderstanding"
+      },
+      "widgets_values": [
+        "Describe this image in detail.",
+        666666666666666,
+        "randomize",
+        0.1,
+        0.95,
+        512,
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 28,
+      "type": "JanusImageGeneration",
+      "pos": [
+        873.2523803710938,
+        594.6815795898438
+      ],
+      "size": [
+        400,
+        240
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "JANUS_MODEL",
+          "link": 29,
+          "label": "model"
+        },
+        {
+          "name": "processor",
+          "type": "JANUS_PROCESSOR",
+          "link": 30,
+          "label": "processor"
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 32,
+          "widget": {
+            "name": "prompt"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            31
+          ],
+          "slot_index": 0,
+          "label": "images"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JanusImageGeneration"
+      },
+      "widgets_values": [
+        "A beautiful photo of",
+        666666666666666,
+        "randomize",
+        1,
+        5,
+        1,
+        0.95,
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 29,
+      "type": "PreviewImage",
+      "pos": [
+        1301.7408447265625,
+        601.4666748046875
+      ],
+      "size": [
+        309.4125671386719,
+        26
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 31,
+          "label": "图像"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      25,
+      24,
+      0,
+      25,
+      0,
+      "JANUS_MODEL"
+    ],
+    [
+      26,
+      26,
+      0,
+      25,
+      2,
+      "IMAGE"
+    ],
+    [
+      27,
+      24,
+      1,
+      25,
+      1,
+      "JANUS_PROCESSOR"
+    ],
+    [
+      28,
+      25,
+      0,
+      27,
+      0,
+      "STRING"
+    ],
+    [
+      29,
+      24,
+      0,
+      28,
+      0,
+      "JANUS_MODEL"
+    ],
+    [
+      30,
+      24,
+      1,
+      28,
+      1,
+      "JANUS_PROCESSOR"
+    ],
+    [
+      31,
+      28,
+      0,
+      29,
+      0,
+      "IMAGE"
+    ],
+    [
+      32,
+      25,
+      0,
+      28,
+      2,
+      "STRING"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "Janus-Pro工作流",
+      "bounding": [
+        514.5820922851562,
+        238.20132446289062,
+        1123.26123046875,
+        609.5014038085938
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 1.2259180297408128,
+      "offset": [
+        -230.5412189679543,
+        -90.0416200026446
+      ]
+    },
+    "ue_links": [],
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0
+  },
+  "version": 0.4
+}

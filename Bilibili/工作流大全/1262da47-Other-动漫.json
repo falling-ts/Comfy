@@ -1,0 +1,2442 @@
+{
+  "id": "00472649-7ad8-436c-bc8a-0e7d901be7ba",
+  "revision": 0,
+  "last_node_id": 93,
+  "last_link_id": 130,
+  "nodes": [
+    {
+      "id": 53,
+      "type": "SaveImage",
+      "pos": [
+        -1314.1726982726013,
+        2400.4420230760834
+      ],
+      "size": [
+        999.5116990642181,
+        678.1917032226547
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen3.5+Anima"
+      ]
+    },
+    {
+      "id": 58,
+      "type": "SaveImage",
+      "pos": [
+        -1321.4813439228756,
+        3141.458884877838
+      ],
+      "size": [
+        1015.2656939803551,
+        678.3028886564166
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen3.5+Anima"
+      ]
+    },
+    {
+      "id": 67,
+      "type": "SaveImage",
+      "pos": [
+        -1319.0474787488138,
+        3856.534650277925
+      ],
+      "size": [
+        999.5116990642181,
+        678.1917032226547
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen3.5+Anima"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -1415.359941437558,
+        1431.4062410119923
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 43,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 4
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 113
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            6
+          ]
+        }
+      ],
+      "title": "CLIP文本编码（正面提示词）",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 9,
+      "type": "EmptyLatentImage",
+      "pos": [
+        -678.2228645416035,
+        1753.78443803213
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 98
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 99
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            8
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        1280,
+        768,
+        1
+      ]
+    },
+    {
+      "id": 8,
+      "type": "KSampler",
+      "pos": [
+        -974.4646497527295,
+        1470.7846359799073
+      ],
+      "size": [
+        270,
+        474
+      ],
+      "flags": {},
+      "order": 44,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 96
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 6
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 7
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            9
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        852394721758174,
+        "randomize",
+        30,
+        5,
+        "er_sde",
+        "simple",
+        1
+      ]
+    },
+    {
+      "id": 45,
+      "type": "Text (Any)",
+      "pos": [
+        -2729.8144542279215,
+        1517.2547107857788
+      ],
+      "size": [
+        564.4714687515188,
+        553.3090810217811
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "title": "视觉分镜师",
+      "properties": {
+        "cnr_id": "plush-for-comfyui",
+        "ver": "1.22.3",
+        "Node name for S&R": "Text (Any)"
+      },
+      "widgets_values": [
+        "You are the Visual Continuity Director and Elite ANIMA3 Prompt Engineer. \nYour ONLY task is to act as the \"Translation Node\", receiving the 9-Act script generated by the Story Plot Expander (Module 1) and translating it into a highly correlated 9-panel static storyboard using precise Anima-style English tag sequences.\n\n### 1. INPUT PROCESSING & VISUAL OVERRIDE (FATAL RULE)\n- Step 1: Read the `Genre` and `Visual Anchor` provided in the input script. \n- Step 2: Identify the `[character name]` and their original `[series/IP name]` (e.g., yor forger, spy x family).\n- Step 3 (Visual Override): You MUST aggressively filter the tags based on the CAMERA SHOT.\n  - **The \"No-Character\" Rule**: If the scene camera is `macro close-up`, `extreme close-up`, or `extreme macro` focusing on an OBJECT (e.g., umbrella ribs, rain droplets, torn fabric), you MUST COMPLETELY OMIT `1girl`, `1boy`, the `[character name]`, and the `[series/IP name]`. \n  - **The \"Phantom Limb\" Rule**: If the scene is a face or upper-body close-up, OMIT tags for legs, shoes, or pants.\n  - **The \"Perspective Logic\" Rule**: Strictly obey the camera angle. Only tag what the lens can physically see.\n\n### 2. CORE MECHANISM: STATIC SLICES ONLY\n- Describe ONLY the current pose of the characters and the current background environment in that exact frozen microsecond.\n- AI image models cannot understand motion, time, past context, or future intentions.\n- BANNED (Process Verbs): Words that imply an ongoing action (e.g., \"sprinting\", \"wiping\", \"pulling\", \"falling\").\n- REQUIRED (Geometric States): Absolute static physical states (e.g., replace \"sprinting\" with \"mid-air running pose\"; replace \"pulling neckline\" with \"hand gripping neckline\").\n\n### 3. OFFICIAL ANIMA FORMAT & BANNED TAGS (STRICT)\n- Format: Single line per Scene, entirely lowercase, separated by \", \".\n- REQUIRED ANIMA PREFIX: You MUST start every line with the official quality/meta prefix: `2025, newest, normal quality, score_5, highres, safe`\n- NO Weights: Do not use syntax like (tag:1.2) or [tag].\n- BANNED TAGS: Subjective lighting/tone tags (cinematic lighting, masterpiece, glowing). \n- ALLOWED: Weather tags (rain/snow/fog) are allowed.\n\n### 4. CONDITIONAL SLOT ORDER & ANTI-INERTIA (CRITICAL)\nYou MUST rigorously choose the structure based on the extracted camera shot. You must actively switch between Structure A and Structure B based on the following logic:\n\n**Structure A (For Wide/Medium/Full/Upper-Body/Face shots):**\n- You MUST follow the official Anima character logic.\nFormat: `[ANIMA PREFIX], [count/gender], [character name], [series/IP name], [artist (optional)], [camera/shot], [CORE STATIC ACTION/POSE], [VISIBLE appearance/clothing ONLY], [environment/lighting]`\nExample: `2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, medium shot, running mid-air...`\n\n**Structure B (For Object/Environment Extreme Macro shots ONLY):**\n- You MUST BREAK THE PATTERN. ABSOLUTELY NO CHARACTER/IP TAGS ALLOWED. \n- Do NOT use `1girl`, `[character name]`, or `[series/IP name]`. Start directly with the prefix, then the camera shot.\nFormat: `[ANIMA PREFIX], [camera/shot], [TRIGGER OBJECT / CORE DETAIL], [object physical state], [environment/weather effect]`\n*FATAL ERROR WARNING:* If you use Structure B, including \"1girl\" or the \"series name\" will cause a critical generation failure.\n\n### 5. DYNAMIC CAMERA EXTRACTION\nThe desired camera shot is explicitly defined in brackets `[ ]` at the start of each Scene in Module 1.\n- Step 1: Extract the camera shot explicitly defined in the brackets `[ ]`.\n- Step 2: Translate it into proper Booru-style camera tags.\n- Step 3: Evaluate the translated camera shot. If it is an extreme macro/close-up focusing purely on an object or detail, you MUST apply **Structure B**. Otherwise, apply **Structure A**.\n\n### 6. OUTPUT LAYOUT & FEW-SHOT EXAMPLES (CRITICAL)\n- Output ONLY the 9 scenes in English. \n- ZERO EMPTY LINES between scenes.\n- SELF-CORRECTION BEFORE OUTPUT: \n  1. Did I include `1girl` or `spy x family` in an extreme macro shot of an object? (If yes, delete them).\n  2. Did I forget the Anima Prefix at the start of any line? (If yes, add it).\n  3. Did I use process verbs like \"running\" instead of static poses like \"mid-air running pose\"? (If yes, fix it).\n\nExample Expected Output Pattern (Study this carefully!):\nScene 1: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, low-angle extreme wide shot, mid-air running pose, body leaning forward, hugging paper bag to chest, wet red off-shoulder sweater, heavy rain, night\nScene 2: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, chest close-up, hand gripping wet red sweater neckline, white knuckles, exposed collarbone, wet skin, holding paper bag\nScene 3: 2025, newest, normal quality, score_5, highres, safe, extreme low angle close-up, bare feet mid-air over puddle, water splashing, radiating water droplets, wet asphalt (Correct: Structure B, NO 1GIRL, NO IP TAG)\nScene 4: 2025, newest, normal quality, score_5, highres, safe, macro close-up, fingers pressing dry paper bag, wet red sweater cuff, water droplet hanging from fingertip, dark background (Correct: Structure B, NO 1GIRL, NO IP TAG)\nScene 5: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, medium close-up, hand resting on cheek, wet hair pushed behind ear, gentle smile, wet red sweater"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 70,
+      "type": "SaveImage",
+      "pos": [
+        -286.86107071418485,
+        3140.785436296207
+      ],
+      "size": [
+        999.5116990642181,
+        678.1917032226547
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen3.5+Anima"
+      ]
+    },
+    {
+      "id": 71,
+      "type": "SaveImage",
+      "pos": [
+        -286.86107071418485,
+        3863.74942539099
+      ],
+      "size": [
+        999.5116990642181,
+        678.1917032226547
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen3.5+Anima"
+      ]
+    },
+    {
+      "id": 61,
+      "type": "MultiTextConcatenate",
+      "pos": [
+        -590.5864700983492,
+        943.2338528603392
+      ],
+      "size": [
+        270,
+        102
+      ],
+      "flags": {},
+      "order": 41,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text0",
+          "type": "TEXT,STRING",
+          "link": 87
+        },
+        {
+          "name": "text1",
+          "type": "TEXT,STRING",
+          "link": 86
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            106
+          ]
+        },
+        {
+          "name": "LIST",
+          "type": "LIST",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI_Lam",
+        "ver": "89b37b2df2362b1e6fc97774275582d3133d0c80",
+        "Node name for S&R": "MultiTextConcatenate"
+      },
+      "widgets_values": [
+        "false",
+        ""
+      ]
+    },
+    {
+      "id": 18,
+      "type": "easy promptLine",
+      "pos": [
+        -645.2099298679124,
+        488.99541795424847
+      ],
+      "size": [
+        361.3526567137276,
+        204
+      ],
+      "flags": {},
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 38
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": [
+            22,
+            87
+          ]
+        },
+        {
+          "name": "COMBO",
+          "shape": 6,
+          "type": "COMBO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "Node name for S&R": "easy promptLine"
+      },
+      "widgets_values": [
+        "text",
+        0,
+        1000,
+        true,
+        ""
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 34,
+      "type": "llama_cpp_clean_states",
+      "pos": [
+        -590.2717887606898,
+        1103.8335748072734
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 42,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "link": 106
+        }
+      ],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": [
+            113
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "lihaoyun6/ComfyUI-llama-cpp",
+        "ver": "a69be4883f98c4025915f0390a3e87aae9ea3477",
+        "Node name for S&R": "llama_cpp_clean_states"
+      },
+      "widgets_values": [
+        -1
+      ]
+    },
+    {
+      "id": 75,
+      "type": "SaveImage",
+      "pos": [
+        -2334.939750826375,
+        2405.6022978265223
+      ],
+      "size": [
+        999.5116990642181,
+        678.1917032226547
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen3.5+Anima"
+      ]
+    },
+    {
+      "id": 54,
+      "type": "SaveImage",
+      "pos": [
+        -2343.906579746825,
+        3147.771229160482
+      ],
+      "size": [
+        999.5116990642181,
+        678.1917032226547
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen3.5+Anima"
+      ]
+    },
+    {
+      "id": 65,
+      "type": "SaveImage",
+      "pos": [
+        -2347.297040613011,
+        3877.2230069412267
+      ],
+      "size": [
+        999.5116990642181,
+        678.1917032226547
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen3.5+Anima"
+      ]
+    },
+    {
+      "id": 77,
+      "type": "SaveImage",
+      "pos": [
+        -274.2936947766833,
+        2397.4745815431247
+      ],
+      "size": [
+        999.5116990642181,
+        678.1917032226547
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen3.5+Anima"
+      ]
+    },
+    {
+      "id": 63,
+      "type": "Text (Any)",
+      "pos": [
+        -2731.576638521961,
+        1515.6509437889304
+      ],
+      "size": [
+        564.4714687515188,
+        553.3090810217811
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "title": "视觉分镜师",
+      "properties": {
+        "cnr_id": "plush-for-comfyui",
+        "ver": "1.22.3",
+        "Node name for S&R": "Text (Any)"
+      },
+      "widgets_values": [
+        "You are the Visual Continuity Director and Elite ANIMA3 Prompt Engineer. \nYour ONLY task is to act as the \"Translation Node\", receiving the 9-Act script generated by the Story Plot Expander (Module 1) and translating it into a highly correlated 9-panel static storyboard using precise Anima-style English tag sequences.\n\n### 1. INPUT PROCESSING & VISUAL OVERRIDE (FATAL RULE)\n- Step 1: Read the `Genre` and `Visual Anchor` provided in the input script. \n- Step 2: Identify the `[character name]` and their original `[series/IP name]` (e.g., yor forger, spy x family).\n- Step 3 (Visual Override): You MUST aggressively filter the tags based on the CAMERA SHOT and scene context.\n  - **The \"Empty Shot & Object Macro\" Rule**: If the scene is an empty shot (scenery only) OR an `extreme macro` focusing purely on an OBJECT (e.g., umbrella ribs, rain droplets), you MUST COMPLETELY OMIT `1girl`, `1boy`, the `[character name]`, the `[series/IP name]`, and ALL character-specific traits (e.g., hair color, clothing tags, expressions). \n  - **The \"Phantom Limb\" Rule**: If the scene is a face or upper-body close-up, OMIT tags for legs, shoes, or pants.\n  - **The \"Perspective Logic\" Rule**: Strictly obey the camera angle. Only tag what the lens can physically see.\n\n### 2. CORE MECHANISM: STATIC SLICES ONLY\n- Describe ONLY the current pose of the characters and the current background environment in that exact frozen microsecond.\n- AI image models cannot understand motion, time, past context, or future intentions.\n- BANNED (Process Verbs): Words that imply an ongoing action (e.g., \"sprinting\", \"wiping\", \"pulling\", \"falling\").\n- REQUIRED (Geometric States): Absolute static physical states (e.g., replace \"sprinting\" with \"mid-air running pose\"; replace \"pulling neckline\" with \"hand gripping neckline\").\n\n### 3. OFFICIAL ANIMA FORMAT & BANNED TAGS (STRICT)\n- Format: Single line per Scene, entirely lowercase, separated by \", \".\n- REQUIRED ANIMA PREFIX: You MUST start every line with the official quality/meta prefix: `2025, newest, normal quality, score_5, highres, safe`\n- NO Weights: Do not use syntax like (tag:1.2) or [tag].\n- BANNED TAGS: Subjective lighting/tone tags (cinematic lighting, masterpiece, glowing). \n- ALLOWED: Weather tags (rain/snow/fog) are allowed.\n\n### 4. CONDITIONAL SLOT ORDER & ANTI-INERTIA (CRITICAL)\nYou MUST rigorously choose the structure based on the extracted camera shot. You must actively switch between Structure A and Structure B based on the following logic:\n\n**Structure A (For Wide/Medium/Full/Upper-Body/Face shots where character IS visible):**\n- You MUST follow the official Anima character logic.\nFormat: `[ANIMA PREFIX], [count/gender], [character name], [series/IP name], [artist (optional)], [camera/shot], [CORE STATIC ACTION/POSE], [VISIBLE appearance/clothing ONLY], [environment/lighting]`\nExample: `2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, medium shot, running mid-air...`\n\n**Structure B (For Empty Shots / Scenery / Object Extreme Macro shots ONLY):**\n- You MUST BREAK THE PATTERN. ABSOLUTELY NO CHARACTER/IP TAGS ALLOWED. \n- Do NOT use `1girl`, `[character name]`, `[series/IP name]`, or any appearance/clothing tags. Start directly with the prefix, then the camera shot, and end with the `no humans` tag.\nFormat: `[ANIMA PREFIX], [camera/shot], [TRIGGER OBJECT / CORE DETAIL], [object physical state], [environment/weather effect], no humans`\n*FATAL ERROR WARNING:* If you use Structure B, including \"1girl\", the \"series name\", or character traits will cause a critical generation failure where a human spawns inside an empty shot. Always use the `no humans` tag to lock the scene.\n\n### 5. DYNAMIC CAMERA EXTRACTION\nThe desired camera shot is explicitly defined in brackets `[ ]` at the start of each Scene in Module 1.\n- Step 1: Extract the camera shot explicitly defined in the brackets `[ ]`.\n- Step 2: Translate it into proper Booru-style camera tags.\n- Step 3: Evaluate the translated camera shot and context. If it is an empty shot (scenery) or an extreme macro focusing purely on an object or detail, you MUST apply **Structure B**. Otherwise, apply **Structure A**.\n\n### 6. OUTPUT LAYOUT & FEW-SHOT EXAMPLES (CRITICAL)\n- Output ONLY the 9 scenes in English. \n- ZERO EMPTY LINES between scenes.\n- SELF-CORRECTION BEFORE OUTPUT: \n  1. Did I include `1girl`, `spy x family`, or `red sweater` in an empty scenery shot or object macro? (If yes, delete them and ensure `no humans` is present).\n  2. Did I forget the Anima Prefix at the start of any line? (If yes, add it).\n  3. Did I use process verbs like \"running\" instead of static poses like \"mid-air running pose\"? (If yes, fix it).\n\nExample Expected Output Pattern (Study this carefully!):\nScene 1: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, low-angle extreme wide shot, mid-air running pose, body leaning forward, hugging paper bag to chest, wet red off-shoulder sweater, heavy rain, night\nScene 2: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, chest close-up, hand gripping wet red sweater neckline, white knuckles, exposed collarbone, wet skin, holding paper bag\nScene 3: 2025, newest, normal quality, score_5, highres, safe, extreme low angle close-up, bare feet mid-air over puddle, water splashing, radiating water droplets, wet asphalt (Correct: Structure B, NO 1GIRL, NO IP TAG, no upper body traits)\nScene 4: 2025, newest, normal quality, score_5, highres, safe, extreme wide shot, empty street, heavy rain, neon lights reflection, wet asphalt, night, no humans (Correct: Structure B, EMPTY SHOT, NO CHARACTER TAGS, `no humans` applied)\nScene 5: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, medium close-up, hand resting on cheek, wet hair pushed behind ear, gentle smile, wet red sweater"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 44,
+      "type": "Text (Any)",
+      "pos": [
+        -2749.2847628620484,
+        637.6194802254769
+      ],
+      "size": [
+        564.4714687515188,
+        553.3090810217811
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "title": "剧情编剧",
+      "properties": {
+        "cnr_id": "plush-for-comfyui",
+        "ver": "1.22.3",
+        "Node name for S&R": "Text (Any)"
+      },
+      "widgets_values": [
+        "# Role: 顶级漫剧编剧与视觉叙事架构师 (Story Plot Expander)\n\n## 核心任务\n你的唯一任务是接收用户的简短故事灵感，将其扩写为逻辑连贯、物理因果严密的 9 幕分镜剧本。\n你的输出将作为下游“视觉分镜翻译节点”的直接输入。你不需要输出英文标签，但你的剧本必须具备极强的“画面感”和“物理因果律”，为下游节点提取“瞬间定格”提供完美的上下文。\n\n## 1. 剧情解构与基调路由 (Genre Routing)\n在扩写前，精准分析用户的输入，并将其归类为以下三种基调之一。这将决定你后续自由调度运镜时的整体视觉侧重点：\n- Genre A (静谧/情感): 镜头语言应偏向克制，多自主调用自然光影交互、面部微表情特写、大远景留白等常规景别。\n- Genre B (悬疑/探索): 镜头语言应偏向压抑，多自主调用限制性视角（如第一人称或过肩视角）、中景线索聚焦、以及常规的近景特写。\n- Genre C (激烈/战斗): 镜头语言应偏向视觉冲击，多自主调用动作达到极点时的广角全景、有张力的半身动态中景、以及常规的物理碰撞近景。\n\n## 2. 视觉锚点设定 (Visual Anchor)\n在剧本开头，明确设定绝对一致的视觉锚点。一旦设定，后续 9 幕严禁偏离这些物理特征（确保角色、道具、空间的一致性）。\n\n## 3. 动态 9 幕剧本扩写逻辑 (Dynamic 9-Panel Narrative Logic)\n放弃固定的公式化运镜结构。你必须**根据故事情节的发展情绪与物理因果，自主决定每一幕的最优景别与运镜方式**（如：大远景、全景、中景、近景、面部特写、手部特写、过肩视角、仰视/俯视等）。\n尽管景别由你自由调度，但你必须严格遵守以下原则：\n- **连贯推进**：9幕必须构成一个完整的情节起伏（起因 -> 发展 -> 高潮动作/异变 -> 结局/余韵）。\n- **画面描述结构**：每一幕必须清晰交代【你决定的镜头景别】、【当前环境的物理现状】以及【角色的绝对静止姿态】。\n\n## 4. 编剧红线 (Critical Constraints)\n- **常规景别约束 (Standard Shots ONLY)**：严禁使用“极微距 (Extreme Macro)”、“局部极近特写 (Extreme Close-up)”、“鱼眼透视 (Fisheye)”或“极端倾斜/扭曲的视角”。必须将所有景别控制在模型易于理解的常规远景、全景、中景、近景和标准特写之内。\n- **强化因果律**：第 N 幕的物理空间和道具状态，必须逻辑继承自第 N-1 幕。绝不能凭空出现新事物。\n- **视觉绝对化 (NO Audio/Smell)**：绝对禁止描写声音、气味或温度（如“清脆声响”、“刺啦声”）。一切必须转化为纯粹的物理视觉状态（如“风铃呈现剧烈摇摆的倾斜状态”、“伞布断裂的边缘呈现锯齿状”）。\n- **杜绝时间预期**：禁止使用“即将”、“开始”、“正准备”、“逐渐”。将所有动作描写为绝对定格（例如：将“开始奔跑”改为“处于奔跑中双脚腾空的姿态”；将“逐渐变暗”改为“一半被阴影完全吞噬”）。\n\n## 输出格式 (Output Format)\n请严格遵循以下排版输出，不要包含多余的寒暄：\n\n### Genre: [填写 Genre A / B / C]\n### Visual Anchor:\n- 角色：[详细的外貌与服装特征]\n- 环境/道具：[核心场景与关键道具]\n\n### Script:\n幕 1 [填写你决定的镜头景别，如：仰视全景]: [符合红线约束的具体定格画面描述]\n幕 2 [填写你决定的镜头景别，如：半身近景]: [符合红线约束的具体定格画面描述]\n...\n幕 9 [填写你决定的镜头景别]: [符合红线约束的具体定格画面描述]"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 83,
+      "type": "Text (Any)",
+      "pos": [
+        -2731.146620417066,
+        1516.6649269809375
+      ],
+      "size": [
+        564.4714687515188,
+        553.3090810217811
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "title": "视觉分镜师",
+      "properties": {
+        "cnr_id": "plush-for-comfyui",
+        "ver": "1.22.3",
+        "Node name for S&R": "Text (Any)"
+      },
+      "widgets_values": [
+        "You are the Visual Continuity Director and Elite ANIMA3 Prompt Engineer. \nYour ONLY task is to act as the \"Translation Node\", receiving the 9-Act script generated by the Story Plot Expander (Module 1) and translating it into a highly correlated 9-panel static storyboard using precise Anima-style English tag sequences.\n\n### 1. INPUT PROCESSING & VISUAL OVERRIDE (FATAL RULE)\n- Step 1: Read the `Genre` and `Visual Anchor` provided in the input script. \n- Step 2: Identify the `[character name]` and their original `[series/IP name]` (e.g., yor forger, spy x family).\n- Step 3 (Visual Override): You MUST aggressively filter the tags based on the CAMERA SHOT and scene context.\n  - **The \"Empty Shot & Object Macro\" Rule**: If the scene is an empty shot (scenery only) OR an `extreme macro` focusing purely on an OBJECT (e.g., umbrella ribs, rain droplets), you MUST COMPLETELY OMIT `1girl`, `1boy`, the `[character name]`, the `[series/IP name]`, and ALL character-specific traits (e.g., hair color, clothing tags, expressions). \n  - **The \"Phantom Limb\" Rule**: If the scene is a face or upper-body close-up, OMIT tags for legs, shoes, or pants.\n  - **The \"Perspective Logic\" Rule**: Strictly obey the camera angle. Only tag what the lens can physically see.\n- Step 4 (Environmental Enrichment): Automatically infer and generate rich background, environmental, and atmospheric tags (e.g., \"neon lights, wet asphalt, puddle reflections, moody atmosphere, detailed background\") that fit the narrative context, placing them strictly at the end of the prompt.\n\n### 2. CORE MECHANISM: STATIC SLICES ONLY\n- Describe ONLY the current pose of the characters and the current background environment in that exact frozen microsecond.\n- AI image models cannot understand motion, time, past context, or future intentions.\n- BANNED (Process Verbs): Words that imply an ongoing action (e.g., \"sprinting\", \"wiping\", \"pulling\", \"falling\").\n- REQUIRED (Geometric States): Absolute static physical states (e.g., replace \"sprinting\" with \"mid-air running pose\"; replace \"pulling neckline\" with \"hand gripping neckline\").\n\n### 3. OFFICIAL ANIMA FORMAT & BANNED TAGS (STRICT)\n- Format: Single line per Scene, entirely lowercase, separated by \", \".\n- REQUIRED ANIMA PREFIX: You MUST start every line with the official quality/meta prefix: `2025, newest, normal quality, score_5, highres, safe`\n- NO Weights: Do not use syntax like (tag:1.2) or [tag].\n- BANNED TAGS: Subjective lighting/tone tags (cinematic lighting, masterpiece, glowing). \n- ALLOWED: Weather tags (rain/snow/fog) are allowed.\n\n### 4. CONDITIONAL SLOT ORDER & ANTI-INERTIA (CRITICAL)\nYou MUST rigorously choose the structure based on the extracted camera shot. You must actively switch between Structure A and Structure B based on the following logic:\n\n**Structure A (For Wide/Medium/Full/Upper-Body/Face shots where character IS visible):**\n- You MUST follow the official Anima character logic.\nFormat: `[ANIMA PREFIX], [count/gender], [character name], [series/IP name], [artist (optional)], [camera/shot], [CORE STATIC ACTION/POSE], [VISIBLE appearance/clothing ONLY], [core environment], [ENRICHED ATMOSPHERE/BACKGROUND DETAILS]`\nExample: `2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, medium shot, running mid-air, wet red sweater, dark street, heavy rain, neon lights reflections, wet asphalt, detailed city background, moody atmosphere`\n\n**Structure B (For Empty Shots / Scenery / Object Extreme Macro shots ONLY):**\n- You MUST BREAK THE PATTERN. ABSOLUTELY NO CHARACTER/IP TAGS ALLOWED. \n- Do NOT use `1girl`, `[character name]`, `[series/IP name]`, or any appearance/clothing tags. Start directly with the prefix, then the camera shot, and end with the `no humans` tag.\nFormat: `[ANIMA PREFIX], [camera/shot], [TRIGGER OBJECT / CORE DETAIL], [object physical state], [core environment], [ENRICHED ATMOSPHERE/BACKGROUND DETAILS], no humans`\n*FATAL ERROR WARNING:* If you use Structure B, including \"1girl\", the \"series name\", or character traits will cause a critical generation failure where a human spawns inside an empty shot. Always use the `no humans` tag to lock the scene.\n\n### 5. DYNAMIC CAMERA EXTRACTION\nThe desired camera shot is explicitly defined in brackets `[ ]` at the start of each Scene in Module 1.\n- Step 1: Extract the camera shot explicitly defined in the brackets `[ ]`.\n- Step 2: Translate it into proper Booru-style camera tags.\n- Step 3: Evaluate the translated camera shot and context. If it is an empty shot (scenery) or an extreme macro focusing purely on an object or detail, you MUST apply **Structure B**. Otherwise, apply **Structure A**.\n\n### 6. OUTPUT LAYOUT & FEW-SHOT EXAMPLES (CRITICAL)\n- Output ONLY the 9 scenes in English. \n- ZERO EMPTY LINES between scenes.\n- SELF-CORRECTION BEFORE OUTPUT: \n  1. Did I include `1girl`, `spy x family`, or `red sweater` in an empty scenery shot or object macro? (If yes, delete them and ensure `no humans` is present).\n  2. Did I forget the Anima Prefix at the start of any line? (If yes, add it).\n  3. Did I use process verbs like \"running\" instead of static poses like \"mid-air running pose\"? (If yes, fix it).\n  4. Did I enrich the background with atmospheric details at the end of the prompt? (If no, expand the environment tags).\n\nExample Expected Output Pattern (Study this carefully!):\nScene 1: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, low-angle extreme wide shot, mid-air running pose, body leaning forward, hugging paper bag to chest, wet red off-shoulder sweater, heavy rain, night, neon street lights, wet asphalt, city background, cinematic shadow\nScene 2: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, chest close-up, hand gripping wet red sweater neckline, white knuckles, exposed collarbone, wet skin, holding paper bag, dark lighting, rain streaks\nScene 3: 2025, newest, normal quality, score_5, highres, safe, extreme low angle close-up, bare feet mid-air over puddle, water splashing, radiating water droplets, wet asphalt, reflective surface, neon light reflection, detailed ground, no humans\nScene 4: 2025, newest, normal quality, score_5, highres, safe, extreme wide shot, empty street, heavy rain, dark alley, gloomy atmosphere, wet asphalt, puddle reflections, detailed city architecture, night, no humans\nScene 5: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, medium close-up, hand resting on cheek, wet hair pushed behind ear, gentle smile, wet red sweater, soft warm indoor lighting, blurred background"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 51,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        -1804.947511100766,
+        1621.1921049240705
+      ],
+      "size": [
+        329.0527964294413,
+        82
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 69
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            100
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "Anima\\Anima-P3-Aesthetics-Details_anima-preview-3.safetensors",
+        1
+      ]
+    },
+    {
+      "id": 5,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        -1806.7521468332552,
+        1496.3579378088114
+      ],
+      "size": [
+        329.0527964294413,
+        82
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 66
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            69
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "Anima\\Anima-Danbooru-Aesthetic-Booster_V1.safetensors",
+        1
+      ]
+    },
+    {
+      "id": 56,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        -1798.4548599674492,
+        1752.5618776002843
+      ],
+      "size": [
+        334.48931502980327,
+        84.08030048483238
+      ],
+      "flags": {},
+      "order": 35,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 100
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            96
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "Anima\\Anima Turbo Lora_v0.1.safetensors",
+        0.3
+      ]
+    },
+    {
+      "id": 10,
+      "type": "VAEDecode",
+      "pos": [
+        -617.6275860886977,
+        1467.96027749743
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 45,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 9
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            51,
+            61
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 89,
+      "type": "easy cleanGpuUsed",
+      "pos": [
+        -373.53247953417736,
+        1576.239063709909
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 48,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 123
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            124
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "Node name for S&R": "easy cleanGpuUsed"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 50,
+      "type": "MultiTextConcatenate",
+      "pos": [
+        -985.5773305870385,
+        590.2443265696174
+      ],
+      "size": [
+        270,
+        102
+      ],
+      "flags": {},
+      "order": 36,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text0",
+          "type": "TEXT,STRING",
+          "link": 63
+        },
+        {
+          "name": "text1",
+          "type": "TEXT,STRING",
+          "link": 64
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            65
+          ]
+        },
+        {
+          "name": "LIST",
+          "type": "LIST",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI_Lam",
+        "ver": "89b37b2df2362b1e6fc97774275582d3133d0c80",
+        "Node name for S&R": "MultiTextConcatenate"
+      },
+      "widgets_values": [
+        "false",
+        ""
+      ]
+    },
+    {
+      "id": 62,
+      "type": "Text (Any)",
+      "pos": [
+        -643.6727929434414,
+        734.8575045560849
+      ],
+      "size": [
+        367.62348679947013,
+        162.2223249861495
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": [
+            86
+          ]
+        }
+      ],
+      "title": "风格质量补充",
+      "properties": {
+        "cnr_id": "plush-for-comfyui",
+        "ver": "1.22.3",
+        "Node name for S&R": "Text (Any)"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 1,
+      "type": "DiffusionModelLoaderKJ",
+      "pos": [
+        -2147.384036596122,
+        1495.563038072477
+      ],
+      "size": [
+        312.06666564941406,
+        178
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "extra_state_dict",
+          "shape": 7,
+          "type": "STRING",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            66
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "1.4.0",
+        "Node name for S&R": "DiffusionModelLoaderKJ"
+      },
+      "widgets_values": [
+        "Anima\\Anima-Base 动漫艺术_V1.safetensors",
+        "default",
+        "default",
+        false,
+        "disabled",
+        false
+      ]
+    },
+    {
+      "id": 2,
+      "type": "VAELoader",
+      "pos": [
+        -2129.5515049260543,
+        1734.264410878628
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "qwen_image_vae.safetensors"
+      ]
+    },
+    {
+      "id": 87,
+      "type": "Text (Any)",
+      "pos": [
+        -2749.99825035858,
+        639.9363385460941
+      ],
+      "size": [
+        564.4714687515188,
+        553.3090810217811
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "title": "剧情编剧",
+      "properties": {
+        "cnr_id": "plush-for-comfyui",
+        "ver": "1.22.3",
+        "Node name for S&R": "Text (Any)"
+      },
+      "widgets_values": [
+        "# Role: 顶级漫剧编剧与视觉叙事架构师 (Story Plot Expander)\n\n## 核心任务\n你的唯一任务是接收用户的简短故事灵感，将其扩写为逻辑连贯、物理因果严密的 9 幕分镜剧本。\n你的输出将作为下游“视觉分镜翻译节点”的直接输入。你不需要输出英文标签，但你的剧本必须具备极强的“画面感”和“物理因果律”，为下游节点提取“瞬间定格”提供完美的上下文。\n\n## 1. 剧情解构与基调路由 (Genre Routing)\n在扩写前，精准分析用户的输入，并将其归类为以下三种基调之一。这将决定你后续自由调度运镜时的整体视觉侧重点：\n- Genre A (静谧/情感): 镜头语言应偏向克制，多自主调用自然光影交互、面部微表情近景、大远景留白等常规景别。\n- Genre B (悬疑/探索): 镜头语言应偏向压抑，多自主调用限制性视角（如第一人称或过肩视角）、中景线索聚焦、以及常规的近景。\n- Genre C (激烈/战斗): 镜头语言应偏向视觉冲击，多自主调用动作达到极点时的广角全景、有张力的半身动态中景、以及常规的物理碰撞近景。\n\n## 2. 视觉锚点设定 (Visual Anchor)\n在剧本开头，明确设定绝对一致的视觉锚点。一旦设定，后续 9 幕严禁偏离这些物理特征（确保角色、道具、空间的一致性）。\n\n## 3. 动态 9 幕剧本扩写逻辑 (Dynamic 9-Panel Narrative Logic)\n放弃固定的公式化运镜结构。你必须根据故事情节的发展情绪与物理因果，自主决定每一幕的最优景别与运镜方式。\n**注意：允许使用的景别仅限【大远景、远景、全景、中景、半身近景、近景、过肩视角、仰视/俯视】。**\n尽管景别由你调度，但你必须严格遵守以下原则：\n- **连贯推进**：9幕必须构成一个完整的情节起伏（起因 -> 发展 -> 高潮动作/异变 -> 结局/余韵）。\n- **画面描述结构**：每一幕必须清晰交代【你决定的镜头景别】、【当前环境的物理现状】以及【角色的绝对静止姿态】。\n\n## 4. 编剧红线 (Critical Constraints - 极其重要)\n- **严格常规景别约束 (Standard Shots ONLY)**：为了防止下游节点误判，**严禁使用任何带有“特写 (Close-up/Extreme Close-up)”、“极微距”、“局部放大”等字眼的景别**。如果你想表现面部或手部细节，请统一使用“近景 (Close shot)”或“半身近景 (Medium close-up)”，并配合相应的物理状态描述。\n- **强化因果律**：第 N 幕的物理空间和道具状态，必须逻辑继承自第 N-1 幕。绝不能凭空出现新事物。\n- **视觉绝对化 (NO Audio/Smell)**：绝对禁止描写声音、气味或温度（如“清脆声响”、“刺啦声”）。一切必须转化为纯粹的物理视觉状态（如“风铃呈现剧烈摇摆的倾斜状态”、“伞布断裂的边缘呈现锯齿状”）。\n- **绝对时间冻结 (Absolute Time Freeze)**：绝对禁止使用任何带有过程感、时间推移或动作预期的词汇（如“逐渐”、“即将”、“开始”、“正准备”、“渐渐消失”）。所有的动作和环境必须是**一瞬间的绝对物理定格**。\n  - 错误示范：“身影逐渐被雨幕吞没” / 正确示范：“身体的一半被雨幕遮蔽，呈现半透明轮廓”\n  - 错误示范：“即将消失在黑暗中” / 正确示范：“作为画面边缘的一个微小暗色剪影”\n  - 错误示范：“开始奔跑” / 正确示范：“处于奔跑中双脚腾空的姿态”\n\n## 输出格式 (Output Format)\n请严格遵循以下排版输出，不要包含多余的寒暄：\n\n### Genre: [填写 Genre A / B / C]\n### Visual Anchor:\n- 角色：[详细的外貌与服装特征]\n- 环境/道具：[核心场景与关键道具]\n\n### Script:\n幕 1 [填写你决定的镜头景别，如：仰视全景]: [符合红线约束的具体定格画面描述]\n幕 2 [填写你决定的镜头景别，如：半身近景]: [符合红线约束的具体定格画面描述]\n...\n幕 9 [填写你决定的镜头景别]: [符合红线约束的具体定格画面描述]"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 88,
+      "type": "Text (Any)",
+      "pos": [
+        -2730.9043006860275,
+        1514.9878636669816
+      ],
+      "size": [
+        564.4714687515188,
+        553.3090810217811
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "title": "视觉分镜师",
+      "properties": {
+        "cnr_id": "plush-for-comfyui",
+        "ver": "1.22.3",
+        "Node name for S&R": "Text (Any)"
+      },
+      "widgets_values": [
+        "You are the Visual Continuity Director and Elite ANIMA3 Prompt Engineer. \nYour ONLY task is to act as the \"Translation Node\", receiving the 9-Act script generated by the Story Plot Expander (Module 1) and translating it into a highly correlated 9-panel static storyboard using precise Anima-style English tag sequences.\n\n### 1. INPUT PROCESSING & VISUAL OVERRIDE (FATAL RULE)\n- Step 1: Read the `Genre` and `Visual Anchor` provided in the input script. \n- Step 2: Identify the `[character name]` and their original `[series/IP name]` (e.g., yor forger, spy x family).\n- Step 3 (Visual Override): You MUST aggressively filter the tags based on the CAMERA SHOT and scene context.\n  - **The \"Empty Shot & Object Macro\" Rule**: If the scene is an empty shot (scenery only) OR an `extreme macro` focusing purely on an INANIMATE OBJECT (e.g., umbrella ribs, rain droplets, a cup), you MUST COMPLETELY OMIT `1girl`, `1boy`, the `[character name]`, the `[series/IP name]`, and ALL character-specific traits. \n  - **CRITICAL EXCEPTION (The Body Part/Silhouette Rule)**: A character's silhouette (剪影) or isolated body parts (e.g., legs, hands, feet) are STILL considered the character. NEVER treat them as objects. You MUST keep the character/IP tags and NEVER use `no humans` for these shots.\n  - **The \"Phantom Limb\" Rule**: Strictly obey the camera angle. If the scene is a face or upper-body close-up, OMIT tags for legs, shoes, or pants. If it's a leg close-up, OMIT face and hair tags.\n- Step 4 (Environmental Enrichment): Automatically infer and generate rich background, environmental, and atmospheric tags (e.g., \"neon lights, wet asphalt, puddle reflections, moody atmosphere\") that fit the narrative context, placing them strictly at the end of the prompt.\n\n### 2. CORE MECHANISM: STATIC SLICES ONLY\n- Describe ONLY the current pose of the characters and the current background environment in that exact frozen microsecond.\n- AI image models cannot understand motion, time, past context, or future intentions.\n- BANNED (Process Verbs): Words that imply an ongoing action or time passage (e.g., \"sprinting\", \"wiping\", \"fading\", \"disappearing\", \"vanishing\").\n- REQUIRED (Geometric States): Absolute static physical states (e.g., replace \"sprinting\" with \"mid-air running pose\"; replace \"fading into rain\" with \"partially obscured by rain, dark silhouette\").\n\n### 3. OFFICIAL ANIMA FORMAT & BANNED TAGS (STRICT)\n- Format: Single line per Scene, entirely lowercase, separated by \", \".\n- REQUIRED ANIMA PREFIX: You MUST start every line with the official quality/meta prefix: `2025, newest, normal quality, score_5, highres, safe`\n- NO Weights: Do not use syntax like (tag:1.2) or [tag].\n- BANNED TAGS: Subjective lighting/tone tags (cinematic lighting, masterpiece, glowing). \n- ALLOWED: Weather tags (rain/snow/fog) are allowed.\n\n### 4. CONDITIONAL SLOT ORDER & ANTI-INERTIA (CRITICAL)\nYou MUST rigorously choose the structure based on the extracted camera shot. You must actively switch between Structure A and Structure B based on the following logic:\n\n**Structure A (For Wide/Medium/Full/Upper-Body/Face/Limb/Silhouette shots where ANY part of the character is visible):**\n- You MUST follow the official Anima character logic.\nFormat: `[ANIMA PREFIX], [count/gender], [character name], [series/IP name], [artist (optional)], [camera/shot], [CORE STATIC ACTION/POSE], [VISIBLE appearance/clothing ONLY], [core environment], [ENRICHED ATMOSPHERE/BACKGROUND DETAILS]`\nExample: `2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, medium shot, running mid-air, wet red sweater, dark street, heavy rain, neon lights reflections, wet asphalt, moody atmosphere`\n\n**Structure B (For TRUE Empty Shots / Scenery / INANIMATE Object Extreme Macro shots ONLY):**\n- You MUST BREAK THE PATTERN. ABSOLUTELY NO CHARACTER/IP TAGS ALLOWED. \n- Do NOT use `1girl`, `[character name]`, `[series/IP name]`, or any appearance/clothing tags. Start directly with the prefix, then the camera shot, and end with the `no humans` tag.\nFormat: `[ANIMA PREFIX], [camera/shot], [TRIGGER OBJECT / CORE DETAIL], [object physical state], [core environment], [ENRICHED ATMOSPHERE/BACKGROUND DETAILS], no humans`\n*FATAL ERROR WARNING:* If you use Structure B on a silhouette or a character's limb, it will cause a critical generation failure. Always use Structure A for limbs/silhouettes.\n\n### 5. DYNAMIC CAMERA EXTRACTION\nThe desired camera shot is explicitly defined in brackets `[ ]` at the start of each Scene in Module 1.\n- Step 1: Extract the camera shot explicitly defined in the brackets `[ ]`.\n- Step 2: Translate it into proper Booru-style camera tags.\n- Step 3: Evaluate the translated camera shot and context. If it is a TRUE empty shot (scenery) or a macro of an INANIMATE object, apply **Structure B**. If it contains any human element (including silhouettes, hands, or legs), you MUST apply **Structure A**.\n\n### 6. OUTPUT LAYOUT & FEW-SHOT EXAMPLES (CRITICAL)\n- Output ONLY the 9 scenes in English. \n- ZERO EMPTY LINES between scenes.\n- SELF-CORRECTION BEFORE OUTPUT: \n  1. Did I apply `no humans` to a scene that contains a character's silhouette, hands, or legs? (If yes, fix it immediately by switching to Structure A).\n  2. Did I include `1girl` or `spy x family` in a TRUE empty scenery shot? (If yes, delete them and ensure `no humans` is present).\n  3. Did I use process verbs like \"fading\" or \"disappearing\" instead of static states like \"obscured\"? (If yes, fix it).\n  4. Did I forget the Anima Prefix at the start of any line? (If yes, add it).\n\nExample Expected Output Pattern:\nScene 1: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, low-angle extreme wide shot, small dark silhouette, mid-air running pose, body leaning forward, hugging paper bag to chest, heavy rain, night, neon street lights, wet asphalt, city background\nScene 2: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, chest close-up, hand gripping wet red sweater neckline, white knuckles, exposed collarbone, wet skin, holding paper bag, dark lighting, rain streaks\nScene 3: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, extreme low angle close-up, bare feet mid-air over puddle, water splashing, radiating water droplets, wet asphalt, reflective surface, neon light reflection, detailed ground\nScene 4: 2025, newest, normal quality, score_5, highres, safe, extreme wide shot, empty street, heavy rain, dark alley, gloomy atmosphere, wet asphalt, puddle reflections, detailed city architecture, night, no humans\nScene 5: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, medium close-up, hand resting on cheek, wet hair pushed behind ear, gentle smile, wet red sweater, soft warm indoor lighting, blurred background"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 40,
+      "type": "ImageGrid",
+      "pos": [
+        -682.7924319420061,
+        1568.840417408973
+      ],
+      "size": [
+        270,
+        130
+      ],
+      "flags": {},
+      "order": 46,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 51
+        },
+        {
+          "name": "cell_width",
+          "type": "INT",
+          "widget": {
+            "name": "cell_width"
+          },
+          "link": 127
+        },
+        {
+          "name": "cell_height",
+          "type": "INT",
+          "widget": {
+            "name": "cell_height"
+          },
+          "link": 128
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            123
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "ImageGrid"
+      },
+      "widgets_values": [
+        3,
+        1216,
+        832,
+        0
+      ]
+    },
+    {
+      "id": 3,
+      "type": "CLIPLoader",
+      "pos": [
+        -2130.3142817704925,
+        1844.8670533222155
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            4,
+            5
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen_3_06b_base.safetensors",
+        "stable_diffusion",
+        "default"
+      ]
+    },
+    {
+      "id": 16,
+      "type": "llama_cpp_parameters",
+      "pos": [
+        -2082.855455526068,
+        754.8618107062758
+      ],
+      "size": [
+        270,
+        346
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "parameters",
+          "type": "LLAMACPPARAMS",
+          "links": [
+            14,
+            28
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "lihaoyun6/ComfyUI-llama-cpp",
+        "ver": "a69be4883f98c4025915f0390a3e87aae9ea3477",
+        "Node name for S&R": "llama_cpp_parameters"
+      },
+      "widgets_values": [
+        2048,
+        30,
+        0.9,
+        0.05,
+        1,
+        0.8,
+        1,
+        0,
+        1,
+        0,
+        0.1,
+        5,
+        -1
+      ]
+    },
+    {
+      "id": 28,
+      "type": "llama_cpp_clean_states",
+      "pos": [
+        -1396.7632767375476,
+        749.473640464482
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 33,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "link": 36
+        }
+      ],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": [
+            64
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "lihaoyun6/ComfyUI-llama-cpp",
+        "ver": "a69be4883f98c4025915f0390a3e87aae9ea3477",
+        "Node name for S&R": "llama_cpp_clean_states"
+      },
+      "widgets_values": [
+        -1
+      ]
+    },
+    {
+      "id": 14,
+      "type": "llama_cpp_instruct_adv",
+      "pos": [
+        -1798.2173878393576,
+        754.3170797250335
+      ],
+      "size": [
+        384.76474153363847,
+        401.3491863224824
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "llama_model",
+          "type": "LLAMACPPMODEL",
+          "link": 13
+        },
+        {
+          "name": "parameters",
+          "shape": 7,
+          "type": "LLAMACPPARAMS",
+          "link": 14
+        },
+        {
+          "name": "images",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "queue_handler",
+          "shape": 7,
+          "type": "*",
+          "link": null
+        },
+        {
+          "name": "custom_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "custom_prompt"
+          },
+          "link": 17
+        },
+        {
+          "name": "system_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "system_prompt"
+          },
+          "link": 125
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "STRING",
+          "links": [
+            36,
+            39
+          ]
+        },
+        {
+          "name": "output_list",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "state_uid",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "aux_id": "lihaoyun6/ComfyUI-llama-cpp",
+        "ver": "a69be4883f98c4025915f0390a3e87aae9ea3477",
+        "Node name for S&R": "llama_cpp_instruct_adv"
+      },
+      "widgets_values": [
+        "Creative - Short Story",
+        "",
+        "# Role: 顶级漫剧编剧与视觉叙事架构师 (Story Plot Expander)\n\n## 核心任务\n你的唯一任务是接收用户的简短故事灵感，将其扩写为逻辑连贯、物理因果严密的 9 幕分镜剧本。\n你的输出将作为下游“视觉分镜翻译节点”的直接输入。你不需要输出英文标签，但你的剧本必须具备极强的“画面感”和“物理因果律”，为下游节点提取“瞬间定格”提供完美的上下文。\n\n## 1. 剧情解构与类型路由 (Genre Routing)\n在扩写前，精准分析用户的输入，并将其归类为以下三种基调之一。这将直接决定下游节点的运镜节奏：\n- Genre A (静谧/情感): 侧重氛围、微表情、光影变化与自然交互。\n- Genre B (悬疑/探索): 侧重限制性视角、线索聚焦、心理张力与压迫感。\n- Genre C (激烈/战斗): 侧重极端透视、物理碰撞、破坏力与肌肉爆发。\n\n## 2. 视觉锚点设定 (Visual Anchor)\n在剧本开头，明确设定绝对一致的视觉锚点。一旦设定，后续 9 幕严禁偏离这些物理特征（确保角色、道具、空间的一致性）。\n\n## 3. 9 幕剧本扩写逻辑 (9-Panel Narrative Logic)\n请严格按照以下结构扩写剧情，每一幕必须清晰描述【环境状态】、【角色行为/姿态】以及推进剧情的【物理因果】：\n- 幕 1 (Establish/开场): 交代大环境全貌，以及角色在环境中的初始物理位置和静态姿态。\n- 幕 2 (Focus/聚焦): 视角收缩，描述角色当前状态下的某个局部物理细节（如眼神方向、手部动作）。\n- 幕 3 (Trigger/诱因): 异变突起。描述环境中引发后续改变的具体物理诱因（如出现的新物体、光影的突变、武器的出鞘）。\n- 幕 4 (Reaction/反应): 角色因为“幕 3”的诱因，产生的第一时间身体反馈或姿态改变。\n- 幕 5 (Action Slice/高潮动作): 核心动作或冲突。描述最具张力的物理瞬间（不要写动作过程，要写动作达到极点时的状态）。\n- 幕 6 (Peak Micro/微观极点): 动作高潮产生的极微小物理细节（如一滴飞溅的汗水、武器碰撞出的火花、接触面的涟漪）。\n- 幕 7 (State Change/状态改变): 核心动作完成后，周围环境或道具被改变后的客观物理现状（如碎裂的地面、扬起的尘土）。\n- 幕 8 (Aftermath/余韵): 聚焦残留物，或角色在经历动作后的局部特写。\n- 幕 9 (Pull Out/尾声): 视角拉远，交代角色在动作结束后，与新环境的整体空间关系。\n\n## 4. 编剧红线 (Critical Constraints)\n- 强化因果律：第 N 幕的物理空间和道具状态，必须逻辑继承自第 N-1 幕。绝不能凭空出现新事物。\n- 画面感至上：禁止使用抽象的心理描写（如“他感到很害怕”）。必须转化为可视化的物理状态（如“他瞳孔放大，身体僵硬，双手死死攥住衣角”）。\n- 语言要求：使用生动、精确、结构清晰的中文进行描述。\n\n## 输出格式 (Output Format)\n请严格遵循以下排版输出，不要包含多余的寒暄：\n\n### Genre: [填写 Genre A / B / C]\n### Visual Anchor:\n- 角色：[详细的外貌与服装特征]\n- 环境/道具：[核心场景与关键道具]\n\n### Script:\n幕 1: [具体描述]\n幕 2: [具体描述]\n...\n幕 9: [具体描述]",
+        "one by one",
+        24,
+        256,
+        105946958969378,
+        "randomize",
+        false,
+        false
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 25,
+      "type": "llama_cpp_instruct_adv",
+      "pos": [
+        -1074.8889104192885,
+        753.114520983366
+      ],
+      "size": [
+        400,
+        394
+      ],
+      "flags": {},
+      "order": 37,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "llama_model",
+          "type": "LLAMACPPMODEL",
+          "link": 44
+        },
+        {
+          "name": "parameters",
+          "shape": 7,
+          "type": "LLAMACPPARAMS",
+          "link": 28
+        },
+        {
+          "name": "images",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "queue_handler",
+          "shape": 7,
+          "type": "*",
+          "link": null
+        },
+        {
+          "name": "custom_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "custom_prompt"
+          },
+          "link": 65
+        },
+        {
+          "name": "system_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "system_prompt"
+          },
+          "link": 130
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "STRING",
+          "links": [
+            38,
+            55
+          ]
+        },
+        {
+          "name": "output_list",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "state_uid",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "aux_id": "lihaoyun6/ComfyUI-llama-cpp",
+        "ver": "a69be4883f98c4025915f0390a3e87aae9ea3477",
+        "Node name for S&R": "llama_cpp_instruct_adv"
+      },
+      "widgets_values": [
+        "Creative - Detailed Analysis",
+        "",
+        "You are the Visual Continuity Director and Elite ANIMA3 Prompt Engineer[cite: 3]. \nYour ONLY task is to act as the \"Translation Node\", receiving the 9-Act script generated by the Story Plot Expander (Module 1) and translating it into a highly correlated 9-panel static storyboard using precise Booru-style English tag sequences[cite: 3].\n\n### 1. INPUT PROCESSING & VISIBILITY CULLING (CRITICAL)\n- Step 1: Read the `Genre` and `Visual Anchor` provided in the input script. \n- Step 2: Extract the exact physical states from the 9-Act script. \n- Step 3 (Visibility Culling): You MUST strictly filter the Visual Anchor tags based on the current camera shot. \n  - If the shot is a \"face close-up\", DO NOT output tags for feet, pants, or shoes.\n  - If the shot is an \"extreme macro on an object\" (e.g., a broken umbrella or a footprint), DO NOT output character clothing or full-body tags. \n  - Only tag what is physically visible within the specific frame of that scene.\n\n### 2. CORE MECHANISM: STATIC SLICES ONLY\n- Describe ONLY the current pose of the characters and the current background environment in that exact frozen microsecond[cite: 3].\n- AI image models cannot understand motion, time, past context, or future intentions[cite: 3].\n- BANNED: Any narrative context, actions happening before/after, or dynamic transitions (\"starting to\", \"gradually\", \"moving\", \"about to\", \"just finished\")[cite: 3].\n- REQUIRED: Absolute static physical states (\"arm extended\", \"feet don't touch the ground\", \"midair\", \"hands wringing fabric\")[cite: 3].\n\n### 3. FORMAT & BANNED TAGS (STRICT)\n- Format: Single line per Scene, entirely lowercase, separated by \", \"[cite: 3].\n- NO Weights: Do not use syntax like (tag:1.2) or [tag][cite: 3].\n- BANNED TAGS: Quality/Meta tags (masterpiece, best quality), Artist tags (@artist), Lighting/Tone tags (sunlight, cinematic lighting, glowing, warm tone)[cite: 3]. \n- ALLOWED: Weather tags (rain/snow/fog) are allowed[cite: 3].\n\n### 4. DYNAMIC SLOT ORDER (APPLY TO EVERY SCENE)\nYou MUST construct each Scene's tags strictly in this order to prioritize the core action for the text encoder:\n[count/gender] -> [character name] -> [camera/shot] -> [CORE STATIC ACTION/TRIGGER OBJECT (Crucial!)] -> [visible clothing/appearance] -> [visible expression/fluids] -> [scene/environment] -> [detail/mood]\n*Note: The core action or trigger MUST be placed immediately after the camera shot to ensure maximum model attention.*\n\n### 5. GENRE-SPECIFIC CAMERA LOGIC (ROUTER)\nStep 1: Identify the `Genre` declared at the top of the input script[cite: 3].\nStep 2: Strictly apply the corresponding 9-panel camera logic below. All shots MUST remain absolute static slices[cite: 3].\n\n**Genre A: Emotional/Serene (Focus: Atmosphere, Micro-expressions, Light)**[cite: 3]\n- Scene 1 (Establish): Extreme wide shot, vast negative space, anchor character small in the frame[cite: 3].\n- Scene 2 (Focus): Medium close-up, focusing on a static environmental interaction (e.g., wind blowing hair)[cite: 3].\n- Scene 3 (Detail): Macro close-up on a quiet trigger (e.g., a falling leaf, light shifting)[cite: 3].\n- Scene 4 (Reaction): Close-up on facial micro-expression (e.g., lowered eyelashes, gentle smile)[cite: 3].\n- Scene 5 (Action Slice): Frozen gentle motion (e.g., hand resting softly on an object)[cite: 3].\n- Scene 6 (Peak Micro): Extreme macro on a specific emotional detail (e.g., a single tear, interlaced fingers)[cite: 3].\n- Scene 7 (Perspective): Over-the-shoulder shot, looking at what the anchor is seeing[cite: 3].\n- Scene 8 (Aftermath): Still life macro, lingering on an object left behind[cite: 3].\n- Scene 9 (Pull Out): High-angle wide shot, encompassing the character and the entire serene environment[cite: 3].\n\n**Genre B: Suspense/Thriller**[cite: 3]\n(Same as previous version...)\n\n**Genre C: Action/Combat**[cite: 3]\n(Same as previous version...)\n\n### 6. OUTPUT LAYOUT (CRITICAL)\n- Output ONLY the 9 scenes in English[cite: 3]. \n- NO explanations, NO Chinese text, NO markdown code blocks, NO story titles, NO narrative thinking text[cite: 3].\n- ZERO EMPTY LINES between scenes[cite: 3].\n\nExample Expected Output:\nScene 1: [who/count], [character], [camera shot], [core static pose], [visible appearance/clothing], [environment]\nScene 2: [who/count], [character], [camera shot], [core static pose], [visible appearance/clothing], [environment]\nScene 3: ...",
+        "one by one",
+        24,
+        256,
+        707967935418256,
+        "randomize",
+        false,
+        false
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 15,
+      "type": "llama_cpp_model_loader",
+      "pos": [
+        -2082.5573614667005,
+        519.5062373378067
+      ],
+      "size": [
+        271.41666412353516,
+        202
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "llama_model",
+          "type": "LLAMACPPMODEL",
+          "links": [
+            13,
+            44
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "lihaoyun6/ComfyUI-llama-cpp",
+        "ver": "a69be4883f98c4025915f0390a3e87aae9ea3477",
+        "Node name for S&R": "llama_cpp_model_loader"
+      },
+      "widgets_values": [
+        "Qwen3.5-27B-UD-IQ3_XXS.gguf",
+        "mmproj-F16.gguf",
+        "Qwen3.5",
+        8192,
+        -1,
+        0,
+        0
+      ]
+    },
+    {
+      "id": 20,
+      "type": "ShowText|pysssss",
+      "pos": [
+        -238.1418725926085,
+        480.95403962097885
+      ],
+      "size": [
+        349.8304018566056,
+        680.5236915705477
+      ],
+      "flags": {},
+      "order": 40,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 22
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-custom-scripts",
+        "ver": "1.2.5",
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        "Scene 1: 2025, newest, normal quality, score_5, highres, safe, extreme wide shot, empty street, heavy rain, dark night, wet asphalt, puddle reflections, blurry foreground, depth of field, small silhouette, cold moonlight, street lamp glow, high contrast, intricate details, sharp focus, no humans",
+        "Scene 2: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, full body shot, kneeling in water, wet black bodysuit, translucent fabric, clinging to skin, water membrane, rain streaks, cold moonlight, street lamp glow, night, heavy rain, intricate details, sharp focus, complex light and shadow",
+        "Scene 3: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, medium shot, hands touching horns, wet blue hair, water droplets, red horns, detached sleeves, blurry foreground, depth of field, bokeh, cold moonlight, street lamp glow, night, heavy rain, intricate details, sharp focus, wet texture",
+        "Scene 4: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, half body close-up, head tilt, looking down, wet hair on face, water dripping on chest, wet black fabric texture, high contrast, chiaroscuro, cold moonlight, street lamp glow, night, heavy rain, intricate details, sharp focus, detailed fabric texture",
+        "Scene 5: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, half body close-up, fingers pulling wet fabric, fabric tension, stretched texture, skin contact, wet black bodysuit, cold moonlight, street lamp glow, night, heavy rain, intricate details, sharp focus, physical tension",
+        "Scene 6: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, extreme close-up, face, blushing, wet eyes, dilated pupils, water droplets on skin, cold moonlight, street lamp glow, night, heavy rain, blurry background, depth of field, bokeh, intricate details, sharp focus, emotional expression",
+        "Scene 7: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, from below, low-angle extreme close-up, looking through water, distorted reflection, water ripples, rain drop falling, giant perspective, wet blue hair, cold moonlight, street lamp glow, night, heavy rain, blurry foreground, depth of field, bokeh, intricate details, sharp focus",
+        "Scene 8: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, medium shot, dutch angle, tilted horizon, unbalanced framing, wet body curve, water streaming down, wet black bodysuit, cold moonlight, street lamp glow, night, heavy rain, intricate details, sharp focus, complex light and shadow",
+        "Scene 9: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, half body close-up, pulling fabric, leaning forward, vertical lighting, rim lighting, wet silhouette, dark background, cold moonlight, street lamp glow, night, heavy rain, static pose, intricate details, sharp focus, high contrast"
+      ]
+    },
+    {
+      "id": 86,
+      "type": "SaveImage",
+      "pos": [
+        615.8663801161742,
+        1433.1599167451159
+      ],
+      "size": [
+        788.9013923750886,
+        619.9881787113229
+      ],
+      "flags": {},
+      "order": 49,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 124
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen3.5+Anima"
+      ]
+    },
+    {
+      "id": 72,
+      "type": "easy int",
+      "pos": [
+        -2597.6731631593257,
+        1287.2559839792955
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "int",
+          "type": "INT",
+          "links": [
+            98,
+            127
+          ]
+        }
+      ],
+      "title": "宽",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "Node name for S&R": "easy int"
+      },
+      "widgets_values": [
+        1344
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 73,
+      "type": "easy int",
+      "pos": [
+        -2597.618286258376,
+        1393.9805261604015
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "int",
+          "type": "INT",
+          "links": [
+            99,
+            128
+          ]
+        }
+      ],
+      "title": "高",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "Node name for S&R": "easy int"
+      },
+      "widgets_values": [
+        768
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -1414.2705912752783,
+        1680.2786233964512
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            7
+          ]
+        }
+      ],
+      "title": "CLIP文本编码（负面提示词）",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "(worst quality, low quality:1.2), lowres, blurry, jpeg artifacts, messy drawing, (text, logo, watermark, signature, username, patreon logo, web address, UI, title, speech bubble, comic panel, sound effects:1.4), (letterboxed, pillarboxed, border, frame, black margin, black bars, white margin, screenshot:1.4), bad anatomy, deformed, distorted, disfigured, poorly drawn hands, missing fingers, extra digits, mutated, extra limbs, missing limbs, inverted limbs, very long legs, plastic skin, doll, fat, old, crowd, 2girls, expressionless, sharp teeth, (3d, photorealistic, realistic, cgi, render:1.2), mosaic"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 42,
+      "type": "ShowText|pysssss",
+      "pos": [
+        137.36576423849397,
+        474.8587288999054
+      ],
+      "size": [
+        599.4209133139511,
+        635.2950774725174
+      ],
+      "flags": {},
+      "order": 39,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 55
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-custom-scripts",
+        "ver": "1.2.5",
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        "Scene 1: 2025, newest, normal quality, score_5, highres, safe, extreme wide shot, empty street, heavy rain, dark night, wet asphalt, puddle reflections, blurry foreground, depth of field, small silhouette, cold moonlight, street lamp glow, high contrast, intricate details, sharp focus, no humans\nScene 2: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, full body shot, kneeling in water, wet black bodysuit, translucent fabric, clinging to skin, water membrane, rain streaks, cold moonlight, street lamp glow, night, heavy rain, intricate details, sharp focus, complex light and shadow\nScene 3: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, medium shot, hands touching horns, wet blue hair, water droplets, red horns, detached sleeves, blurry foreground, depth of field, bokeh, cold moonlight, street lamp glow, night, heavy rain, intricate details, sharp focus, wet texture\nScene 4: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, half body close-up, head tilt, looking down, wet hair on face, water dripping on chest, wet black fabric texture, high contrast, chiaroscuro, cold moonlight, street lamp glow, night, heavy rain, intricate details, sharp focus, detailed fabric texture\nScene 5: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, half body close-up, fingers pulling wet fabric, fabric tension, stretched texture, skin contact, wet black bodysuit, cold moonlight, street lamp glow, night, heavy rain, intricate details, sharp focus, physical tension\nScene 6: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, extreme close-up, face, blushing, wet eyes, dilated pupils, water droplets on skin, cold moonlight, street lamp glow, night, heavy rain, blurry background, depth of field, bokeh, intricate details, sharp focus, emotional expression\nScene 7: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, from below, low-angle extreme close-up, looking through water, distorted reflection, water ripples, rain drop falling, giant perspective, wet blue hair, cold moonlight, street lamp glow, night, heavy rain, blurry foreground, depth of field, bokeh, intricate details, sharp focus\nScene 8: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, medium shot, dutch angle, tilted horizon, unbalanced framing, wet body curve, water streaming down, wet black bodysuit, cold moonlight, street lamp glow, night, heavy rain, intricate details, sharp focus, complex light and shadow\nScene 9: 2025, newest, normal quality, score_5, highres, safe, 1girl, ganyu, genshin impact, half body close-up, pulling fabric, leaning forward, vertical lighting, rim lighting, wet silhouette, dark background, cold moonlight, street lamp glow, night, heavy rain, static pose, intricate details, sharp focus, high contrast"
+      ]
+    },
+    {
+      "id": 32,
+      "type": "ShowText|pysssss",
+      "pos": [
+        -1394.2199420816214,
+        848.8211169037857
+      ],
+      "size": [
+        275.4078825718268,
+        307.14031262993126
+      ],
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 39
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-custom-scripts",
+        "ver": "1.2.5",
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        "### Genre: Genre C (诱惑/私密)\n### Visual Anchor:\n- 角色：甘雨（Ganyu），拥有冰蓝色长发与醒目的红色双角。身着黑色紧身衣，布料因完全湿透而呈现半透明状，紧紧贴合肌肤，清晰勾勒出身体曲线。面色泛红，眼神迷离湿润。\n- 环境/道具：璃月港深夜的街道，地面布满积水，倒映着微弱的环境光。无其他行人。\n- 时间/光影：深夜/暴雨。冷色调的月光与路灯在雨幕中形成高反差的光斑，主要光源来自上方，在湿润的皮肤和布料上形成强烈的高光反射。\n\n### Script:\n幕 1 [大远景]: 暴雨倾盆的璃月港街道，空旷无人。甘雨渺小的身影在积水中行走，黑色轮廓在冷冽的夜色与雨幕中显得孤立无援，积水倒映出她模糊的倒影。\n\n幕 2 [全景]: 甘雨停下脚步，双膝微屈跪坐在积水中。黑色紧身衣因吸水而彻底紧贴身体，布料表面因张力产生细微的褶皱，勾勒出胸臀的饱满曲线，雨水在布料表面形成流动的水膜。\n\n幕 3 [中景]: 甘雨抬起双手，指尖轻触头顶湿润的红色双角。冰蓝色长发凌乱地垂落在肩头，发梢滴落的水珠在重力作用下拉长，背景是模糊的雨丝与街道灯光。\n\n幕 4 [半身近景]: 甘雨微微侧头，视线低垂。冰蓝色的长发被雨水打湿，几缕发丝粘连在脸颊与锁骨处，雨水顺着发流进胸前，黑色布料在胸前凹陷处形成深色的水渍纹理。\n\n幕 5 [半身近景]: 甘雨的右手手指勾住胸口处紧贴在皮肤上的布料边缘，指腹用力按压，布料因拉扯而产生形变，紧绷的纹理清晰可见，展现出极致的物理张力。\n\n幕 6 [近景]: 甘雨的面部特写。面色因情绪或体温而泛起明显的潮红，与冷色调的雨水形成强烈对比。双眼睁大，瞳孔中反射着微弱的光点，眼神呈现出湿润、迷离且失焦的状态。\n\n幕 7 [仰视]: 极低角度的贴地视角。镜头穿过积水中破碎的倒影向上仰视甘雨，她的身形在透视下显得巨大而具有压迫感，雨水从她垂下的长发尖端滴落，砸入水中激起微小的涟漪。\n\n幕 8 [中景]: 构图发生严重倾斜。甘雨的身体随倾斜的地平线呈现失衡状态，黑色紧身衣的轮廓在倾斜的画面中被拉伸，雨水顺着身体曲线滑落，光影在湿润的肌肤与布料上形成斑驳的切割。\n\n幕 9 [半身近景]: 甘雨维持着拉扯布料的姿态，身体微微前倾。冷冽的月光从上方垂直照射，将她湿润的轮廓与背景中的黑暗分割开来，画面定格在这一瞬间的静谧与张力之中，无任何动作发生。"
+      ]
+    },
+    {
+      "id": 91,
+      "type": "Text (Any)",
+      "pos": [
+        -2750.200830254598,
+        638.4720156957391
+      ],
+      "size": [
+        564.4714687515188,
+        553.3090810217811
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": [
+            125
+          ]
+        }
+      ],
+      "title": "剧情编剧",
+      "properties": {
+        "cnr_id": "plush-for-comfyui",
+        "ver": "1.22.3",
+        "Node name for S&R": "Text (Any)"
+      },
+      "widgets_values": [
+        "# Role: 顶级漫剧编剧与视觉叙事架构师 (Story Plot Expander)\n\n## 核心任务\n你的唯一任务是接收用户的简短故事灵感，将其扩写为逻辑连贯、物理因果严密的 9 幕分镜剧本。\n你的输出将作为下游“视觉分镜翻译节点”的直接输入。你不需要输出英文标签，但你的剧本必须具备极强的“画面感”和“物理因果律”，为下游节点提取“瞬间定格”提供完美的上下文。\n\n## 1. 剧情解构与基调路由 (Genre Routing)\n在扩写前，精准分析用户的输入，并将其归类为以下三种基调之一。这将决定你后续自由调度运镜时的整体视觉侧重点：\n- Genre A (静谧/情感): 镜头语言应偏向克制，多自主调用自然光影交互、面部微表情近景、大远景留白等常规景别。\n- Genre B (悬疑/探索): 镜头语言应偏向压抑，多自主调用限制性视角（如第一人称或过肩视角）、中景线索聚焦、以及常规的近景。\n- Genre C (诱惑/私密): 镜头语言应偏向极致的感官张力，多自主调用展现角色曲线优势的局部特写（如锁骨、腰际、或水珠滑落的肌肤微距）、带有窥视感与呼吸感的低角度或越轴镜头、以及极具挑逗性与情绪拉扯的半身动态中景，配合光影营造充满 NSFW 暗示与诱惑力的私密氛围。\n\n## 2. 视觉锚点设定 (Visual Anchor)\n在剧本开头，明确设定绝对一致的视觉锚点（包含角色、环境、时间与光影基调）。一旦设定，后续 9 幕严禁偏离这些物理特征，确保叙事时空的绝对连贯。\n\n## 3. 动态 9 幕剧本扩写逻辑 (Dynamic 9-Panel Narrative Logic)\n放弃固定的公式化运镜结构。你必须根据故事情节的发展情绪与物理因果，自主决定每一幕的最优景别与运镜方式。\n**注意：允许使用的景别仅限【大远景、远景、全景、中景、半身近景、近景、过肩视角、仰视/俯视】。**\n\n**【静态张力替代复杂动作】(核心法则)**\n当需要表现强烈的视觉冲击（如高潮、危机、压迫感或极致诱惑）时，**绝对不要描写复杂的物理格斗或人体扭曲动作**。请务必通过以下电影级镜头语言来制造张力：\n1. **构图失衡**：描写画面地平线发生严重倾斜，营造不安、疯狂或失控的心理暗示。\n2. **极端透视**：描写极低角度的贴地仰视（放大压迫感），或自带严重透视畸变的夸张机位。\n3. **空间遮挡**：描写透过前景的遮挡物（如带水珠的毛玻璃、生锈的铁丝网、摇曳的树叶）窥视角色，建立强烈的景深与故事感。\n4. **极致光影**：描写角色处于浓重的黑暗中，仅有边缘轮廓被背光勾勒；或者极其强烈的明暗切割投射在角色身体上。\n\n## 4. 编剧红线 (Critical Constraints)\n- **严格常规景别约束 (Standard Shots ONLY)**：严禁使用任何带有“特写 (Close-up/Extreme Close-up)”、“极微距”、“局部放大”等字眼的景别。表现局部细节请统一使用“近景 (Close shot)”或“半身近景 (Medium close-up)”。\n- **强化因果律**：第 N 幕的物理空间和道具状态，必须逻辑继承自第 N-1 幕。绝不能凭空出现新事物。\n- **视觉绝对化 (NO Audio/Smell)**：禁止描写声音、气味或温度。一切必须转化为纯粹的物理视觉状态。\n- **绝对时间冻结 (Absolute Time Freeze)**：绝对禁止使用任何带有过程感、时间推移或动作预期的词汇（如“逐渐”、“即将”、“开始”）。动作和环境必须是一瞬间的**绝对物理定格**。\n\n## 输出格式 (Output Format)\n请严格遵循以下排版输出，不要包含多余的寒暄：\n\n### Genre: [填写 Genre A / B / C]\n### Visual Anchor:\n- 角色：[详细的外貌与服装特征]\n- 环境/道具：[核心场景与关键道具]\n- 时间/光影：[明确当前的时间点与核心光源，如：深夜/清冷的月光从窗户照入]\n\n### Script:\n幕 1 [填写你决定的镜头景别]: [符合红线约束的具体定格画面描述]\n幕 2 [填写你决定的镜头景别]: [符合红线约束的具体定格画面描述]\n...\n幕 9 [填写你决定的镜头景别]: [符合红线约束的具体定格画面描述]"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 92,
+      "type": "Text (Any)",
+      "pos": [
+        -2728.9893270351517,
+        1518.7950119851373
+      ],
+      "size": [
+        564.4714687515188,
+        553.3090810217811
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": [
+            130
+          ]
+        }
+      ],
+      "title": "视觉分镜师Qwen3.5",
+      "properties": {
+        "cnr_id": "plush-for-comfyui",
+        "ver": "1.22.3",
+        "Node name for S&R": "Text (Any)"
+      },
+      "widgets_values": [
+        "You are the Visual Continuity Director and Elite ANIMA3 Prompt Engineer. \nYour ONLY task is to act as the \"Translation Node\", receiving the 9-Act script generated by the Story Plot Expander (Module 1) and translating it into a highly correlated 9-panel static storyboard using precise Anima-style English tag sequences.\n\n### 1. INPUT PROCESSING & VISUAL OVERRIDE (FATAL RULE)\n- Step 1: Read the `Genre` and `Visual Anchor` provided in the input script.\n- Step 2: Identify the `[character name]` and their original `[series/IP name]`.\n- Step 3 (Visual Override): You MUST aggressively filter the tags based on the CAMERA SHOT and scene context.\n  - **The \"Empty Shot & Object Macro\" Rule**: If the scene is an empty shot (scenery only) OR an `extreme macro` focusing purely on an INANIMATE OBJECT, you MUST COMPLETELY OMIT `1girl`, `1boy`, the `[character name]`, the `[series/IP name]`, and ALL character-specific traits. \n  - **CRITICAL EXCEPTION (The Body Part/Silhouette Rule)**: A character's silhouette or isolated body parts are STILL considered the character. NEVER use `no humans` for these shots.\n  - **The \"Phantom Limb\" Rule**: Strictly obey the camera angle. If the scene is a face or upper-body close-up, OMIT tags for legs, shoes, or pants.\n- Step 4 (Environmental & Texture Enrichment):\n  - **Global Environment & Lighting (CRITICAL)**: You MUST inherit and output the core ENVIRONMENT, TIME, and LIGHTING tags defined in the Visual Anchor across ALL 9 scenes. Even in close-ups, do NOT drop the core environmental anchor.\n  - **Texture & Lens Details**: You MUST inject high-frequency physical detail tags into every scene (e.g., \"intricate details, sharp focus, ultra-detailed\").\n\n### 2. CINEMATIC TENSION TRANSLATION (NEW CORE MECHANISM)\nTo achieve massive visual impact without relying on complex physical character poses, you MUST translate the narrative descriptions of camera angles and lighting into high-weight Anima tags:\n- If the script describes a tilted horizon/unbalanced framing -> output `dutch angle`\n- If the script describes an extreme exaggerated perspective -> output `dynamic angle, fisheye`\n- If the script describes extreme low/high angles -> output `from below` or `from above`\n- If the script describes looking through objects or foreground obstructions -> output `blurry foreground, depth of field, bokeh`\n- If the script describes strong edge lighting, silhouettes, or dark contrasts -> output `backlighting, rim lighting, high contrast, chiaroscuro`\n\n### 3. OFFICIAL ANIMA FORMAT & BANNED TAGS (STRICT)\n- Format: Single line per Scene, entirely lowercase, separated by \", \".\n- REQUIRED ANIMA PREFIX: You MUST start every line with the official quality/meta prefix: `2025, newest, normal quality, score_5, highres, safe`\n- BANNED TAGS: Subjective \"magic\" tags (masterpiece, best quality, glowing, magic), process verbs (running, fading). Replace verbs with static poses (mid-air running pose).\n\n### 4. CONDITIONAL SLOT ORDER & ANTI-INERTIA (CRITICAL)\nYou must actively switch between Structure A and Structure B:\n\n**Structure A (For shots where ANY part of the character is visible):**\nFormat: `[ANIMA PREFIX], [count/gender], [character name], [series/IP name], [artist (optional)], [camera/shot], [CINEMATIC TENSION TAGS (if applicable)], [CORE STATIC ACTION/POSE], [VISIBLE appearance/clothing ONLY], [GLOBAL ENVIRONMENT & LIGHTING], [ENRICHED ATMOSPHERE/BACKGROUND DETAILS], [PHYSICAL TEXTURES & LENS DETAILS]`\n\n**Structure B (For TRUE Empty Shots / INANIMATE Object Macro shots ONLY):**\nFormat: `[ANIMA PREFIX], [camera/shot], [CINEMATIC TENSION TAGS (if applicable)], [TRIGGER OBJECT / CORE DETAIL], [object physical state], [GLOBAL ENVIRONMENT & LIGHTING], [ENRICHED ATMOSPHERE/BACKGROUND DETAILS], [PHYSICAL TEXTURES & LENS DETAILS], no humans`\n\n### 5. DYNAMIC CAMERA EXTRACTION\n- Step 1: Extract the camera shot explicitly defined in brackets `[ ]`.\n- Step 2: Translate it into proper Booru-style tags.\n- Step 3: Evaluate context. If it's a TRUE empty scenery shot, apply **Structure B**. Otherwise, apply **Structure A**.\n\n### 6. OUTPUT LAYOUT & STRICT FORMATTING (CRITICAL - READ CAREFULLY)\n- **ABSOLUTE NO-COT RULE (FATAL)**: You are strictly forbidden from outputting ANY thinking process, step-by-step logic, analysis, or introductory/concluding remarks.\n- Your entire response MUST consist of exactly 9 lines of raw text. \n- ZERO EMPTY LINES between scenes.\n- The VERY FIRST character of your output MUST be \"S\" (from Scene 1).\n\nExample Expected Output Pattern:\nScene 1: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, low-angle extreme wide shot, from below, dutch angle, small dark silhouette, leaning on railing, heavy rain, neon street lights, night, intricate details, sharp focus, complex light and shadow\nScene 2: 2025, newest, normal quality, score_5, highres, safe, 1girl, yor forger, spy x family, chest close-up, blurry foreground, depth of field, hand gripping wet red sweater neckline, holding paper bag, rain streaks, night, intricate details, detailed fabric texture, sharp focus\nScene 3: 2025, newest, normal quality, score_5, highres, safe, extreme wide shot, empty street, heavy rain, dark alley, wet asphalt, puddle reflections, night, intricate details, sharp focus, high contrast, no humans"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 64,
+      "type": "Note",
+      "pos": [
+        -1750.0295571545025,
+        203.9905944103431
+      ],
+      "size": [
+        545.1794319972716,
+        180.9077576119422
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Anima剧情生成助手",
+      "properties": {},
+      "widgets_values": [
+        "# 系统提示词 (System Prompt)\n\n**【角色设定】**\n你是一个专业的 Anima 模型生图提示词专家与分镜剧情生成助手。你的任务是根据用户指定的角色，结合特定主题（如“雨夜/湿身/氛围感”），生成能够支撑九宫格连贯分镜的动态剧情，并提取出纯粹的角色基础底模提示词。\n\n**【严格输出规则】**\n每一次回复必须严格遵循以下标准，禁止输出任何多余的废话、解释、过渡句或寒暄，并且**段落之间不要有多余的空行**。\n\n**【格式模板】**\nX. 角色名称 (外文名) - 《作品名称》\n大致剧情：\n[在此编写剧情。规则1：去修饰化，文字精炼直白。规则2：必须是一条完整的动态故事线，包含清晰的动作轨迹、物理状态变化（如衣物吸水紧绷、半透明透视）与情绪/微表情递进。规则3：信息量与动作拆解必须足以支撑生成 9 张连贯的分镜图。]\n完整提示词：\n[在此编写提示词。规则1：严格遵循格式 `[质量/元数据/年份/安全标签], [人物数量], [角色], [IP系列], [艺术家(可选)], [角色通用标签]`。规则2：纯净角色特征（极其重要！），提示词中**绝对禁止**出现任何环境、天气、背景、动作或光影的描写词汇（如 rain, night, city, cinematic lighting, running 等）。仅保留角色自身的固定外貌、发型、瞳色、服装等基础视觉特征标签，确保其作为纯净的底膜提示词。]\n\n**【参考示例】**\n1. 申鹤 (Shenhe) - 《原神》\n大致剧情：\n申鹤在奥藏山巡视时遭遇暴雨。她没有寻找避雨处，任由雨水浇透全身。黑色的紧身连体衣吸水后呈现出极致的紧绷感，将她丰满曼妙的曲线毫无保留地勾勒出来。冰蓝色的长发湿黏在白皙的背部，水珠顺着红色的结绳滴落。她停下脚步，冷漠地注视着山间的雨雾，随后轻轻甩去发梢的水分，散发着清冷脱俗又极具张力的性感。\n完整提示词：\n2026, newest, high quality, score_9, highres, safe, 1girl, shenhe, genshin impact, white hair, long hair, braided hair, gradient hair, blue eyes, black bodysuit, detached sleeves, bare shoulders, cleavage, masterpiece"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 17,
+      "type": "Text (Any)",
+      "pos": [
+        -1797.726405772878,
+        493.5504737033658
+      ],
+      "size": [
+        388.9438623783699,
+        198.7715402642633
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": [
+            17
+          ]
+        }
+      ],
+      "title": "主要剧情",
+      "properties": {
+        "cnr_id": "plush-for-comfyui",
+        "ver": "1.22.3",
+        "Node name for S&R": "Text (Any)"
+      },
+      "widgets_values": [
+        "甘雨 (Ganyu) - 《原神》\n大致剧情：\n璃月港的深夜，暴雨如注。甘雨穿行在空旷的街道上。黑色的紧身衣被大雨完全浇透。犹如第二层皮肤般的布料紧绷在身上，勾勒出极具诱惑力的胸臀曲线。她停下脚步，双膝微屈跪坐在积水中。她抬起双手，轻轻抚摸头顶被雨水打湿的红色双角。雨水顺着冰蓝色的长发流进胸前。她伸手扯了扯紧贴在胸口处的布料。她微微侧头，面色泛红，眼神湿润而迷离。"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 49,
+      "type": "Text (Any)",
+      "pos": [
+        -1399.0728888305484,
+        494.2626184101839
+      ],
+      "size": [
+        388.9438623783699,
+        198.7715402642633
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "links": [
+            63
+          ]
+        }
+      ],
+      "title": "官方推荐格式提示词",
+      "properties": {
+        "cnr_id": "plush-for-comfyui",
+        "ver": "1.22.3",
+        "Node name for S&R": "Text (Any)"
+      },
+      "widgets_values": [
+        "2026, newest, high quality, score_9, highres, nsfw, 1girl, ganyu, genshin impact, long hair, blue hair, purple eyes, horns, bell, black bodysuit, white and blue dress, detached sleeves, pantyhose, cleavage, masterpiece"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 47,
+      "type": "SaveImage",
+      "pos": [
+        -223.88263583137038,
+        1428.2336152024782
+      ],
+      "size": [
+        802.9824587154721,
+        625.7421842838726
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 47,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 61
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.3",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen3.5+Anima"
+      ]
+    }
+  ],
+  "links": [
+    [
+      4,
+      3,
+      0,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      5,
+      3,
+      0,
+      7,
+      0,
+      "CLIP"
+    ],
+    [
+      6,
+      6,
+      0,
+      8,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      7,
+      7,
+      0,
+      8,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      8,
+      9,
+      0,
+      8,
+      3,
+      "LATENT"
+    ],
+    [
+      9,
+      8,
+      0,
+      10,
+      0,
+      "LATENT"
+    ],
+    [
+      10,
+      2,
+      0,
+      10,
+      1,
+      "VAE"
+    ],
+    [
+      13,
+      15,
+      0,
+      14,
+      0,
+      "LLAMACPPMODEL"
+    ],
+    [
+      14,
+      16,
+      0,
+      14,
+      1,
+      "LLAMACPPARAMS"
+    ],
+    [
+      17,
+      17,
+      0,
+      14,
+      4,
+      "STRING"
+    ],
+    [
+      22,
+      18,
+      0,
+      20,
+      0,
+      "STRING"
+    ],
+    [
+      28,
+      16,
+      0,
+      25,
+      1,
+      "LLAMACPPARAMS"
+    ],
+    [
+      36,
+      14,
+      0,
+      28,
+      0,
+      "STRING"
+    ],
+    [
+      38,
+      25,
+      0,
+      18,
+      0,
+      "STRING"
+    ],
+    [
+      39,
+      14,
+      0,
+      32,
+      0,
+      "STRING"
+    ],
+    [
+      44,
+      15,
+      0,
+      25,
+      0,
+      "LLAMACPPMODEL"
+    ],
+    [
+      51,
+      10,
+      0,
+      40,
+      0,
+      "IMAGE"
+    ],
+    [
+      55,
+      25,
+      0,
+      42,
+      0,
+      "STRING"
+    ],
+    [
+      61,
+      10,
+      0,
+      47,
+      0,
+      "IMAGE"
+    ],
+    [
+      63,
+      49,
+      0,
+      50,
+      0,
+      "TEXT,STRING"
+    ],
+    [
+      64,
+      28,
+      0,
+      50,
+      1,
+      "TEXT,STRING"
+    ],
+    [
+      65,
+      50,
+      0,
+      25,
+      4,
+      "STRING"
+    ],
+    [
+      66,
+      1,
+      0,
+      5,
+      0,
+      "MODEL"
+    ],
+    [
+      69,
+      5,
+      0,
+      51,
+      0,
+      "MODEL"
+    ],
+    [
+      86,
+      62,
+      0,
+      61,
+      1,
+      "TEXT,STRING"
+    ],
+    [
+      87,
+      18,
+      0,
+      61,
+      0,
+      "STRING"
+    ],
+    [
+      96,
+      56,
+      0,
+      8,
+      0,
+      "MODEL"
+    ],
+    [
+      98,
+      72,
+      0,
+      9,
+      0,
+      "INT"
+    ],
+    [
+      99,
+      73,
+      0,
+      9,
+      1,
+      "INT"
+    ],
+    [
+      100,
+      51,
+      0,
+      56,
+      0,
+      "MODEL"
+    ],
+    [
+      106,
+      61,
+      0,
+      34,
+      0,
+      "STRING"
+    ],
+    [
+      113,
+      34,
+      0,
+      6,
+      1,
+      "STRING"
+    ],
+    [
+      123,
+      40,
+      0,
+      89,
+      0,
+      "IMAGE"
+    ],
+    [
+      124,
+      89,
+      0,
+      86,
+      0,
+      "IMAGE"
+    ],
+    [
+      125,
+      91,
+      0,
+      14,
+      5,
+      "STRING"
+    ],
+    [
+      127,
+      72,
+      0,
+      40,
+      1,
+      "INT"
+    ],
+    [
+      128,
+      73,
+      0,
+      40,
+      2,
+      "INT"
+    ],
+    [
+      130,
+      92,
+      0,
+      25,
+      5,
+      "STRING"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "模型加载区",
+      "bounding": [
+        -2152.4787968713263,
+        1392.5315997236994,
+        699.9884894574366,
+        623.3481030066869
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "提示词推理区",
+      "bounding": [
+        -2096.6912937866236,
+        379.883070722042,
+        3383.2029846946552,
+        815.8070844165
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "采样区",
+      "bounding": [
+        -1001.2457403303755,
+        1387.9550361622028,
+        607.6829082060747,
+        632.2758530705239
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "图片尺寸",
+      "bounding": [
+        -2663.0507620655553,
+        1213.6559839792956,
+        407.270794585806,
+        252.01638210818805
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.9849732675809844,
+      "offset": [
+        1470.7378300398566,
+        -1114.7176495571891
+      ]
+    },
+    "workspace_info": {
+      "id": "Z3eITa_JujZ8clUhm9zn1"
+    },
+    "frontendVersion": "1.42.15",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

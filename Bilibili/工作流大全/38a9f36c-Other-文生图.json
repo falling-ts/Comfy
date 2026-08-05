@@ -1,0 +1,1091 @@
+{
+  "id": "d3f04960-0182-4600-a368-55d2f1949fbb",
+  "revision": 0,
+  "last_node_id": 29,
+  "last_link_id": 27,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "BasicGuider",
+      "pos": [
+        1619.0078125,
+        1145.87158203125
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 17
+        },
+        {
+          "label": "条件",
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "label": "引导",
+          "name": "GUIDER",
+          "type": "GUIDER",
+          "slot_index": 0,
+          "links": [
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "BasicGuider",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 2,
+      "type": "KSamplerSelect",
+      "pos": [
+        1619.0078125,
+        855.8716430664062
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "采样器",
+          "name": "SAMPLER",
+          "type": "SAMPLER",
+          "slot_index": 0,
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "KSamplerSelect",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "euler"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 4,
+      "type": "BasicScheduler",
+      "pos": [
+        1619.0078125,
+        985.8716430664062
+      ],
+      "size": [
+        210,
+        106
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "label": "Sigmas",
+          "name": "SIGMAS",
+          "type": "SIGMAS",
+          "slot_index": 0,
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "BasicScheduler",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "beta",
+        25,
+        1
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 6,
+      "type": "VAEDecode",
+      "pos": [
+        2513.48828125,
+        885.5155639648438
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "Latent",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 5
+        },
+        {
+          "label": "VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            16
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "VAEDecode",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 5,
+      "type": "DualCLIPLoader",
+      "pos": [
+        1631.5166015625,
+        601.3104248046875
+      ],
+      "size": [
+        315,
+        130
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 0,
+          "links": [
+            15
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "DualCLIPLoader",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "t5xxl_fp8_e4m3fn.safetensors",
+        "clip_l.safetensors",
+        "flux",
+        "default"
+      ]
+    },
+    {
+      "id": 14,
+      "type": "NunchakuFluxLoraLoader",
+      "pos": [
+        1992.87255859375,
+        342.289306640625
+      ],
+      "size": [
+        300.8999938964844,
+        82
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "label": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            17,
+            18
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-nunchaku",
+        "ver": "aee38dd7ee8f88bf5db0a7ce813da67a4f969c88",
+        "Node name for S&R": "NunchakuFluxLoraLoader",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "flux\\F.1 小红书照片_最强网感｜时尚穿搭_trendy_ photo2.safetensors",
+        0.8000000000000002
+      ]
+    },
+    {
+      "id": 10,
+      "type": "VAELoader",
+      "pos": [
+        2371.60546875,
+        349.8014831542969
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 0,
+          "links": [
+            6
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "VAELoader",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "ae.safetensors"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "FluxGuidance",
+      "pos": [
+        1862.5863037109375,
+        1151.7635498046875
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "条件",
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "FluxGuidance",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        3.5
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 15,
+      "type": "EmptyLatentImage",
+      "pos": [
+        1861.081298828125,
+        998.8844604492188
+      ],
+      "size": [
+        210,
+        106
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "Latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            13
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "EmptyLatentImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        832,
+        1536,
+        2
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 13,
+      "type": "SamplerCustomAdvanced",
+      "pos": [
+        2165.24462890625,
+        865.8716430664062
+      ],
+      "size": [
+        320.779541015625,
+        326
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "噪波生成",
+          "name": "noise",
+          "type": "NOISE",
+          "link": 9
+        },
+        {
+          "label": "引导",
+          "name": "guider",
+          "type": "GUIDER",
+          "link": 10
+        },
+        {
+          "label": "采样器",
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 11
+        },
+        {
+          "label": "Sigmas",
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 12
+        },
+        {
+          "label": "Latent",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "label": "输出",
+          "name": "output",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            5
+          ]
+        },
+        {
+          "label": "降噪输出",
+          "name": "denoised_output",
+          "type": "LATENT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "SamplerCustomAdvanced",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 11,
+      "type": "NunchakuFluxDiTLoader",
+      "pos": [
+        1635.5537109375,
+        344.4029541015625
+      ],
+      "size": [
+        312.2771911621094,
+        202
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            14
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-nunchaku",
+        "ver": "aee38dd7ee8f88bf5db0a7ce813da67a4f969c88",
+        "Node name for S&R": "NunchakuFluxDiTLoader",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "svdq-int4_r32-flux.1-dev.safetensors",
+        0,
+        "nunchaku-fp16",
+        "auto",
+        0,
+        "bfloat16",
+        "enabled"
+      ]
+    },
+    {
+      "id": 19,
+      "type": "LoadImage",
+      "pos": [
+        495.4742736816406,
+        410.4382019042969
+      ],
+      "size": [
+        270,
+        314
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            20
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.49",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "微信图片_2025-08-07_204958_997_看图王.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 21,
+      "type": "ImageResize+",
+      "pos": [
+        797.3389892578125,
+        438.2748107910156
+      ],
+      "size": [
+        270,
+        218
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            26
+          ]
+        },
+        {
+          "label": "宽度",
+          "name": "width",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "label": "高度",
+          "name": "height",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_essentials",
+        "ver": "33ff89fd354d8ec3ab6affb605a79a931b445d99",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ImageResize+"
+      },
+      "widgets_values": [
+        0,
+        1280,
+        "lanczos",
+        "keep proportion",
+        "always",
+        64
+      ]
+    },
+    {
+      "id": 27,
+      "type": "BizyAirJoyCaption3",
+      "pos": [
+        1108.6881103515625,
+        428.5320739746094
+      ],
+      "size": [
+        400,
+        286
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "label": "STRING",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            27
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "bizyair",
+        "ver": "2377b758b7839da0f867ba9414ee1abda2049726",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "BizyAirJoyCaption3"
+      },
+      "widgets_values": [
+        true,
+        0.5,
+        256,
+        "Descriptive",
+        "any",
+        "",
+        "Jack",
+        "",
+        [
+          false,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 12,
+      "type": "RandomNoise",
+      "pos": [
+        1859.0078125,
+        855.8716430664062
+      ],
+      "size": [
+        274.4105529785156,
+        82
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "噪波生成",
+          "name": "NOISE",
+          "type": "NOISE",
+          "slot_index": 0,
+          "links": [
+            9
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "RandomNoise",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        853006208253487,
+        "fixed"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 29,
+      "type": "CLIPTextEncode",
+      "pos": [
+        1830.1845703125,
+        1323.5472412109375
+      ],
+      "size": [
+        706.1957397460938,
+        242.7745819091797
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "The image features a woman wearing black lingerie with gold embellishments, including a sheer overlay with floral designs. She is standing against a backdrop of pink cherry blossoms, which adds a soft and romantic touch to the scene. The lighting is soft and natural, highlighting the delicate details of her outfit and the blossoms. The overall color tone is a blend of black and pink hues, creating an elegant and feminine atmosphere. The composition centers on the woman, with the blossoms framing her figure beautifully.",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 23,
+      "type": "ShowText|pysssss",
+      "pos": [
+        891.9273681640625,
+        797.9683227539062
+      ],
+      "size": [
+        514.1483154296875,
+        242.81173706054688
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 27
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-custom-scripts",
+        "ver": "aac13aa7ce35b07d43633c3bbe654a38c00d74f5",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        "This is a highly detailed digital artwork featuring a young Asian woman with long, straight black hair and fair skin. She is standing in a relaxed pose, looking directly at the viewer with a gentle smile. She has large, expressive eyes and is wearing subtle makeup with pink lipstick. The woman is dressed in a black lingerie set with a lace-trimmed bra that accentuates her large breasts, and matching high-waisted shorts adorned with small golden stars. Over her shoulders, she wears a sheer, black robe with intricate gold embroidery. Her midriff is exposed, revealing a flat stomach.\n\nIn the background, there are pink cherry blossoms on a branch, adding a delicate and feminine touch to the scene. The background also includes a dark wooden panel with a subtle pattern, providing a contrast to the lighter elements in the foreground. The overall composition is balanced, with the woman positioned centrally, and the background elements framing her. The style of the artwork is realistic with a touch of fantasy, focusing on detailed textures and soft lighting that highlight the subject's features and the delicate nature of the cherry blossoms."
+      ]
+    },
+    {
+      "id": 28,
+      "type": "CLIPTextEncode",
+      "pos": [
+        747.7114868164062,
+        1086.1756591796875
+      ],
+      "size": [
+        706.1957397460938,
+        242.7745819091797
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "A young Asian woman with long straight hair and fair skin She stood in a relaxed posture, looking straight at the audience with a gentle smile She has a pair of big and expressive eyes, wearing light makeup and pink lipstick The woman was wearing a black lingerie with a lace trimmed bra that accentuated her large breasts, and a matching pair of high waisted shorts adorned with golden stars She wore a black transparent robe over her shoulders, embroidered with exquisite gold embroidery Her abdomen is exposed, revealing a flat belly\nIn the background, pink cherry blossoms bloom on tree branches, adding a delicate and feminine touch to the scene The background also includes a dark wooden board with subtle patterns, which contrasts with the brighter elements in the foreground The overall composition is balanced, with the woman at the center and background elements forming her frame The style of the artwork is realistic, with a hint of fantasy, attention to detail in texture and soft lighting, highlighting the characteristics of the subject and the delicate essence of cherry blossoms",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 16,
+      "type": "CLIPTextEncode",
+      "pos": [
+        1994.9029541015625,
+        485.1326904296875
+      ],
+      "size": [
+        706.1957397460938,
+        242.7745819091797
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "label": "条件",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            8
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "CLIPTextEncode",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "A young Asian woman with long straight hair and fair skin She stood in a relaxed posture, looking straight at the audience with a gentle smile She has a pair of big and expressive eyes, wearing light makeup and pink lipstick The woman was wearing a black lingerie with a lace trimmed bra that accentuated her large breasts, and a matching pair of high waisted shorts adorned with golden stars She wore a black transparent robe over her shoulders, embroidered with exquisite gold embroidery Her abdomen is exposed, revealing a flat belly\nIn the background, pink cherry blossoms bloom on tree branches, adding a delicate and feminine touch to the scene The background also includes a dark wooden board with subtle patterns, which contrasts with the brighter elements in the foreground The overall composition is balanced, with the woman at the center and background elements forming her frame The style of the artwork is realistic, with a hint of fantasy, attention to detail in texture and soft lighting, highlighting the characteristics of the subject and the delicate essence of cherry blossoms",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 17,
+      "type": "PreviewImage",
+      "pos": [
+        2763.1474609375,
+        296.21295166015625
+      ],
+      "size": [
+        620.26513671875,
+        921.9808959960938
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 16
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47",
+        "Node name for S&R": "PreviewImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      2,
+      9,
+      0,
+      1,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      5,
+      13,
+      0,
+      6,
+      0,
+      "LATENT"
+    ],
+    [
+      6,
+      10,
+      0,
+      6,
+      1,
+      "VAE"
+    ],
+    [
+      8,
+      16,
+      0,
+      9,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      9,
+      12,
+      0,
+      13,
+      0,
+      "NOISE"
+    ],
+    [
+      10,
+      1,
+      0,
+      13,
+      1,
+      "GUIDER"
+    ],
+    [
+      11,
+      2,
+      0,
+      13,
+      2,
+      "SAMPLER"
+    ],
+    [
+      12,
+      4,
+      0,
+      13,
+      3,
+      "SIGMAS"
+    ],
+    [
+      13,
+      15,
+      0,
+      13,
+      4,
+      "LATENT"
+    ],
+    [
+      14,
+      11,
+      0,
+      14,
+      0,
+      "MODEL"
+    ],
+    [
+      15,
+      5,
+      0,
+      16,
+      0,
+      "CLIP"
+    ],
+    [
+      16,
+      6,
+      0,
+      17,
+      0,
+      "IMAGE"
+    ],
+    [
+      17,
+      14,
+      0,
+      1,
+      0,
+      "MODEL"
+    ],
+    [
+      18,
+      14,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      20,
+      19,
+      0,
+      21,
+      0,
+      "IMAGE"
+    ],
+    [
+      26,
+      21,
+      0,
+      27,
+      0,
+      "IMAGE"
+    ],
+    [
+      27,
+      27,
+      0,
+      23,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "采样器",
+      "bounding": [
+        1609.0078125,
+        785.8716430664062,
+        1133.1395263671875,
+        437.2973937988281
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "nunchaku标准工作流",
+      "bounding": [
+        1619.0078125,
+        255.87167358398438,
+        1121.169921875,
+        496.70892333984375
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.49500000000000693,
+      "offset": [
+        -601.0774071242907,
+        -11.454170718637785
+      ]
+    },
+    "ue_links": [],
+    "links_added_by_ue": [],
+    "frontendVersion": "1.23.4",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

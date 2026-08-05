@@ -1,0 +1,744 @@
+{
+  "id": "4a74176f-0ea1-46c6-8d8c-d00570137fde",
+  "revision": 0,
+  "last_node_id": 16,
+  "last_link_id": 22,
+  "nodes": [
+    {
+      "id": 2,
+      "type": "RunningHub ICCustom Loader",
+      "pos": [
+        1111.425048828125,
+        217.68801879882812
+      ],
+      "size": [
+        231.34042358398438,
+        27.25438690185547
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "ICCustom Pipeline",
+          "name": "ICCustom Pipeline",
+          "type": "RHICCustomPipeline",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RunningHub ICCustom Loader",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 1,
+      "type": "RunningHub ICCustom Sampler",
+      "pos": [
+        1115.9486083984375,
+        307.5880126953125
+      ],
+      "size": [
+        433.8684387207031,
+        296.85089111328125
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "pipeline",
+          "name": "pipeline",
+          "type": "RHICCustomPipeline",
+          "link": 1
+        },
+        {
+          "label": "ref_image",
+          "name": "ref_image",
+          "type": "IMAGE",
+          "link": 21
+        },
+        {
+          "label": "target_image",
+          "name": "target_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 3
+        },
+        {
+          "label": "target_mask",
+          "name": "target_mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 12
+        },
+        {
+          "label": "prompt",
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 17
+        },
+        {
+          "label": "num_inference_steps",
+          "name": "num_inference_steps",
+          "type": "INT",
+          "widget": {
+            "name": "num_inference_steps"
+          }
+        },
+        {
+          "label": "guidance",
+          "name": "guidance",
+          "type": "FLOAT",
+          "widget": {
+            "name": "guidance"
+          }
+        },
+        {
+          "label": "true_gs",
+          "name": "true_gs",
+          "type": "FLOAT",
+          "widget": {
+            "name": "true_gs"
+          }
+        },
+        {
+          "label": "seed",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            5,
+            10,
+            18
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RunningHub ICCustom Sampler",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "",
+        25,
+        40,
+        3,
+        715408744119834,
+        "randomize"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "LoadImage",
+      "pos": [
+        790.145751953125,
+        637.0437622070312
+      ],
+      "size": [
+        279.2544860839844,
+        384.884033203125
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          }
+        },
+        {
+          "label": "upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            3,
+            14
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            12,
+            15
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "clipspace/25b88467c563c12e1b88915cb81bd2f4_e2d50e1cf92eb2952c31923f7bc657ce9041dfd2fb4613e582b025be331fc41e.png [input]",
+        "image"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "ImageAndMaskPreview",
+      "pos": [
+        1093.63330078125,
+        692.3074951171875
+      ],
+      "size": [
+        227.56141662597656,
+        256.4648742675781
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 14
+        },
+        {
+          "label": "遮罩",
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 15
+        },
+        {
+          "label": "mask_opacity",
+          "name": "mask_opacity",
+          "type": "FLOAT",
+          "widget": {
+            "name": "mask_opacity"
+          }
+        },
+        {
+          "label": "mask_color",
+          "name": "mask_color",
+          "type": "STRING",
+          "widget": {
+            "name": "mask_color"
+          }
+        },
+        {
+          "label": "pass_through",
+          "name": "pass_through",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "pass_through"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "composite",
+          "type": "IMAGE",
+          "links": [
+            16
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageAndMaskPreview",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        0.8000000000000002,
+        "255, 0, 0",
+        true
+      ]
+    },
+    {
+      "id": 12,
+      "type": "PreviewImage",
+      "pos": [
+        1360.18310546875,
+        691.1927490234375
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 18
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 11,
+      "type": "Text Multiline",
+      "pos": [
+        1348.5042724609375,
+        159.1430206298828
+      ],
+      "size": [
+        220.24087524414062,
+        88
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "text",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            17
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Text Multiline",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "A marquise-colored blue sofa is placed in the room."
+      ]
+    },
+    {
+      "id": 3,
+      "type": "LoadImage",
+      "pos": [
+        778.9038696289062,
+        223.3858184814453
+      ],
+      "size": [
+        287.8783264160156,
+        347.8684387207031
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          }
+        },
+        {
+          "label": "upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            13,
+            21
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "5bfca6c39094fbdde6b000aa8c1c55f77afbb988aa02ebab889bfe41e89169a3.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "ImageConcanate",
+      "pos": [
+        1590,
+        660
+      ],
+      "size": [
+        270,
+        102
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像_1",
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 13
+        },
+        {
+          "label": "图像_2",
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 16
+        },
+        {
+          "label": "direction",
+          "name": "direction",
+          "type": "COMBO",
+          "widget": {
+            "name": "direction"
+          }
+        },
+        {
+          "label": "match_image_size",
+          "name": "match_image_size",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "match_image_size"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            9
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageConcanate",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "down",
+        true
+      ]
+    },
+    {
+      "id": 8,
+      "type": "ImageConcanate",
+      "pos": [
+        1591.6142578125,
+        853.213623046875
+      ],
+      "size": [
+        270,
+        102
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像_1",
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 9
+        },
+        {
+          "label": "图像_2",
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 10
+        },
+        {
+          "label": "direction",
+          "name": "direction",
+          "type": "COMBO",
+          "widget": {
+            "name": "direction"
+          }
+        },
+        {
+          "label": "match_image_size",
+          "name": "match_image_size",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "match_image_size"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            22
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageConcanate",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "right",
+        true
+      ]
+    },
+    {
+      "id": 6,
+      "type": "SaveImage",
+      "pos": [
+        1572.6656494140625,
+        250.6844940185547
+      ],
+      "size": [
+        285.61566162109375,
+        356.76885986328125
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5
+        },
+        {
+          "label": "filename_prefix",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          }
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 16,
+      "type": "SaveImage",
+      "pos": [
+        1894.5567626953125,
+        246.1759490966797
+      ],
+      "size": [
+        485.7544860839844,
+        613.6932373046875
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 22
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      2,
+      0,
+      1,
+      0,
+      "RHICCustomPipeline"
+    ],
+    [
+      3,
+      4,
+      0,
+      1,
+      2,
+      "IMAGE"
+    ],
+    [
+      5,
+      1,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      9,
+      7,
+      0,
+      8,
+      0,
+      "IMAGE"
+    ],
+    [
+      10,
+      1,
+      0,
+      8,
+      1,
+      "IMAGE"
+    ],
+    [
+      12,
+      4,
+      1,
+      1,
+      3,
+      "MASK"
+    ],
+    [
+      13,
+      3,
+      0,
+      7,
+      0,
+      "IMAGE"
+    ],
+    [
+      14,
+      4,
+      0,
+      10,
+      0,
+      "IMAGE"
+    ],
+    [
+      15,
+      4,
+      1,
+      10,
+      1,
+      "MASK"
+    ],
+    [
+      16,
+      10,
+      0,
+      7,
+      1,
+      "IMAGE"
+    ],
+    [
+      17,
+      11,
+      0,
+      1,
+      4,
+      "STRING"
+    ],
+    [
+      18,
+      1,
+      0,
+      12,
+      0,
+      "IMAGE"
+    ],
+    [
+      21,
+      3,
+      0,
+      1,
+      1,
+      "IMAGE"
+    ],
+    [
+      22,
+      8,
+      0,
+      16,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "links_added_by_ue": [],
+    "ue_links": [],
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "ds": {
+      "scale": 0.797202450000006,
+      "offset": [
+        -593.7581686712949,
+        8.464535850858116
+      ]
+    },
+    "frontendVersion": "1.23.0",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
