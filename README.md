@@ -13,11 +13,12 @@
 - [第 1 步:安装 Git](#第-1-步安装-git)
 - [第 2 步:克隆本项目](#第-2-步克隆本项目)
 - [第 3 步:安装 OpenCode(桌面版)](#第-3-步安装-opencode桌面版)
-- [第 4 步:让 OpenCode 装它自己的 CLI(可选)](#第-4-步让-opencode-装它自己的-cli可选)
-- [第 5 步:让 OpenCode 安装其它 AI 工具(可选)](#第-5-步让-opencode-安装其它-ai-工具可选)
-- [第 6 步:让 OpenCode 配置 Python 环境](#第-6-步让-opencode-配置-python-环境)
-- [第 7 步:让 OpenCode 安装 ComfyUI 依赖并启动](#第-7-步让-opencode-安装-comfyui-依赖并启动)
-- [第 8 步:之后一切都交给 AI](#第-8-步之后一切都交给-ai)
+- [第 4 步:以管理员身份运行 OpenCode,建立软连接](#第-4-步以管理员身份运行-opencode按软连接方案建立软连接)
+- [第 5 步:让 OpenCode 装它自己的 CLI(可选)](#第-5-步让-opencode-装它自己的-cli可选)
+- [第 6 步:让 OpenCode 安装其它 AI 工具(可选)](#第-6-步让-opencode-安装其它-ai-工具可选)
+- [第 7 步:让 OpenCode 配置 Python 环境](#第-7-步让-opencode-配置-python-环境)
+- [第 8 步:让 OpenCode 安装 ComfyUI 依赖并启动](#第-8-步让-opencode-安装-comfyui-依赖并启动)
+- [第 9 步:之后一切都交给 AI](#第-9-步之后一切都交给-ai)
 - [常见问题](#常见问题)
 - [附录](#附录)
 
@@ -87,7 +88,34 @@ OpenCode 是你和这套工作区之间的 AI 主力,负责装软件、配环境
 
 ---
 
-## 第 4 步:让 OpenCode 装它自己的 CLI(可选)
+## 第 4 步:以管理员身份运行 OpenCode,按软连接方案建立软连接
+
+> ⚠️ **很重要**:本工作区依赖「相对路径符号链接」,把 `ComfyUI\` 里的相关目录指向项目根(`models\`、`media\`、`workflows\`、各插件目录)。**创建符号链接需要管理员权限,所以必须以管理员身份运行 OpenCode。**
+
+1. 在开始菜单找到 OpenCode,右键 →「**以管理员身份运行**」
+2. 打开本项目(添加 `Comfy` 目录),把下面这段话发给它:
+
+> 请按以下「软连接方案」检查并修复本项目的软链接(全部用**相对路径**符号链接):
+>
+> 1. 先确认 `ComfyUI\` 下这些路径里哪些是**真实目录**(不是链接):`custom_nodes\ComfyUI_UltimateSDUpscale`、`custom_nodes\ComfyUI-GGUF`、`custom_nodes\ComfyUI-KJNodes`、`custom_nodes\ComfyUI-FallingTS`、`input`、`output`、`models`,以及 `user\default\workflows`;
+> 2. 把这些**真实目录删除**(若已是链接则跳过),再逐个建立相对路径符号链接,目标指向项目根目录:
+>    - `ComfyUI\custom_nodes\ComfyUI_UltimateSDUpscale` → `..\..\ComfyUI_UltimateSDUpscale`
+>    - `ComfyUI\custom_nodes\ComfyUI-GGUF` → `..\..\ComfyUI-GGUF`
+>    - `ComfyUI\custom_nodes\ComfyUI-KJNodes` → `..\..\ComfyUI-KJNodes`
+>    - `ComfyUI\custom_nodes\ComfyUI-FallingTS` → `..\..\ComfyUI-FallingTS`
+>    - `ComfyUI\input` → `..\media`
+>    - `ComfyUI\output` → `..\media`
+>    - `ComfyUI\models` → `..\models`
+>    - `ComfyUI\user\default\workflows` → `..\..\..\workflows`
+> 3. 全部完成后,用 `dir` 或资源管理器确认这些路径显示为「符号链接」,并验证 `ComfyUI\models\diffusion_models` 等子目录可正常进入。
+>
+> 注意:只能删除上面列出的真实目录;`ComfyUI\temp\` 等真实目录保留;所有链接一律用相对路径,保证整个项目文件夹移动后不失效。
+
+3. 软链接就绪后,继续[第 5 步](#第-5-步让-opencode-装它自己的-cli可选)。
+
+---
+
+## 第 5 步:让 OpenCode 装它自己的 CLI(可选)
 
 如果你更习惯在命令行里用 OpenCode,直接对它说:
 
@@ -97,7 +125,7 @@ OpenCode 是你和这套工作区之间的 AI 主力,负责装软件、配环境
 
 ---
 
-## 第 5 步:让 OpenCode 安装其它 AI 工具(可选)
+## 第 6 步:让 OpenCode 安装其它 AI 工具(可选)
 
 继续以 OpenCode 为基地,让它帮你把常用的 AI CLI 都装上(这样你可以随时切换):
 
@@ -109,7 +137,7 @@ OpenCode 是你和这套工作区之间的 AI 主力,负责装软件、配环境
 
 ---
 
-## 第 6 步:让 OpenCode 配置 Python 环境
+## 第 7 步:让 OpenCode 配置 Python 环境
 
 把这段话发给 OpenCode(让它先装 Miniconda,再建 ComfyUI 专用环境):
 
@@ -126,7 +154,7 @@ python --version
 
 ---
 
-## 第 7 步:让 OpenCode 安装 ComfyUI 依赖并启动
+## 第 8 步:让 OpenCode 安装 ComfyUI 依赖并启动
 
 把这段话发给 OpenCode(它会依次完成:装 CUDA 版 PyTorch → 装主程序依赖 → 装各插件依赖 → 启动):
 
@@ -145,7 +173,7 @@ python --version
 
 ---
 
-## 第 8 步:之后一切都交给 AI
+## 第 9 步:之后一切都交给 AI
 
 环境就绪后,所有工作都可以让 AI 帮你做:
 
@@ -161,7 +189,7 @@ python --version
 ## 常见问题
 
 - **代理 / 下载慢**:默认直连;失败时用本机代理(如 Clash 的 `127.0.0.1:7890`);HuggingFace 模型国内可用 `hf-mirror.com` 镜像,把链接前缀 `huggingface.co` 换成 `hf-mirror.com` 即可(见附录 E)
-- **Windows 软链接**:`custom_nodes\` 下的插件和 `models\` 等使用相对路径符号链接。若克隆/运行时报"无法创建符号链接"或链接失效,请开启「开发者模式」(设置 → 隐私和安全性 → 开发者选项 → 开启开发者模式),或让 AI 重新创建软链接
+- **Windows 软链接**:`custom_nodes\` 下的插件和 `models\` 等使用相对路径符号链接。创建链接需要管理员权限,推荐**以管理员身份运行 OpenCode**再让它修复(见[第 4 步](#第-4-步以管理员身份运行-opencode按软连接方案建立软连接));或手动开启「开发者模式」(设置 → 隐私和安全性 → 开发者选项 → 开启开发者模式)
 - **显存不足**:Klein 9B 蒸馏版较吃显存(24G 卡跑 1024 tile 偏紧,爆显存降到 768);MiniMax H3 需大显存,低显存建议用量化版或云端(详见附录 C 备注)
 - **模型放好后记得重启 ComfyUI**,加载节点才会识别新模型
 
