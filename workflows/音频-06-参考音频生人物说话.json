@@ -1,5 +1,5 @@
 {
-  "last_node_id": 7,
+  "last_node_id": 8,
   "last_link_id": 7,
   "nodes": [
     {
@@ -308,6 +308,32 @@
       "properties": {},
       "widgets_values": [
         "## Qwen3-TTS 参考音色人物说话(官方 example_workflows 写法)\n\n**流程**:参考音频 → SenseVoice ASR 自动转写 → 预计算声纹 → 克隆生成 → 保存\n\n**插件**:ComfyUI-Qwen3-TTS(https://github.com/wanaigc/ComfyUI-Qwen3-TTS),模型自动下载到 models/TTS/Qwen/(默认 ModelScope 国内源)\n\n**参考音色**:LoadAudio 上传 3s+ 干净人声,SenseVoice ASR 自动转写参考音频内容(ref_text 自动填充)\n\n**预计算优化**:VoiceClonePrompt 只分析一次参考音频,之后改文本秒级出结果\n\n**情绪控制(重要)**:在 Qwen3TTSVoiceClone 的 **instruct 参数**填情绪词:\n- 内置情绪:开心 / 激动 / 生气 / 难过 / 温柔 / 恐惧 / 冷酷 / 低语 / 惊讶 / 厌恶 / 平静(自动翻译成英文指令)\n- 或直接写完整描述:\"用特别愤怒的语气说\"\"温柔亲切带笑意地念出\"\n- ⚠️ 不要写在 target_text 里(会被原样念出),文本里只支持 [pause:0.8] 停顿\n\n**x_vector_only(节点 4)**:保持 False —— 使用 ASR 转写文本+声纹双模态,相似度更高;若参考音频无内容/ASR 失败可改 True(纯声纹)\n\n**采样参数**:seed 随机/固定、temperature 0.9、top_p 1、top_k 50、重复惩罚 1.05\n\n**丰富音色扩展**(换 Loader 模型):\n- 音色设计:1.7B-VoiceDesign,自然语言凭空造声\n- 预设音色:1.7B-CustomVoice,内置 9 音色(Vivian/Serena/Uncle_Fu/Dylan/Eric/Ryan/Aiden/Ono_Anna/Sohee)\n- 低显存:0.6B-Base"
+      ],
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 8,
+      "type": "MarkdownNote",
+      "pos": [
+        2100,
+        0
+      ],
+      "size": [
+        600,
+        560
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "提示词模板",
+      "properties": {},
+      "widgets_values": [
+        "## 参考音频生人物说话提示词模板(Qwen3-TTS 声音克隆)\n\n核心:音色由参考音频决定(3 秒以上干净人声),提示词管\"说什么 + 情绪\",参考文本决定克隆相似度 —— 务必让语音识别转写准确。\n\n公式:合成文本 -> 情绪 -> 停顿控制 -> 可选纯声纹模式\n\n1. 合成文本:要说的内容,支持 [pause:0.8] 停顿\n2. 情绪(情绪指令参数,重要):\n   - 内置词:开心/激动/生气/难过/温柔/恐惧/冷酷/低语/惊讶/厌恶/平静\n   - 或完整描述:\"用特别愤怒的语气说\"\"温柔亲切带笑意地念出\"\n   - 注意:不要写在合成文本里(会被原样念出)\n3. 参考文本:自动由语音识别转写,保持纯声纹模式关闭生效\n4. 采样:温度 0.9 / 概率 1 / 采样数 50 保自然;重复惩罚 1.05\n\n示例:\n合成文本: \"你好,欢迎来到我的频道![pause:0.8] 今天想和大家分享一个有趣的话题\"\n情绪指令: \"温柔亲切,带笑意,语速适中\"\n\n参考音频要求:3-15 秒单人干净人声,无背景音乐/混响,音质清晰"
       ],
       "color": "#222",
       "bgcolor": "#000"

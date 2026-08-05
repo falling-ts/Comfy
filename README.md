@@ -241,7 +241,7 @@ Comfy/
 | 2 | 背景音乐/纯器乐 | Stable Audio 3 | **已就绪** |
 | 3 | 环境音/音效 | Stable Audio 3(SFX/One-shot 类别) | **已就绪** |
 | 4 | 情绪语音生成(8 种情绪) | Qwen3-TTS(情感标签);备用 IndexTTS-2 | 需下载 |
-| 5 | 人物说话·参考音色克隆 | Qwen3-TTS 声音克隆(3s 参考音频);备用 F5-TTS | 需下载 |
+| 5 | 人物说话·参考音色克隆 | Qwen3-TTS 声音克隆(3s 参考音频+情绪标签/指令) | 需下载 |
 | 6 | 多角色对话/混音 | Qwen3-TTS RoleBank+AdvancedDialogue | 需装插件 |
 
 ### 视频类(6 个,MiniMax H3)
@@ -275,9 +275,24 @@ Comfy/
 | `t5gemma_b_b_ul2.safetensors`(StableAudio 文本编码器) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/stable-audio-3/resolve/main/text_encoders/t5gemma_b_b_ul2.safetensors> |
 | `ace_step_1.5_turbo_aio.safetensors`(音乐/歌曲) | `models\checkpoints\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/ace_step_1.5_ComfyUI_files/resolve/main/checkpoints/ace_step_1.5_turbo_aio.safetensors> |
 | ACE-Step 1.5 split 版(低显存替代 AIO) | `diffusion_models`+`text_encoders`+`vae` | ⬇️ 可选 | `acestep_v1.5_turbo.safetensors` + `qwen_0.6b_ace15`(歌词质量选 `qwen_4b_ace15`)+ `ace_1.5_vae.safetensors`,均见 <https://huggingface.co/Comfy-Org/ace_step_1.5_ComfyUI_files> |
-| Qwen3-TTS-12Hz-1.7B-Base(万能:克隆+对话) | 插件自动下载至 `models/TTS/Qwen/` | ⬇️ 需下载 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-Base>(默认走 ModelScope 国内源) |
-| Qwen3-TTS-12Hz-1.7B-CustomVoice(预设音色,可选) | 同上 | ⬇️ 可选 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice> |
-| IndexTTS-2 全套(情绪语音备用,含 gpt/s2mel/bigvgan 等) | TTS-Audio-Suite 目录 | ⬇️ 可选 | <https://huggingface.co/IndexTeam/IndexTTS-2>(镜像 [AEmotionStudio/index-tts-2-models](https://huggingface.co/AEmotionStudio/index-tts-2-models)) |
+| Qwen3-TTS-12Hz-1.7B-Base(万能:克隆+对话,工作流 ④⑤⑥ 默认,~4.5 GB) | 插件自动下载至 `models/TTS/Qwen/` | ⬇️ 需下载 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-Base> |
+| Qwen3-TTS-12Hz-1.7B-CustomVoice(9 预设音色,~4.5 GB) | 同上 | ⬇️ 可选 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice> |
+| Qwen3-TTS-12Hz-1.7B-VoiceDesign(自然语言造声,~4.5 GB) | 同上 | ⬇️ 可选 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign> |
+| Qwen3-TTS-12Hz-0.6B-Base(低显存克隆,约 4GB VRAM,~2.5 GB) | 同上 | ⬇️ 可选 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base> |
+| Qwen3-TTS-12Hz-0.6B-CustomVoice(低显存预设音色,~2.5 GB) | 同上 | ⬇️ 可选 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice> |
+| SenseVoiceSmall(ASR 自动转写参考文本,工作流 ⑤ 必需,~0.9 GB) | 插件自动下载 | ⬇️ 需下载 | <https://huggingface.co/FunAudioLLM/SenseVoiceSmall> |
+
+> **Qwen3-TTS 下载说明**:均为**目录型模型**,必须整目录下载(`config.json`/`tokenizer` 词表/`speech_tokenizer/` 等,仅下 safetensors 无法加载)。推荐直接开 `Qwen3TTSLoader` 的 `auto_download`(默认开),插件自动从 ModelScope 整目录快照下载并自动建目录;**手动下载**时按以下结构放入(`models/` 是软链接,实际落点 `D:\Comfy\models\`):
+>
+> ```
+> models/TTS/Qwen/Qwen3-TTS-12Hz-1.7B-Base/          ← 5 个 Qwen3-TTS 模型都放 TTS/Qwen/ 下
+> models/TTS/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice/
+> models/TTS/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign/
+> models/TTS/Qwen/Qwen3-TTS-12Hz-0.6B-Base/
+> models/TTS/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice/
+> models/TTS/SenseVoiceSmall/                        ← SenseVoice 直接放 TTS/ 下,无 Qwen 子目录
+> ```
+| IndexTTS-2 全套(情绪语音备用,含 gpt/s2mel/bigvgan 等,~5 GB) | TTS-Audio-Suite 目录 | ⬇️ 可选 | <https://huggingface.co/IndexTeam/IndexTTS-2>(镜像 [AEmotionStudio/index-tts-2-models](https://huggingface.co/AEmotionStudio/index-tts-2-models)) |
 | F5-TTS(参考音色克隆备用,最快零样本) | TTS-Audio-Suite 目录 | ⬇️ 可选 | <https://huggingface.co/SWivid/F5-TTS> |
 | CosyVoice3(跨语言克隆,可选) | TTS-Audio-Suite 目录 | ⬇️ 可选 | 随 [TTS-Audio-Suite](https://github.com/diodiogod/TTS-Audio-Suite) 文档 |
 | `qwen3.5_2b_bf16.safetensors`(音频编码) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen3.5/resolve/main/text_encoders/qwen3.5_2b_bf16.safetensors> |
