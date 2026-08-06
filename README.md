@@ -292,6 +292,7 @@ Comfy/
 |------|---------|------|---------|
 | `qwen_image_2512_fp8_e4m3fn.safetensors` | `models\diffusion_models\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_2512_fp8_e4m3fn.safetensors> |
 | `qwen_image_edit_2511_bf16.safetensors` | `models\diffusion_models\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_bf16.safetensors> |
+| `qwen_image_edit_2511_fp8mixed.safetensors`(官方轻量版:混合精度,~20GB) | `models\diffusion_models\` | ⬇️ 可选(8G 显存推荐) | <https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors> (主分支无则用 PR #14:<https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/refs%2Fpr%2F14/split_files/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors>) |
 | `flux-2-klein-9b-fp8.safetensors` | `models\diffusion_models\` | ⬇️ 需下载 | <https://huggingface.co/black-forest-labs/FLUX.2-klein-9b-fp8/resolve/main/flux-2-klein-9b-fp8.safetensors> ⚠️门控 |
 | `qwen_3_8b_fp8mixed.safetensors`(Klein 文本编码器) | `models\text_encoders\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors> |
 | `full_encoder_small_decoder.safetensors`(Klein/FLUX.2 解码器) | `models\vae\` | ⬇️ 需下载 | <https://huggingface.co/black-forest-labs/FLUX.2-small-decoder/resolve/main/full_encoder_small_decoder.safetensors> |
@@ -303,6 +304,8 @@ Comfy/
 | `birefnet.safetensors`(抠图/背景移除) | `models\background_removal\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/birefnet> |
 | `sam3.1_multiplex_fp16.safetensors`(自动掩码,可选) | `models\checkpoints\` | ⬇️ 可选 | <https://huggingface.co/Comfy-Org/sam3.1/resolve/main/checkpoints/sam3.1_multiplex_fp16.safetensors> |
 | LaMa/MAT 预填充(可选,装 Acly ComfyUI-Inpaint-Nodes 后) | 插件自动下载 | ⬇️ 可选 | 随 [ComfyUI-Inpaint-Nodes](https://github.com/Acly/ComfyUI-Inpaint-Nodes) 安装 |
+
+> **Edit-2511 fp8mixed 说明**:官方混合精度量化(敏感层 bf16 + 其余 fp8),显存减半;需新版 ComfyUI 的 MixedPrecisionOps 加载(Load Diffusion Model 自动识别),若出黑图先查版本,或改用社区 fullmm 变体 `silveroxides/Qwen-Image-Quants/qwen_image_edit_2511_fp8mixed_fullmm.safetensors`;配合 Lightning 4 步 LoRA 时,官方讨论建议直接用融合版 [lightx2v/Qwen-Image-Edit-2511-Lightning](https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning) 避免线条伪影。
 
 ### 音频类
 
@@ -453,3 +456,67 @@ UNETLoader → Patch Sage Attention KJ(auto) → MiniMaxH3Cache(EasyCache)
 2. **sageattn 2.2.0.post6 数值正确**,通过工作流节点(KJNodes `Patch Sage Attention KJ`)定向启用
 3. 启动命令保持 `python.exe main.py --enable-manager --disable-pinned-memory --fast-disk`(8GB 显存/16GB 内存设备最佳)
 4. 相关文档:`docs/启动参数推荐-8GB-16GB设备-2026-08-06.md`、`docs/ComfyUI-启动参数参考-2026-08-06.md`
+
+## 附录 H · 迁移到 Linux + RTX 5090D 服务器（2026-08-06）
+
+> 目标:Windows(8GB 显存 / 16GB 内存)→ Linux 服务器(RTX 5090D,32GB GDDR7)。
+> 本机基准环境:torch 2.13.0+cu130、sageattention 2.2.0+cu130(post6)、triton-windows 3.7.1.post27(Windows 专属,Linux 换 `triton`)。
+
+### H.1 硬件 / 驱动(先决条件)
+
+- RTX 5090D = Blackwell 架构,**sm_120**,32GB GDDR7;CUDA 核心与 5090 相同(21760),但 AI 算力约为 5090 的 71%(2375 vs 3352 TOPS)
+- **Linux 驱动必须 ≥ 570**(CUDA 12.8+),建议直接装最新 580/6xx 系;装完 `nvidia-smi` 能识别 sm_120 才可继续
+- torch 必须支持 sm_120:**2.7+cu128 及以上**;本机用的 2.13.0+cu130 满足。切勿用旧 torch(2.5.x/cu124 会报 `no kernel image available for sm_120`)
+
+### H.2 环境重建(Linux 不能直接复用 Windows conda 环境)
+
+```bash
+conda create -n ComfyUI python=3.13 -y
+conda activate ComfyUI
+pip install torch==2.13.0+cu130 torchvision==0.28.0+cu130 torchaudio==2.11.0+cu130 \
+  --index-url https://download.pytorch.org/whl/cu130
+# 其余依赖从 Windows `pip freeze` 生成 requirements,唯一替换:
+#   triton-windows==3.7.1.post27 → triton(与 torch 2.13 匹配)
+```
+
+- **sageattention**:2.2 支持 Blackwell;源码编译前设置 `TORCH_CUDA_ARCH_LIST="12.0"`(**只写 12.0,不要加 9.0**,否则编译失败);Blackwell 上相对 torch attention 提速约 6%(社区实测,低于 Ada)
+
+### H.3 启动参数(与 Windows 的差异,重点)
+
+| Windows 参数 | Linux 处理 |
+|---|---|
+| `--disable-pinned-memory` | **删除**(Windows 0.30.x 回归修复用;Linux pinned 内存可用到 95% RAM,是加速项) |
+| `--fast-disk` | **删除**(8G 显存/16G 内存的妥协;32G 显存可整体装下 Qwen-2512 fp8 约 19.5G,无需磁盘换页) |
+| `--enable-manager` | 保留 |
+| 建议新增 | 默认 dynamic VRAM 即可;模型常驻不吃紧时可试 `--highvram`(主模型 19.5G + 文本编码器 7.9G ≈ 27.4G) |
+
+启动脚本改为 `start-comfyui.sh`:
+
+```bash
+#!/usr/bin/env bash
+cd "$(dirname "$0")/ComfyUI"
+conda activate ComfyUI
+python main.py --enable-manager
+```
+
+### H.4 文件搬运与软链接
+
+- 超项目:`git clone --recurse-submodules <remote>`(17 个子模块)
+- **models 约 178.7GB 单独 rsync**(`rsync -avP`);服务器需预留 ≥250GB NVMe(还要补 MiniMax H3 缺的约 21.5GB)
+- 软链接重建(`ln -s` 相对路径):
+  - `ComfyUI/input → ../media`、`ComfyUI/output → ../media`、`ComfyUI/models → ../models`、`ComfyUI/user/default/workflows → ../../../workflows`
+  - `custom_nodes/` 下 4 个相对链接可直接重建;⚠️ **9 个绝对路径链接(`D:\Comfy\...`)必须重建为相对路径**(清单见附录 A)
+- `ComfyUI-FallingTS/.env`(API Key)不进 git,服务器上单独放置并 `chmod 600`
+- 中文文件名 / 路径在 Linux UTF-8 下无问题
+
+### H.5 服务器建议
+
+- 内存 **≥64GB**(H3 视频流程吃内存,32G 是底线);配 32~64GB swap 兜底
+- 远程访问:SSH 端口转发到 `127.0.0.1:8188`,或 `--listen 0.0.0.0` + 防火墙白名单
+- 5090D 满载 575W,确认电源与散热余量
+
+### H.6 性能预期
+
+- 32GB 显存 + 1.79TB/s 带宽:20B 模型完全常驻显存,消除 NVMe→RAM→VRAM 换页;4 步 Lightning LoRA 基本秒级出图
+- 8G 卡时代工作流里的妥协(tile 768、分块降噪、低分辨率+放大)大多可以放开
+- 5090D AI 算力约为 5090 的 71%,相比 4060 仍是数量级提升

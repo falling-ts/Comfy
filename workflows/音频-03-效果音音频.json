@@ -254,7 +254,7 @@
       "title": "提示词模板",
       "properties": {},
       "widgets_values": [
-        "## 效果音/一次性音效提示词模板(Stable Audio 3 一次性音效)\n\n核心:描述\"单个短促声音样本\",讲清乐器/声源、击打方式、材质、拾音与空间。本工作流类别用\"一次性音效\",长度 1-11 秒(音乐制作素材用)。\n\n公式:乐器/声源 -> 演奏或击打方式 -> 材质与音色 -> 拾音与空间 -> 长度\n\n1. 声源:鼓/琴/合成器/人声/物体\n2. 击打方式:拨弦/猛击/轻拍/突刺/扫弦\n3. 材质音色:木质共鸣/金属微光/毛毡锤/鼓皮\n4. 拾音空间:干声/近拾音/房间/混响尾音\n5. 长度:多数 1-3 秒,特殊质感 6-11 秒\n\n示例:\n\"钢琴琴键击打,明亮打击起音,共鸣木质琴身。2 秒\"\n\"干拍手:静音房间录制,极锐利瞬态,无房间反射。1 秒\"\n\"相位失真贝斯:经典相位失真正弦波扭曲成锯齿波,复古合成贝斯音色。11 秒\"\n\"打击乐冲击击打,电影感。2 秒\"\n\"短促有力的 808 底鼓,锐利失真瞬态,快速衰减次低音尾音。1 秒\"\n---\n\n## Sage Attention 加速(节点级,不影响 Qwen3-TTS)\n\n本工作流已插入 KJNodes Patch Sage Attention KJ 节点(CheckpointLoaderSimple 之后)(CheckpointLoaderSimple 之后),仅对本工作流的 Stable Audio 3 模型生效 —— **不全局替换**,Qwen3-TTS(音频-04/05)的 sdpa 路径不受影响。\n\n- 默认 sage_attention = auto;想关闭改为 disabled(恢复原始 attention)\n- 速度提升约 +20~30%(RTX 4060 实测)\n- 若报错 illegal memory access,把 auto 换成 sageattn_qk_int8_pv_fp16_cuda 或回 disabled"
+        "## 效果音/一次性音效提示词模板(Stable Audio 3 一次性音效)\n\n核心:描述\"单个短促声音样本\",讲清乐器/声源、击打方式、材质、拾音与空间。本工作流类别用\"一次性音效\",长度 1-11 秒(音乐制作素材用)。\n\n公式:乐器/声源 -> 演奏或击打方式 -> 材质与音色 -> 拾音与空间 -> 长度\n\n1. 声源:鼓/琴/合成器/人声/物体\n2. 击打方式:拨弦/猛击/轻拍/突刺/扫弦\n3. 材质音色:木质共鸣/金属微光/毛毡锤/鼓皮\n4. 拾音空间:干声/近拾音/房间/混响尾音\n5. 长度:多数 1-3 秒,特殊质感 6-11 秒\n\n示例:\n\"钢琴琴键击打,明亮打击起音,共鸣木质琴身。2 秒\"\n\"干拍手:静音房间录制,极锐利瞬态,无房间反射。1 秒\"\n\"相位失真贝斯:经典相位失真正弦波扭曲成锯齿波,复古合成贝斯音色。11 秒\"\n\"打击乐冲击击打,电影感。2 秒\"\n\"短促有力的 808 底鼓,锐利失真瞬态,快速衰减次低音尾音。1 秒\"\n---\n\n## Sage Attention 加速(节点级,不影响 Qwen3-TTS)\n\n本工作流已插入 KJNodes Patch Sage Attention KJ 节点(CheckpointLoaderSimple 之后)(CheckpointLoaderSimple 之后),仅对本工作流的 Stable Audio 3 模型生效 —— **不全局替换**,Qwen3-TTS(音频-04/05)的 sdpa 路径不受影响。\n\n- 参数 sage_attention = sageattn_qk_int8_pv_fp8_cuda++(sm89/RTX 40 系最优,实测 hd=64 时比 auto 快 ~4 倍,x65 vs SDPA)\n- 想关闭改为 disabled(恢复原始 attention)\n- 备选:sageattn_qk_int8_pv_fp16_cuda(hd=128 更快);RTX 50 系可用 sageattn3\n- 若报错 illegal memory access,回退 fp16_cuda 或 disabled"
       ],
       "color": "#222",
       "bgcolor": "#000"
@@ -1920,7 +1920,7 @@
               "Node name for S&R": "PathchSageAttentionKJ"
             },
             "widgets_values": [
-              "auto"
+              "sageattn_qk_int8_pv_fp8_cuda++"
             ]
           }
         ],

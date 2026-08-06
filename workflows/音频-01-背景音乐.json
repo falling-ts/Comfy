@@ -243,7 +243,7 @@
       "title": "提示词模板",
       "properties": {},
       "widgets_values": [
-        "## 背景音乐提示词模板(Stable Audio 3)\n\n核心:描述\"氛围与情绪\",弱化结构、强化空间感与持续性 —— 背景音乐要求融入而不抢戏。本工作流类别用\"音乐/乐器\",时长建议 150-300 秒循环友好。\n\n公式:用途与氛围 -> 核心乐器 -> 情绪与能量 -> 空间质感 -> BPM -> 时长\n\n1. 用途:影视/直播/视频/冥想/工作背景\n2. 核心乐器:钢琴/吉他/合成器铺底/弦乐等 1-3 种即可\n3. 情绪:舒缓/温暖/悬疑/史诗/治愈(用形容词精确)\n4. 空间质感:宽阔混响/近距离/磁带暖声/黑胶感\n5. BPM:背景音乐建议 60-100(慢速)\n6. 时长:150-300 秒,长于实际需要以便截取\n\n示例:\n\"舒缓的电影氛围音乐,温暖钢琴琶音与弦乐铺底交织,细微合成器持续音营造广阔空间感,适合治愈系视频背景。70 BPM,240 秒\"\n\"低保真嘻哈背景音乐,柔和电钢琴,轻微黑胶噪音,低通滤波鼓组,松弛梦幻的氛围。75 BPM,150 秒\"\n\"轻快的咖啡馆爵士,丝滑萨克斯主奏,钢琴和弦,立式贝斯,刷鼓,温馨舒适的下午氛围。85 BPM,180 秒\"\n---\n\n## Sage Attention 加速(节点级,不影响 Qwen3-TTS)\n\n本工作流已插入 KJNodes Patch Sage Attention KJ 节点(CheckpointLoaderSimple 之后)(CheckpointLoaderSimple 之后),仅对本工作流的 Stable Audio 3 模型生效 —— **不全局替换**,Qwen3-TTS(音频-04/05)的 sdpa 路径不受影响。\n\n- 默认 sage_attention = auto;想关闭改为 disabled(恢复原始 attention)\n- 速度提升约 +20~30%(RTX 4060 实测)\n- 若报错 illegal memory access,把 auto 换成 sageattn_qk_int8_pv_fp16_cuda 或回 disabled"
+        "## 背景音乐提示词模板(Stable Audio 3)\n\n核心:描述\"氛围与情绪\",弱化结构、强化空间感与持续性 —— 背景音乐要求融入而不抢戏。本工作流类别用\"音乐/乐器\",时长建议 150-300 秒循环友好。\n\n公式:用途与氛围 -> 核心乐器 -> 情绪与能量 -> 空间质感 -> BPM -> 时长\n\n1. 用途:影视/直播/视频/冥想/工作背景\n2. 核心乐器:钢琴/吉他/合成器铺底/弦乐等 1-3 种即可\n3. 情绪:舒缓/温暖/悬疑/史诗/治愈(用形容词精确)\n4. 空间质感:宽阔混响/近距离/磁带暖声/黑胶感\n5. BPM:背景音乐建议 60-100(慢速)\n6. 时长:150-300 秒,长于实际需要以便截取\n\n示例:\n\"舒缓的电影氛围音乐,温暖钢琴琶音与弦乐铺底交织,细微合成器持续音营造广阔空间感,适合治愈系视频背景。70 BPM,240 秒\"\n\"低保真嘻哈背景音乐,柔和电钢琴,轻微黑胶噪音,低通滤波鼓组,松弛梦幻的氛围。75 BPM,150 秒\"\n\"轻快的咖啡馆爵士,丝滑萨克斯主奏,钢琴和弦,立式贝斯,刷鼓,温馨舒适的下午氛围。85 BPM,180 秒\"\n---\n\n## Sage Attention 加速(节点级,不影响 Qwen3-TTS)\n\n本工作流已插入 KJNodes Patch Sage Attention KJ 节点(CheckpointLoaderSimple 之后)(CheckpointLoaderSimple 之后),仅对本工作流的 Stable Audio 3 模型生效 —— **不全局替换**,Qwen3-TTS(音频-04/05)的 sdpa 路径不受影响。\n\n- 参数 sage_attention = sageattn_qk_int8_pv_fp8_cuda++(sm89/RTX 40 系最优,实测 hd=64 时比 auto 快 ~4 倍,x65 vs SDPA)\n- 想关闭改为 disabled(恢复原始 attention)\n- 备选:sageattn_qk_int8_pv_fp16_cuda(hd=128 更快);RTX 50 系可用 sageattn3\n- 若报错 illegal memory access,回退 fp16_cuda 或 disabled"
       ],
       "color": "#222",
       "bgcolor": "#000"
@@ -1909,7 +1909,7 @@
               "Node name for S&R": "PathchSageAttentionKJ"
             },
             "widgets_values": [
-              "auto"
+              "sageattn_qk_int8_pv_fp8_cuda++"
             ]
           }
         ],
