@@ -8,7 +8,7 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 
 | 路径 | 说明 |
 |------|------|
-| `ComfyUI` | ComfyUI 主程序,`master` 分支,v0.30.0(独立 git 仓库;官方已移除 `dev` 分支,默认分支为 `master`) |
+| `ComfyUI` | ComfyUI 主程序,`master` 分支,v0.30.0(独立 git 仓库;官方默认分支即 `master`;本地曾用 `dev` 分支,现已删除) |
 | `ComfyUI-GGUF` | GGUF 量化模型加载/推理节点(独立 git 仓库,`main`) |
 | `ComfyUI-KJNodes` | KJNodes 工具节点包(独立 git 仓库,`main`) |
 | `ComfyUI-FallingTS` | comfy-desktop-plugins:Seedance 2.0 视频生成节点,走 Volcengine API(独立 git 仓库,`main`,2026-08-04 开源发布准备完成) |
