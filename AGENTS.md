@@ -14,6 +14,7 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `ComfyUI-FallingTS` | comfy-desktop-plugins:Seedance 2.0 视频生成节点,走 Volcengine API(独立 git 仓库,`main`,2026-08-04 开源发布准备完成) |
 | `ComfyUI_UltimateSDUpscale` | 分块重绘插件 Ultimate SD Upscale(git clone 含子模块 `repositories/ultimate_sd_upscale`) |
 | `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,`main` 分支,SSH) |
+| `MiniMax-H3` | MiniMax H3 官方模型仓库(子模块,`main`),自带官方 Skills,见「子项目约定 → MiniMax-H3」 |
 | `workflows` | **用户工作流实际存储处**(17 个 json:图片 8 / 视频 4 / 音频 5),前端保存即在此,可经 `GET /userdata?dir=workflows` 读取 |
 | `models` | 模型目录(实际存放处,`ComfyUI\models` 为软链接) |
 | `media` | 输入/输出文件(input、output 均软链接到此) |
@@ -101,6 +102,15 @@ python main.py --enable-manager
 - 当前注册 2 个节点:`Seedance2FirstLastFrame`(首尾帧生视频)、`Seedance2Reference`(多模态参考生视频);入口 `plugin.py`(`comfy_entrypoint()` / `inject()`)
 - ⚠️ **`.env` 含真实 API Key,禁止读取、打印或提交**(`.env` 已在 .gitignore)
 - 注意:`README.md` 已过时(仍声称 4 个节点,实际 2 个),改动节点时同步文档
+
+### MiniMax-H3(官方模型仓库 + 官方 Skills)
+- MiniMax H3 官方仓库(子模块,`main` 分支),包含完整模型结构(diffusers 组件)与官方 Skills;本地推理仍走 ComfyUI 内置 H3 节点与各加速插件
+- **官方 Skills 位置:`MiniMax-H3\skills\`**,共 9 个:
+  - `h3-prompt-writing`(核心,英文):H3 提示词写作规范,覆盖全部 5 种生成模式 T2VA / I2VA / FL2VA / L2VA / Ref2VA,结构化为 `integrated_multimodal_description` + `overall_soundscape` + `non_diegetic_music`;附 `references\base-en.txt`(基础模式)与 `references\ref-en.txt`(Ref2VA 全参考模式)
+  - 8 个风格生成器(均含 `SKILL.md` + 中文 `SKILL.cn.md`):`3d-animation-short-generator`、`brand-promo-video-generator`、`co-op-game-intro-generator`、`handdrawn-live-video-generator`、`minimalist-product-ad-generator`、`mv-subtitle-skill-confirmed`、`paper-collage-explainer-generator`、`papercraft-stop-motion-explainer`
+- **用法**:写 H3 提示词时先读 `MiniMax-H3\skills\h3-prompt-writing\SKILL.md` 及其 references;风格类任务在基础规范之上叠加对应生成器 skill(读其 `SKILL.md`/`SKILL.cn.md`)
+- 官方安装 CLI(备用):`npx skills add https://github.com/MiniMax-AI/MiniMax-H3 --skill h3-prompt-writing`
+- 更新:`git -C MiniMax-H3 pull`(子模块)
 
 ## 开发规范
 
