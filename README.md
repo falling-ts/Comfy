@@ -32,7 +32,7 @@
   - `ComfyUI-GGUF` —— GGUF 量化模型加载
   - `ComfyUI-KJNodes` —— 大型工具节点包
   - `ComfyUI_UltimateSDUpscale` —— 分块重绘放大
-- **工作流方案**:图片 8 + 音频 6 + 视频 6(见[附录 B](#附录-b工作流方案总览))
+- **工作流方案**:图片 8 + 音频 5 + 视频 6(见[附录 B](#附录-b工作流方案总览))
 - **模型目录**(`models\`,软链接到项目根)—— 见[附录 C](#附录-c模型下载清单)
 - **文档**:官方文档本地克隆 `ComfyUI-Docs\`;工作区说明 `AGENTS.md`
 
@@ -220,7 +220,7 @@ Comfy/
 
 ## 附录 B · 工作流方案总览
 
-### 图片类(8 个,模型已全部就绪)
+### 图片类(8 个)
 
 | # | 工作流 | 核心模型 |
 |---|--------|---------|
@@ -230,40 +230,44 @@ Comfy/
 | 4 | 图片四周扩大 Outpaint | Qwen-Edit 2511 + Klein 9B + LaMa 预填充(可选) |
 | 5 | 图片中心放大/局部重绘 Inpaint | Klein 9B + 掩码(手动/SAM3) |
 | 6 | 物体移除 | Klein 9B + 掩码扩张 |
-| 7 | 图片放大/超清(3~4 倍,8 整除) | 4x-UltraSharp |
+| 7 | 图片放大/超清(3~4 倍,8 整除) | 4xNomos8kDAT |
 | 8 | 三视图/多角度生成 | Qwen-Edit 2511 + 多角度 LoRA |
 
-### 音频类(6 个)
+### 音频类(5 个)
 
 | # | 工作流 | 核心模型 | 状态 |
 |---|--------|---------|------|
-| 1 | 音乐/歌曲生成 | ACE-Step 1.5(内置 nodes_ace;低显存可选 split 版) | 需下载 |
-| 2 | 背景音乐/纯器乐 | Stable Audio 3 | **已就绪** |
-| 3 | 环境音/音效 | Stable Audio 3(SFX/One-shot 类别) | **已就绪** |
-| 4 | 情绪语音生成(8 种情绪) | Qwen3-TTS(情感标签);备用 IndexTTS-2 | 需下载 |
-| 5 | 人物说话·参考音色克隆 | Qwen3-TTS 声音克隆(3s 参考音频+情绪标签/指令) | 需下载 |
-| 6 | 多角色对话/混音 | Qwen3-TTS RoleBank+AdvancedDialogue | 需装插件 |
+| 1 | 背景音乐/纯器乐 | Stable Audio 3(已内置 Sage 节点加速) | 需下载 |
+| 2 | 环境音/音效 | Stable Audio 3(SFX/One-shot 类别,已内置 Sage 节点加速) | 需下载 |
+| 3 | 效果音/一次性音效 | Stable Audio 3(One-shot 类别,已内置 Sage 节点加速) | 需下载 |
+| 4 | 文生人物说话(纯文本造声) | Qwen3-TTS VoiceDesign(自然语言描述音色) | 需下载 |
+| 5 | 参考音频生人物说话(克隆) | Qwen3-TTS VoiceClone(3s 参考音频+情绪指令) | 需下载 |
+
+> **Sage 加速说明**:Stable Audio 3 工作流(①②③)已内置 KJNodes `Patch Sage Attention KJ` 节点,按工作流局部加速(~+20-30%),**不全局替换 attention**,不影响 Qwen3-TTS(④⑤)的 sdpa 路径;关闭该节点改为 `disabled` 即恢复原始 attention。
 
 ### 视频类(6 个,MiniMax H3)
 
-文生视频 T2V / 图生视频 I2V / 首帧参考 / 首尾帧 / 多图参考 / 图像+音频参考 —— 全部需下载模型(见附录 C)。
+文生视频 T2V / 图生视频 I2V / 首帧参考 / 首尾帧 / 多图参考 / 图像+音频参考 —— 需下载模型(见附录 C)。
 
 ## 附录 C · 模型下载清单
 
-> 方案原则:全开源、本地推理、零 API 费用。模型统一放 `models\` 对应子目录。下载大文件建议走镜像(附录 E),或让 AI 帮你下载。
+> 方案原则:全开源、本地推理、零 API 费用。模型统一放 `models\` 对应子目录。下载大文件建议走镜像(附录 E),或让 AI 帮你下载。状态列按**全新环境**标注,默认都需下载;`⬇️ 可选` 为按需补充的模型。
 
 ### 图片类
 
 | 模型 | 放置目录 | 状态 | 下载地址 |
 |------|---------|------|---------|
-| `qwen_image_2512_fp8_e4m3fn.safetensors` | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_2512_fp8_e4m3fn.safetensors> |
-| `qwen_image_edit_2511_bf16.safetensors` | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_bf16.safetensors> |
-| `flux-2-klein-9b-fp8.safetensors` | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/black-forest-labs/FLUX.2-klein-9b-fp8/resolve/main/flux-2-klein-9b-fp8.safetensors> ⚠️门控 |
-| `qwen_3_8b_fp8mixed.safetensors`(Klein 文本编码器) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors> |
-| `full_encoder_small_decoder.safetensors`(Klein/FLUX.2 解码器) | `models\vae\` | ✅ 已就绪 | <https://huggingface.co/black-forest-labs/FLUX.2-small-decoder/resolve/main/full_encoder_small_decoder.safetensors> |
-| `qwen_2.5_vl_7b_fp8_scaled.safetensors`(Qwen-Edit 文本编码器) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/HunyuanVideo_1.5_repackaged/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors> |
-| `qwen_image_vae.safetensors` | `models\vae\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors> |
-| `4x-UltraSharp.pth`(放大,已验证可下) | `models\upscale_models\` | ✅ 已就绪 | <https://huggingface.co/lokCX/4x-Ultrasharp/resolve/main/4x-UltraSharp.pth> |
+| `qwen_image_2512_fp8_e4m3fn.safetensors` | `models\diffusion_models\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_2512_fp8_e4m3fn.safetensors> |
+| `qwen_image_edit_2511_bf16.safetensors` | `models\diffusion_models\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_bf16.safetensors> |
+| `flux-2-klein-9b-fp8.safetensors` | `models\diffusion_models\` | ⬇️ 需下载 | <https://huggingface.co/black-forest-labs/FLUX.2-klein-9b-fp8/resolve/main/flux-2-klein-9b-fp8.safetensors> ⚠️门控 |
+| `qwen_3_8b_fp8mixed.safetensors`(Klein 文本编码器) | `models\text_encoders\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors> |
+| `full_encoder_small_decoder.safetensors`(Klein/FLUX.2 解码器) | `models\vae\` | ⬇️ 需下载 | <https://huggingface.co/black-forest-labs/FLUX.2-small-decoder/resolve/main/full_encoder_small_decoder.safetensors> |
+| `qwen_2.5_vl_7b_fp8_scaled.safetensors`(Qwen-Edit 文本编码器) | `models\text_encoders\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/HunyuanVideo_1.5_repackaged/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors> |
+| `qwen_image_vae.safetensors` | `models\vae\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors> |
+| `4xNomos8kDAT.safetensors`(放大,推荐) | `models\upscale_models\` | ⬇️ 需下载 | <https://huggingface.co/Phips/4xNomos8kDAT/resolve/main/4xNomos8kDAT.safetensors> |
+| `Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors`(2512 加速 LoRA) | `models\loras\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/loras/Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors> |
+| `Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors`(2511 加速 LoRA) | `models\loras\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors> |
+| `birefnet.safetensors`(抠图/背景移除) | `models\background_removal\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/birefnet> |
 | `sam3.1_multiplex_fp16.safetensors`(自动掩码,可选) | `models\checkpoints\` | ⬇️ 可选 | <https://huggingface.co/Comfy-Org/sam3.1/resolve/main/checkpoints/sam3.1_multiplex_fp16.safetensors> |
 | LaMa/MAT 预填充(可选,装 Acly ComfyUI-Inpaint-Nodes 后) | 插件自动下载 | ⬇️ 可选 | 随 [ComfyUI-Inpaint-Nodes](https://github.com/Acly/ComfyUI-Inpaint-Nodes) 安装 |
 
@@ -271,17 +275,14 @@ Comfy/
 
 | 模型 | 放置目录 | 状态 | 下载地址 |
 |------|---------|------|---------|
-| `stable_audio_3_medium.safetensors` | `models\checkpoints\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/stable-audio-3/resolve/main/checkpoints/stable_audio_3_medium.safetensors> |
-| `t5gemma_b_b_ul2.safetensors`(StableAudio 文本编码器) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/stable-audio-3/resolve/main/text_encoders/t5gemma_b_b_ul2.safetensors> |
-| `ace_step_1.5_turbo_aio.safetensors`(音乐/歌曲) | `models\checkpoints\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/ace_step_1.5_ComfyUI_files/resolve/main/checkpoints/ace_step_1.5_turbo_aio.safetensors> |
-| ACE-Step 1.5 split 版(低显存替代 AIO) | `diffusion_models`+`text_encoders`+`vae` | ⬇️ 可选 | `acestep_v1.5_turbo.safetensors` + `qwen_0.6b_ace15`(歌词质量选 `qwen_4b_ace15`)+ `ace_1.5_vae.safetensors`,均见 <https://huggingface.co/Comfy-Org/ace_step_1.5_ComfyUI_files> |
-| Qwen3-TTS-12Hz-1.7B-Base(万能:克隆+对话,工作流 ④⑤⑥ 默认,~4.5 GB) | 插件自动下载至 `models/TTS/Qwen/` | ⬇️ 需下载 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-Base> |
-| Qwen3-TTS-12Hz-1.7B-CustomVoice(9 预设音色,~4.5 GB) | 同上 | ⬇️ 可选 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice> |
-| Qwen3-TTS-12Hz-1.7B-VoiceDesign(自然语言造声,~4.5 GB) | 同上 | ⬇️ 可选 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign> |
-| Qwen3-TTS-12Hz-0.6B-Base(低显存克隆,约 4GB VRAM,~2.5 GB) | 同上 | ⬇️ 可选 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base> |
-| Qwen3-TTS-12Hz-0.6B-CustomVoice(低显存预设音色,~2.5 GB) | 同上 | ⬇️ 可选 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice> |
+| `stable_audio_3_medium.safetensors` | `models\checkpoints\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/stable-audio-3/resolve/main/checkpoints/stable_audio_3_medium.safetensors> |
+| `t5gemma_b_b_ul2.safetensors`(StableAudio 文本编码器) | `models\text_encoders\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/stable-audio-3/resolve/main/text_encoders/t5gemma_b_b_ul2.safetensors> |
+| Qwen3-TTS-12Hz-1.7B-Base(万能:克隆+对话,工作流 ④⑤ 默认,~4.5 GB) | 插件自动下载至 `models/TTS/Qwen/` | ⬇️ 需下载 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-Base> |
+| Qwen3-TTS-12Hz-1.7B-CustomVoice(9 预设音色,~4.5 GB) | 同上 | ⬇️ 需下载 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice> |
+| Qwen3-TTS-12Hz-1.7B-VoiceDesign(自然语言造声,~4.5 GB) | 同上 | ⬇️ 需下载 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign> |
+| Qwen3-TTS-12Hz-0.6B-Base(低显存克隆,约 4GB VRAM,~2.5 GB) | 同上 | ⬇️ 需下载 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base> |
+| Qwen3-TTS-12Hz-0.6B-CustomVoice(低显存预设音色,~2.5 GB) | 同上 | ⬇️ 需下载 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice> |
 | SenseVoiceSmall(ASR 自动转写参考文本,工作流 ⑤ 必需,~0.9 GB) | 插件自动下载 | ⬇️ 需下载 | <https://huggingface.co/FunAudioLLM/SenseVoiceSmall> |
-
 > **Qwen3-TTS 下载说明**:均为**目录型模型**,必须整目录下载(`config.json`/`tokenizer` 词表/`speech_tokenizer/` 等,仅下 safetensors 无法加载)。推荐直接开 `Qwen3TTSLoader` 的 `auto_download`(默认开),插件自动从 ModelScope 整目录快照下载并自动建目录;**手动下载**时按以下结构放入(`models/` 是软链接,实际落点 `D:\Comfy\models\`):
 >
 > ```
@@ -295,7 +296,7 @@ Comfy/
 | IndexTTS-2 全套(情绪语音备用,含 gpt/s2mel/bigvgan 等,~5 GB) | TTS-Audio-Suite 目录 | ⬇️ 可选 | <https://huggingface.co/IndexTeam/IndexTTS-2>(镜像 [AEmotionStudio/index-tts-2-models](https://huggingface.co/AEmotionStudio/index-tts-2-models)) |
 | F5-TTS(参考音色克隆备用,最快零样本) | TTS-Audio-Suite 目录 | ⬇️ 可选 | <https://huggingface.co/SWivid/F5-TTS> |
 | CosyVoice3(跨语言克隆,可选) | TTS-Audio-Suite 目录 | ⬇️ 可选 | 随 [TTS-Audio-Suite](https://github.com/diodiogod/TTS-Audio-Suite) 文档 |
-| `qwen3.5_2b_bf16.safetensors`(音频编码) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen3.5/resolve/main/text_encoders/qwen3.5_2b_bf16.safetensors> |
+| `qwen3.5_2b_bf16.safetensors`(音频编码) | `models\text_encoders\` | ⬇️ 需下载 | <https://huggingface.co/Comfy-Org/Qwen3.5/resolve/main/text_encoders/qwen3.5_2b_bf16.safetensors> |
 
 ### 视频类(MiniMax H3,Comfy-Org/MiniMax-H3 仓库)
 
@@ -309,6 +310,17 @@ Comfy/
 
 > **fl2va 与 ref2va 是同一基座的任务变体**:`视频-01 文生视频` 用 fl2va,`视频-02/03/04`(首帧/首尾帧/参考图音视频)用 ref2va,两者都要下。仓库另有 bf16/int8_convrot/pruned_fp8_scaled 档可选。
 
+### MiniMax H3 Turbo LoRA(4 步加速)
+
+> 由 larryvrh 发布在 HuggingFace(`MiniMax-H3-Turbo-Lora`),**4 步采样 ≈ 常规 20 步的 5 倍提速**;bf16 标准 LoRA,每文件约 744 MB(应用方式 `W_eff = W + lora_B @ lora_A`)。国内下载把前缀 `huggingface.co` 换成 `hf-mirror.com` 即可。配套要求:ComfyUI v0.30.0+、KJNodes、ComfyUI-ReservedVRAM、SageAttention、`pip install triton-windows`。
+
+| 模型 | 放置目录 | 状态 | 下载地址 |
+|------|---------|------|---------|
+| `minimax_h3_turbo_4step.safetensors`(训练权重,快速运动下更清晰,推荐) | `models\loras\` | ⬇️ 需下载 | <https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora/resolve/main/minimax_h3_turbo_4step.safetensors> |
+| `minimax_h3_turbo_4step_ema.safetensors`(时间平均权重,更平滑但当前检查点未成熟) | `models\loras\` | ⬇️ 可选 | <https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora/resolve/main/minimax_h3_turbo_4step_ema.safetensors> |
+
+> ⚠️ 注意:该 LoRA 为**早期预览(欠训练)**,原版仓库 README 声明暂不支持 ComfyUI(需 B 站社区转换版);预算充足建议 8 步而非 4 步。仓库首页:https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora
+
 ### MiniMax H3 加速方案(社区现状)
 
 | 方案 | 提速 | 做法 | 代价 |
@@ -318,7 +330,7 @@ Comfy/
 | GGUF 量化 | 显存↓ | `qwen3vl-32B-MiniMax-H3-Q4_K.gguf`(Q2 效果差) | 社区有分歧,需 A/B |
 | INT4 文本编码器 | 显存↓ | 替代 nvfp4_awq | 更小可用 |
 | 显存优化 | 防 OOM | `🎈VRAM/RAM-Cleanup` 节点;启动 `--fast-disk`、`--vram-headroom` | 编码器频繁重载 |
-| Lightning 蒸馏 LoRA | 未来 | 尚未发布,等社区蒸馏 | — |
+| 4-step 加速 LoRA(Turbo) | ~5x | MiniMax-H3-Turbo-Lora(见上节);配套 HyperStep / ReservedVRAM / SageAttention | 早期预览(欠训练),EMA 未成熟;原版需社区转换 |
 
 **低显存**:8G/12G/16G 均可跑(动态卸载,clip 编码器放 CPU);本地最高 768p,2K 需官方 API。
 
@@ -331,6 +343,20 @@ Comfy/
 | ComfyUI-Inpaint-Nodes(可选) | LaMa/MAT 预填充、ColorMatch 接缝修复 | <https://github.com/Acly/ComfyUI-Inpaint-Nodes> |
 | ComfyUI-Angelo(可选) | Klein 点击式编辑(2026 趋势) | <https://github.com/shootthesound/ComfyUI-Angelo> |
 
+### H3 加速插件(已装,2026-08-06)
+
+| 插件 | 用途 | GitHub | 状态 |
+|------|------|--------|------|
+| ComfyUI-NB-H3-HyperStep | 中间块残差复用(跳 34-38 个 transformer 块) | <https://github.com/biyuhe3442-cmd/ComfyUI-NB-H3-HyperStep> | ✅ submodule |
+| ComfyUI-Spectrum-MiniMax-H3 | 谱特征预测,减少采样求值(275★) | <https://github.com/xmarre/ComfyUI-Spectrum-MiniMax-H3> | ✅ submodule |
+| ComfyUI-MiniMaxH3-Cache | EasyCache 增强版块级缓存 | <https://github.com/lihaoyun6/ComfyUI-MiniMaxH3-Cache> | ✅ submodule |
+| ComfyUI-SolAttn_triton | Sol-Attn 稀疏注意力(kijai,仅 4090/5090 实测) | <https://github.com/kijai/ComfyUI-SolAttn_triton> | ✅ submodule |
+| ComfyUI-ReservedVRAM | 动态预留显存,防 OOM | <https://github.com/Windecay/ComfyUI-ReservedVRAM> | ✅ submodule |
+| H3ReferenceSuite(H3RefLoader) | H3 参考加载/工作流套件 | 随 <https://github.com/juemin4-source/minimax-h3-guide> | ✅ submodule |
+| ComfyUI_GJJ_Nodes | GJJ 节点合集(含 Bernini 1.3B 二采等) | <https://github.com/guojijun/ComfyUI_GJJ_Nodes> | ✅ submodule |
+
+> 以上全部 `git clone` 到项目根目录、注册为 **git submodule**、经 `ComfyUI\custom_nodes\` **符号链接**加载。加速启用细节见[附录 G](#附录-g--h3-加速环境部署与核查记录2026-08-06)。
+
 ## 附录 E · 网络与镜像
 
 - **默认直连外网**;直连失败(超时/403/TLS 被掐)时,改用本机代理,如 Clash Verge 混合端口 `127.0.0.1:7890`(HTTP 与 SOCKS5 均可)
@@ -342,5 +368,55 @@ Comfy/
 
 - **门控仓库**:`black-forest-labs/FLUX.2-klein-9b-fp8` 需登录 HF 并接受 BFL 协议
 - **显存**:Klein 9B 蒸馏版占用较高(24G 卡跑 1024 tile 偏紧,爆显存时降到 768);MiniMax H3 需大显存,低显存建议量化或云端
-- **下载顺序建议**:先补音频小件(ACE-Step、Qwen3-TTS)→ 视频大件(MiniMax H3 全套 5 文件,fl2va 与 ref2va 都要下)
+- **下载顺序建议**:先补音频小件(Qwen3-TTS 全套、SenseVoice、Stable Audio 3)→ 视频大件(MiniMax H3 全套 5 文件,fl2va 与 ref2va 都要下)→ 图片大件(Qwen-Image 2512/Edit 2511、FLUX.2 Klein 9B)
 - **模型放好后重启 ComfyUI**;`stable_audio_3_medium` + `t5gemma` 就绪后,背景音乐工作流可立即运行
+
+## 附录 G · H3 加速环境部署与核查记录(2026-08-06)
+
+### G.1 加速依赖安装
+
+| 包 | 版本 | 说明 |
+|----|------|------|
+| torch / torchvision / torchaudio | 2.13.0+cu130 / 0.28.0+cu130 / 2.11.0+cu130 | CUDA 13.0 版,已激活 comfy-kitchen CUDA 后端 |
+| **sageattention** | **2.2.0+cu130torch2.10.0andhigher.post6** | 预编译 wheel,备份在 `backups/sageattention/` |
+| triton-windows | 3.7.1.post27 | torch 2.13 配套 |
+| nvidia-ml-py / ninja / diffusers / timm / spandrel-extra-arches 等 | 最新 | 各插件依赖 |
+
+**sageattention 版本选型过程**:
+- PyPI 上最高只有 **1.0.6(V1)**,2.2.0(V2++,含 SageAttention2++)仅在 GitHub / 社区预编译 wheel
+- 源码编译 2.2.0 在 Windows(MSVC + CUDA 13.2)下失败 → cccl 标准库与 MSVC 兼容问题
+- 改用社区预编译 wheel **`2.2.0.post6`**(woct0rdho 构建,专为 torch 2.12/2.13 编译,修复了此前版本的黑图/NaN bug)
+- 下载注意:GitHub release 直连被限速(约 22KB/s)→ 走代理 `127.0.0.1:7890` 提速(2.5MB/s)
+
+### G.2 重要核查发现:torch 2.13 的 SDPA 损坏
+
+- **现象**:`F.scaled_dot_product_attention` 与 fp64 高精度权威计算的 cosine 仅 ≈0.01(MATH / EFFICIENT / CUDNN 三个 backend 全部错误,连纯 fp64 输入也错)
+- **sageattn 数值正确**:2.2.0.post6 所有 kernel 与 fp64 权威 cosine ≥ **0.9993**(fp16/bf16,RTX 4060 实测)
+- **影响范围**:ComfyUI 默认 `attention_sub_quad` 不走 SDPA → 不受影响;`--use-pytorch-cross-attention` 及直接调 SDPA 的第三方节点会中招
+- **结论**:sage attention **数值正确可放心用**(文生图/H3 均可),通过工作流节点定向启用;勿用 `--use-sage-attention` 全局替换(黑图史 + 影响所有模型)
+
+### G.3 加速插件部署
+
+- 7 个插件 `git clone` 到项目根目录 → 注册为 **git submodule**(`branch=main`)→ 在 `ComfyUI\custom_nodes\` 建立 Windows 符号链接(Python `os.symlink`,因 Git Bash `ln -s` 会退化为目录复制)
+- **未装**:SHUO-Canvas(非开源商业画布产品,非插件);BlockCache(T8star,GitHub 无公开仓库,以 MiniMaxH3-Cache 等价替代)
+- 顺带修复历史遗留:ComfyUI-Qwen3-TTS 补齐 `.gitmodules` 映射
+
+### G.4 工作流加速改造
+
+- 本地 H3 工作流**仅** `视频-04-参考图音视频生视频.json`(视频-01/02/03 为 Seedance 火山引擎 API,非本地,无法加本地加速)
+- 已加入加速链:
+
+```
+UNETLoader → Patch Sage Attention KJ(auto) → MiniMaxH3Cache(EasyCache)
+  → NBH3HyperStep(Turbo 跳36块) → SpectrumApplyMiniMaxH3(默认关) → Sampler
+```
+
+- 原文件备份:`workflows/backup-视频-04-加速前-20260806.json`
+- 兼容性:核心链(Sage + EasyCache + HyperStep)是 HyperStep 官方推荐的共存组合;Spectrum 与它们叠加未验证(同为"减少求值"类),默认 `enabled=false`,需单独用时打开
+
+### G.5 结论
+
+1. **H3 提速核心是 torch cu130 激活的 comfy-kitchen CUDA 后端**(INT8/NVFP4 硬件直算,6-8×),已就绪,无需额外配置
+2. **sageattn 2.2.0.post6 数值正确**,通过工作流节点(KJNodes `Patch Sage Attention KJ`)定向启用
+3. 启动命令保持 `python.exe main.py --enable-manager --disable-pinned-memory --fast-disk`(8GB 显存/16GB 内存设备最佳)
+4. 相关文档:`docs/启动参数推荐-8GB-16GB设备-2026-08-06.md`、`docs/ComfyUI-启动参数参考-2026-08-06.md`
