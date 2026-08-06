@@ -107,8 +107,9 @@ OpenCode 是你和这套工作区之间的 AI 主力,负责装软件、配环境
 >    - `ComfyUI\output` → `..\media`
 >    - `ComfyUI\models` → `..\models`
 >    - `ComfyUI\user\default\workflows` → `..\..\..\workflows`
+>    - (其余 H3 加速插件与 `H3ReferenceSuite` 当前为**绝对路径**符号链接,见[附录 A 软连接清单](#软连接清单2026-08-06-实测-17-个),建议一并改为相对路径以保证可移植)
 > 3. 全部完成后,用 `dir` 或资源管理器确认这些路径显示为「符号链接」,并验证 `ComfyUI\models\diffusion_models` 等子目录可正常进入。
->
+> 
 > 注意:只能删除上面列出的真实目录;`ComfyUI\temp\` 等真实目录保留;所有链接一律用相对路径,保证整个项目文件夹移动后不失效。
 
 3. 软链接就绪后,继续[第 5 步](#第-5-步让-opencode-装它自己的-cli可选)。
@@ -201,7 +202,7 @@ python --version
 
 ```
 Comfy/
-├── ComfyUI/                  # ComfyUI 主程序(dev 分支)
+├── ComfyUI/                  # ComfyUI 主程序(master 分支)
 │   ├── main.py               # 启动入口(python main.py --enable-manager)
 │   ├── custom_nodes/         # 自定义节点(软链接 → ../各插件目录)
 │   ├── input/  output/       # 输入/输出(软链接 → ../media)
@@ -217,6 +218,38 @@ Comfy/
 ├── Templates/  Bilibili/  RunningHub/   # 官方模板 + 调研资料
 └── AGENTS.md                 # 工作区说明(供 AI 读取)
 ```
+
+### 软连接清单(2026-08-06 实测 17 个)
+
+全部为 Windows 符号链接(SymbolicLink)。创建/修复需管理员权限(或以管理员运行 OpenCode / 开启 Windows 开发者模式)。
+
+**A. 相对路径链接(8 个,项目整体移动后不失效)**
+
+| ComfyUI 内路径 | 相对目标 | 实际指向 |
+|---|---|---|
+| `input` | `..\media` | `media` |
+| `output` | `..\media` | `media` |
+| `models` | `..\models` | `models`(模型实际存放处) |
+| `user\default\workflows` | `..\..\..\workflows` | `workflows`(用户工作流实际存储处) |
+| `custom_nodes\ComfyUI-FallingTS` | `..\..\ComfyUI-FallingTS` | `ComfyUI-FallingTS` |
+| `custom_nodes\ComfyUI-GGUF` | `..\..\ComfyUI-GGUF` | `ComfyUI-GGUF` |
+| `custom_nodes\ComfyUI-KJNodes` | `..\..\ComfyUI-KJNodes` | `ComfyUI-KJNodes` |
+| `custom_nodes\ComfyUI_UltimateSDUpscale` | `..\..\ComfyUI_UltimateSDUpscale` | `ComfyUI_UltimateSDUpscale` |
+
+**B. 绝对路径链接(9 个,⚠️ 项目文件夹移动后会失效,建议改为相对路径)**
+
+| ComfyUI 内路径 | 绝对目标 |
+|---|---|
+| `custom_nodes\ComfyUI-MiniMaxH3-Cache` | `D:\Comfy\ComfyUI-MiniMaxH3-Cache` |
+| `custom_nodes\ComfyUI-NB-H3-HyperStep` | `D:\Comfy\ComfyUI-NB-H3-HyperStep` |
+| `custom_nodes\ComfyUI-Qwen3-TTS` | `D:\Comfy\ComfyUI-Qwen3-TTS` |
+| `custom_nodes\ComfyUI-ReservedVRAM` | `D:\Comfy\ComfyUI-ReservedVRAM` |
+| `custom_nodes\ComfyUI-SolAttn_triton` | `D:\Comfy\ComfyUI-SolAttn_triton` |
+| `custom_nodes\ComfyUI-Spectrum-MiniMax-H3` | `D:\Comfy\ComfyUI-Spectrum-MiniMax-H3` |
+| `custom_nodes\ComfyUI_GJJ_Nodes` | `D:\Comfy\ComfyUI_GJJ_Nodes` |
+| `custom_nodes\H3ReferenceSuite` | `D:\Comfy\minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
+
+> 说明:`custom_nodes\` 已被 ComfyUI 的 `.gitignore` 忽略,链接改动不污染子仓库;`ComfyUI\temp\` 为真实目录(非链接),可随时清理。
 
 ## 附录 B · 工作流方案总览
 
