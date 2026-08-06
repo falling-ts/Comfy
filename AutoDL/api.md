@@ -73,3 +73,52 @@
 - 返回 `code=AuthorizeFailed` / 登录超时 → token 过期或无效(JWT `exp` 字段约 2026-10);重新从登录态获取。
 - 只要价格 → 直接对返回 JSON 按 `machine_sku_info` 里 payg 的 `current_price` 排序;注意单位是厘。
 - 只想要有货的 → 过滤 `gpu_idle_num > 0`,或请求体 `gpu_idle_num: 1`。
+
+## 5. 云上模型库读取方法(autodl.art,2026-08-06 实测)
+
+> 页面 `https://www.autodl.art/app/common/model` 是 **AutoDL.Art 社区站**(域名独立,登录态与 autodl.com 不通用)。
+> 同一账号可在 autodl.art 登录后从浏览器 Network 复制 token;autodl.com 市场的 token 在这里无效。
+
+### 5.1 认证方式
+
+- 请求头:`Authorization: <token>`(**裸 token,不带 Bearer**,与 autodl.com 市场一致)
+- autodl.art 签发的 JWT:`aud = cg_website`(社区站);autodl.com 的是 `aud = website`,两者不通用
+- ⚠️ **token 属于敏感凭据:不写入本文件、不提交 git**(与 §0 同约定)
+- 失败特征:裸 token 有效时返回 `{"code":"Success","data":{...}}`;无效/过期返回 `{"code":"AuthorizeFailed","msg":"认证失败; 登录超时"}`;带 `Bearer ` 前缀也会失败
+
+### 5.2 模型文件搜索(核心接口)
+
+- 接口:`POST https://www.autodl.art/api/v1/application/model/file/search`
+- Body(**注意参数名**):
+
+```json
+{
+  "page_index": 1,
+  "page_size": 100,
+  "file_name": "qwen_image_2512",
+  "model_repository": ""
+}
+```
+
+- `file_name` / `model_repository` 二选一(分别按文件名、模型仓库名过滤);**传 `keyword` 会被忽略**(实测任意关键词都返回同一批最新上传,100 条封顶)
+- `page_size` 实测最大 100;`data.total` 恒为 null,翻页以「返回条数 < 100」为终止条件
+- 返回 `data.list[]`,每条含:
+  - `model_name` / `file_name`(文件名可能带 `<em>` 高亮标签,需清洗)
+  - `file_size`(字节)、`md5`(可校验一致性)、`model_repository`(来源仓库)
+  - `instance_path`(如 `/.autodl/93/e7/54/<md5>`,云上存储路径)
+  - `user_info.username`(上传者)、`created_at` / `updated_at`
+
+### 5.3 前端反推过程(接口变更后自查)
+
+1. 抓 `https://www.autodl.art/app/common/model` HTML → 入口 JS `/assets/index.27e3033b.js`(772KB,主 bundle)
+2. 主 bundle 路由表里找 `path:"common/model"` → 组件分包 `./model-search.40b72d2b.js`
+3. `model-search.40b72d2b.js` 从 `./deploy.458d13b0.js` 导入接口函数
+4. `deploy.458d13b0.js` 内定义:`Y = async a => (await t.post(`${r}/application/model/file/search`, a)).data`(`r = "/api/v1"`),导出为 `w` 供搜索页使用
+5. 请求体参数在 `model-search.40b72d2b.js` 里构造:`{page_index, page_size, file_name, model_repository}`(搜索下拉只有「文件名 / 模型仓库名」两档)
+
+### 5.4 实测结果摘要(2026-08-06)
+
+- 库内含大量 Comfy-Org 官方 repackage 文件(上传者 `cg`)与社区上传(zealman / nahz202 / aistudent / O_O 等),热门模型基本齐全
+- 已确认可用:Qwen-Image-2512 fp8(19.03G)、Qwen-Edit-2511 bf16(38.05G)/ fp8mixed(19.12G)、FLUX.2 Klein 9B fp8(8.79G)、MiniMax H3 fl2va/ref2va pruned int8(19.53G)、H3 VAE 与 4 步 LoRA、qwen3vl_32b nvfp4(注意:同名文件为 25.28G,与本地 14.61G 版本不同,勿混用)、Stable Audio 3、Qwen3-TTS 全系 zip、放大模型等
+- 缺失:qwen3.5_2b_bf16(音频文本编码器)、4xNomos8kDAT、SenseVoiceSmall
+- 拷贝到实例后:模型落在 `/root/autodl-tmp/`,需 `ln -s` 到 ComfyUI models 或配置 `extra_model_paths.yaml`,并确认文件名与工作流引用一致
