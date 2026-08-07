@@ -15,7 +15,7 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `ComfyUI_UltimateSDUpscale` | 分块重绘插件 Ultimate SD Upscale(git clone 含子模块 `repositories/ultimate_sd_upscale`) |
 | `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,`main` 分支,SSH) |
 | `MiniMax-H3` | MiniMax H3 官方模型仓库(子模块,`main`),自带官方 Skills,见「子项目约定 → MiniMax-H3」 |
-| `ComfyUI-MiniMaxH3-Cache` 等 8 个 H3 加速插件 | EasyCache/HyperStep/Spectrum/SolAttn/ReservedVRAM/Qwen3-TTS/GJJ_Nodes,均 git submodule(`main`),经 `custom_nodes` **绝对路径**软链接加载,详见「软链接映射 §B」 |
+| `ComfyUI-MiniMaxH3-Cache` 等 8 个 H3 加速插件 | EasyCache/HyperStep/Spectrum/SolAttn/ReservedVRAM/Qwen3-TTS/GJJ_Nodes,均 git submodule(`main`),经 `custom_nodes` **相对路径**软链接加载,详见「软链接映射 §B」 |
 | `minimax-h3-guide` | H3 参考加载套件(git submodule,`main`),`custom_nodes\H3ReferenceSuite` 指向其 `custom_nodes\H3ReferenceSuite` |
 | `workflows` | **用户工作流实际存储处**(17 个 json:图片 8 / 视频 4 / 音频 5),前端保存即在此,可经 `GET /userdata?dir=workflows` 读取 |
 | `models` | 模型目录(实际存放处,`ComfyUI\models` 为软链接) |
@@ -26,11 +26,20 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `backups` | **工作流/重要文件的修改前备份目录**(2026-08-04 起,替代原 `.claude\` 存放位置) |
 | `start-comfyui.cmd / .ps1` | 一键启动脚本(等价 `python main.py --enable-manager`) |
 
-## 软链接映射(重要,共 16 个:8 相对 + 8 绝对,2026-08-06 实测)
+## 软链接映射(重要,共 16 个,全部为相对路径 SymbolicLink,2026-08-07 实测)
 
-全部为 Windows 符号链接(SymbolicLink)。前 8 个为**相对路径**(项目根目录整体移动后不失效);后 8 个(H3 加速插件等)为**绝对路径**(指向 `D:\Comfy\...`),**项目根目录移动后失效,需按相对路径重建**(重建方法见 README 附录 A)。
+全部为 Windows **相对路径**符号链接,**项目根目录整体移动后不失效**。
 
-### A. 相对路径链接(8 个,可移植)
+### A. 基础链接(4 个)
+
+| ComfyUI 内路径 | 类型 | 相对目标 | 实际指向 |
+|------|------|------|------|
+| `ComfyUI\input` | SymbolicLink | `..\media` | `media` |
+| `ComfyUI\output` | SymbolicLink | `..\media` | `media` |
+| `ComfyUI\models` | SymbolicLink | `..\models` | `models`(模型实际存放处) |
+| `ComfyUI\user\default\workflows` | SymbolicLink | `..\..\..\workflows` | `workflows`(用户工作流实际存储处) |
+
+### B. custom_nodes 插件链接(12 个,均指向项目根)
 
 | ComfyUI 内路径 | 类型 | 相对目标 | 实际指向 |
 |------|------|------|------|
@@ -38,23 +47,14 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `custom_nodes\ComfyUI-GGUF` | SymbolicLink | `..\..\ComfyUI-GGUF` | `ComfyUI-GGUF` |
 | `custom_nodes\ComfyUI-KJNodes` | SymbolicLink | `..\..\ComfyUI-KJNodes` | `ComfyUI-KJNodes` |
 | `custom_nodes\ComfyUI-FallingTS` | SymbolicLink | `..\..\ComfyUI-FallingTS` | `ComfyUI-FallingTS`(原 `ComfyUI-Plugins`,更早 `comfy_desktop_plugins`) |
-| `ComfyUI\input` | SymbolicLink | `..\media` | `media` |
-| `ComfyUI\output` | SymbolicLink | `..\media` | `media` |
-| `ComfyUI\models` | SymbolicLink | `..\models` | `models`(模型实际存放处) |
-| `ComfyUI\user\default\workflows` | SymbolicLink | `..\..\..\workflows` | `workflows`(用户工作流实际存储处) |
-
-### B. 绝对路径链接(8 个,⚠️ 项目移动后失效)
-
-| ComfyUI 内路径 | 绝对目标(2026-08-06 实测) |
-|------|------|
-| `custom_nodes\ComfyUI-MiniMaxH3-Cache` | `D:\Comfy\ComfyUI-MiniMaxH3-Cache` |
-| `custom_nodes\ComfyUI-NB-H3-HyperStep` | `D:\Comfy\ComfyUI-NB-H3-HyperStep` |
-| `custom_nodes\ComfyUI-Qwen3-TTS` | `D:\Comfy\ComfyUI-Qwen3-TTS` |
-| `custom_nodes\ComfyUI-ReservedVRAM` | `D:\Comfy\ComfyUI-ReservedVRAM` |
-| `custom_nodes\ComfyUI-SolAttn_triton` | `D:\Comfy\ComfyUI-SolAttn_triton` |
-| `custom_nodes\ComfyUI-Spectrum-MiniMax-H3` | `D:\Comfy\ComfyUI-Spectrum-MiniMax-H3` |
-| `custom_nodes\ComfyUI_GJJ_Nodes` | `D:\Comfy\ComfyUI_GJJ_Nodes` |
-| `custom_nodes\H3ReferenceSuite` | `D:\Comfy\minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
+| `custom_nodes\ComfyUI-MiniMaxH3-Cache` | SymbolicLink | `..\..\ComfyUI-MiniMaxH3-Cache` | `ComfyUI-MiniMaxH3-Cache` |
+| `custom_nodes\ComfyUI-NB-H3-HyperStep` | SymbolicLink | `..\..\ComfyUI-NB-H3-HyperStep` | `ComfyUI-NB-H3-HyperStep` |
+| `custom_nodes\ComfyUI-Qwen3-TTS` | SymbolicLink | `..\..\ComfyUI-Qwen3-TTS` | `ComfyUI-Qwen3-TTS` |
+| `custom_nodes\ComfyUI-ReservedVRAM` | SymbolicLink | `..\..\ComfyUI-ReservedVRAM` | `ComfyUI-ReservedVRAM` |
+| `custom_nodes\ComfyUI-SolAttn_triton` | SymbolicLink | `..\..\ComfyUI-SolAttn_triton` | `ComfyUI-SolAttn_triton` |
+| `custom_nodes\ComfyUI-Spectrum-MiniMax-H3` | SymbolicLink | `..\..\ComfyUI-Spectrum-MiniMax-H3` | `ComfyUI-Spectrum-MiniMax-H3` |
+| `custom_nodes\ComfyUI_GJJ_Nodes` | SymbolicLink | `..\..\ComfyUI_GJJ_Nodes` | `ComfyUI_GJJ_Nodes` |
+| `custom_nodes\H3ReferenceSuite` | SymbolicLink | `..\..\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
 
 - `custom_nodes` 已被 ComfyUI `.gitignore` 忽略,改动不污染 git
 - `ComfyUI\temp\`(真实目录,非链接):运行中生成的临时文件/预览图(如 `ComfyUI_temp_*.png`),可随时清理

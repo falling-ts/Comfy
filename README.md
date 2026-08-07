@@ -219,11 +219,11 @@ Comfy/
 └── AGENTS.md                 # 工作区说明(供 AI 读取)
 ```
 
-### 软连接清单(2026-08-06 实测 17 个)
+### 软连接清单(2026-08-07 实测 16 个,全部为相对路径)
 
-全部为 Windows 符号链接(SymbolicLink)。创建/修复需管理员权限(或以管理员运行 OpenCode / 开启 Windows 开发者模式)。
+全部为 Windows 符号链接(SymbolicLink),且**全部为相对路径,项目整体移动后不失效**。创建/修复需管理员权限(或以管理员运行 OpenCode / 开启 Windows 开发者模式)。
 
-**A. 相对路径链接(8 个,项目整体移动后不失效)**
+**A. 基础链接(4 个)**
 
 | ComfyUI 内路径 | 相对目标 | 实际指向 |
 |---|---|---|
@@ -231,23 +231,23 @@ Comfy/
 | `output` | `..\media` | `media` |
 | `models` | `..\models` | `models`(模型实际存放处) |
 | `user\default\workflows` | `..\..\..\workflows` | `workflows`(用户工作流实际存储处) |
+
+**B. custom_nodes 插件链接(12 个,均指向项目根)**
+
+| ComfyUI 内路径 | 相对目标 | 实际指向 |
+|---|---|---|
 | `custom_nodes\ComfyUI-FallingTS` | `..\..\ComfyUI-FallingTS` | `ComfyUI-FallingTS` |
 | `custom_nodes\ComfyUI-GGUF` | `..\..\ComfyUI-GGUF` | `ComfyUI-GGUF` |
 | `custom_nodes\ComfyUI-KJNodes` | `..\..\ComfyUI-KJNodes` | `ComfyUI-KJNodes` |
 | `custom_nodes\ComfyUI_UltimateSDUpscale` | `..\..\ComfyUI_UltimateSDUpscale` | `ComfyUI_UltimateSDUpscale` |
-
-**B. 绝对路径链接(9 个,⚠️ 项目文件夹移动后会失效,建议改为相对路径)**
-
-| ComfyUI 内路径 | 绝对目标 |
-|---|---|
-| `custom_nodes\ComfyUI-MiniMaxH3-Cache` | `D:\Comfy\ComfyUI-MiniMaxH3-Cache` |
-| `custom_nodes\ComfyUI-NB-H3-HyperStep` | `D:\Comfy\ComfyUI-NB-H3-HyperStep` |
-| `custom_nodes\ComfyUI-Qwen3-TTS` | `D:\Comfy\ComfyUI-Qwen3-TTS` |
-| `custom_nodes\ComfyUI-ReservedVRAM` | `D:\Comfy\ComfyUI-ReservedVRAM` |
-| `custom_nodes\ComfyUI-SolAttn_triton` | `D:\Comfy\ComfyUI-SolAttn_triton` |
-| `custom_nodes\ComfyUI-Spectrum-MiniMax-H3` | `D:\Comfy\ComfyUI-Spectrum-MiniMax-H3` |
-| `custom_nodes\ComfyUI_GJJ_Nodes` | `D:\Comfy\ComfyUI_GJJ_Nodes` |
-| `custom_nodes\H3ReferenceSuite` | `D:\Comfy\minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
+| `custom_nodes\ComfyUI-MiniMaxH3-Cache` | `..\..\ComfyUI-MiniMaxH3-Cache` | `ComfyUI-MiniMaxH3-Cache` |
+| `custom_nodes\ComfyUI-NB-H3-HyperStep` | `..\..\ComfyUI-NB-H3-HyperStep` | `ComfyUI-NB-H3-HyperStep` |
+| `custom_nodes\ComfyUI-Qwen3-TTS` | `..\..\ComfyUI-Qwen3-TTS` | `ComfyUI-Qwen3-TTS` |
+| `custom_nodes\ComfyUI-ReservedVRAM` | `..\..\ComfyUI-ReservedVRAM` | `ComfyUI-ReservedVRAM` |
+| `custom_nodes\ComfyUI-SolAttn_triton` | `..\..\ComfyUI-SolAttn_triton` | `ComfyUI-SolAttn_triton` |
+| `custom_nodes\ComfyUI-Spectrum-MiniMax-H3` | `..\..\ComfyUI-Spectrum-MiniMax-H3` | `ComfyUI-Spectrum-MiniMax-H3` |
+| `custom_nodes\ComfyUI_GJJ_Nodes` | `..\..\ComfyUI_GJJ_Nodes` | `ComfyUI_GJJ_Nodes` |
+| `custom_nodes\H3ReferenceSuite` | `..\..\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
 
 > 说明:`custom_nodes\` 已被 ComfyUI 的 `.gitignore` 忽略,链接改动不污染子仓库;`ComfyUI\temp\` 为真实目录(非链接),可随时清理。
 
@@ -497,7 +497,7 @@ python main.py --enable-manager
 - **models 约 178.7GB 单独 rsync**(`rsync -avP`);服务器需预留 ≥250GB NVMe(还要补 MiniMax H3 缺的约 21.5GB)
 - 软链接重建(`ln -s` 相对路径):
   - `ComfyUI/input → ../media`、`ComfyUI/output → ../media`、`ComfyUI/models → ../models`、`ComfyUI/user/default/workflows → ../../../workflows`
-  - `custom_nodes/` 下 4 个相对链接可直接重建;⚠️ **9 个绝对路径链接(`D:\Comfy\...`)必须重建为相对路径**(清单见附录 A)
+  - `custom_nodes/` 下 12 个插件链接 + 4 个基础链接共 **16 个全部为相对路径**,按[附录 A 清单](#软连接清单2026-08-07-实测-16-个全部为相对路径)重建即可
 - `ComfyUI-FallingTS/.env`(API Key)不进 git,服务器上单独放置并 `chmod 600`
 - 中文文件名 / 路径在 Linux UTF-8 下无问题
 
