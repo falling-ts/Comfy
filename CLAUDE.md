@@ -1,30 +1,35 @@
-# AGENTS.md — ComfyUI 本地工作区
+# ComfyUI 本地工作区
 
-ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为 PowerShell,路径均为绝对路径。
-
-> 本文件于 2026-08-05 由 `.codex\AGENTS.md` 提取至项目根(Codex 与 Claude Code 均自动读取),仅保留 **项目私有/特殊信息**;通用 ComfyUI 框架、模型目录、后缀术语等知识不在此展开,需要时读在线文档或 `backups\backup-20260805-路径清理\` 归档。`.codex\` 与 `.claude\` 已删除,原内容见该归档备份。本文件内路径均为相对项目根目录的写法,便于跨机器使用。
+ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为 PowerShell,路径均相对项目根目录。
 
 ## 目录结构
 
 | 路径 | 说明 |
 |------|------|
-| `ComfyUI` | ComfyUI 主程序,`master` 分支,v0.30.0(独立 git 仓库;官方默认分支即 `master`;本地曾用 `dev` 分支,现已删除) |
-| `ComfyUI-GGUF` | GGUF 量化模型加载/推理节点(独立 git 仓库,`main`) |
-| `ComfyUI-KJNodes` | KJNodes 工具节点包(独立 git 仓库,`main`) |
-| `ComfyUI-FallingTS` | comfy-desktop-plugins:Seedance 2.0 视频生成节点,走 Volcengine API(独立 git 仓库,`main`,2026-08-04 开源发布准备完成) |
-| `ComfyUI_UltimateSDUpscale` | 分块重绘插件 Ultimate SD Upscale(git clone 含子模块 `repositories/ultimate_sd_upscale`) |
-| `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,`main` 分支,SSH) |
-| `MiniMax-H3` | MiniMax H3 官方模型仓库(子模块,`main`),自带官方 Skills,见「子项目约定 → MiniMax-H3」 |
-| `ComfyUI-MiniMaxH3-Cache` 等 8 个 H3 加速插件 | EasyCache/HyperStep/Spectrum/SolAttn/ReservedVRAM/Qwen3-TTS/GJJ_Nodes,均 git submodule(`main`),经 `custom_nodes` **相对路径**软链接加载,详见「软链接映射 §B」 |
+| `ComfyUI` | ComfyUI 主程序(git submodule,`master` 分支) |
+| `ComfyUI-GGUF` | GGUF 量化模型加载/推理节点(git submodule,`main`) |
+| `ComfyUI-KJNodes` | KJNodes 工具节点包(git submodule,`main`) |
+| `ComfyUI-FallingTS` | 这是我的插件,通用工具节点集:Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强 |
+| `ComfyUI_UltimateSDUpscale` | 分块重绘插件 Ultimate SD Upscale(git submodule,`main`,含 `repositories/ultimate_sd_upscale`) |
+| `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,`main` 分支) |
+| `MiniMax-H3` | MiniMax H3 官方模型仓库(git submodule,`main`),自带官方 Skills(`MiniMax-H3\skills\`,共 9 个) |
+| `ComfyUI-MiniMaxH3-Cache` 等 7 个 H3 配套插件 | EasyCache/HyperStep/Spectrum/SolAttn/ReservedVRAM(加速)+ Qwen3-TTS(语音)+ GJJ_Nodes(角色库),均 git submodule(`main`),经 `custom_nodes` **相对路径**软链接加载,详见「软链接映射 §B」 |
 | `minimax-h3-guide` | H3 参考加载套件(git submodule,`main`),`custom_nodes\H3ReferenceSuite` 指向其 `custom_nodes\H3ReferenceSuite` |
-| `workflows` | **用户工作流实际存储处**(17 个 json:图片 8 / 视频 4 / 音频 5),前端保存即在此,可经 `GET /userdata?dir=workflows` 读取 |
+| `SHUO-Canvas` | AI 多模态创作画布(原 AI-CanvasPro):文字/图片/视频/音频节点化串联,支持 RunningHub 与 ComfyUI 本地/云端工作流(git submodule,`main`,v0.7.2,非开源 NC 许可) |
+| `workflows` | **用户工作流实际存储处**(21 个 json:17 个活动工作流[图片 8 / 视频 4 / 音频 5] + 4 个 `backup-*` 备份),前端保存即在此,可经 `GET /userdata?dir=workflows` 读取 |
 | `models` | 模型目录(实际存放处,`ComfyUI\models` 为软链接) |
 | `media` | 输入/输出文件(input、output 均软链接到此) |
 | `Templates` | ComfyUI 官方模板库本地缓存(494 个,按类分目录) |
 | `RunningHub` | RunningHub 调研(非 git):`RunningHub-API读取指南.md` + `API.md` + `workflows\`(429 个) |
 | `Bilibili` | B 站调研(非 git):`B站教程调研.md` + `工作流大全\`(153 个配套工作流) |
+| `AutoDL` | 云端 GPU 调研(非 git):`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4015 条模型清单) |
+| `Stories` | Obsidian 故事写作工作区(`.obsidian\`):`template\` + `七纹刻印\` 两本 |
+| `docs` | 本地参考文档(7 个 md):启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、模型调研报告等 |
+| `logs` | ComfyUI 运行日志(`comfyui*.log`/`comfyui-console*.log`,已 gitignore) |
 | `backups` | **工作流/重要文件的修改前备份目录**(2026-08-04 起,替代原 `.claude\` 存放位置) |
-| `start-comfyui.cmd / .ps1` | 一键启动脚本(等价 `python main.py --enable-manager`) |
+| `README.md` / `LICENSE` | 项目说明与许可 |
+| `.gitmodules` | 16 个子模块登记(git submodule) |
+| `start-comfyui.cmd / .ps1` | 一键启动脚本(等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`) |
 
 ## 软链接映射(重要,共 16 个,全部为相对路径 SymbolicLink,2026-08-07 实测)
 
@@ -62,8 +67,11 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 
 ## 版本与运行
 
-- conda 环境 `ComfyUI`(位于 `miniconda3\envs\ComfyUI`,Python 3.13.14)
-- 依赖版本:torch 2.13.0+cu130、comfyui-frontend-package 1.47.11、comfyui-manager 4.2.2、comfyui-workflow-templates 0.11.27
+- conda 根:`C:\Users\zghyu\Miniconda3`(conda 不在 Git Bash 的 PATH;用 `conda activate` 或直接调 env 内 `python.exe`)
+- **两个名称极易混淆的 conda 环境,均为 Python 3.13.14 / torch 2.13.0+cu130(CUDA 13.0,RTX 4060 8GB VRAM)**:
+  - `ComfyUI`(2026-07-31 建,197 包)= **运行环境**,`start-comfyui.cmd` 与本文档均用它,路径 `miniconda3\envs\ComfyUI\python.exe`
+  - `Comfy`(2026-08-07 建,199 包)= 同款基础上多 `onnxruntime-gpu 1.28.0`、`opencv-python 5.0.0.93`(其余仅依赖小版本差异),疑似备用/实验环境,勿混用
+- 共享关键版本:comfyui-frontend-package **1.48.6**、comfyui-manager **4.2.2**、comfyui-workflow-templates **0.11.31**、sageattention **2.2.0**(cu130)、comfy-kitchen **0.2.26**、comfy-aimdo 0.4.13、transformers 4.57.3、diffusers 0.39.0、numpy 2.4.6、safetensors 0.8.0
 - 启动:
 
 ```powershell
@@ -72,31 +80,31 @@ cd ComfyUI
 python main.py --enable-manager
 ```
 
-- 或 `conda run -n ComfyUI python main.py --enable-manager`(在 `ComfyUI` 下);双击 `start-comfyui.cmd` / 运行 `start-comfyui.ps1` 等价
+- 或 `conda run -n ComfyUI python main.py --enable-manager`(在 `ComfyUI` 下);双击 `start-comfyui.cmd` / 运行 `start-comfyui.ps1` 等价(脚本已带 `--disable-pinned-memory --fast-disk`,适配 8GB VRAM/16GB RAM)
 - 前端默认地址 `http://127.0.0.1:8188`
-- 注意:环境名是 `ComfyUI`(不是 "ConfyUI");不要用系统级 Python 运行主程序
+- 注意:环境名是 `ComfyUI`(不是 "ConfyUI",也不要与 `Comfy` 混用);不要用系统级 Python(`C:\Program Files\Python313`,3.13.13)运行主程序
 - 改自定义节点代码后**重启 ComfyUI 生效**,无需复制文件(经软链接即时加载)
 
-## 模型与蓝图(2026-08-05 现状)
+## 模型与蓝图(2026-08-07 现状)
 
-模型实际存放在 `models\` 下(ComfyUI\models 为软链接)。当前已就绪:
+模型实际存放在 `models\` 下(`ComfyUI\models` 为软链接),当前合计约 178.7 GB。已就绪:
 
 | 目录 | 已就绪 |
 |------|--------|
 | diffusion_models | `qwen_image_2512_fp8_e4m3fn`、`qwen_image_edit_2511_bf16`、`flux-2-klein-9b-fp8`、`minimax_h3_fl2va_pruned_int8_convrot`、`minimax_h3_ref2va_pruned_int8_convrot` |
-| text_encoders | `qwen_2.5_vl_7b_fp8_scaled`(Qwen-Edit)、`qwen_3_8b_fp8mixed`(Klein)、`qwen3.5_2b_bf16`(音频)、`t5gemma_b_b_ul2`(音频) |
-| vae | `qwen_image_vae`、`full_encoder_small_decoder`(Klein/FLUX.2) |
-| loras | `Qwen-Image-2512-Lightning-4steps-V1.0-fp32` |
+| text_encoders | `qwen_2.5_vl_7b_fp8_scaled`(Qwen-Edit)、`qwen_3_8b_fp8mixed`(Klein)、`qwen3.5_2b_bf16`(音频)、`t5gemma_b_b_ul2`(音频)、`qwen3vl_32b_minimax_h3_nvfp4_awq`(H3 视频) |
+| vae | `qwen_image_vae`、`full_encoder_small_decoder`(Klein/FLUX.2)、`minimax_h3_video_vae_fp16`、`minimax_h3_audio_vae_fp32` |
+| loras | `Qwen-Image-2512-Lightning-4steps-V1.0-fp32`、`Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16`、`minimax_h3_turbo_4step`、`[Qwen-Edit]3DChineseStyle_25`、`Kook_Qwen_2512_真实幻想` |
 | checkpoints | `stable_audio_3_medium.safetensors`(音频) |
-| upscale_models | `4x-UltraSharp.pth`、`4xNomos8kDAT`、`RealESRGAN_x4plus.pth` |
+| upscale_models | `4xNomos8kDAT`(原 `4x-UltraSharp.pth`、`RealESRGAN_x4plus.pth` 已移除) |
 | background_removal | `birefnet.safetensors` |
+| TTS | `TTS\Qwen\` 下 Qwen3-TTS-12Hz 五变体(0.6B-Base / 0.6B-CustomVoice / 1.7B-Base / 1.7B-CustomVoice / 1.7B-VoiceDesign,各含主模型 + speech_tokenizer);`TTS\SenseVoiceSmall`(ASR,`model.pt`) |
 
-**MiniMax H3 视频类仍缺 3 个**(已下 fl2va/ref2va,共约 21.5GB 待补,见 `视频-01~04`):
-- `vae/minimax_h3_video_vae_fp16.safetensors`(~5.2GB)
-- `vae/minimax_h3_audio_vae_fp32.safetensors`(~0.6GB)
-- `text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors`(~15.7GB)
+MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\minimax_h3_video_vae_fp16`(~4.9GB)、`vae\minimax_h3_audio_vae_fp32`(~0.6GB)、`text_encoders\qwen3vl_32b_minimax_h3_nvfp4_awq`(~14.6GB)。
 
-已删除(2026-08-03):FLUX.2 文生图全套 5 文件 69.28G、qwen_image 文生图全家、qwen_edit 2509、LTX-2.3/Wan 2.2 视频、TripoSplat 3D;路线转向 Qwen-Image(国漫/中文更优)。`blueprints\` 内置 89 个蓝图;除 Qwen 2511 外其余蓝图均缺模型。
+空目录(尚未放置模型):`ASR\`、`GJJ\`(character_library/costume_library/scene_library/wav 四个子目录)、`audio_encoders\`、`diffusers\` 等其余标准目录。
+
+已删除(2026-08-03):FLUX.2 文生图全套 5 文件 69.28G、qwen_image 文生图全家、qwen_edit 2509、LTX-2.3/Wan 2.2 视频、TripoSplat 3D;路线转向 Qwen-Image(国漫/中文更优)。`ComfyUI\blueprints\` 内置 89 个蓝图(注意:位于 ComfyUI 目录内,不在项目根);除 Qwen 2511 外其余蓝图均缺模型。
 
 ## 官方文档与分类文档
 
@@ -104,36 +112,12 @@ python main.py --enable-manager
 - 分类文档已归档到 `backups\backup-20260805-路径清理\`(01-08 全量;05 含 Codex 协作约定与 Claude 协作约定两版)
 - 专题资料:`Bilibili\B站教程调研.md`(含 MiniMax H3 专题);`RunningHub-API读取指南.md` + `API.md` + `workflows-list.md`
 
-## 子项目约定
-
-### ComfyUI-GGUF
-- GGUF 量化模型加载/推理;注册 `UnetLoaderGGUF`、`CLIPLoaderGGUF`、`DualCLIPLoaderGGUF`、`TripleCLIPLoaderGGUF`、`QuadrupleCLIPLoaderGGUF`、`UnetLoaderGGUFAdvanced`
-- 关键文件:`nodes.py`(注册)、`loader.py`、`ops.py`、`dequant.py`
-
-### ComfyUI-KJNodes
-- 大型工具节点包;节点分散在 `nodes\` 下(`nodes.py` 核心 + `curve_nodes.py`、`batchcrop_nodes.py`、`image_nodes.py`、`mask_nodes.py`、`lora_nodes.py`、`ltxv_nodes.py`、`audioscheduler_nodes.py` 等),`__init__.py` 聚合导出
-- 新节点按类别放入对应文件并同步 `__init__.py` 导出
-
-### ComfyUI-FallingTS(comfy-desktop-plugins)
-- 使用 ComfyUI V3 扩展 API(`comfy_api.latest` 的 `IO`/`ComfyExtension`),只兼容 `dev` 分支(v0.29+),不要降级 ComfyUI
-- 当前注册 2 个节点:`Seedance2FirstLastFrame`(首尾帧生视频)、`Seedance2Reference`(多模态参考生视频);入口 `plugin.py`(`comfy_entrypoint()` / `inject()`)
-- ⚠️ **`.env` 含真实 API Key,禁止读取、打印或提交**(`.env` 已在 .gitignore)
-- 注意:`README.md` 已过时(仍声称 4 个节点,实际 2 个),改动节点时同步文档
-
-### MiniMax-H3(官方模型仓库 + 官方 Skills)
-- MiniMax H3 官方仓库(子模块,`main` 分支),包含完整模型结构(diffusers 组件)与官方 Skills;本地推理仍走 ComfyUI 内置 H3 节点与各加速插件
-- **官方 Skills 位置:`MiniMax-H3\skills\`**,共 9 个:
-  - `h3-prompt-writing`(核心,英文):H3 提示词写作规范,覆盖全部 5 种生成模式 T2VA / I2VA / FL2VA / L2VA / Ref2VA,结构化为 `integrated_multimodal_description` + `overall_soundscape` + `non_diegetic_music`;附 `references\base-en.txt`(基础模式)与 `references\ref-en.txt`(Ref2VA 全参考模式)
-  - 8 个风格生成器(均含 `SKILL.md` + 中文 `SKILL.cn.md`):`3d-animation-short-generator`、`brand-promo-video-generator`、`co-op-game-intro-generator`、`handdrawn-live-video-generator`、`minimalist-product-ad-generator`、`mv-subtitle-skill-confirmed`、`paper-collage-explainer-generator`、`papercraft-stop-motion-explainer`
-- **用法**:写 H3 提示词时先读 `MiniMax-H3\skills\h3-prompt-writing\SKILL.md` 及其 references;风格类任务在基础规范之上叠加对应生成器 skill(读其 `SKILL.md`/`SKILL.cn.md`)
-- 官方安装 CLI(备用):`npx skills add https://github.com/MiniMax-AI/MiniMax-H3 --skill h3-prompt-writing`
-- 更新:`git -C MiniMax-H3 pull`(子模块)
-
 ## 开发规范
 
-- 修改 ComfyUI 主程序时遵守 `ComfyUI\AGENTS.md` 上游规范:改动小且直接、尽量少改文件、不引入新依赖、核心代码不发网络请求、保持节点/API 兼容
-- 各子项目是独立 git 仓库,必须与线上保持纯粹一致:**不要在这些目录内新增/修改/删除文件**;项目根目录本身不是 git 仓库,不要在根目录执行 git 操作
-- 节点注册(V1 `NODE_CLASS_MAPPINGS` / V3 `comfy_entrypoint()`)等通用约定与代码书写规范见全局 `~/.claude\CLAUDE.md`
+- 项目根目录 `D:\Comfy` **本身是一个 git 仓库**(`main`),经 `.gitmodules` 登记 16 个子模块;根仓库跟踪的是各子模块的**指针提交**(`git ls-files -s` 中模式 `160000`)。不要误以为"根目录不是 git 仓库、不能在根目录执行 git 操作"
+- 各子项目(ComfyUI 及全部插件、ComfyUI-Docs、MiniMax-H3、SHUO-Canvas 等)是根仓库的 git **子模块**:各自独立仓库、自身维护与上游一致。改动子模块代码在**子模块目录内**正常 commit/push,再回到根仓库 `git add <子模块路径>` 提交一次"指针更新";不要留着子模块脏工作树不提交,也不要往根仓库混入无关文件
+- 修改 ComfyUI 主程序时遵守 `ComfyUI\AGENTS.md` 上游规范:改动小且直接、尽量少改文件、不引入新依赖、核心代码不发网络请求(见其 "No Internet Requests")、保持节点/API/工作流兼容、删除死代码、代码须看起来像手写
+- 节点注册(V1 `NODE_CLASS_MAPPINGS` / V3 `comfy_entrypoint()`)与 ComfyUI API 使用约定见各插件仓库及 `ComfyUI\AGENTS.md`;代码书写规范(卫语句优先、switch 代替 if-else、缩进)与网络/代理策略见全局 `~/.claude\CLAUDE.md`
 
 ## 工作流节点固定规范(强制)
 
@@ -170,7 +154,7 @@ python main.py --enable-manager
 - `ComfyUI` 工作树含已删除的占位文件(`models/*/put_*_here` 等),属安装后正常现象,不要恢复或提交
 - `ComfyUI-FallingTS` 已完成开源发布准备(README/.gitignore 完善、web 扩展入库、`.claude/` 已忽略),工作树干净
 - `custom_nodes\websocket_image_save.py` 与 `example_node.py.example` 是本地文件,不属于任何仓库
-- `media` 目前为空(2026-08-05):workflows 里引用的输入图片/音频文件均尚不存在,运行前需放入
+- `media`(input/output 软链接目标)已有内容(2026-08-07 实测):`audio_00001.mp3`、`qwen3tts\`、`3d\` 等;部分旧工作流引用的输入文件可能仍缺失,运行前核对
 
 ## 常见任务
 
@@ -179,3 +163,9 @@ python main.py --enable-manager
 - 验证节点加载:启动后查日志中 custom node 加载输出,或访问 `/object_info` 检查节点是否注册
 - 挑选/运行工作流:先核对「模型与蓝图」确认组件就位,再开 `blueprints\`、`Templates\`(494 个)、`Bilibili\工作流大全\`、`RunningHub\workflows\` 的 json
 - 清理临时输出残留:删 `temp\` 里 `ComfyUI_temp_*.png` 后,前端「资产 → 已生成」可能仍显示内容 —— 那是任务历史(`GET /history`)中的输出记录,文件已删但引用还在。清理:`POST /history` + `{"clear": true}` 全清(等价 `server.py` 的 `wipe_history()`),或 `{"delete": ["<prompt_id>", ...]}` 定向删除;验证 `GET /history` 归零,前端 F5 刷新。注:资产系统默认禁用(`--enable-assets` 才启用),任务历史是「已生成」面板唯一来源;清空前确认 history 输出均为 `temp` 类型(无 output/input 真实数据)
+
+## Git 提交规范
+
+我的插件中, 严格按照 `git add .` `commit` 最后推送
+项目根目录中, 严格按照 `git add .` `commit` 最后推送
+子项目除了我的插件是我自己写的, 其它所有子项目不允许提交和修改代码, 或者推送
