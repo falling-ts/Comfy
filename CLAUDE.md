@@ -13,7 +13,7 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `ComfyUI_UltimateSDUpscale` | 分块重绘插件 Ultimate SD Upscale(git submodule,`main`,含 `repositories/ultimate_sd_upscale`) |
 | `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,`main` 分支) |
 | `MiniMax-H3` | MiniMax H3 官方模型仓库(git submodule,`main`),自带官方 Skills(`MiniMax-H3\skills\`,共 9 个) |
-| `ComfyUI-MiniMaxH3-Cache` 等 7 个 H3 配套插件 | EasyCache/HyperStep/Spectrum/SolAttn/ReservedVRAM(加速)+ Qwen3-TTS(语音)+ GJJ_Nodes(角色库),均 git submodule(`main`),经 `custom_nodes` **相对路径**软链接加载,详见「软链接映射 §B」 |
+| `ComfyUI-MiniMaxH3-Cache` 等 6 个 H3 配套插件 | EasyCache/Spectrum/SolAttn/ReservedVRAM(加速)+ Qwen3-TTS(语音)+ GJJ_Nodes(角色库),均 git submodule(`main`),经 `custom_nodes` **相对路径**软链接加载,详见「软链接映射 §B」 |
 | `minimax-h3-guide` | H3 参考加载套件(git submodule,`main`),`custom_nodes\H3ReferenceSuite` 指向其 `custom_nodes\H3ReferenceSuite` |
 | `SHUO-Canvas` | AI 多模态创作画布(原 AI-CanvasPro):文字/图片/视频/音频节点化串联,支持 RunningHub 与 ComfyUI 本地/云端工作流(git submodule,`main`,v0.7.2,非开源 NC 许可) |
 | `workflows` | **用户工作流实际存储处**(21 个 json:17 个活动工作流[图片 8 / 视频 4 / 音频 5] + 4 个 `backup-*` 备份),前端保存即在此,可经 `GET /userdata?dir=workflows` 读取 |
@@ -53,7 +53,6 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `custom_nodes\ComfyUI-KJNodes` | SymbolicLink | `..\..\ComfyUI-KJNodes` | `ComfyUI-KJNodes` |
 | `custom_nodes\ComfyUI-FallingTS` | SymbolicLink | `..\..\ComfyUI-FallingTS` | `ComfyUI-FallingTS`(原 `ComfyUI-Plugins`,更早 `comfy_desktop_plugins`) |
 | `custom_nodes\ComfyUI-MiniMaxH3-Cache` | SymbolicLink | `..\..\ComfyUI-MiniMaxH3-Cache` | `ComfyUI-MiniMaxH3-Cache` |
-| `custom_nodes\ComfyUI-NB-H3-HyperStep` | SymbolicLink | `..\..\ComfyUI-NB-H3-HyperStep` | `ComfyUI-NB-H3-HyperStep` |
 | `custom_nodes\ComfyUI-Qwen3-TTS` | SymbolicLink | `..\..\ComfyUI-Qwen3-TTS` | `ComfyUI-Qwen3-TTS` |
 | `custom_nodes\ComfyUI-ReservedVRAM` | SymbolicLink | `..\..\ComfyUI-ReservedVRAM` | `ComfyUI-ReservedVRAM` |
 | `custom_nodes\ComfyUI-SolAttn_triton` | SymbolicLink | `..\..\ComfyUI-SolAttn_triton` | `ComfyUI-SolAttn_triton` |
@@ -72,6 +71,8 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
   - `ComfyUI`(2026-07-31 建,197 包)= **运行环境**,`start-comfyui.cmd` 与本文档均用它,路径 `miniconda3\envs\ComfyUI\python.exe`
   - `Comfy`(2026-08-07 建,199 包)= 同款基础上多 `onnxruntime-gpu 1.28.0`、`opencv-python 5.0.0.93`(其余仅依赖小版本差异),疑似备用/实验环境,勿混用
 - 共享关键版本:comfyui-frontend-package **1.48.6**、comfyui-manager **4.2.2**、comfyui-workflow-templates **0.11.31**、sageattention **2.2.0**(cu130)、comfy-kitchen **0.2.26**、comfy-aimdo 0.4.13、transformers 4.57.3、diffusers 0.39.0、numpy 2.4.6、safetensors 0.8.0
+- 前端打包目录(web_root,`server.py:251` 经 `FrontendManager.init_frontend()` 定位)= `<虚拟环境>/Lib/site-packages/comfyui_frontend_package/static/`(即 `C:\Users\zghyu\Miniconda3\envs\ComfyUI\Lib\site-packages\comfyui_frontend_package\static\`):主入口 `index.html`,打包产物在 `assets\`(421 个 `<分块名>-<hash>.js`,含 `core-*.js`/`api-*.js`/`index-*.js`),`scripts\` 保留 `app.js`/`api.js`/`domWidget.js` 等扩展 import 入口;插件 `web\js` 经 `GET /extensions`(`server.py:356`)运行时加载,**不参与前端打包**,重建 `assets\` 不影响扩展
+- 测试插件「从零安装」是否正常时:需清理**浏览器缓存**的前端打包文件(即 `assets\` 下载到浏览器侧的 `-hash.js`/`-hash.css`),对 `http://127.0.0.1:8188` 强刷(`Ctrl+Shift+R`)或清除该站点数据,以验证扩展在无陈旧缓存的干净状态下能正常加载;**磁盘 `assets\` 目录勿删**(是前端真实构建产物,删了页面白屏/无法加载)
 - 启动:
 
 ```powershell
@@ -91,7 +92,7 @@ python main.py --enable-manager
 
 | 目录 | 已就绪 |
 |------|--------|
-| diffusion_models | `qwen_image_2512_fp8_e4m3fn`、`qwen_image_edit_2511_bf16`、`flux-2-klein-9b-fp8`、`minimax_h3_fl2va_pruned_int8_convrot`、`minimax_h3_ref2va_pruned_int8_convrot` |
+| diffusion_models | `qwen_image_2512_fp8_e4m3fn`、`qwen_image_edit_2511_fp8mixed`、`flux-2-klein-9b-fp8`、`minimax_h3_fl2va_pruned_int8_convrot`、`minimax_h3_ref2va_pruned_int8_convrot` |
 | text_encoders | `qwen_2.5_vl_7b_fp8_scaled`(Qwen-Edit)、`qwen_3_8b_fp8mixed`(Klein)、`qwen3.5_2b_bf16`(音频)、`t5gemma_b_b_ul2`(音频)、`qwen3vl_32b_minimax_h3_nvfp4_awq`(H3 视频) |
 | vae | `qwen_image_vae`、`full_encoder_small_decoder`(Klein/FLUX.2)、`minimax_h3_video_vae_fp16`、`minimax_h3_audio_vae_fp32` |
 | loras | `Qwen-Image-2512-Lightning-4steps-V1.0-fp32`、`Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16`、`minimax_h3_turbo_4step`、`[Qwen-Edit]3DChineseStyle_25`、`Kook_Qwen_2512_真实幻想` |
@@ -118,29 +119,6 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
 - 各子项目(ComfyUI 及全部插件、ComfyUI-Docs、MiniMax-H3、SHUO-Canvas 等)是根仓库的 git **子模块**:各自独立仓库、自身维护与上游一致。改动子模块代码在**子模块目录内**正常 commit/push,再回到根仓库 `git add <子模块路径>` 提交一次"指针更新";不要留着子模块脏工作树不提交,也不要往根仓库混入无关文件
 - 修改 ComfyUI 主程序时遵守 `ComfyUI\AGENTS.md` 上游规范:改动小且直接、尽量少改文件、不引入新依赖、核心代码不发网络请求(见其 "No Internet Requests")、保持节点/API/工作流兼容、删除死代码、代码须看起来像手写
 - 节点注册(V1 `NODE_CLASS_MAPPINGS` / V3 `comfy_entrypoint()`)与 ComfyUI API 使用约定见各插件仓库及 `ComfyUI\AGENTS.md`;代码书写规范(卫语句优先、switch 代替 if-else、缩进)与网络/代理策略见全局 `~/.claude\CLAUDE.md`
-
-## 工作流节点固定规范(强制)
-
-**所有创作或修改的工作流 JSON,全部节点必须"固定"(pinned),防止拖动/缩放破坏布局。**
-
-- 固定写法:每个节点的 `flags` 必须包含 `"pinned": true`:
-  ```json
-  {
-    "id": 8,
-    "type": "EmptySD3LatentImage",
-    "pos": [-520, 480],
-    "size": [300, 560],
-    "order": 16,
-    "mode": 0,
-    "flags": {"pinned": true},
-    "inputs": [],
-    "outputs": [],
-    "widgets_values": []
-  }
-  ```
-- 字段语义(源自前端源码 `GraphView`/`settingStore`/`api` schema):`flags.pinned = true` 后节点不可拖动、不可调整大小(等价右侧面板 SetPinned 开关 `node.pin(true)`);`mode` 为 0=always / 2=never / 4=bypass;`order` 为执行顺序;`pos` 为画布坐标、`size` 为宽高。
-- 每次创建/修改工作流后必须验证:遍历所有节点,`flags.pinned === true`,且节点 `pos/size` 两两不重叠。
-- 未固定的工作流视为未完成,提交前必须补上。注意:折叠子图(subgraph)内部节点同样要 pinned。
 
 ## 网络与代理
 

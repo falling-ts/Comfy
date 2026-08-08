@@ -241,7 +241,6 @@ Comfy/
 | `custom_nodes\ComfyUI-KJNodes` | `..\..\ComfyUI-KJNodes` | `ComfyUI-KJNodes` |
 | `custom_nodes\ComfyUI_UltimateSDUpscale` | `..\..\ComfyUI_UltimateSDUpscale` | `ComfyUI_UltimateSDUpscale` |
 | `custom_nodes\ComfyUI-MiniMaxH3-Cache` | `..\..\ComfyUI-MiniMaxH3-Cache` | `ComfyUI-MiniMaxH3-Cache` |
-| `custom_nodes\ComfyUI-NB-H3-HyperStep` | `..\..\ComfyUI-NB-H3-HyperStep` | `ComfyUI-NB-H3-HyperStep` |
 | `custom_nodes\ComfyUI-Qwen3-TTS` | `..\..\ComfyUI-Qwen3-TTS` | `ComfyUI-Qwen3-TTS` |
 | `custom_nodes\ComfyUI-ReservedVRAM` | `..\..\ComfyUI-ReservedVRAM` | `ComfyUI-ReservedVRAM` |
 | `custom_nodes\ComfyUI-SolAttn_triton` | `..\..\ComfyUI-SolAttn_triton` | `ComfyUI-SolAttn_triton` |
@@ -291,7 +290,7 @@ Comfy/
 | 模型 | 放置目录 | 状态 | 下载地址 |
 |------|---------|------|---------|
 | `qwen_image_2512_fp8_e4m3fn.safetensors` | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_2512_fp8_e4m3fn.safetensors> |
-| `qwen_image_edit_2511_bf16.safetensors` | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_bf16.safetensors> |
+| `qwen_image_edit_2511_fp8mixed.safetensors` | `models\diffusion_models\` | ⏳ 待下载(替换 bf16) | <https://www.modelscope.cn/models/Kakazhuce/qwen_image_edit_2511_fp8mixed/resolve/master/qwen_image_edit_2511_fp8mixed.safetensors> |
 | `flux-2-klein-9b-fp8.safetensors` | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/black-forest-labs/FLUX.2-klein-9b-fp8/resolve/main/flux-2-klein-9b-fp8.safetensors> ⚠️门控 |
 | `qwen_3_8b_fp8mixed.safetensors`(Klein 文本编码器) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors> |
 | `full_encoder_small_decoder.safetensors`(Klein/FLUX.2 解码器) | `models\vae\` | ✅ 已就绪 | <https://huggingface.co/black-forest-labs/FLUX.2-small-decoder/resolve/main/full_encoder_small_decoder.safetensors> |
@@ -360,7 +359,7 @@ Comfy/
 | GGUF 量化 | 显存↓ | `qwen3vl-32B-MiniMax-H3-Q4_K.gguf`(Q2 效果差) | 社区有分歧,需 A/B |
 | INT4 文本编码器 | 显存↓ | 替代 nvfp4_awq | 更小可用 |
 | 显存优化 | 防 OOM | `🎈VRAM/RAM-Cleanup` 节点;启动 `--fast-disk`、`--vram-headroom` | 编码器频繁重载 |
-| 4-step 加速 LoRA(Turbo) | ~5x | MiniMax-H3-Turbo-Lora(见上节);配套 HyperStep / ReservedVRAM / SageAttention | 早期预览(欠训练),EMA 未成熟;原版需社区转换 |
+| 4-step 加速 LoRA(Turbo) | ~5x | MiniMax-H3-Turbo-Lora(见上节);配套 ReservedVRAM / SageAttention | 早期预览(欠训练),EMA 未成熟;原版需社区转换 |
 
 **低显存**:8G/12G/16G 均可跑(动态卸载,clip 编码器放 CPU);本地最高 768p,2K 需官方 API。
 
@@ -375,7 +374,6 @@ Comfy/
 
 | 插件 | 用途 | GitHub | 状态 |
 |------|------|--------|------|
-| ComfyUI-NB-H3-HyperStep | 中间块残差复用(跳 34-38 个 transformer 块) | <https://github.com/biyuhe3442-cmd/ComfyUI-NB-H3-HyperStep> | ✅ submodule |
 | ComfyUI-Spectrum-MiniMax-H3 | 谱特征预测,减少采样求值(275★) | <https://github.com/xmarre/ComfyUI-Spectrum-MiniMax-H3> | ✅ submodule |
 | ComfyUI-MiniMaxH3-Cache | EasyCache 增强版块级缓存 | <https://github.com/lihaoyun6/ComfyUI-MiniMaxH3-Cache> | ✅ submodule |
 | ComfyUI-SolAttn_triton | Sol-Attn 稀疏注意力(kijai,仅 4090/5090 实测) | <https://github.com/kijai/ComfyUI-SolAttn_triton> | ✅ submodule |
@@ -425,7 +423,7 @@ Comfy/
 
 ### G.3 加速插件部署
 
-- 7 个插件 `git clone` 到项目根目录 → 注册为 **git submodule**(`branch=main`)→ 在 `ComfyUI\custom_nodes\` 建立 Windows 符号链接(Python `os.symlink`,因 Git Bash `ln -s` 会退化为目录复制)
+- 6 个插件 `git clone` 到项目根目录 → 注册为 **git submodule**(`branch=main`)→ 在 `ComfyUI\custom_nodes\` 建立 Windows 符号链接(Python `os.symlink`,因 Git Bash `ln -s` 会退化为目录复制)
 - **未装**:SHUO-Canvas(非开源商业画布产品,非插件);BlockCache(T8star,GitHub 无公开仓库,以 MiniMaxH3-Cache 等价替代)
 - 顺带修复历史遗留:ComfyUI-Qwen3-TTS 补齐 `.gitmodules` 映射
 
@@ -436,11 +434,11 @@ Comfy/
 
 ```
 UNETLoader → Patch Sage Attention KJ(auto) → MiniMaxH3Cache(EasyCache)
-  → NBH3HyperStep(Turbo 跳36块) → SpectrumApplyMiniMaxH3(默认关) → Sampler
+  → SpectrumApplyMiniMaxH3(默认关) → Sampler
 ```
 
 - 原文件备份:`workflows/backup-视频-04-加速前-20260806.json`
-- 兼容性:核心链(Sage + EasyCache + HyperStep)是 HyperStep 官方推荐的共存组合;Spectrum 与它们叠加未验证(同为"减少求值"类),默认 `enabled=false`,需单独用时打开
+- 兼容性:核心链(Sage + EasyCache)已验证共存;Spectrum 与它们叠加未验证(同为"减少求值"类),默认 `enabled=false`,需单独用时打开
 
 ### G.5 结论
 
