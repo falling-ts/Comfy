@@ -10,11 +10,11 @@ trigger-words: [H3提示词, H3 prompt, 视频提示词, T2VA, I2VA, FL2VA, L2VA
 ## 工作流
 
 1. 识别输入模式:T2VA、I2VA、FL2VA、L2VA,或完整参考 Ref2VA。
-2. 基础文本/关键帧模式:阅读 `references/base-en.txt` 并按其最终提示词结构编写。
-3. 完整参考模式:阅读 `references/ref-en.txt` 并按其六段式改写格式编写。
+2. 基础文本/关键帧模式:阅读 `references/base-cn.md`(中文版;英文原版 `base-en.txt`)并按其最终提示词结构编写。
+3. 完整参考模式:阅读 `references/ref-cn.md`(中文版;英文原版 `ref-en.txt`)并按其六段式改写格式编写。
 4. 严格保留所选指南中的**字段名、段落顺序、标签和时间标记写法**(大小写一致,不可改动)。
 
-> 说明:`references/` 下的 base-en.txt / ref-en.txt 是 H3 提示词的官方英文规范,其中的字段名(`integrated_multimodal_description` 等)与时间标记(`At 00:SS.mmm`、`S.SS-second`)必须按原样书写,故保持英文;本中文版仅翻译 Skill 的说明与流程。
+> 说明:`references/` 下同时提供中文版(`base-cn.md` / `ref-cn.md`)与英文原版(`base-en.txt` / `ref-en.txt`)。其中的字段名(`integrated_multimodal_description` 等)与时间标记(`At 00:SS.mmm`、`S.SS-second`)必须按原样书写,中英文版一致;中文版便于理解,英文原版用于精确保留字段格式。
 
 ## 基础模式
 
@@ -23,7 +23,7 @@ trigger-words: [H3提示词, H3 prompt, 视频提示词, T2VA, I2VA, FL2VA, L2VA
 - **FL2VA**:描述首帧与尾帧之间的连续路径(推荐单镜头)。
 - **L2VA**:推断一个合理的开场,并收敛到给定的尾帧。
 
-按 `references/base-en.txt` 所示顺序使用三个核心字段:`integrated_multimodal_description`、`overall_soundscape`、`non_diegetic_music`。
+按 `references/base-cn.md` 所示顺序使用三个核心字段:`integrated_multimodal_description`、`overall_soundscape`、`non_diegetic_music`。
 
 ## 完整参考模式(Ref2VA)
 
@@ -31,7 +31,7 @@ Ref2VA 改写按以下**六段式**顺序组织:`subject_definitions`、`summary
 
 参考标签(`<Subject N>` / `<Picture N>` / `<Video N>` / `<Audio N>`)在全部段落中保持同一含义。
 
-阅读 `references/ref-en.txt` 获取标签规则、保留分析(retenention_analysis)和完整示例。
+阅读 `references/ref-cn.md` 获取标签规则、保留分析(retention_analysis)和完整示例。
 
 ## 输出规则
 
