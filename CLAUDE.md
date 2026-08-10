@@ -26,9 +26,10 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `models` | 模型目录(实际存放处,`ComfyUI\models` 为软链接) |
 | `media` | 输入/输出文件(input、output 均软链接到此) |
 | `Templates` | ComfyUI 官方模板库本地缓存(按类分目录)+ **个人工作流归档**(根目录 17 个 json:图片 8 / 视频 4 / 音频 5,2026-08-09 移入) |
-| `RunningHub` | RunningHub 调研(非 git):`RunningHub-API读取指南.md` + `API.md` + `workflows\`(429 个) |
-| `Bilibili` | B 站调研(非 git):`B站教程调研.md` + `工作流大全\`(153 个配套工作流) |
-| `AutoDL` | 云端 GPU 调研(非 git):`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4015 条模型清单) |
+| `webs` | **三方网站调研聚合目录**(非 git,2026-08-10 移入):`RunningHub\` + `Bilibili\` + `AutoDL\` |
+| `webs\RunningHub` | RunningHub 调研(非 git):`RunningHub-API读取指南.md` + `API.md` + `workflows\`(429 个) |
+| `webs\Bilibili` | B 站调研(非 git):`B站教程调研.md` + `工作流大全\`(153 个配套工作流) |
+| `webs\AutoDL` | 云端 GPU 调研(非 git):`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4015 条模型清单) |
 | `Stories` | Obsidian 故事写作工作区(`.obsidian\`):`template\` + `七纹刻印\` 两本 |
 | `docs` | 本地参考文档(7 个 md):启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、模型调研报告等 |
 | `logs` | ComfyUI 运行日志(`comfyui*.log`/`comfyui-console*.log`,已 gitignore) |
@@ -108,7 +109,7 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
 
 - 本地克隆 `ComfyUI-Docs`(SSH,`main`,保持纯净);在线源码为 GitHub `Comfy-Org/docs`(内容规则详见该仓库,不在此展开)
 - 分类文档已归档到 `backups\backup-20260805-路径清理\`(01-08 全量;05 含 Codex 协作约定与 Claude 协作约定两版)
-- 专题资料:`Bilibili\B站教程调研.md`(含 MiniMax H3 专题);`RunningHub-API读取指南.md` + `API.md` + `workflows-list.md`
+- 专题资料:`webs\Bilibili\B站教程调研.md`(含 MiniMax H3 专题);`webs\RunningHub\RunningHub-API读取指南.md` + `API.md` + `workflows-list.md`
 
 ## 开发规范
 
@@ -136,7 +137,7 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
 - 修改工作流或重要文件前,先备份到 `backups\`,命名 `backup-<文件名>-<YYYYMMDD>-<说明>.json`;**备份一律放 `backups`,不要再放 `.claude\`**
 - 新增/修改自定义节点:直接改对应子项目,经软链接即时生效,无需复制到 custom_nodes
 - 验证节点加载:启动后查日志中 custom node 加载输出,或访问 `/object_info` 检查节点是否注册
-- 挑选/运行工作流:先核对「模型与蓝图」确认组件就位,再开 `blueprints\`、`Templates\`(官方子目录 + 根目录个人归档 17 个)、`Bilibili\工作流大全\`、`RunningHub\workflows\` 的 json
+- 挑选/运行工作流:先核对「模型与蓝图」确认组件就位,再开 `blueprints\`、`Templates\`(官方子目录 + 根目录个人归档 17 个)、`webs\Bilibili\工作流大全\`、`webs\RunningHub\workflows\` 的 json
 - 清理临时输出残留:删 `temp\` 里 `ComfyUI_temp_*.png` 后,前端「资产 → 已生成」可能仍显示内容 —— 那是任务历史(`GET /history`)中的输出记录,文件已删但引用还在。清理:`POST /history` + `{"clear": true}` 全清(等价 `server.py` 的 `wipe_history()`),或 `{"delete": ["<prompt_id>", ...]}` 定向删除;验证 `GET /history` 归零,前端 F5 刷新。注:资产系统默认禁用(`--enable-assets` 才启用),任务历史是「已生成」面板唯一来源;清空前确认 history 输出均为 `temp` 类型(无 output/input 真实数据)
 
 ## Git 提交规范

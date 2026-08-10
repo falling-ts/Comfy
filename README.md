@@ -215,7 +215,7 @@ Comfy/
 ├── workflows/                # 用户工作流(图片/视频/音频)
 ├── models/                   # 模型实际存放处(按子目录分类)
 ├── media/                    # 输入图片/音频 + 生成结果
-├── Templates/  Bilibili/  RunningHub/   # 官方模板 + 调研资料
+├── Templates/  webs/                  # 官方模板 + 三方调研(webs\RunningHub / Bilibili / AutoDL)
 └── AGENTS.md                 # 工作区说明(供 AI 读取)
 ```
 
