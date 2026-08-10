@@ -52,8 +52,8 @@ Step 5.5 自检通过后，在产出任何分镜产物之前展示分镜模式�
     - 为每个面板附加一个小型 ASCII 草图（或为整个镜头附加一个组合草图），让用户无需渲染图像即可在数秒内浏览空间版式。示例：
       ```
       [0-1s]  Mia (L, mid)         door-frame (R)
-              ──kneels, hands on apple basket──
-              cam: low push-in, locked
+              ──跪下，双手捧着苹果筐──
+              cam: 低角度推进，固定
               audio: silent | anchor: basket center-bottom
       [1-2s]  ...
       ```
@@ -65,40 +65,40 @@ Step 5.5 自检通过后，在产出任何分镜产物之前展示分镜模式�
 逐镜头小节模板（复制粘贴骨架，适用于任何镜头）：
 
 ```markdown
-## S03 / 6s — Title: 奶奶把苹果筐递给 Mia
+## S03 / 6s — 标题: 奶奶把苹果筐递给 Mia
 
-- **Hook type**: reveal
-- **Scene & characters**: scene:kitchen | char:Mia, char:Grandma
-- **Spatial anchor card**:
-  - Fixed landmarks: door-frame (right third), kitchen-island (center bottom)
-  - Character positions: Mia (L, midground, facing camera) | Grandma (R, foreground, facing Mia)
-  - Exited character status: —
-  - Lighting baseline: warm overhead key + cool bounce right
-- **Continuity from S02**: 奶奶弯下腰从中岛拿起苹果筐
-- **Continuity to S04**: Mia 接住筐转身，门铃响起
-- **Double-binding**: [char:Mia] [char:Grandma] [scene:kitchen] [hook:reveal]
+- **钩子类型**: reveal
+- **场景与角色**: scene:kitchen | char:Mia, char:Grandma
+- **空间锚点卡**:
+  - 固定地标: door-frame（右三分之一），kitchen-island（中底部）
+  - 角色位置: Mia（左，中景，面向镜头）| Grandma（右，前景，面向 Mia）
+  - 离场角色状态: —
+  - 光照基线: 暖色顶光主光 + 右侧冷色反射补光
+- **自 S02 的连续性**: 奶奶弯下腰从中岛拿起苹果筐
+- **到 S04 的连续性**: Mia 接住筐转身，门铃响起
+- **双重绑定**: [char:Mia] [char:Grandma] [scene:kitchen] [hook:reveal]
 
-### Per-panel four-quadrant content
+### 逐面板四象限内容
 
 #### 0–1s
-- Pose + Expression: 奶奶弯腰双手持筐；Mia 左侧站姿，眼神好奇
-- Camera: locked medium shot, eye-level
-- Audio + Anchor: silent | Mia: L midground | basket: center bottom
-- Performance: [BEAT]
+- 姿势 + 表情: 奶奶弯腰双手持筐；Mia 左侧站姿，眼神好奇
+- 摄像机: 中景固定，平视
+- 音频 + 锚点: silent | Mia: 左中景 | basket: 中底部
+- 表演: [BEAT]
 
 #### 1–2s
-- Pose + Expression: 奶奶手臂伸向 Mia，筐倾斜；Mia 双手前伸准备接
-- Camera: locked medium shot, eye-level
-- Audio + Anchor: ♪ SFX: basket rustle | anchor: door-frame: right third
-- Performance: [HANDOFF → S04 opening]
+- 姿势 + 表情: 奶奶手臂伸向 Mia，筐倾斜；Mia 双手前伸准备接
+- 摄像机: 中景固定，平视
+- 音频 + 锚点: ♪ SFX: 竹筐摩擦声 | anchor: door-frame: 右三分之一
+- 表演: [HANDOFF → S04 opening]
 
 #### 2–3s
 ...
 
-### ASCII layout (optional)
+### ASCII 版式（可选）
 [0-1s]  Grandma (R, fg)        door-frame (R, bg)
-        ──lifts basket──        Mia (L, mid)
-        cam: locked | silent
+        ──举起筐──        Mia (L, mid)
+        cam: 固定 | silent
 [1-2s]  ...
 ```
 

@@ -16,19 +16,19 @@
 **I2VA** 始终使用:
 
 ```text
-For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+对于目标视频,在目标视频的 0.00 秒处,<Picture 1>(来自 [Shot 1])被完整引用。
 ```
 
 **FL2VA** 始终使用:
 
 ```text
-How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot N) aligns with the S.SS-second mark of the target video.
+参考图片与目标视频的对齐方式 — Picture 1(来自 Shot 1)对齐目标视频的 0.00 秒位置;Picture 2(来自 Shot N)对齐目标视频的 S.SS 秒位置。
 ```
 
 **L2VA** 始终使用:
 
 ```text
-How the reference pictures align with the target video — <Picture 1> (from [Shot N]) aligns with the S.SS-second mark of the target video.
+参考图片与目标视频的对齐方式 — <Picture 1>(来自 [Shot N])对齐目标视频的 S.SS 秒位置。
 ```
 
 其中,`N` 是实际最终镜头的编号,`S.SS` 是有效视频时长,精确格式化为两位小数。指令必须是最终提示词的第一行,其后空一行,再写核心字段。
@@ -78,7 +78,7 @@ FL2VA 一般倾向于单个镜头,以便模型能从首帧到末帧连续插值�
 在 `[Shot 1]` 开头,陈述整体风格和初始构图。常见风格包括 `Cinematic`、`live-action`、`2D-animated`、`3D CG`、`claymation`、`watercolor` 和 `vintage film`。对于关键帧任务,从参考图中推导风格;对于 T2VA,从用户文本中选择。
 
 ```text
-[Shot 1] Live-action, cinematic, a medium-wide shot frames...
+[Shot 1] 真人实拍、电影感,一个中景镜头框住...
 ```
 
 ### 4.2 镜头与切换
@@ -86,7 +86,7 @@ FL2VA 一般倾向于单个镜头,以便模型能从首帧到末帧连续插值�
 不要给第一个镜头添加时间戳。后续镜头使用递增的镜头编号,且每个镜头以严格递增、落在视频时长范围内的切换时间开头:
 
 ```text
-[Shot 2] At 00:03.500, the camera cuts to...
+[Shot 2] At 00:03.500,镜头切换到...
 ```
 
 对于普通切换,使用 `the camera cuts to`、`the shot cuts to`、`the shot transitions to`、`the shot changes to` 或 `the shot switches to`。当用户明确要求时,也可以使用叠化(cross-dissolve)、淡入淡出(fade)或划变(wipe)。切换应引入关于主体、空间、状态、视点或时间的新信息。如果只需改变距离或轻微角度,优先使用摄像机运动。
@@ -117,9 +117,9 @@ FL2VA 一般倾向于单个镜头,以便模型能从首帧到末帧连续插值�
 摄像机运动应写成镜头内自然的英文动作,而不是堆叠在句尾的独立标签:
 
 ```text
-The camera pushes in with small amplitude at slow speed toward the folded letter in her hands.
-The camera pans right with large amplitude at fast speed, revealing the open doorway.
-The camera holds a static shot as the runner exits the frame.
+镜头以小幅度、慢速向前推进,推向她手中折叠的信。
+镜头以大幅度、快速向右摇摄,露出敞开的门口。
+镜头保持静止机位,奔跑者离开画面。
 ```
 
 ### 4.4 说话者、对白与演唱
@@ -129,14 +129,14 @@ The camera holds a static shot as the runner exits the frame.
 当说话者首次出现时,提供足够的视听上下文信息以建立稳定身份,例如角色类型、年龄、性别、是否在画面内、音高、音色、语速或口音。将说话者的身份描述短语、ID、动作和表达方式放在 `<d>` 之外。在 `<d>` 内,只包含语言标签和用户实际提供的口头内容。逐字保留原始单词和标点;不得翻译或改写。
 
 ```text
-The young woman with a quiet, breathy voice (S1) says: <d>[English] I get off at the next station.</d>
-The two children (S1,S2) shout together, <d>[English] Wait for us!</d>
+声音轻柔、略带气声的年轻女子(S1)说道:<d>[English] I get off at the next station.</d>
+两个孩子(S1,S2)齐声喊道,<d>[English] Wait for us!</d>
 ```
 
 对于旁白,使用确切短语 `says in an off-screen voiceover`。在每个旁白 `<d>` 块之后,立即说明对应画中角色的嘴唇保持闭合:
 
 ```text
-The man (S1) says in an off-screen voiceover: <d>[English] I still remember that road.</d> while his lips remain completely closed.
+男子(S1)以画外音说道:<d>[English] I still remember that road.</d>与此同时,他的嘴唇始终保持完全闭合。
 ```
 
 当同一句对白或歌词跨越切换时,在两部分相接处使用 `<scenetrans>`,并明确说明音频跨越切换继续。当说话被视频结尾截断时,使用 `<cutoff>`。连贯性可用 `continues seamlessly across the cut`、`continues uninterrupted into the next shot`、`carries over from the previous shot` 或 `remains audible across the transition` 表达。
@@ -146,7 +146,7 @@ The man (S1) says in an off-screen voiceover: <d>[English] I still remember that
 任何实际可见于画面的横幅、标牌、标签、字幕或霓虹文字,都放在英文双引号内。逐字保留原始文字和标点,不进行翻译。
 
 ```text
-A red neon sign reading "营业中" glows above the doorway.
+门口上方亮着一块写着"营业中"的红色霓虹招牌。
 ```
 
 ### 4.6 overall_soundscape
@@ -154,7 +154,7 @@ A red neon sign reading "营业中" glows above the doorway.
 用 1–4 句英文,以一个连续段落概括整个视频中的环境音、物理动作声和非语言人声,如风声、雨声、交通声、脚步声、布料摩擦声、撞击声、呼吸声、笑声或喘气声。对白、演唱和剧情内音乐已属于多模态描述,不应在此重复。仅当用户明确要求整段视频完全静音时,才使用 `N/A`。
 
 ```text
-overall_soundscape: Steady rain taps against the café windows while low room ambience continues underneath. The entrance bell rings once, followed by wet footsteps and the soft scrape of a chair.
+overall_soundscape: 稳定的雨滴敲打着咖啡馆的窗户,低沉的室内环境音在下方持续。入口的门铃响了一声,随后是湿漉漉的脚步声和椅子轻微的刮擦声。
 ```
 
 ### 4.7 non_diegetic_music
@@ -162,7 +162,7 @@ overall_soundscape: Steady rain taps against the café windows while low room am
 用 1–3 句英文描述角色听不到、只有观众能听到的背景音乐。聚焦于乐器、速度、节奏和动态变化;不要使用抽象情绪词,也不要解释配乐的情感功能。角色能听到的演唱、乐器、收音机、电视或手机音乐属于剧情内事件,应出现在多模态描述中。没有非剧情音乐时使用 `N/A`。
 
 ```text
-non_diegetic_music: Sparse piano notes at a slow tempo, joined by sustained low strings that gradually increase in volume before fading out.
+non_diegetic_music: 稀疏的钢琴音符以慢速奏出,随后加入持续的低音弦乐,音量逐渐增强后淡出。
 ```
 
 ## 5. 案例
@@ -172,11 +172,11 @@ non_diegetic_music: Sparse piano notes at a slow tempo, joined by sustained low 
 没有参考图像,直接从文本构建完整时间线。可以添加与用户意图保持一致的场景、角色、动作和声音细节。
 
 ```text
-integrated_multimodal_description: [Shot 1] Live-action, cinematic, a medium-wide shot frames a baker opening the shutters of a small street bakery before sunrise. The camera pushes in with small amplitude at slow speed as the middle-aged baker with a calm, slightly raspy voice (S1) places a fresh loaf on the wooden counter and says: <d>[English] First batch of the morning.</d> [Shot 2] At 00:05.000, the camera cuts to a close-up of steam rising from the sliced bread while the baker's final words carry over from the previous shot.
+integrated_multimodal_description: [Shot 1] 真人实拍、电影感,一个中景镜头框住一位面包师在日出前打开一家临街小面包店的百叶窗。镜头以小幅度、慢速向前推进,这位声音沉稳、略带沙哑的中年面包师(S1)把一条新鲜面包放在木质柜台上,说道:<d>[English] First batch of the morning.</d> [Shot 2] At 00:05.000,镜头切换到被切开的面包上升起热气的特写,面包师最后的话语从上一个镜头延续过来。
 
-overall_soundscape: Wooden shutters scrape open over a quiet street as trays clink softly inside the bakery. The doorbell rings once, followed by light footsteps and the crisp sound of bread being sliced.
+overall_soundscape: 安静的街道上木制百叶窗刮擦着打开,面包店内的托盘轻轻碰撞。门铃响了一声,随后是轻快的脚步声和清脆的切面包声。
 
-non_diegetic_music: A soft acoustic-guitar pattern at a moderate tempo, joined by sparse upright-bass notes and a gentle fade at the end.
+non_diegetic_music: 柔和的原声吉他音型以中速奏出,辅以稀疏的立式贝斯音符,结尾轻柔淡出。
 ```
 
 ### 案例 2:I2VA
@@ -184,13 +184,13 @@ non_diegetic_music: A soft acoustic-guitar pattern at a moderate tempo, joined b
 先写首帧指令,然后把 Picture 1 中的主体、构图和场景作为 Shot 1 的起点,再描述场景如何继续展开。
 
 ```text
-For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.
+对于目标视频,在目标视频的 0.00 秒处,<Picture 1>(来自 [Shot 1])被完整引用。
 
-integrated_multimodal_description: [Shot 1] Live-action, cinematic, the young woman shown in <Picture 1> remains beside the rain-covered train window, preserving her appearance, clothing, seat position, and the carriage layout. The camera trucks right with small amplitude at slow speed as she lifts her gaze from the folded letter toward the passing city lights. Her reflection moves across the glass while the quiet, breathy young woman (S1) says: <d>[English] I get off at the next station.</d> She folds the letter along its existing crease.
+integrated_multimodal_description: [Shot 1] 真人实拍、电影感,<Picture 1> 中出现的年轻女子仍待在布满雨滴的车窗旁,保留她的容貌、衣着、座位位置和车厢布局。镜头以小幅度、慢速向右横移,她将目光从折叠的信件抬向掠过的城市灯光。她的倒影在玻璃上移动,这位声音轻柔、略带气声的年轻女子(S1)说道:<d>[English] I get off at the next station.</d>她沿着信上已有的折痕把信折起。
 
-overall_soundscape: The train wheels produce a steady metallic rhythm beneath a low ventilation hum. Rain ticks against the window while paper rustles softly in her hands.
+overall_soundscape: 火车车轮在低沉的通风嗡鸣声下发出平稳的金属节奏。雨滴敲打着车窗,纸张在她手中轻轻沙沙作响。
 
-non_diegetic_music: Sustained cello notes at a slow tempo with widely spaced piano tones, gradually decreasing in volume.
+non_diegetic_music: 持续的大提琴音符以慢速奏出,点缀着间隔宽广的钢琴音色,音量逐渐降低。
 ```
 
 ### 案例 3:FL2VA
@@ -198,11 +198,11 @@ non_diegetic_music: Sustained cello notes at a slow tempo with widely spaced pia
 两张图分别锚定开场和结局。主体不应重复两份静态图像描述,而应提供连接二者的运动路径。以下示例是一个八秒的单镜头。
 
 ```text
-How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 8.00-second mark of the target video.
+参考图片与目标视频的对齐方式 — Picture 1(来自 Shot 1)对齐目标视频的 0.00 秒位置;Picture 2(来自 Shot 1)对齐目标视频的 8.00 秒位置。
 
-integrated_multimodal_description: [Shot 1] Live-action, cinematic, a rain-soaked cyclist begins in the position and framing established by Picture 1, holding a closed black umbrella beside a silver bicycle. The camera pulls out with small amplitude at slow speed as she releases the bicycle handle, raises the umbrella above her shoulder, and presses the runner upward until the canopy opens. Water rolls from the expanding fabric while she steps beneath it, rotates the handle into the final angle, and settles into the pose, spacing, and composition established by Picture 2 at the end of the shot.
+integrated_multimodal_description: [Shot 1] 真人实拍、电影感,一位浑身湿透的骑行者从 Picture 1 确立的位置和取景开始,身旁停着一辆银色自行车,手中握着一把收拢的黑色雨伞。镜头以小幅度、慢速向后拉出,她松开自行车车把,把雨伞举过肩头,向上推动滑块直到伞面撑开。水从展开的伞布上滚落,她站到伞下,把伞柄转到最终角度,并在镜头结尾落定到 Picture 2 确立的姿势、间距和构图中。
 
-overall_soundscape: Rain falls steadily on the pavement, followed by the metallic click of the umbrella runner and the soft snap of the canopy opening. Water drips from the bicycle frame as distant traffic passes.
+overall_soundscape: 雨水持续落在路面上,随后是雨伞滑块的金属咔嗒声和伞面撑开时轻柔的啪嗒声。远处车流经过,水从自行车车架上滴落。
 
 non_diegetic_music: N/A
 ```
@@ -212,11 +212,11 @@ non_diegetic_music: N/A
 图像仅锚定最后时刻。先建立一个兼容的先前状态,然后让动作、物体状态和构图在最终镜头中逐渐落在 Picture 1 上。以下示例是一个六秒的单镜头。
 
 ```text
-How the reference pictures align with the target video — <Picture 1> (from [Shot 1]) aligns with the 6.00-second mark of the target video.
+参考图片与目标视频的对齐方式 — <Picture 1>(来自 [Shot 1])对齐目标视频的 6.00 秒位置。
 
-integrated_multimodal_description: [Shot 1] Live-action, cinematic, a close shot begins with an intact drinking glass near the edge of a dark wooden table, while the same hand and sleeve visible in <Picture 1> approach from the right. The camera pushes in with small amplitude at slow speed as the fingertips strike the rim. The glass tips, falls, and hits the floor with a sharp impact; cracks spread through it as fragments slide outward. Toward the end, the moving pieces lose momentum and settle into the exact broken arrangement, hand position, camera angle, lighting, and final composition established by <Picture 1>.
+integrated_multimodal_description: [Shot 1] 真人实拍、电影感,特写镜头从一张深色木桌边缘的一只完好玻璃杯开始,而 <Picture 1> 中可见的同一只手和衣袖从右侧伸入。镜头以小幅度、慢速向前推进,指尖敲击杯沿。玻璃杯倾倒、掉落,哐当一声砸在地板上;裂纹在杯中蔓延,碎片向外滑开。接近结尾时,移动的碎片失去动能,落定到 <Picture 1> 确立的精确破碎布局、手部位置、机位角度、光线和最终构图中。
 
-overall_soundscape: Fingertips tap the glass before it scrapes across the tabletop, falls, and breaks with a sharp crash. Small fragments scatter and gradually stop sliding across the floor.
+overall_soundscape: 指尖轻叩玻璃杯,随后杯子在桌面上刮过、掉落并哐当一声摔碎。细小的碎片飞散,逐渐在地板上停止滑动。
 
-non_diegetic_music: A low electronic pulse at a slow tempo, ending immediately after the glass breaks.
+non_diegetic_music: 低沉的电音脉冲以慢速奏出,在玻璃杯碎裂后立即结束。
 ```
