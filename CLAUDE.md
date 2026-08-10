@@ -18,9 +18,10 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `custom_nodes\ComfyUI-SeedVR2_VideoUpscaler` | SeedVR2 高清修复/放大插件(git submodule,`main`,2026-08-10 加入,支持图像与视频) |
 | `custom_nodes\ComfyUI-SUPIR` | SUPIR 超分放大插件(git submodule,`main`,2026-08-10 加入,kijai 维护) |
 | `docs\ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,`main` 分支),2026-08-10 移入 `docs\` |
-| `MiniMax-H3` | MiniMax H3 官方模型仓库(git submodule,`main`),自带官方 Skills(`MiniMax-H3\skills\`,共 9 个) |
+| `h3` | **MiniMax H3 生态聚合目录**(2026-08-10 建):`MiniMax-H3` + `minimax-h3-guide` 两个子模块 |
+| `h3\MiniMax-H3` | MiniMax H3 官方模型仓库(git submodule,`main`),自带官方 Skills(`h3\MiniMax-H3\skills\`,共 9 个) |
 | `custom_nodes\ComfyUI-MiniMaxH3-Cache` 等 6 个 H3 配套插件 | EasyCache/Spectrum/SolAttn/ReservedVRAM(加速)+ Qwen3-TTS(语音)+ GJJ_Nodes(角色库),均 git submodule(`main`),集中于 `custom_nodes\`,经目录级软链接加载,详见「软链接映射 §B」 |
-| `minimax-h3-guide` | H3 参考加载套件(git submodule,`main`);其 `custom_nodes\H3ReferenceSuite` 由根 `custom_nodes\H3ReferenceSuite` 子链接指向 |
+| `h3\minimax-h3-guide` | H3 参考加载套件(git submodule,`main`);其 `custom_nodes\H3ReferenceSuite` 由根 `custom_nodes\H3ReferenceSuite` 子链接指向 |
 | `SHUO-Canvas` | AI 多模态创作画布(原 AI-CanvasPro):文字/图片/视频/音频节点化串联,支持 RunningHub 与 ComfyUI 本地/云端工作流(git submodule,`main`,v0.7.2,非开源 NC 许可) |
 | `workflows` | **用户工作流实际存储处**(当前仅 **`万物建模.json`** 1 个主工作流;原图片 8/视频 4/音频 5 共 17 个工作流已于 2026-08-09 移入 `Templates\` 根目录归档),前端保存即在此,可经 `GET /userdata?dir=workflows` 读取 |
 | `models` | 模型目录(实际存放处,`ComfyUI\models` 为软链接) |
@@ -56,7 +57,7 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | ComfyUI 内路径 | 类型 | 相对目标 | 实际指向 |
 |------|------|------|------|
 | `ComfyUI\custom_nodes` | SymbolicLink(目录级) | `..\custom_nodes` | 根 `custom_nodes`(插件聚合目录,15 插件 + H3ReferenceSuite 链接) |
-| `custom_nodes\H3ReferenceSuite` | SymbolicLink(子链接) | `..\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
+| `custom_nodes\H3ReferenceSuite` | SymbolicLink(子链接) | `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
 
 - 根 `custom_nodes` 由**根仓库**跟踪:15 个插件以 gitlink 形式登记,`H3ReferenceSuite` 为符号链接;本地文件 `example_node.py.example`、`websocket_image_save.py` 被根 `.gitignore` 排除(保留磁盘副本供加载)。`ComfyUI\custom_nodes` 是目录级符号链接,其目标内容不受 ComfyUI 子模块 git 影响
 - `ComfyUI\temp\`(真实目录,非链接):运行中生成的临时文件/预览图(如 `ComfyUI_temp_*.png`),可随时清理

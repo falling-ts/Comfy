@@ -237,7 +237,7 @@ Comfy/
 | ComfyUI 内路径 | 相对目标 | 实际指向 |
 |---|---|---|
 | `custom_nodes` | `..\custom_nodes` | 根 `custom_nodes`(插件聚合目录,15 插件 + H3ReferenceSuite 链接) |
-| `custom_nodes\H3ReferenceSuite` | `..\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
+| `custom_nodes\H3ReferenceSuite` | `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
 
 > 说明:`custom_nodes\` 已被 ComfyUI 的 `.gitignore` 忽略,链接改动不污染子仓库;`ComfyUI\temp\` 为真实目录(非链接),可随时清理。
 
