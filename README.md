@@ -34,7 +34,7 @@
   - `ComfyUI_UltimateSDUpscale` —— 分块重绘放大
 - **工作流方案**:图片 8 + 音频 5 + 视频 6(见[附录 B](#附录-b工作流方案总览))
 - **模型目录**(`models\`,软链接到项目根)—— 见[附录 C](#附录-c模型下载清单)
-- **文档**:官方文档本地克隆 `ComfyUI-Docs\`;工作区说明 `AGENTS.md`
+- **文档**:官方文档本地克隆 `docs\ComfyUI-Docs\`;工作区说明 `AGENTS.md`
 
 ---
 
@@ -211,7 +211,7 @@ Comfy/
 ├── ComfyUI-KJNodes/          # KJNodes 工具节点包
 ├── ComfyUI-FallingTS/        # Seedance 2.0 视频生成节点(火山引擎 API)
 ├── ComfyUI_UltimateSDUpscale/ # 分块重绘放大
-├── ComfyUI-Docs/             # 官方文档本地克隆(只读参考)
+├── docs/ComfyUI-Docs/        # 官方文档本地克隆(只读参考)
 ├── workflows/                # 用户工作流(图片/视频/音频)
 ├── models/                   # 模型实际存放处(按子目录分类)
 ├── media/                    # 输入图片/音频 + 生成结果
