@@ -107,7 +107,7 @@ OpenCode 是你和这套工作区之间的 AI 主力,负责装软件、配环境
 >    - `ComfyUI\output` → `..\media`
 >    - `ComfyUI\models` → `..\models`
 >    - `ComfyUI\user\default\workflows` → `..\..\..\workflows`
->    - (其余 H3 加速插件与 `H3ReferenceSuite` 当前为**绝对路径**符号链接,见[附录 A 软连接清单](#软连接清单2026-08-06-实测-17-个),建议一并改为相对路径以保证可移植)
+>    - (其余 H3 加速插件与 `H3ReferenceSuite` 当前为**绝对路径**符号链接,见[附录 A 软连接清单](#软连接清单2026-08-10-实测-21-个),建议一并改为相对路径以保证可移植)
 > 3. 全部完成后,用 `dir` 或资源管理器确认这些路径显示为「符号链接」,并验证 `ComfyUI\models\diffusion_models` 等子目录可正常进入。
 > 
 > 注意:只能删除上面列出的真实目录;`ComfyUI\temp\` 等真实目录保留;所有链接一律用相对路径,保证整个项目文件夹移动后不失效。
@@ -219,7 +219,7 @@ Comfy/
 └── AGENTS.md                 # 工作区说明(供 AI 读取)
 ```
 
-### 软连接清单(2026-08-07 实测 16 个,全部为相对路径)
+### 软连接清单(2026-08-10 实测 21 个,全部为相对路径)
 
 全部为 Windows 符号链接(SymbolicLink),且**全部为相对路径,项目整体移动后不失效**。创建/修复需管理员权限(或以管理员运行 OpenCode / 开启 Windows 开发者模式)。
 
@@ -232,7 +232,7 @@ Comfy/
 | `models` | `..\models` | `models`(模型实际存放处) |
 | `user\default\workflows` | `..\..\..\workflows` | `workflows`(用户工作流实际存储处) |
 
-**B. custom_nodes 插件链接(12 个,均指向项目根)**
+**B. custom_nodes 插件链接(17 个,均指向项目根)**
 
 | ComfyUI 内路径 | 相对目标 | 实际指向 |
 |---|---|---|
@@ -247,6 +247,11 @@ Comfy/
 | `custom_nodes\ComfyUI-Spectrum-MiniMax-H3` | `..\..\ComfyUI-Spectrum-MiniMax-H3` | `ComfyUI-Spectrum-MiniMax-H3` |
 | `custom_nodes\ComfyUI_GJJ_Nodes` | `..\..\ComfyUI_GJJ_Nodes` | `ComfyUI_GJJ_Nodes` |
 | `custom_nodes\H3ReferenceSuite` | `..\..\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
+| `custom_nodes\ComfyUI-Impact-Pack` | `..\..\ComfyUI-Impact-Pack` | `ComfyUI-Impact-Pack` |
+| `custom_nodes\ComfyUI_LayerStyle` | `..\..\ComfyUI_LayerStyle` | `ComfyUI_LayerStyle` |
+| `custom_nodes\ComfyUI-Easy-Use` | `..\..\ComfyUI-Easy-Use` | `ComfyUI-Easy-Use` |
+| `custom_nodes\ComfyUI-SeedVR2_VideoUpscaler` | `..\..\ComfyUI-SeedVR2_VideoUpscaler` | `ComfyUI-SeedVR2_VideoUpscaler` |
+| `custom_nodes\ComfyUI-SUPIR` | `..\..\ComfyUI-SUPIR` | `ComfyUI-SUPIR` |
 
 > 说明:`custom_nodes\` 已被 ComfyUI 的 `.gitignore` 忽略,链接改动不污染子仓库;`ComfyUI\temp\` 为真实目录(非链接),可随时清理。
 
@@ -380,6 +385,16 @@ Comfy/
 | ComfyUI-ReservedVRAM | 动态预留显存,防 OOM | <https://github.com/Windecay/ComfyUI-ReservedVRAM> | ✅ submodule |
 | H3ReferenceSuite(H3RefLoader) | H3 参考加载/工作流套件 | 随 <https://github.com/juemin4-source/minimax-h3-guide> | ✅ submodule |
 | ComfyUI_GJJ_Nodes | GJJ 节点合集(含 Bernini 1.3B 二采等) | <https://github.com/guojijun/ComfyUI_GJJ_Nodes> | ✅ submodule |
+
+### 扩图/裁切放大插件(已装,2026-08-10)
+
+| 插件 | 用途 | GitHub | 状态 |
+|------|------|--------|------|
+| ComfyUI-Impact-Pack | 局部放大/检测精修:`DetailerForEach`/`FaceDetailer` 区域框选→裁剪→放大→重绘→贴回(3251★) | <https://github.com/ltdrdata/ComfyUI-Impact-Pack> | ✅ submodule |
+| ComfyUI_LayerStyle | 图层风格化节点集:`LayerUtility: CropByMask`/`LayerMask: MaskBoxDetect` 画遮罩选区域(3118★) | <https://github.com/chflame163/ComfyUI_LayerStyle> | ✅ submodule |
+| ComfyUI-Easy-Use | 易用节点集:`easy imageCrop` 前端拖框截图、`easy imageSplitGrid` 九宫格拆块放大(2651★) | <https://github.com/yolain/ComfyUI-Easy-Use> | ✅ submodule |
+| ComfyUI-SeedVR2_VideoUpscaler | SeedVR2 高清修复/放大(图像+视频,2723★) | <https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler> | ✅ submodule |
+| ComfyUI-SUPIR | SUPIR 超分放大修复(2303★) | <https://github.com/kijai/ComfyUI-SUPIR> | ✅ submodule |
 
 > 以上全部 `git clone` 到项目根目录、注册为 **git submodule**、经 `ComfyUI\custom_nodes\` **符号链接**加载。加速启用细节见[附录 G](#附录-g--h3-加速环境部署与核查记录2026-08-06)。
 
