@@ -7,19 +7,20 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | 路径 | 说明 |
 |------|------|
 | `ComfyUI` | ComfyUI 主程序(git submodule,`master` 分支) |
-| `ComfyUI-GGUF` | GGUF 量化模型加载/推理节点(git submodule,`main`) |
-| `ComfyUI-KJNodes` | KJNodes 工具节点包(git submodule,`main`) |
-| `ComfyUI-FallingTS` | 这是我的插件,通用工具节点集:Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强 |
-| `ComfyUI_UltimateSDUpscale` | 分块重绘插件 Ultimate SD Upscale(git submodule,`main`,含 `repositories/ultimate_sd_upscale`) |
-| `ComfyUI-Impact-Pack` | 局部放大/检测精修插件(git submodule,`main`,2026-08-10 加入):`DetailerForEach`/`FaceDetailer`/`ImpactImageCrop`,区域框选→裁剪→放大→重绘→贴回 |
-| `ComfyUI_LayerStyle` | 图层风格化节点集(git submodule,`main`,2026-08-10 加入):`LayerUtility: CropByMask`/`LayerMask: MaskBoxDetect` 画遮罩选区域 |
-| `ComfyUI-Easy-Use` | 易用节点集(git submodule,`main`,2026-08-10 加入):`easy imageCrop` 前端拖框截图、`easy imageSplitGrid` 九宫格拆块放大 |
-| `ComfyUI-SeedVR2_VideoUpscaler` | SeedVR2 高清修复/放大插件(git submodule,`main`,2026-08-10 加入,支持图像与视频) |
-| `ComfyUI-SUPIR` | SUPIR 超分放大插件(git submodule,`main`,2026-08-10 加入,kijai 维护) |
+| `custom_nodes` | **插件聚合目录**(2026-08-10 起):15 个插件子模块 + `H3ReferenceSuite` 链接全部集中于此;`ComfyUI\custom_nodes` 经**目录级**相对软链接指向它,详见「软链接映射 §B」 |
+| `custom_nodes\ComfyUI-GGUF` | GGUF 量化模型加载/推理节点(git submodule,`main`) |
+| `custom_nodes\ComfyUI-KJNodes` | KJNodes 工具节点包(git submodule,`main`) |
+| `custom_nodes\ComfyUI-FallingTS` | 这是我的插件,通用工具节点集:Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强 |
+| `custom_nodes\ComfyUI_UltimateSDUpscale` | 分块重绘插件 Ultimate SD Upscale(git submodule,`main`,含 `repositories/ultimate_sd_upscale`) |
+| `custom_nodes\ComfyUI-Impact-Pack` | 局部放大/检测精修插件(git submodule,`main`,2026-08-10 加入):`DetailerForEach`/`FaceDetailer`/`ImpactImageCrop`,区域框选→裁剪→放大→重绘→贴回 |
+| `custom_nodes\ComfyUI_LayerStyle` | 图层风格化节点集(git submodule,`main`,2026-08-10 加入):`LayerUtility: CropByMask`/`LayerMask: MaskBoxDetect` 画遮罩选区域 |
+| `custom_nodes\ComfyUI-Easy-Use` | 易用节点集(git submodule,`main`,2026-08-10 加入):`easy imageCrop` 前端拖框截图、`easy imageSplitGrid` 九宫格拆块放大 |
+| `custom_nodes\ComfyUI-SeedVR2_VideoUpscaler` | SeedVR2 高清修复/放大插件(git submodule,`main`,2026-08-10 加入,支持图像与视频) |
+| `custom_nodes\ComfyUI-SUPIR` | SUPIR 超分放大插件(git submodule,`main`,2026-08-10 加入,kijai 维护) |
 | `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,`main` 分支) |
 | `MiniMax-H3` | MiniMax H3 官方模型仓库(git submodule,`main`),自带官方 Skills(`MiniMax-H3\skills\`,共 9 个) |
-| `ComfyUI-MiniMaxH3-Cache` 等 6 个 H3 配套插件 | EasyCache/Spectrum/SolAttn/ReservedVRAM(加速)+ Qwen3-TTS(语音)+ GJJ_Nodes(角色库),均 git submodule(`main`),经 `custom_nodes` **相对路径**软链接加载,详见「软链接映射 §B」 |
-| `minimax-h3-guide` | H3 参考加载套件(git submodule,`main`),`custom_nodes\H3ReferenceSuite` 指向其 `custom_nodes\H3ReferenceSuite` |
+| `custom_nodes\ComfyUI-MiniMaxH3-Cache` 等 6 个 H3 配套插件 | EasyCache/Spectrum/SolAttn/ReservedVRAM(加速)+ Qwen3-TTS(语音)+ GJJ_Nodes(角色库),均 git submodule(`main`),集中于 `custom_nodes\`,经目录级软链接加载,详见「软链接映射 §B」 |
+| `minimax-h3-guide` | H3 参考加载套件(git submodule,`main`);其 `custom_nodes\H3ReferenceSuite` 由根 `custom_nodes\H3ReferenceSuite` 子链接指向 |
 | `SHUO-Canvas` | AI 多模态创作画布(原 AI-CanvasPro):文字/图片/视频/音频节点化串联,支持 RunningHub 与 ComfyUI 本地/云端工作流(git submodule,`main`,v0.7.2,非开源 NC 许可) |
 | `workflows` | **用户工作流实际存储处**(当前仅 **`万物建模.json`** 1 个主工作流;原图片 8/视频 4/音频 5 共 17 个工作流已于 2026-08-09 移入 `Templates\` 根目录归档),前端保存即在此,可经 `GET /userdata?dir=workflows` 读取 |
 | `models` | 模型目录(实际存放处,`ComfyUI\models` 为软链接) |
@@ -36,7 +37,7 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `.gitmodules` | 20 个子模块登记(git submodule) |
 | `start-comfyui.cmd / .ps1` | 一键启动脚本(等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`) |
 
-## 软链接映射(重要,共 21 个,全部为相对路径 SymbolicLink,2026-08-07 实测,08-10 新增 5 个扩图/放大插件)
+## 软链接映射(重要,共 6 个,全部为相对路径 SymbolicLink;2026-08-07 建,08-10 插件收敛为目录级链接)
 
 全部为 Windows **相对路径**符号链接,**项目根目录整体移动后不失效**。
 
@@ -49,28 +50,14 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `ComfyUI\models` | SymbolicLink | `..\models` | `models`(模型实际存放处) |
 | `ComfyUI\user\default\workflows` | SymbolicLink | `..\..\..\workflows` | `workflows`(用户工作流实际存储处) |
 
-### B. custom_nodes 插件链接(17 个,均指向项目根)
+### B. custom_nodes 目录级链接 + H3ReferenceSuite 子链接(2 个)
 
 | ComfyUI 内路径 | 类型 | 相对目标 | 实际指向 |
 |------|------|------|------|
-| `custom_nodes\ComfyUI_UltimateSDUpscale` | SymbolicLink | `..\..\ComfyUI_UltimateSDUpscale` | `ComfyUI_UltimateSDUpscale` |
-| `custom_nodes\ComfyUI-GGUF` | SymbolicLink | `..\..\ComfyUI-GGUF` | `ComfyUI-GGUF` |
-| `custom_nodes\ComfyUI-KJNodes` | SymbolicLink | `..\..\ComfyUI-KJNodes` | `ComfyUI-KJNodes` |
-| `custom_nodes\ComfyUI-FallingTS` | SymbolicLink | `..\..\ComfyUI-FallingTS` | `ComfyUI-FallingTS`(原 `ComfyUI-Plugins`,更早 `comfy_desktop_plugins`) |
-| `custom_nodes\ComfyUI-MiniMaxH3-Cache` | SymbolicLink | `..\..\ComfyUI-MiniMaxH3-Cache` | `ComfyUI-MiniMaxH3-Cache` |
-| `custom_nodes\ComfyUI-Qwen3-TTS` | SymbolicLink | `..\..\ComfyUI-Qwen3-TTS` | `ComfyUI-Qwen3-TTS` |
-| `custom_nodes\ComfyUI-ReservedVRAM` | SymbolicLink | `..\..\ComfyUI-ReservedVRAM` | `ComfyUI-ReservedVRAM` |
-| `custom_nodes\ComfyUI-SolAttn_triton` | SymbolicLink | `..\..\ComfyUI-SolAttn_triton` | `ComfyUI-SolAttn_triton` |
-| `custom_nodes\ComfyUI-Spectrum-MiniMax-H3` | SymbolicLink | `..\..\ComfyUI-Spectrum-MiniMax-H3` | `ComfyUI-Spectrum-MiniMax-H3` |
-| `custom_nodes\ComfyUI_GJJ_Nodes` | SymbolicLink | `..\..\ComfyUI_GJJ_Nodes` | `ComfyUI_GJJ_Nodes` |
-| `custom_nodes\H3ReferenceSuite` | SymbolicLink | `..\..\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
-| `custom_nodes\ComfyUI-Impact-Pack` | SymbolicLink | `..\..\ComfyUI-Impact-Pack` | `ComfyUI-Impact-Pack` |
-| `custom_nodes\ComfyUI_LayerStyle` | SymbolicLink | `..\..\ComfyUI_LayerStyle` | `ComfyUI_LayerStyle` |
-| `custom_nodes\ComfyUI-Easy-Use` | SymbolicLink | `..\..\ComfyUI-Easy-Use` | `ComfyUI-Easy-Use` |
-| `custom_nodes\ComfyUI-SeedVR2_VideoUpscaler` | SymbolicLink | `..\..\ComfyUI-SeedVR2_VideoUpscaler` | `ComfyUI-SeedVR2_VideoUpscaler` |
-| `custom_nodes\ComfyUI-SUPIR` | SymbolicLink | `..\..\ComfyUI-SUPIR` | `ComfyUI-SUPIR` |
+| `ComfyUI\custom_nodes` | SymbolicLink(目录级) | `..\custom_nodes` | 根 `custom_nodes`(插件聚合目录,15 插件 + H3ReferenceSuite 链接) |
+| `custom_nodes\H3ReferenceSuite` | SymbolicLink(子链接) | `..\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
 
-- `custom_nodes` 已被 ComfyUI `.gitignore` 忽略,改动不污染 git
+- 根 `custom_nodes` 由**根仓库**跟踪:15 个插件以 gitlink 形式登记,`H3ReferenceSuite` 为符号链接;本地文件 `example_node.py.example`、`websocket_image_save.py` 被根 `.gitignore` 排除(保留磁盘副本供加载)。`ComfyUI\custom_nodes` 是目录级符号链接,其目标内容不受 ComfyUI 子模块 git 影响
 - `ComfyUI\temp\`(真实目录,非链接):运行中生成的临时文件/预览图(如 `ComfyUI_temp_*.png`),可随时清理
 - ⚠️ **`ComfyUI\input\`(用户上传)与 `output\`(生成结果)是真实数据:严禁删除、移动或批量清理**;只有 `temp\` 可清理
 
