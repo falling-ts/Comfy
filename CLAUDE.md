@@ -11,15 +11,20 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `ComfyUI-KJNodes` | KJNodes 工具节点包(git submodule,`main`) |
 | `ComfyUI-FallingTS` | 这是我的插件,通用工具节点集:Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强 |
 | `ComfyUI_UltimateSDUpscale` | 分块重绘插件 Ultimate SD Upscale(git submodule,`main`,含 `repositories/ultimate_sd_upscale`) |
+| `ComfyUI-Impact-Pack` | 局部放大/检测精修插件(git submodule,`main`,2026-08-10 加入):`DetailerForEach`/`FaceDetailer`/`ImpactImageCrop`,区域框选→裁剪→放大→重绘→贴回 |
+| `ComfyUI_LayerStyle` | 图层风格化节点集(git submodule,`main`,2026-08-10 加入):`LayerUtility: CropByMask`/`LayerMask: MaskBoxDetect` 画遮罩选区域 |
+| `ComfyUI-Easy-Use` | 易用节点集(git submodule,`main`,2026-08-10 加入):`easy imageCrop` 前端拖框截图、`easy imageSplitGrid` 九宫格拆块放大 |
+| `ComfyUI-SeedVR2_VideoUpscaler` | SeedVR2 高清修复/放大插件(git submodule,`main`,2026-08-10 加入,支持图像与视频) |
+| `ComfyUI-SUPIR` | SUPIR 超分放大插件(git submodule,`main`,2026-08-10 加入,kijai 维护) |
 | `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,`main` 分支) |
 | `MiniMax-H3` | MiniMax H3 官方模型仓库(git submodule,`main`),自带官方 Skills(`MiniMax-H3\skills\`,共 9 个) |
 | `ComfyUI-MiniMaxH3-Cache` 等 6 个 H3 配套插件 | EasyCache/Spectrum/SolAttn/ReservedVRAM(加速)+ Qwen3-TTS(语音)+ GJJ_Nodes(角色库),均 git submodule(`main`),经 `custom_nodes` **相对路径**软链接加载,详见「软链接映射 §B」 |
 | `minimax-h3-guide` | H3 参考加载套件(git submodule,`main`),`custom_nodes\H3ReferenceSuite` 指向其 `custom_nodes\H3ReferenceSuite` |
 | `SHUO-Canvas` | AI 多模态创作画布(原 AI-CanvasPro):文字/图片/视频/音频节点化串联,支持 RunningHub 与 ComfyUI 本地/云端工作流(git submodule,`main`,v0.7.2,非开源 NC 许可) |
-| `workflows` | **用户工作流实际存储处**(21 个 json:17 个活动工作流[图片 8 / 视频 4 / 音频 5] + 4 个 `backup-*` 备份),前端保存即在此,可经 `GET /userdata?dir=workflows` 读取 |
+| `workflows` | **用户工作流实际存储处**(当前仅 **`万物建模.json`** 1 个主工作流;原图片 8/视频 4/音频 5 共 17 个工作流已于 2026-08-09 移入 `Templates\` 根目录归档),前端保存即在此,可经 `GET /userdata?dir=workflows` 读取 |
 | `models` | 模型目录(实际存放处,`ComfyUI\models` 为软链接) |
 | `media` | 输入/输出文件(input、output 均软链接到此) |
-| `Templates` | ComfyUI 官方模板库本地缓存(494 个,按类分目录) |
+| `Templates` | ComfyUI 官方模板库本地缓存(按类分目录)+ **个人工作流归档**(根目录 17 个 json:图片 8 / 视频 4 / 音频 5,2026-08-09 移入) |
 | `RunningHub` | RunningHub 调研(非 git):`RunningHub-API读取指南.md` + `API.md` + `workflows\`(429 个) |
 | `Bilibili` | B 站调研(非 git):`B站教程调研.md` + `工作流大全\`(153 个配套工作流) |
 | `AutoDL` | 云端 GPU 调研(非 git):`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4015 条模型清单) |
@@ -28,10 +33,10 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `logs` | ComfyUI 运行日志(`comfyui*.log`/`comfyui-console*.log`,已 gitignore) |
 | `backups` | **工作流/重要文件的修改前备份目录**(2026-08-04 起,替代原 `.claude\` 存放位置) |
 | `README.md` / `LICENSE` | 项目说明与许可 |
-| `.gitmodules` | 16 个子模块登记(git submodule) |
+| `.gitmodules` | 20 个子模块登记(git submodule) |
 | `start-comfyui.cmd / .ps1` | 一键启动脚本(等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`) |
 
-## 软链接映射(重要,共 16 个,全部为相对路径 SymbolicLink,2026-08-07 实测)
+## 软链接映射(重要,共 21 个,全部为相对路径 SymbolicLink,2026-08-07 实测,08-10 新增 5 个扩图/放大插件)
 
 全部为 Windows **相对路径**符号链接,**项目根目录整体移动后不失效**。
 
@@ -44,7 +49,7 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `ComfyUI\models` | SymbolicLink | `..\models` | `models`(模型实际存放处) |
 | `ComfyUI\user\default\workflows` | SymbolicLink | `..\..\..\workflows` | `workflows`(用户工作流实际存储处) |
 
-### B. custom_nodes 插件链接(12 个,均指向项目根)
+### B. custom_nodes 插件链接(17 个,均指向项目根)
 
 | ComfyUI 内路径 | 类型 | 相对目标 | 实际指向 |
 |------|------|------|------|
@@ -59,6 +64,11 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `custom_nodes\ComfyUI-Spectrum-MiniMax-H3` | SymbolicLink | `..\..\ComfyUI-Spectrum-MiniMax-H3` | `ComfyUI-Spectrum-MiniMax-H3` |
 | `custom_nodes\ComfyUI_GJJ_Nodes` | SymbolicLink | `..\..\ComfyUI_GJJ_Nodes` | `ComfyUI_GJJ_Nodes` |
 | `custom_nodes\H3ReferenceSuite` | SymbolicLink | `..\..\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
+| `custom_nodes\ComfyUI-Impact-Pack` | SymbolicLink | `..\..\ComfyUI-Impact-Pack` | `ComfyUI-Impact-Pack` |
+| `custom_nodes\ComfyUI_LayerStyle` | SymbolicLink | `..\..\ComfyUI_LayerStyle` | `ComfyUI_LayerStyle` |
+| `custom_nodes\ComfyUI-Easy-Use` | SymbolicLink | `..\..\ComfyUI-Easy-Use` | `ComfyUI-Easy-Use` |
+| `custom_nodes\ComfyUI-SeedVR2_VideoUpscaler` | SymbolicLink | `..\..\ComfyUI-SeedVR2_VideoUpscaler` | `ComfyUI-SeedVR2_VideoUpscaler` |
+| `custom_nodes\ComfyUI-SUPIR` | SymbolicLink | `..\..\ComfyUI-SUPIR` | `ComfyUI-SUPIR` |
 
 - `custom_nodes` 已被 ComfyUI `.gitignore` 忽略,改动不污染 git
 - `ComfyUI\temp\`(真实目录,非链接):运行中生成的临时文件/预览图(如 `ComfyUI_temp_*.png`),可随时清理
@@ -115,7 +125,7 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
 
 ## 开发规范
 
-- 项目根目录 `D:\Comfy` **本身是一个 git 仓库**(`main`),经 `.gitmodules` 登记 16 个子模块;根仓库跟踪的是各子模块的**指针提交**(`git ls-files -s` 中模式 `160000`)。不要误以为"根目录不是 git 仓库、不能在根目录执行 git 操作"
+- 项目根目录 `D:\Comfy` **本身是一个 git 仓库**(`main`),经 `.gitmodules` 登记 20 个子模块;根仓库跟踪的是各子模块的**指针提交**(`git ls-files -s` 中模式 `160000`)。不要误以为"根目录不是 git 仓库、不能在根目录执行 git 操作"
 - 各子项目(ComfyUI 及全部插件、ComfyUI-Docs、MiniMax-H3、SHUO-Canvas 等)是根仓库的 git **子模块**:各自独立仓库、自身维护与上游一致。改动子模块代码在**子模块目录内**正常 commit/push,再回到根仓库 `git add <子模块路径>` 提交一次"指针更新";不要留着子模块脏工作树不提交,也不要往根仓库混入无关文件
 - 修改 ComfyUI 主程序时遵守 `ComfyUI\AGENTS.md` 上游规范:改动小且直接、尽量少改文件、不引入新依赖、核心代码不发网络请求(见其 "No Internet Requests")、保持节点/API/工作流兼容、删除死代码、代码须看起来像手写
 - 节点注册(V1 `NODE_CLASS_MAPPINGS` / V3 `comfy_entrypoint()`)与 ComfyUI API 使用约定见各插件仓库及 `ComfyUI\AGENTS.md`;代码书写规范(卫语句优先、switch 代替 if-else、缩进)与网络/代理策略见全局 `~/.claude\CLAUDE.md`
@@ -139,7 +149,7 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
 - 修改工作流或重要文件前,先备份到 `backups\`,命名 `backup-<文件名>-<YYYYMMDD>-<说明>.json`;**备份一律放 `backups`,不要再放 `.claude\`**
 - 新增/修改自定义节点:直接改对应子项目,经软链接即时生效,无需复制到 custom_nodes
 - 验证节点加载:启动后查日志中 custom node 加载输出,或访问 `/object_info` 检查节点是否注册
-- 挑选/运行工作流:先核对「模型与蓝图」确认组件就位,再开 `blueprints\`、`Templates\`(494 个)、`Bilibili\工作流大全\`、`RunningHub\workflows\` 的 json
+- 挑选/运行工作流:先核对「模型与蓝图」确认组件就位,再开 `blueprints\`、`Templates\`(官方子目录 + 根目录个人归档 17 个)、`Bilibili\工作流大全\`、`RunningHub\workflows\` 的 json
 - 清理临时输出残留:删 `temp\` 里 `ComfyUI_temp_*.png` 后,前端「资产 → 已生成」可能仍显示内容 —— 那是任务历史(`GET /history`)中的输出记录,文件已删但引用还在。清理:`POST /history` + `{"clear": true}` 全清(等价 `server.py` 的 `wipe_history()`),或 `{"delete": ["<prompt_id>", ...]}` 定向删除;验证 `GET /history` 归零,前端 F5 刷新。注:资产系统默认禁用(`--enable-assets` 才启用),任务历史是「已生成」面板唯一来源;清空前确认 history 输出均为 `temp` 类型(无 output/input 真实数据)
 
 ## Git 提交规范
