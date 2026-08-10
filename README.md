@@ -425,7 +425,7 @@ Comfy/
 ### G.3 加速插件部署
 
 - 6 个插件 `git clone` 到项目根目录 → 注册为 **git submodule**(`branch=main`)→ 在 `ComfyUI\custom_nodes\` 建立 Windows 符号链接(Python `os.symlink`,因 Git Bash `ln -s` 会退化为目录复制)
-- **未装**:SHUO-Canvas(非开源商业画布产品,非插件);BlockCache(T8star,GitHub 无公开仓库,以 MiniMaxH3-Cache 等价替代)
+- **未装**:BlockCache(T8star,GitHub 无公开仓库,以 MiniMaxH3-Cache 等价替代);SHUO-Canvas(非开源商业画布,2026-08-10 已移除)
 - 顺带修复历史遗留:ComfyUI-Qwen3-TTS 补齐 `.gitmodules` 映射
 
 ### G.4 工作流加速改造
