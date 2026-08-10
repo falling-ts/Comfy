@@ -1,7 +1,7 @@
 // 无限创作工作流 v6 — 段弧多场景版
 // 核心：规划段弧 → 分多场景写作 → grep 硬查重 → 无重复写入
 // 每一段弧包含多个场景，循序渐进推向高潮
-// 使用: Workflow({ scriptPath: 'D:/Stories/default/.workflow.v6.js' })
+// 使用: Workflow({ scriptPath: 'D:/Comfy/stories/template/.workflow.v6.js' })
 // 默认循环 50 段弧，可传 args: { arcs: N } 自定义
 
 export const meta = {
@@ -15,8 +15,8 @@ export const meta = {
   ],
 }
 
-const STORY_FILE = 'D:/Stories/default/正文.md'
-const OUTLINE_FILE = 'D:/Stories/default/大纲.md'
+const STORY_FILE = 'D:/Comfy/stories/template/0000-正文.md'
+const OUTLINE_FILE = 'D:/Comfy/stories/template/0010-大纲.md'
 const LB = '【', RB = '】'
 
 const MAX_ARCS = args?.arcs || 50
