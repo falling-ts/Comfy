@@ -310,7 +310,7 @@ PowerShell 要点:列表接口同样是 POST,Body 用 UTF-8 JSON;分页判断 `h
 - RunningHub 接口全部走 POST(前端 axios 封装 `r.post`);相同路径用 GET 会 404 或参数错误
 - H3 工作流节点为 RH 私有节点(`RHMiniMaxH3DirectModelLoader` 等),JSON 主要在 RunningHub 平台运行;本地 ComfyUI 需先装对应自定义节点
 - `getContent` 返回的 JSON 可直接导入 ComfyUI,但私有节点缺失时前端会提示缺节点
-- 本目录(`RunningHub\`)不属于任何 git 仓库,可安全存放调研文档与下载的工作流文件
+- 本目录(`webs\RunningHub\`)不属于任何 git 仓库,可安全存放调研文档与下载的工作流文件
 - 全量列表的 `tags` 参数必须传**子标签 ID 数组**(见 §9.1);分类筛选别用一级分类 ID
 - `days` 是热度窗口不是发布时间过滤(见 §9.3);按点赞排行时记得把 `likeCount` 从字符串转 int
 - 广场接口(/api/portal/*)在 `/api` 前缀下实测有效;`/api/portal/template/tags` 已失效(404),分类用 `/api/portal/tag/tree`
@@ -459,7 +459,7 @@ Body: {"workflowId": "<ID>"}
 ```
 1. 从 workflows-list.md 解析全部工作流 ID(正则提取 post/<ID>)
 2. 并行调用 getDetail(6 线程)→ 元数据(节点/模型/自定义节点)
-3. 并行调用 export(6 线程)→ 下载 JSON 文件到 RunningHub\workflows\
+3. 并行调用 export(6 线程)→ 下载 JSON 文件到 webs\RunningHub\workflows\
 4. 解析 Content-Disposition 拿文件名 → 清洗 → 保存
 5. 把 详情列 + 下载地址(workflows/<文件名>)写回 workflows-list.md
 ```
@@ -471,7 +471,7 @@ Body: {"workflowId": "<ID>"}
 - 详情拉取:320/320 成功
 - 文件下载:320/320 成功
 - 总大小:约 28.1 MB(单文件 3.9 KB ~ 1.6 MB)
-- 下载目录:`RunningHub\workflows\`
+- 下载目录:`webs\RunningHub\workflows\`
 
 ### 6.3 并发要点
 
@@ -505,7 +505,7 @@ H = {
     "Content-Type": "application/json",
 }
 BASE = "https://www.runninghub.cn"
-OUT = r"RunningHub\workflows"  # 下载目录
+OUT = r"webs\RunningHub\workflows"  # 下载目录
 os.makedirs(OUT, exist_ok=True)
 
 def post(path, body, timeout=120):
@@ -578,6 +578,6 @@ print("成功:", sum(1 for v in results.values() if v["ok"]), "/", len(ids))
 ## 10. 安全与规范
 
 - token 是敏感凭据,不要写入任何 md、不要提交 git;脚本从环境变量读取
-- `RunningHub\` 目录不属于任何 git 仓库,下载文件可安全存放
+- `webs\RunningHub\` 目录不属于任何 git 仓库,下载文件可安全存放
 - 下载的工作流可能使用 RunningHub 私有自定义节点(详情列有数量),导入本地 ComfyUI 前先装对应节点
 - 批量调用注意频率(6 并发实测稳定),避免触发风控

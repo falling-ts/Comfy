@@ -59,7 +59,7 @@ H3 于 2026-08-02/03 开源,当前"节点优化/加速"生态刚起步:最硬核
 | 排名 | 视频 | 发布时间 | 播放 / 赞 / 藏 | UP 主 | 内容与判断 |
 |------|------|------|------|------|------|
 | 1 | [Minimax-H3的5倍加速且超强画质方案???其实只是一个小技巧](https://www.bilibili.com/video/BV1zMMf6nEYM) | 2026-08-04 06:48 | 17745 / 396 / 847 | 狮子都是孤军奋战 | ✅ 低分辨率生成 + Bernini 放大的"5 倍加速"技巧;评论区真实讨论(4090 实测时间、Bernini OOM、先 480 再放大思路) |
-| 2 | [MiniMax H3 本地生成提速60%+!ComfyUI超级加速插件实测](https://www.bilibili.com/video/BV19Juc6DE8k) | 2026-08-04 17:28 | 6784 / 227 / 396 | Mr_陌客 | ✅ HyperStep 加速插件实测(开源 GitHub:biyuhe3442-cmd/ComfyUI-NB-H3-HyperStep,中间层残差复用/跳 34-36 块),推荐链:H3 Loader→SageAttention→HyperStep→Sampler;夸克网盘备链 |
+| 2 | [MiniMax H3 本地生成提速60%+!ComfyUI超级加速插件实测](https://www.bilibili.com/video/BV19Juc6DE8k) | 2026-08-04 17:28 | 6784 / 227 / 396 | Mr_陌客 | ✅ HyperStep 加速插件实测(开源 GitHub:biyuhe3442-cmd/ComfyUI-NB-H3-HyperStep,中间层残差复用/跳 34-36 块),推荐链:H3 Loader→SageAttention→HyperStep→Sampler;夸克网盘备链 ⚠️ 注:该插件已在本机移除(2026-08-10,兼容性弃用) |
 | 3 | [Minimax H3本地部署福音!低显存及二采加速优化!](https://www.bilibili.com/video/BV1tDMq6GE65) | 2026-08-05 01:25 | 6147 / 285 / 453 | wuwukasi | ✅ 低显存部署 + 二采加速优化,13 分钟讲解;资源走夸克网盘 |
 | 4 | [海螺H3 究极多重加速方案 比原版快70% 低配置通杀!](https://www.bilibili.com/video/BV1nkM16DEBC) | 2026-08-06 02:16 | 4269 / 112 / 365 | 阿硕讲ai | ✅ 今日最新,多重加速组合(SHUO-Canvas GitHub);评论区真实讨论(加速会削弱提示词响应、50 系兼容、用什么卡测的) |
 | 5 | [Minimax-H3的5倍加速且超强画质方案(+Bernini 1.3B二采)](https://www.bilibili.com/video/BV1GhMk6hEdF) | 2026-08-05 16:51 | 2060 / 72 / 94 | 郭吉军插件汉化 | ⚠️ Bernini 1.3B 二采加速方案,节点开源(ComfyUI_GJJ_Nodes),评论区真实反馈(节点缺失、低显存卸载问题);模型走夸克网盘,资源分发性质偏重 |

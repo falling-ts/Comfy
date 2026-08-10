@@ -10,12 +10,12 @@
 
 | # | 插件 | GitHub 仓库 | ⭐ Star | 最近提交/推送 | 类别 | 说明 / 相关节点 | 本机已装 |
 |---|------|------------|--------|--------------|------|----------------|---------|
-| 1 | ComfyUI-Impact-Pack | ltdrdata/ComfyUI-Impact-Pack | **3251** | 2026-04-19 | 扩图/裁剪放大 | `FaceDetailer`/`DetailerForEach`/`ImpactImageCrop`,检测框选→裁剪→latent放大→重绘→贴回 | 否 |
-| 2 | ComfyUI_LayerStyle | chflame163/ComfyUI_LayerStyle | **3118** | 2026-08-01 | 扩图/裁剪放大 | `LayerUtility: CropByMask`、`LayerMask: MaskBoxDetect`,画 mask 框选区域 | 否 |
+| 1 | ComfyUI-Impact-Pack | ltdrdata/ComfyUI-Impact-Pack | **3251** | 2026-04-19 | 扩图/裁剪放大 | `FaceDetailer`/`DetailerForEach`/`ImpactImageCrop`,检测框选→裁剪→latent放大→重绘→贴回 | ✅ 已装 |
+| 2 | ComfyUI_LayerStyle | chflame163/ComfyUI_LayerStyle | **3118** | 2026-08-01 | 扩图/裁剪放大 | `LayerUtility: CropByMask`、`LayerMask: MaskBoxDetect`,画 mask 框选区域 | ✅ 已装 |
 | 3 | ComfyUI-KJNodes | kijai/ComfyUI-KJNodes | **3031** | 2026-08-07 | 裁剪放大 | `ImageResizeKJ`/`ImageResizeKJv2` 等工具节点 | ✅ 已装 |
-| 4 | ComfyUI-SeedVR2_VideoUpscaler | numz/ComfyUI-SeedVR2_VideoUpscaler | **2723** | 2025-12-24 | 裁切放大/精修 | SeedVR2 图像/视频高清修复放大,`SeedVR2LoadDiTModel`/`SeedVR2VideoUpscaler` | 否 |
-| 5 | ComfyUI-Easy-Use | yolain/ComfyUI-Easy-Use | **2651** | 2026-07-28 | 扩图/裁剪放大 | `easy imageCrop`(前端拖框截图)、`easy imageSplitGrid`(九宫格拆块放大) | 否 |
-| 6 | ComfyUI-SUPIR | kijai/ComfyUI-SUPIR | **2303** | 2026-04-29 | 裁切放大/精修 | SUPIR 高清放大修复,`SUPIR_Upscale` | 否 |
+| 4 | ComfyUI-SeedVR2_VideoUpscaler | numz/ComfyUI-SeedVR2_VideoUpscaler | **2723** | 2025-12-24 | 裁切放大/精修 | SeedVR2 图像/视频高清修复放大,`SeedVR2LoadDiTModel`/`SeedVR2VideoUpscaler` | ✅ 已装 |
+| 5 | ComfyUI-Easy-Use | yolain/ComfyUI-Easy-Use | **2651** | 2026-07-28 | 扩图/裁剪放大 | `easy imageCrop`(前端拖框截图)、`easy imageSplitGrid`(九宫格拆块放大) | ✅ 已装 |
+| 6 | ComfyUI-SUPIR | kijai/ComfyUI-SUPIR | **2303** | 2026-04-29 | 裁切放大/精修 | SUPIR 高清放大修复,`SUPIR_Upscale` | ✅ 已装 |
 | 7 | was-node-suite-comfyui(WAS Node Suite) | WASasquatch/was-node-suite-comfyui | **1814** | 2025-06-02 | 裁剪放大 | 210+ 节点,含 `Image Crop`/`Image Resize`/`Blend` 等 | 否 |
 | 8 | ComfyUI-Florence2 | kijai/ComfyUI-Florence2 | **1730** | 2026-05-06 | 辅助(区域理解) | 图像区域理解/反推,辅助局部重绘选区域 | 否 |
 | 9 | ComfyUI_UltimateSDUpscale | ssitu/ComfyUI_UltimateSDUpscale | **1535** | 2026-06-22 | 裁切放大 | 大图分块 tile 图生图放大补细节,`UltimateSDUpscale` | ✅ 已装 |
@@ -62,13 +62,15 @@
 
 ## 三、本机落地对照(8GB)
 
+> 本机已装 7 个:Impact-Pack、LayerStyle、KJNodes、Easy-Use、SeedVR2、SUPIR、UltimateSDUpscale(见上方榜单 ✅ 标注);comfyui-inpaint-nodes 等未装。
+
 | 场景 | 推荐插件 | Star | 备注 |
 |------|---------|------|------|
 | 局部区域放大补细节(首选,免安装思路) | 内置 `ImageCrop`/`CropByBBoxes` + 本机 Qwen-Edit-2511 | — | 详见《局部区域截图放大补细节工作流调研》 |
 | 现成分块放大 | UltimateSDUpscale | 1535 | ✅ 已装即用 |
-| 一站式自动框选放大重绘 | Impact-Pack | 3251 | 需安装,配 UltralyticsDetector |
+| 一站式自动框选放大重绘 | Impact-Pack | 3251 | ✅ 已装(配 UltralyticsDetector 检测模型) |
 | 画遮罩选区域,零偏移重绘 | comfyui-inpaint-nodes / Inpaint-CropAndStitch | 1227 / 1137 | 需安装 |
-| 放大后精修 | SeedVR2(2723★)/ SUPIR(2303★) | — | 8GB 建议 3B 量化版 |
+| 放大后精修 | SeedVR2(2723★)/ SUPIR(2303★) | — | ✅ 插件已装;模型需下载(SeedVR2 3B fp8) |
 
 ---
 
