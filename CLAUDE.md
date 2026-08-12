@@ -86,6 +86,14 @@ python main.py --enable-manager
 - 注意:环境名是 `ComfyUI`(不是 "ConfyUI",也不要与 `Comfy` 混用);不要用系统级 Python(`C:\Program Files\Python313`,3.13.13)运行主程序
 - 改自定义节点代码后**重启 ComfyUI 生效**,无需复制文件(经软链接即时加载)
 
+### ComfyUI 官方日志(排查插件/请求问题优先看这里)
+
+- **官方日志文件**:`ComfyUI\user\comfyui.log`;多实例同时跑时按端口命名 `comfyui_<port>.log`(如 `comfyui_8188.log`);轮转保留 `comfyui.prev.log` / `comfyui.prev2.log`。启动时日志会打印一行 `** Log path: <路径>` 指明当前文件。
+- **CLI 配置**:`--verbose LEVEL FILE` 可自定义控制台级别与文件输出(可重复),如 `--verbose INFO D:\Comfy\ComfyUI\user\comfyui_8188.log`;`--log-stdout` 把普通输出切到 stdout。
+- **日志类别/格式**:行首 `[YYYY-MM-DD HH:MM:SS.mmm]` 时间戳,含级别(DEBUG/DETAIL/INFO/WARNING/ERROR/CRITICAL)。内容包括:启动信息(版本/设备/VRAM)、插件加载(`Import times for custom nodes`)、模型加载、报错 traceback、ComfyUI-Manager 网络操作,以及**自定义节点通过 `logging` 输出**的信息(插件里用 `print` 不一定进文件,建议用 `logging` 才稳定落盘)。
+- **前端终端**:浏览器 ComfyUI 界面底部终端(经 WebSocket 推送的环形缓冲)也能实时看到同样的日志,排查前端扩展报错可直接看它。
+- **注意**:`logs\comfyui*.log` 是用户自建重定向(如启动脚本),**不是官方位置**,可能缺部分输出;查不到关键日志时先看 `user\comfyui_<port>.log`。
+
 ## 模型与蓝图(2026-08-07 现状)
 
 模型实际存放在 `models\` 下(`ComfyUI\models` 为软链接),当前合计约 178.7 GB。已就绪:
@@ -141,6 +149,28 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
 - 验证节点加载:启动后查日志中 custom node 加载输出,或访问 `/object_info` 检查节点是否注册
 - 挑选/运行工作流:先核对「模型与蓝图」确认组件就位,再开 `blueprints\`、`templates\`(官方子目录 + 根目录个人归档 17 个)、`webs\Bilibili\工作流大全\`、`webs\RunningHub\workflows\` 的 json
 - 清理临时输出残留:删 `temp\` 里 `ComfyUI_temp_*.png` 后,前端「资产 → 已生成」可能仍显示内容 —— 那是任务历史(`GET /history`)中的输出记录,文件已删但引用还在。清理:`POST /history` + `{"clear": true}` 全清(等价 `server.py` 的 `wipe_history()`),或 `{"delete": ["<prompt_id>", ...]}` 定向删除;验证 `GET /history` 归零,前端 F5 刷新。注:资产系统默认禁用(`--enable-assets` 才启用),任务历史是「已生成」面板唯一来源;清空前确认 history 输出均为 `temp` 类型(无 output/input 真实数据)
+
+## 工作流布局规范(修改与创作必须遵守)
+
+**布局目的**: 让工作流一眼可读、连线可追踪、节点群可辨识。以下三条为硬性要求, 修改或新建工作流时逐一自检。
+
+1. **节点间距与不重叠**
+   - 节点之间**严禁重叠**;
+   - 相邻节点(横向或纵向相邻)之间边距 **20~50px(至少 20px, 最多 50px)**;
+   - 对角线相隔较远的不算相邻, 不受 50px 上限限制(但也不得重叠、不得低于 20px)。
+
+2. **连线走线(尽量直线)**
+   - 连线**不允许大于 90 度的回折**(不出现走回头路/明显绕线的直角回弯);
+   - 输出端口与对应输入端口**尽最大努力保持直线**: 同一功能链上的节点尽量同排/同列对齐, 让输出到下一输入基本水平(左→右)或垂直(上→下);
+   - 避免长距离交叉串线; 有多个下游时优先保证主干直线。
+
+3. **节点群按「正方向大区域」摆放**
+   - 不同功能(加载器/采样/解码/后处理/条件)的节点群, 各自聚成**独立大区域**, 不要混排交错;
+   - 整体流向保持**正向一致**: 模型/输入从左上或左侧进入, 处理链水平向右推进, 输出/保存落在右侧或右下;
+   - 每个功能群内部节点紧凑对齐, 群与群之间留出明显空白带以区分。
+
+**自检方法**: 重排后对全部节点做两两包围盒校验 —— 任一轴分离小于 20px 即判为过近/重叠, 超过 50px 视为间距过大, 均需调整。
+
 
 ## Git 提交规范
 
