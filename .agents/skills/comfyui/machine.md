@@ -23,5 +23,5 @@ the repo.
   - **知识独立安装,无 MCP 驱动层**:未安装 `comfyui-mcp`(npm),SKILL.md 里 `health_check / get_node_info / list_installed_nodes` 等 MCP 工具**不存在**。与 API 通信一律用本目录 `comfy_client.py`(stdlib)直连 :8188,或直接 HTTP。
   - **8GB 小显存**:图像/视频优先 fp8/int8 量化 + Lightning 4 步 LoRA + SageAttention;主文生图链路默认 `--fast-disk --disable-pinned-memory`。
   - **sibling skills 未装**:SKILL.md 提及的 `minimax-h3` / `krea` / `seedance` 不在本机;H3 提示词由本机已有 `h3-prompt-writing` skill 承担,遇到 krea/seedance 模型直接说明未安装。
-  - **Qwen-Image-Edit 条件节点**:`TextEncodeQwenImageEditPlus`(三参考图 image1/2/3,提示词内用 `图N` / `Picture N` 编号引用,VAE 参考 latent 写入 `reference_latents`);单图用 `TextEncodeQwenImageEdit`。自研 `GJJ_TextEncodeQwenImageEditPlus` 用 `imageN:` 标签。规范详见 `docs\Qwen-Image-Edit-三参考图提示词规范与可用Skills-2026-08-11.md`。
-  - **自定义插件聚合**:`D:\Comfy\custom_nodes`(目录级软链接加载,FallingTS / GJJ_Nodes / KJNodes / LayerStyle / Impact-Pack / Easy-Use / SeedVR2 / SUPIR / UltimateSDUpscale / MiniMaxH3 套件),改节点代码需重启 ComfyUI 生效。
+  - **Qwen-Image-Edit 条件节点**:`TextEncodeQwenImageEditPlus`(三参考图 image1/2/3,提示词内用 `图N` / `Picture N` 编号引用,VAE 参考 latent 写入 `reference_latents`);单图用 `TextEncodeQwenImageEdit`。规范详见 `docs\Qwen-Image-Edit-三参考图提示词规范与可用Skills-2026-08-11.md`。
+  - **自定义插件聚合**:`D:\Comfy\custom_nodes`(目录级软链接加载,41 个插件含 FallingTS / KJNodes / LayerStyle / Impact-Pack / Easy-Use / SeedVR2 / SUPIR / UltimateSDUpscale / MiniMaxH3 套件 / LinkFX / AnimatedLinks / rgthree / controlnet_aux / VideoHelperSuite / Florence2 / IPAdapter_plus / WanVideoWrapper 等),改节点代码需重启 ComfyUI 生效;2026-08-12 按下载量批量装入 25 个,nunchaku 因 RTX 4060 不支持已删除,ReActor/RMBG/SAM2 等需运行时下模型。
