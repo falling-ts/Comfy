@@ -41,7 +41,7 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 | `backups` | **工作流/重要文件的修改前备份目录**(2026-08-04 起,替代原 `.claude\` 存放位置) |
 | `README.md` / `LICENSE` | 项目说明与许可 |
 | `.gitmodules` | 47 个子模块登记(git submodule) |
-| `start-comfyui.cmd / .ps1` | 一键启动脚本(等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`) |
+| `comfy-server.cmd` | 后台服务式启动脚本(参考 harness-server.cmd 改造:杀 8188 旧进程 → 静默后台启动 → 等待就绪,日志 `%TEMP%\comfy-server-8188.log`;开始菜单同款 `comfy-server` 快捷方式;等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`) |
 
 ## 软链接映射(重要,共 7 个,全部为相对路径 SymbolicLink;2026-08-07 建,08-10 插件收敛为目录级链接,08-13 加 Claude Code 兼容链接)
 
@@ -77,7 +77,7 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 
 - conda 根:`C:\Users\zghyu\Miniconda3`(conda 不在 Git Bash 的 PATH;用 `conda activate` 或直接调 env 内 `python.exe`)
 - **两个名称极易混淆的 conda 环境,均为 Python 3.13.14 / torch 2.13.0+cu130(CUDA 13.0,RTX 4060 8GB VRAM)**:
-  - `ComfyUI`(2026-07-31 建,197 包)= **运行环境**,`start-comfyui.cmd` 与本文档均用它,路径 `miniconda3\envs\ComfyUI\python.exe`
+  - `ComfyUI`(2026-07-31 建,197 包)= **运行环境**,`comfy-server.cmd` 与本文档均用它,路径 `miniconda3\envs\ComfyUI\python.exe`
   - `Comfy`(2026-08-07 建,199 包)= 同款基础上多 `onnxruntime-gpu 1.28.0`、`opencv-python 5.0.0.93`(其余仅依赖小版本差异),疑似备用/实验环境,勿混用
 - 共享关键版本:comfyui-frontend-package **1.48.6**、comfyui-manager **4.2.2**、comfyui-workflow-templates **0.11.31**、sageattention **2.2.0**(cu130)、comfy-kitchen **0.2.26**、comfy-aimdo 0.4.13、transformers 4.57.3、diffusers 0.39.0、numpy 2.4.6、safetensors 0.8.0
 - 前端打包目录(web_root,`server.py:251` 经 `FrontendManager.init_frontend()` 定位)= `<虚拟环境>/Lib/site-packages/comfyui_frontend_package/static/`(即 `C:\Users\zghyu\Miniconda3\envs\ComfyUI\Lib\site-packages\comfyui_frontend_package\static\`):主入口 `index.html`,打包产物在 `assets\`(421 个 `<分块名>-<hash>.js`,含 `core-*.js`/`api-*.js`/`index-*.js`),`scripts\` 保留 `app.js`/`api.js`/`domWidget.js` 等扩展 import 入口;插件 `web\js` 经 `GET /extensions`(`server.py:356`)运行时加载,**不参与前端打包**,重建 `assets\` 不影响扩展
@@ -90,7 +90,7 @@ cd ComfyUI
 python main.py --enable-manager
 ```
 
-- 或 `conda run -n ComfyUI python main.py --enable-manager`(在 `ComfyUI` 下);双击 `start-comfyui.cmd` / 运行 `start-comfyui.ps1` 等价(脚本已带 `--disable-pinned-memory --fast-disk`,适配 8GB VRAM/16GB RAM)
+- 或 `conda run -n ComfyUI python main.py --enable-manager`(在 `ComfyUI` 下);双击开始菜单 `comfy-server` 或运行 `comfy-server.cmd` 等价(后台无窗口服务式,已带 `--disable-pinned-memory --fast-disk`,适配 8GB VRAM/16GB RAM;想看前台实时日志则手动执行 `python main.py --enable-manager --disable-pinned-memory --fast-disk`)
 - 前端默认地址 `http://127.0.0.1:8188`
 - 注意:环境名是 `ComfyUI`(不是 "ConfyUI",也不要与 `Comfy` 混用);不要用系统级 Python(`C:\Program Files\Python313`,3.13.13)运行主程序
 - 改自定义节点代码后**重启 ComfyUI 生效**,无需复制文件(经软链接即时加载)
@@ -132,6 +132,7 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
 
 ## 开发规范
 
+- **临时脚本(一次性调研/修改/校验用的 `.py`/`.ps1` 等)一律写入 `scripts\` 目录**,严禁散落在项目根目录或其它目录;用完即删或留存在 `scripts\` 内,不得在根目录遗留 `_*.py` 之类临时文件
 - 项目根目录 `D:\Comfy` **本身是一个 git 仓库**(`main`),经 `.gitmodules` 登记 21 个子模块;根仓库跟踪的是各子模块的**指针提交**(`git ls-files -s` 中模式 `160000`)。不要误以为"根目录不是 git 仓库、不能在根目录执行 git 操作"
 - 各子项目(ComfyUI 及全部插件、ComfyUI-Docs、MiniMax-H3 等)是根仓库的 git **子模块**:各自独立仓库、自身维护与上游一致。改动子模块代码在**子模块目录内**正常 commit/push,再回到根仓库 `git add <子模块路径>` 提交一次"指针更新";不要留着子模块脏工作树不提交,也不要往根仓库混入无关文件
 - 修改 ComfyUI 主程序时遵守 `ComfyUI\AGENTS.md` 上游规范:改动小且直接、尽量少改文件、不引入新依赖、核心代码不发网络请求(见其 "No Internet Requests")、保持节点/API/工作流兼容、删除死代码、代码须看起来像手写
@@ -165,8 +166,9 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
 
 1. **节点间距与不重叠**
    - 节点之间**严禁重叠**;
-   - 相邻节点(横向或纵向相邻)之间边距 **20~50px(至少 20px, 最多 50px)**;
-   - 对角线相隔较远的不算相邻, 不受 50px 上限限制(但也不得重叠、不得低于 20px)。
+   - 相邻节点(横向或纵向相邻)之间边距 **50~60px(至少 50px, 最多 60px)**;
+   - 对角线相隔较远的不算相邻, 不受 60px 上限限制(但也不得重叠、不得低于 50px);
+   - **`FallingTSMarkDownTable`(MD 数据表)节点在画布中单独占一列**: 其所在列的整条垂直方向(正下方无限延伸, 无像素限制)严禁放置任何节点——MD 节点会根据数据内容自动向下扩展高度, 同列下方有节点会被覆盖; 其他节点只能放在 MD 节点右侧的其他列(列间满足 50~60px 边距), 与 MD 节点同列的任何位置均不得放置节点。
 
 2. **连线走线(尽量直线)**
    - 连线**不允许大于 90 度的回折**(不出现走回头路/明显绕线的直角回弯);
@@ -178,7 +180,7 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
    - 整体流向保持**正向一致**: 模型/输入从左上或左侧进入, 处理链水平向右推进, 输出/保存落在右侧或右下;
    - 每个功能群内部节点紧凑对齐, 群与群之间留出明显空白带以区分。
 
-**自检方法**: 重排后对全部节点做两两包围盒校验 —— 任一轴分离小于 20px 即判为过近/重叠, 超过 50px 视为间距过大, 均需调整。
+**自检方法**: 重排后对全部节点做两两包围盒校验 —— 任一轴分离小于 50px 即判为过近/重叠, 超过 60px 视为间距过大, 均需调整。
 
 
 ## Git 提交规范
