@@ -75,24 +75,22 @@ ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为
 
 ## 版本与运行
 
-- conda 根:`C:\Users\zghyu\Miniconda3`(conda 不在 Git Bash 的 PATH;用 `conda activate` 或直接调 env 内 `python.exe`)
-- **两个名称极易混淆的 conda 环境,均为 Python 3.13.14 / torch 2.13.0+cu130(CUDA 13.0,RTX 4060 8GB VRAM)**:
-  - `ComfyUI`(2026-07-31 建,197 包)= **运行环境**,`comfy-server.cmd` 与本文档均用它,路径 `miniconda3\envs\ComfyUI\python.exe`
-  - `Comfy`(2026-08-07 建,199 包)= 同款基础上多 `onnxruntime-gpu 1.28.0`、`opencv-python 5.0.0.93`(其余仅依赖小版本差异),疑似备用/实验环境,勿混用
-- 共享关键版本:comfyui-frontend-package **1.48.6**、comfyui-manager **4.2.2**、comfyui-workflow-templates **0.11.31**、sageattention **2.2.0**(cu130)、comfy-kitchen **0.2.26**、comfy-aimdo 0.4.13、transformers 4.57.3、diffusers 0.39.0、numpy 2.4.6、safetensors 0.8.0
-- 前端打包目录(web_root,`server.py:251` 经 `FrontendManager.init_frontend()` 定位)= `<虚拟环境>/Lib/site-packages/comfyui_frontend_package/static/`(即 `C:\Users\zghyu\Miniconda3\envs\ComfyUI\Lib\site-packages\comfyui_frontend_package\static\`):主入口 `index.html`,打包产物在 `assets\`(421 个 `<分块名>-<hash>.js`,含 `core-*.js`/`api-*.js`/`index-*.js`),`scripts\` 保留 `app.js`/`api.js`/`domWidget.js` 等扩展 import 入口;插件 `web\js` 经 `GET /extensions`(`server.py:356`)运行时加载,**不参与前端打包**,重建 `assets\` 不影响扩展
+- **Python 虚拟环境:项目内 `.venv`**(`D:\Comfy\.venv`,2026-08-16 由 conda 环境迁移而来,官方 `python -m venv` 基于系统 Python 3.13.13 创建;原 `C:\Users\zghyu\Miniconda3\envs\ComfyUI` 已删除)。启动一律用 `.venv\Scripts\python.exe`(或先 `.venv\Scripts\activate` 再 `python`),不要用系统级 Python(`C:\Program Files\Python313`)运行主程序
+- **运行环境 `.venv`:Python 3.13.13 / torch 2.13.0+cu130(CUDA 13.0,RTX 4060 8GB VRAM)**,`comfy-server.cmd` 与本文档均用它,路径 `D:\Comfy\.venv\Scripts\python.exe`;依赖安装顺序:torch(cu130 index)→ `ComfyUI\requirements.txt` → 插件 requirements → 加速依赖,迁移后与旧 conda 环境包版本对齐(见 `backups\pip-freeze-ComfyUI-20260816-020146.txt` 与 `pip-freeze-venv-final.txt` 对比)
+- 共享关键版本:comfyui-frontend-package **1.48.7**、comfyui-manager **4.2.2**、comfyui-workflow-templates **0.11.34**、sageattention **2.2.0**(cu130,本地 wheel `backups\sageattention\`)、triton-windows **3.7.1.post27**、comfy-kitchen **0.2.28**、comfy-aimdo 0.4.13、transformers 4.57.3、diffusers 0.39.0、numpy 2.4.6、onnxruntime-gpu 1.28.0、safetensors 0.8.0
+- 前端打包目录(web_root,`server.py:251` 经 `FrontendManager.init_frontend()` 定位)= `<虚拟环境>/Lib/site-packages/comfyui_frontend_package/static/`(即 `D:\Comfy\.venv\Lib\site-packages\comfyui_frontend_package\static\`):主入口 `index.html`,打包产物在 `assets\`(421 个 `<分块名>-<hash>.js`,含 `core-*.js`/`api-*.js`/`index-*.js`),`scripts\` 保留 `app.js`/`api.js`/`domWidget.js` 等扩展 import 入口;插件 `web\js` 经 `GET /extensions`(`server.py:356`)运行时加载,**不参与前端打包**,重建 `assets\` 不影响扩展
 - 测试插件「从零安装」是否正常时:需清理**浏览器缓存**的前端打包文件(即 `assets\` 下载到浏览器侧的 `-hash.js`/`-hash.css`),对 `http://127.0.0.1:8188` 强刷(`Ctrl+Shift+R`)或清除该站点数据,以验证扩展在无陈旧缓存的干净状态下能正常加载;**磁盘 `assets\` 目录勿删**(是前端真实构建产物,删了页面白屏/无法加载)
 - 启动:
 
 ```powershell
-conda activate ComfyUI
-cd ComfyUI
+D:\Comfy\.venv\Scripts\activate
+cd D:\Comfy\ComfyUI
 python main.py --enable-manager
 ```
 
-- 或 `conda run -n ComfyUI python main.py --enable-manager`(在 `ComfyUI` 下);双击开始菜单 `comfy-server` 或运行 `comfy-server.cmd` 等价(后台无窗口服务式,已带 `--disable-pinned-memory --fast-disk`,适配 8GB VRAM/16GB RAM;想看前台实时日志则手动执行 `python main.py --enable-manager --disable-pinned-memory --fast-disk`)
+- 或直接 `D:\Comfy\.venv\Scripts\python.exe main.py --enable-manager`(在 `ComfyUI` 下);双击开始菜单 `comfy-server` 或运行 `comfy-server.cmd` 等价(后台无窗口服务式,已带 `--disable-pinned-memory --fast-disk`,适配 8GB VRAM/16GB RAM;想看前台实时日志则手动执行 `D:\Comfy\.venv\Scripts\python.exe main.py --enable-manager --disable-pinned-memory --fast-disk`)
 - 前端默认地址 `http://127.0.0.1:8188`
-- 注意:环境名是 `ComfyUI`(不是 "ConfyUI",也不要与 `Comfy` 混用);不要用系统级 Python(`C:\Program Files\Python313`,3.13.13)运行主程序
+- 注意:主程序必须用 `.venv` 的 Python 运行(`.venv\Scripts\python.exe`),不要用系统级 Python(`C:\Program Files\Python313`,3.13.13)或任何 conda 环境运行
 - 改自定义节点代码后**重启 ComfyUI 生效**,无需复制文件(经软链接即时加载)
 
 ### ComfyUI 官方日志(排查插件/请求问题优先看这里)

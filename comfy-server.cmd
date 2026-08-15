@@ -5,7 +5,7 @@ set "PORT=8188"
 set "ROOT=%~dp0"
 set "COMFY_DIR=%ROOT%ComfyUI"
 set "LOG=%TEMP%\comfy-server-%PORT%.log"
-set "PYTHON=C:\Users\zghyu\miniconda3\envs\ComfyUI\python.exe"
+set "PYTHON=%ROOT%.venv\Scripts\python.exe"
 
 echo [1/3] Stopping existing service on port %PORT%...
 for /f "tokens=5" %%P in ('netstat -ano ^| findstr /c:":%PORT%" ^| findstr /c:"LISTENING"') do (

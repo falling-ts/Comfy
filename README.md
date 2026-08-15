@@ -43,7 +43,7 @@
 - **系统**:Windows 10/11(推荐;本文以 Windows 为准)
 - **硬件**:内存 16G 以上;**有 NVIDIA 显卡**(N 卡)体验最佳;无 N 卡也能跑,但慢
 - **网络**:能访问外网即可;部分地区需代理;国内下载模型可用 `hf-mirror.com` 镜像(见附录 E)
-- **你不需要提前装任何东西**——Python、CUDA、Miniconda、各种 CLI 都由 AI 帮你装
+- **你不需要提前装任何东西**——Python、CUDA、虚拟环境、各种 CLI 都由 AI 帮你装
 
 ---
 
@@ -140,16 +140,16 @@ OpenCode 是你和这套工作区之间的 AI 主力,负责装软件、配环境
 
 ## 第 7 步:让 OpenCode 配置 Python 环境
 
-把这段话发给 OpenCode(让它先装 Miniconda,再建 ComfyUI 专用环境):
+把这段话发给 OpenCode(让它在项目根目录创建 `.venv` 虚拟环境):
 
-> 帮我安装 miniconda,并初始化一个名为 ComfyUI 的 conda 环境(python 3.13)。具体下载安装,你从网络搜索。
+> 在项目根目录创建 Python 3.13 虚拟环境 `.venv`(若系统没有 Python 3.13,先安装官方 Python 3.13)。具体下载安装,你从网络搜索。
 >
-> 注意:环境名必须是 `ComfyUI`(不是 ConfyUI),后面所有依赖都装进这个环境,不要用系统 Python。
+> 注意:环境必须在项目根目录 `.venv`(不是系统 Python),后面所有依赖都装进这个环境,不要用系统 Python。
 
 完成后验证(它会在终端里执行):
 
 ```powershell
-conda activate ComfyUI
+D:\Comfy\.venv\Scripts\activate
 python --version
 ```
 
@@ -459,11 +459,10 @@ UNETLoader → Patch Sage Attention KJ(auto) → MiniMaxH3Cache(EasyCache)
 - **Linux 驱动必须 ≥ 570**(CUDA 12.8+),建议直接装最新 580/6xx 系;装完 `nvidia-smi` 能识别 sm_120 才可继续
 - torch 必须支持 sm_120:**2.7+cu128 及以上**;本机用的 2.13.0+cu130 满足。切勿用旧 torch(2.5.x/cu124 会报 `no kernel image available for sm_120`)
 
-### H.2 环境重建(Linux 不能直接复用 Windows conda 环境)
+### H.2 环境重建(Linux 不能直接复用 Windows 环境)
 
 ```bash
-conda create -n ComfyUI python=3.13 -y
-conda activate ComfyUI
+python3 -m venv .venv && source .venv/bin/activate
 pip install torch==2.13.0+cu130 torchvision==0.28.0+cu130 torchaudio==2.11.0+cu130 \
   --index-url https://download.pytorch.org/whl/cu130
 # 其余依赖从 Windows `pip freeze` 生成 requirements,唯一替换:
@@ -486,7 +485,7 @@ pip install torch==2.13.0+cu130 torchvision==0.28.0+cu130 torchaudio==2.11.0+cu1
 ```bash
 #!/usr/bin/env bash
 cd "$(dirname "$0")/ComfyUI"
-conda activate ComfyUI
+source ../.venv/bin/activate
 python main.py --enable-manager
 ```
 
