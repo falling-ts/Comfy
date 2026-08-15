@@ -1,8 +1,8 @@
 {
  "id": "gen-3000-文生场景",
  "revision": 0,
- "last_node_id": 42,
- "last_link_id": 58,
+ "last_node_id": 46,
+ "last_link_id": 69,
  "nodes": [
   {
    "id": 1,
@@ -1069,7 +1069,7 @@
      "type": "IMAGE",
      "slot_index": 0,
      "links": [
-      55
+      59
      ]
     }
    ],
@@ -1151,7 +1151,7 @@
      "localized_name": "图像",
      "name": "images",
      "type": "IMAGE",
-     "link": 56
+     "link": 59
     },
     {
      "localized_name": "音频",
@@ -1243,7 +1243,9 @@
      "name": "video",
      "type": "VIDEO",
      "slot_index": 0,
-     "links": []
+     "links": [
+      61
+     ]
     }
    ],
    "title": "场景视频 预览/保存",
@@ -1381,8 +1383,8 @@
    "id": 40,
    "type": "SeedVR2LoadDiTModel",
    "pos": [
-    4520.0,
-    850.0
+    7590.0,
+    184.0
    ],
    "size": [
     307.6646484375,
@@ -1495,8 +1497,8 @@
    "id": 41,
    "type": "SeedVR2LoadVAEModel",
    "pos": [
-    4520.0,
-    1376.0
+    7590.0,
+    1554.0
    ],
    "size": [
     312.866796875,
@@ -1653,8 +1655,8 @@
    "id": 42,
    "type": "SeedVR2VideoUpscaler",
    "pos": [
-    4893.0,
-    850.0
+    7590.0,
+    710.0
    ],
    "size": [
     270,
@@ -1668,7 +1670,7 @@
      "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
-     "link": 55
+     "link": 60
     },
     {
      "localized_name": "dit",
@@ -1824,6 +1826,208 @@
     "cpu",
     false
    ]
+  },
+  {
+   "id": 43,
+   "type": "FallingTSContinue",
+   "pos": [
+    6960.0,
+    710.0
+   ],
+   "size": [
+    200.0,
+    90.0
+   ],
+   "flags": {},
+   "order": 99,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "any",
+     "type": "*",
+     "link": 61,
+     "widget": {
+      "name": "any"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "any",
+     "type": "*",
+     "slot_index": 0,
+     "links": [
+      62
+     ]
+    }
+   ],
+   "widgets_values": [],
+   "properties": {
+    "Node name for S&R": "FallingTSContinue"
+   }
+  },
+  {
+   "id": 44,
+   "type": "GetVideoComponents",
+   "pos": [
+    7260,
+    710
+   ],
+   "size": [
+    185.17734375,
+    66
+   ],
+   "flags": {},
+   "order": 99,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "link": 62
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": [
+      60
+     ]
+    },
+    {
+     "localized_name": "audio",
+     "name": "audio",
+     "type": "AUDIO",
+     "links": [
+      63
+     ]
+    },
+    {
+     "localized_name": "fps",
+     "name": "fps",
+     "type": "FLOAT",
+     "links": [
+      64
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.3.68",
+    "Node name for S&R": "GetVideoComponents"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 45,
+   "type": "CreateVideo",
+   "pos": [
+    7920,
+    710
+   ],
+   "size": [
+    270,
+    78
+   ],
+   "flags": {},
+   "order": 99,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 65
+    },
+    {
+     "localized_name": "audio",
+     "name": "audio",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": 63
+    },
+    {
+     "localized_name": "fps",
+     "name": "fps",
+     "type": "FLOAT",
+     "widget": {
+      "name": "fps"
+     },
+     "link": 64
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "VIDEO",
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.3.68",
+    "Node name for S&R": "CreateVideo"
+   },
+   "widgets_values": [
+    24
+   ]
+  },
+  {
+   "id": 46,
+   "type": "PreviewVideo",
+   "pos": [
+    8250,
+    710
+   ],
+   "size": [
+    1270,
+    870
+   ],
+   "flags": {},
+   "order": 99,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "link": 66
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": 67
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "slot_index": 0,
+     "links": []
+    }
+   ],
+   "title": "场景视频 预览/保存",
+   "properties": {
+    "Node name for S&R": "PreviewVideo",
+    "ue_properties": {
+     "widget_ue_connectable": {
+      "filename_prefix": true
+     },
+     "version": "7.8",
+     "input_ue_unconnectable": {}
+    }
+   },
+   "widgets_values": "scene_video_upscaled"
   }
  ],
  "links": [
@@ -2012,22 +2216,6 @@
    "LATENT"
   ],
   [
-   55,
-   15,
-   0,
-   42,
-   0,
-   "IMAGE"
-  ],
-  [
-   56,
-   42,
-   0,
-   17,
-   0,
-   "IMAGE"
-  ],
-  [
    57,
    40,
    0,
@@ -2037,6 +2225,94 @@
   ],
   [
    58,
+   41,
+   0,
+   42,
+   2,
+   "SEEDVR2_VAE"
+  ],
+  [
+   59,
+   15,
+   0,
+   17,
+   0,
+   "IMAGE"
+  ],
+  [
+   60,
+   44,
+   0,
+   42,
+   0,
+   "IMAGE"
+  ],
+  [
+   61,
+   18,
+   0,
+   43,
+   0,
+   "VIDEO"
+  ],
+  [
+   62,
+   43,
+   0,
+   44,
+   0,
+   "VIDEO"
+  ],
+  [
+   63,
+   44,
+   1,
+   45,
+   1,
+   "AUDIO"
+  ],
+  [
+   64,
+   44,
+   2,
+   45,
+   2,
+   "FLOAT"
+  ],
+  [
+   65,
+   42,
+   0,
+   45,
+   0,
+   "IMAGE"
+  ],
+  [
+   66,
+   45,
+   0,
+   46,
+   0,
+   "VIDEO"
+  ],
+  [
+   67,
+   1,
+   0,
+   46,
+   1,
+   "STRING"
+  ],
+  [
+   68,
+   40,
+   0,
+   42,
+   1,
+   "SEEDVR2_DIT"
+  ],
+  [
+   69,
    41,
    0,
    42,
