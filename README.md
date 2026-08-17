@@ -1,6 +1,6 @@
 # Comfy — AI 驱动的 ComfyUI 全模态工作区
 
-> 本仓库是一套开箱即用的 **ComfyUI 全模态工作区**:包含 ComfyUI 主程序、Seedance 2.0 视频生成、GGUF / KJNodes / 超分等自定义节点、图片/视频/音频工作流方案,以及模型目录规划。
+> 本仓库是一套开箱即用的 **ComfyUI 全模态工作区**:包含 ComfyUI 主程序、MiniMax H3 视频 + Qwen 系列图像 + Stable Audio/Qwen3-TTS 音频生成、42 个自定义节点(GGUF/KJNodes/超分/加速等)、22 个图片/视频/音频工作流,以及模型目录规划。
 >
 > **核心思路:所有安装、配置、运行、出图、训练工作流,都交给 AI(OpenCode)来做。** 你只需要:装 Git → 克隆本仓库 → 装 OpenCode → 让它干活。
 
@@ -26,13 +26,13 @@
 
 ## 这是什么
 
-- **ComfyUI 主程序**(`ComfyUI\`,dev 分支,v0.30.0)—— 本地节点式 AI 图像/视频/音频生成引擎
-- **自定义节点**(经 `ComfyUI\custom_nodes\` 软链接加载):
-  - `ComfyUI-FallingTS` —— Seedance 2.0 视频生成(首尾帧 / 多模态参考,走火山引擎 API)
-  - `ComfyUI-GGUF` —— GGUF 量化模型加载
-  - `ComfyUI-KJNodes` —— 大型工具节点包
-  - `ComfyUI_UltimateSDUpscale` —— 分块重绘放大
-- **工作流方案**:图片 8 + 音频 5 + 视频 6(见[附录 B](#附录-b工作流方案总览))
+- **ComfyUI 主程序**(`ComfyUI\` 子模块,master 分支,v0.31.0)—— 本地节点式 AI 图像/视频/音频生成引擎
+- **自定义节点**(42 个,集中于根 `custom_nodes\`,经 `ComfyUI\custom_nodes\` **目录级**软链接加载;完整清单见 `AGENTS.md`):
+  - `ComfyUI-FallingTS` —— 自研通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强)
+  - `ComfyUI-GGUF` / `ComfyUI-KJNodes` —— GGUF 量化加载 / 大型工具节点包
+  - `ComfyUI-SeedVR2_VideoUpscaler` / `ComfyUI-SUPIR` / `ComfyUI_UltimateSDUpscale` —— 超分放大/修复
+  - H3 生态 5 插件(Spectrum / SolAttn / ReservedVRAM / Qwen3-TTS / latent-upscaler)+ 其余 30 个
+- **工作流方案**:22 个,按编号分组(1xxx 万物 / 2xxx 场景镜头 / 3xxx-4xxx 视频生成 / 5xxx 拆解 / 6xxx-7xxx 音频;见[附录 B](#附录-b工作流方案总览))
 - **模型目录**(`models\`,软链接到项目根)—— 见[附录 C](#附录-c模型下载清单)
 - **文档**:官方文档本地克隆 `docs\ComfyUI-Docs\`;工作区说明 `AGENTS.md`
 
@@ -95,22 +95,14 @@ OpenCode 是你和这套工作区之间的 AI 主力,负责装软件、配环境
 1. 在开始菜单找到 OpenCode,右键 →「**以管理员身份运行**」
 2. 打开本项目(添加 `Comfy` 目录),把下面这段话发给它:
 
-> 请按以下「软连接方案」检查并修复本项目的软链接(全部用**相对路径**符号链接):
+> 请按以下「软连接方案」检查并修复本项目的软链接(全部用**相对路径**符号链接,共 7 个,完整清单见 `AGENTS.md`「软链接映射」):
 >
-> 1. 先确认 `ComfyUI\` 下这些路径里哪些是**真实目录**(不是链接):`custom_nodes\ComfyUI_UltimateSDUpscale`、`custom_nodes\ComfyUI-GGUF`、`custom_nodes\ComfyUI-KJNodes`、`custom_nodes\ComfyUI-FallingTS`、`input`、`output`、`models`,以及 `user\default\workflows`;
-> 2. 把这些**真实目录删除**(若已是链接则跳过),再逐个建立相对路径符号链接,目标指向项目根目录:
->    - `ComfyUI\custom_nodes\ComfyUI_UltimateSDUpscale` → `..\..\ComfyUI_UltimateSDUpscale`
->    - `ComfyUI\custom_nodes\ComfyUI-GGUF` → `..\..\ComfyUI-GGUF`
->    - `ComfyUI\custom_nodes\ComfyUI-KJNodes` → `..\..\ComfyUI-KJNodes`
->    - `ComfyUI\custom_nodes\ComfyUI-FallingTS` → `..\..\ComfyUI-FallingTS`
->    - `ComfyUI\input` → `..\media`
->    - `ComfyUI\output` → `..\media`
->    - `ComfyUI\models` → `..\models`
->    - `ComfyUI\user\default\workflows` → `..\..\..\workflows`
->    - (其余 H3 加速插件与 `H3ReferenceSuite` 当前为**绝对路径**符号链接,见[附录 A 软连接清单](#软连接清单2026-08-10-实测-6-个),建议一并改为相对路径以保证可移植)
-> 3. 全部完成后,用 `dir` 或资源管理器确认这些路径显示为「符号链接」,并验证 `ComfyUI\models\diffusion_models` 等子目录可正常进入。
-> 
-> 注意:只能删除上面列出的真实目录;`ComfyUI\temp\` 等真实目录保留;所有链接一律用相对路径,保证整个项目文件夹移动后不失效。
+> 1. **目录级插件链接**:确认 `ComfyUI\custom_nodes` 是符号链接,指向 `..\custom_nodes`(根目录插件聚合目录,42 个插件全部经这一个链接加载;**不是**旧方案的一插件一链接);
+> 2. **基础链接**:`ComfyUI\input` → `..\media`、`ComfyUI\output` → `..\media`、`ComfyUI\models` → `..\models`、`ComfyUI\user\default\workflows` → `..\..\..\workflows`;
+> 3. **子链接**:`custom_nodes\H3ReferenceSuite` → `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite`;`.claude` → `.agents`;
+> 4. 全部完成后,确认这些路径显示为「符号链接」,并验证 `ComfyUI\models\diffusion_models` 等子目录可正常进入。
+>
+> 注意:只能替换真实目录;`ComfyUI\temp\` 等真实目录保留;所有链接一律用相对路径,保证整个项目文件夹移动后不失效。
 
 3. 软链接就绪后,继续[第 5 步](#第-5-步让-opencode-装它自己的-cli可选)。
 
@@ -149,7 +141,7 @@ OpenCode 是你和这套工作区之间的 AI 主力,负责装软件、配环境
 完成后验证(它会在终端里执行):
 
 ```powershell
-D:\Comfy\.venv\Scripts\activate
+.\.venv\Scripts\activate   # 类 Unix 用 source .venv/bin/activate
 python --version
 ```
 
@@ -165,7 +157,7 @@ python --version
 >    `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130`
 >    (先检测我的 NVIDIA 显卡和驱动支持哪个 CUDA 版本,选择匹配的 `cuXXX`;若没有 N 卡则装 CPU 版)
 > 2. 再装剩余依赖:`pip install -r requirements.txt`
-> 3. 然后进入其它 `ComfyUI-*` 相关目录(`ComfyUI-GGUF`、`ComfyUI-KJNodes`、`ComfyUI-FallingTS`、`ComfyUI_UltimateSDUpscale`、`ComfyUI-Docs`),逐个检查各自需要的依赖(如各自的 `requirements.txt` 或 README),都帮我安装好。
+> 3. 然后进入 `custom_nodes\` 下全部插件目录(42 个,见 `AGENTS.md` 目录结构),逐个检查各自需要的依赖(如各自的 `requirements.txt` 或 README),都帮我安装好。
 > 4. 最后回到 `ComfyUI` 目录启动:`python main.py --enable-manager`
 >
 > 启动成功后告诉我前端地址。
@@ -181,7 +173,7 @@ python --version
 - 下载模型(按[附录 C](#附录-c模型下载清单),直接说"下载 xx 模型到 models\yyy\")
 - 运行 / 修改 / 新建工作流(在 `workflows\` 里)
 - 安装新自定义节点、排错、调参、出图、训练
-- 视频/音频/图片生成(Seedance、MiniMax、Stable Audio、Qwen 系列等)
+- 视频/音频/图片生成(MiniMax H3、Stable Audio、Qwen 系列等)
 
 一句话总结:**你负责"想要什么",AI 负责"怎么做"。**
 
@@ -190,7 +182,7 @@ python --version
 ## 常见问题
 
 - **代理 / 下载慢**:默认直连;失败时用本机代理(如 Clash 的 `127.0.0.1:7890`);HuggingFace 模型国内可用 `hf-mirror.com` 镜像,把链接前缀 `huggingface.co` 换成 `hf-mirror.com` 即可(见附录 E)
-- **Windows 软链接**:`custom_nodes\` 下的插件和 `models\` 等使用相对路径符号链接。创建链接需要管理员权限,推荐**以管理员身份运行 OpenCode**再让它修复(见[第 4 步](#第-4-步以管理员身份运行-opencode按软连接方案建立软连接));或手动开启「开发者模式」(设置 → 隐私和安全性 → 开发者选项 → 开启开发者模式)
+- **符号链接**:`ComfyUI\custom_nodes`(目录级,聚合 42 插件)、`models`/`input`/`output`/`workflows` 等共 7 个相对路径符号链接。创建链接需要管理员权限,推荐**以管理员身份运行 OpenCode**再让它修复(见[第 4 步](#第-4-步以管理员身份运行-opencode按软连接方案建立软连接));或手动开启「开发者模式」(设置 → 隐私和安全性 → 开发者选项 → 开启开发者模式)
 - **显存不足**:Klein 9B 蒸馏版较吃显存(24G 卡跑 1024 tile 偏紧,爆显存降到 768);MiniMax H3 需大显存,低显存建议用量化版或云端(详见附录 C 备注)
 - **模型放好后记得重启 ComfyUI**,加载节点才会识别新模型
 
@@ -202,26 +194,31 @@ python --version
 
 ```
 Comfy/
-├── ComfyUI/                  # ComfyUI 主程序(master 分支)
+├── ComfyUI/                  # ComfyUI 主程序(master 分支,子模块)
 │   ├── main.py               # 启动入口(python main.py --enable-manager)
-│   ├── custom_nodes/         # 自定义节点(软链接 → ../各插件目录)
+│   ├── custom_nodes/         # 自定义节点(目录级软链接 → ../custom_nodes)
 │   ├── input/  output/       # 输入/输出(软链接 → ../media)
+│   ├── user/default/workflows  # 用户工作流(软链接 → ../../../../workflows)
 │   └── models/               # 模型(软链接 → ../models)
-├── ComfyUI-GGUF/             # GGUF 量化模型节点
-├── ComfyUI-KJNodes/          # KJNodes 工具节点包
-├── ComfyUI-FallingTS/        # Seedance 2.0 视频生成节点(火山引擎 API)
-├── ComfyUI_UltimateSDUpscale/ # 分块重绘放大
-├── docs/ComfyUI-Docs/        # 官方文档本地克隆(只读参考)
-├── workflows/                # 用户工作流(图片/视频/音频)
-├── models/                   # 模型实际存放处(按子目录分类)
-├── media/                    # 输入图片/音频 + 生成结果
-├── templates/  webs/                # 官方模板 + 三方调研(webs\RunningHub / Bilibili / AutoDL)
-└── AGENTS.md                 # 工作区说明(供 AI 读取)
+├── custom_nodes/             # 插件聚合目录:42 个插件子模块 + H3ReferenceSuite 链接
+│   ├── ComfyUI-FallingTS/    # 自研通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo)
+│   ├── ComfyUI-GGUF/  ComfyUI-KJNodes/   # 量化加载 / 工具节点包
+│   └── ...(其余 39 个,见 AGENTS.md 目录结构)
+├── docs/                     # 20 个分类文档 + 4 个子模块(ComfyUI-Docs/Obsidian-Dev-Docs/Obsidian-API/codex)
+├── h3/                       # MiniMax H3 生态(MiniMax-H3 + minimax-h3-guide)
+├── workflows/                # 用户工作流 22 个(1xxx~7xxx,见附录 B)
+├── models/                   # 模型实际存放处(约 189GB,38 个槽位目录,见附录 C)
+├── media/                    # 输入图片/音频 + 生成结果(3d/qwen3tts/clipspace)
+├── templates/  webs/         # 官方模板缓存 + 三方调研(RunningHub/Bilibili/AutoDL)
+├── stories/                  # Obsidian 故事写作工作区
+├── scripts/                  # 工具脚本(连线校验/布局校验等,仅本地不入库)
+├── backups/                  # 工作流/文档修改前备份
+└── AGENTS.md                 # 工作区说明(供 AI 读取,目录结构/软链接/规范全在此)
 ```
 
-### 软连接清单(2026-08-10 实测 6 个,全部为相对路径)
+### 软连接清单(2026-08-17 实测 7 个,全部为相对路径)
 
-全部为 Windows 符号链接(SymbolicLink),且**全部为相对路径,项目整体移动后不失效**。创建/修复需管理员权限(或以管理员运行 OpenCode / 开启 Windows 开发者模式)。
+全部为**相对路径**符号链接,**项目整体移动后不失效**。创建/修复需管理员权限(或以管理员运行 OpenCode / 开启开发者模式)。
 
 **A. 基础链接(4 个)**
 
@@ -236,52 +233,83 @@ Comfy/
 
 | ComfyUI 内路径 | 相对目标 | 实际指向 |
 |---|---|---|
-| `custom_nodes` | `..\custom_nodes` | 根 `custom_nodes`(插件聚合目录,15 插件 + H3ReferenceSuite 链接) |
+| `custom_nodes` | `..\custom_nodes` | 根 `custom_nodes`(插件聚合目录,42 插件 + H3ReferenceSuite 链接) |
 | `custom_nodes\H3ReferenceSuite` | `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
 
-> 说明:`custom_nodes\` 已被 ComfyUI 的 `.gitignore` 忽略,链接改动不污染子仓库;`ComfyUI\temp\` 为真实目录(非链接),可随时清理。
+**C. 根目录 Claude Code 兼容链接(1 个)**
+
+| 根内路径 | 相对目标 | 实际指向 |
+|---|---|---|
+| `.claude` | `.agents` | 根 `.agents`(技能聚合目录,Claude Code 兼容垫片) |
+
+> 说明:`ComfyUI\custom_nodes` 为目录级链接,插件目录的增删不影响它;`ComfyUI\temp\` 为真实目录(非链接),可随时清理。
 
 ## 附录 B · 工作流方案总览
 
-### 图片类(8 个)
+`workflows\` 下共 **22 个**主工作流,按「编号-用途」命名分组(前端保存即在此):
 
-| # | 工作流 | 核心模型 |
-|---|--------|---------|
-| 1 | 文生图 T2I(928×1664 竖版) | Qwen-Image-2512 |
-| 2 | 参考图生图 I2I(风格/角色参考) | FLUX.2 Klein 9B |
-| 3 | 图片指令修改(换装/换背景/改元素) | Qwen-Image-Edit 2511 |
-| 4 | 图片四周扩大 Outpaint | Qwen-Edit 2511 + Klein 9B |
-| 5 | 图片中心放大/局部重绘 Inpaint | Klein 9B + 掩码(手动) |
-| 6 | 物体移除 | Klein 9B + 掩码扩张 |
-| 7 | 图片放大/超清(3~4 倍,8 整除) | 4xNomos8kDAT |
-| 8 | 三视图/多角度生成 | Qwen-Edit 2511 + 多角度 LoRA |
+### 图片/万物类(1xxx,3 个,基于 Qwen-Image-2512 / Qwen-Edit 2511 / FLUX.2-Klein)
 
-### 音频类(5 个)
+| 工作流 | 用途 |
+|--------|------|
+| `1000-万物建模` | 主线主流程(万物建模) |
+| `1001-灰度遮罩` | 灰度遮罩工具 |
+| `1010-万物变化` | 万物变化/变换 |
 
-| # | 工作流 | 核心模型 | 状态 |
-|---|--------|---------|------|
-| 1 | 背景音乐/纯器乐 | Stable Audio 3(已内置 Sage 节点加速) | 需下载 |
-| 2 | 环境音/音效 | Stable Audio 3(SFX/One-shot 类别,已内置 Sage 节点加速) | 需下载 |
-| 3 | 效果音/一次性音效 | Stable Audio 3(One-shot 类别,已内置 Sage 节点加速) | 需下载 |
-| 4 | 文生人物说话(纯文本造声) | Qwen3-TTS VoiceDesign(自然语言描述音色) | 需下载 |
-| 5 | 参考音频生人物说话(克隆) | Qwen3-TTS VoiceClone(3s 参考音频+情绪指令) | 需下载 |
+### 场景镜头类(2xxx,4 个)
 
-> **Sage 加速说明**:Stable Audio 3 工作流(①②③)已内置 KJNodes `Patch Sage Attention KJ` 节点,按工作流局部加速(~+20-30%),**不全局替换 attention**,不影响 Qwen3-TTS(④⑤)的 sdpa 路径;关闭该节点改为 `disabled` 即恢复原始 attention。
+| 工作流 | 用途 |
+|--------|------|
+| `2000-场景首帧` | 场景首帧生成 |
+| `2010-场景拉镜` | 镜头拉远/拉近变换 |
+| `2020-场景推镜` | 镜头推进变换 |
+| `2030-场景旋镜` | 镜头环绕旋转 |
 
-### 视频类(6 个,MiniMax H3)
+### 视频生成类(3xxx-4xxx,7 个,MiniMax H3)
 
-文生视频 T2V / 图生视频 I2V / 首帧参考 / 首尾帧 / 多图参考 / 图像+音频参考 —— 需下载模型(见附录 C)。
+| 工作流 | 用途 | H3 模式 |
+|--------|------|---------|
+| `3000-文生场景` | 文本 → 场景视频(仅画面,无音轨) | T2VA(fl2va) |
+| `3010-图生场景` | 首帧图 → 场景视频 | I2V(fl2va) |
+| `3020-参考场景` | 多图 + 多视频参考 → 视频 | R2V(ref2va) |
+| `4000-文生视频` | 文本 → 视频(与 3000 同构的通用版) | T2VA(fl2va) |
+| `4010-图生视频` | 首帧图 → 视频 | I2V(fl2va) |
+| `4020-首尾视频` | 首尾帧 → 视频 | fl2va |
+| `4030-参考视频` | 参考图/视频 → 视频 | R2V(ref2va) |
+
+> 3000/3010/3020 与 4000/4010/4020/4030 结构一一对应(前者为场景流水线版,后者为通用版);均已去除音频轨道,视频 + 音频在后期流水线(5xxx-7xxx)中合并。
+
+### 拆解类(5xxx,2 个)
+
+| 工作流 | 用途 |
+|--------|------|
+| `5000-视频拆帧` | 视频 → 逐帧图片 |
+| `5010-视频拆音` | 视频 → 分离音频 |
+
+### 音频生成类(6xxx-7xxx,6 个)
+
+| 工作流 | 用途 | 核心模型 |
+|--------|------|---------|
+| `6000-背景音乐` | 纯器乐 BGM | Stable Audio 3(内置 Sage 加速) |
+| `6010-环境音效` | 环境/氛围音 | Stable Audio 3 |
+| `6020-效果音效` | 一次性/打击音效 | Stable Audio 3 |
+| `6030-文生人声` | 文本描述音色 → 说话 | Qwen3-TTS VoiceDesign |
+| `6040-参考人声` | 3s 参考音频克隆 → 说话 | Qwen3-TTS CustomVoice |
+| `7000-截取声音` | 音频裁剪/截取工具 | — |
+
+> 2026-08-09 前曾归档于 `templates\` 的旧版图片 8/视频 4/音频 5 工作流已删除,全部以当前编号体系为准。
 
 ## 附录 C · 模型下载清单
 
-> 方案原则:全开源、本地推理、零 API 费用。以下清单与本地 `models\` 目录**一一对应**(2026-08-06 核查),状态列反映本地实际就绪情况;全新环境(Linux 5090 服务器)需按下载地址重新获取,或按[附录 H.4](#h4-文件搬运与软链接)随 `models` 整体 rsync 迁移。
+> 方案原则:全开源、本地推理、零 API 费用。以下清单与本地 `models\` 目录**一一对应**(2026-08-17 核查),状态列反映本地实际就绪情况;全新环境(Linux 5090 服务器)需按下载地址重新获取,或按[附录 H.4](#h4-文件搬运与软链接)随 `models` 整体 rsync 迁移。
 
 ### 图片类
 
 | 模型 | 放置目录 | 状态 | 下载地址 |
 |------|---------|------|---------|
 | `qwen_image_2512_fp8_e4m3fn.safetensors` | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_2512_fp8_e4m3fn.safetensors> |
-| `qwen_image_edit_2511_fp8mixed.safetensors` | `models\diffusion_models\` | ⏳ 待下载(替换 bf16) | <https://www.modelscope.cn/models/Kakazhuce/qwen_image_edit_2511_fp8mixed/resolve/master/qwen_image_edit_2511_fp8mixed.safetensors> |
+| `qwen_image_fp8_e4m3fn.safetensors`(2512 前代,备用) | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_fp8_e4m3fn.safetensors> |
+| `qwen_image_edit_2511_fp8mixed.safetensors` | `models\diffusion_models\` | ✅ 已就绪 | <https://www.modelscope.cn/models/Kakazhuce/qwen_image_edit_2511_fp8mixed/resolve/master/qwen_image_edit_2511_fp8mixed.safetensors> |
 | `flux-2-klein-9b-fp8.safetensors` | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/black-forest-labs/FLUX.2-klein-9b-fp8/resolve/main/flux-2-klein-9b-fp8.safetensors> ⚠️门控 |
 | `qwen_3_8b_fp8mixed.safetensors`(Klein 文本编码器) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors> |
 | `full_encoder_small_decoder.safetensors`(Klein/FLUX.2 解码器) | `models\vae\` | ✅ 已就绪 | <https://huggingface.co/black-forest-labs/FLUX.2-small-decoder/resolve/main/full_encoder_small_decoder.safetensors> |
@@ -289,7 +317,9 @@ Comfy/
 | `qwen_image_vae.safetensors` | `models\vae\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors> |
 | `4xNomos8kDAT.safetensors`(放大,推荐) | `models\upscale_models\` | ✅ 已就绪 | <https://huggingface.co/Phips/4xNomos8kDAT/resolve/main/4xNomos8kDAT.safetensors> |
 | `Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors`(2512 加速 LoRA) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/loras/Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors> |
+| `Qwen-Image-Lightning-4steps-V1.0.safetensors`(2512 前代加速 LoRA,备用) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/loras/Qwen-Image-Lightning-4steps-V1.0.safetensors> |
 | `Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors`(2511 加速 LoRA) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors> |
+| `qwen-image-edit-2511-multiple-angles-lora.safetensors`(多视角 LoRA,配 `ComfyUI-qwenmultiangle` 插件) | `models\loras\` | ✅ 已就绪 | 社区 LoRA(本地文件,5090 随 `models` 迁移) |
 | `birefnet.safetensors`(抠图/背景移除) | `models\background_removal\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/birefnet> |
 | `Kook_Qwen_2512_真实幻想.safetensors`(2512 写实/幻想风格 LoRA,图片-01 文生图在用) | `models\loras\` | ✅ 已就绪 | 本地文件(社区 LoRA,无固定 URL;5090 随 `models` 迁移,见[附录 H.4](#h4-文件搬运与软链接)) |
 | `[Qwen-Edit]3DChineseStyle_25.safetensors`(Qwen-Edit 3D 国风 LoRA,图片-01 文生图在用) | `models\loras\` | ✅ 已就绪 | 本地文件(社区 LoRA,无固定 URL;5090 随 `models` 迁移,见[附录 H.4](#h4-文件搬运与软链接)) |
@@ -329,17 +359,17 @@ Comfy/
 | `minimax_h3_video_vae_fp16.safetensors`(视频 VAE) | `models\vae\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors> |
 | `minimax_h3_audio_vae_fp32.safetensors`(音频 VAE) | `models\vae\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors> |
 
-> **fl2va 与 ref2va 是同一基座的任务变体**:`视频-01 文生视频` 用 fl2va,`视频-02/03/04`(首帧/首尾帧/参考图音视频)用 ref2va,两者都要下。仓库另有 bf16/int8_convrot/pruned_fp8_scaled 档可选。
+> **fl2va 与 ref2va 是同一基座的任务变体**:文生/图生工作流(3000/3010/4000/4010)用 fl2va,参考生成工作流(3020/4030)用 ref2va,两者都要下。仓库另有 bf16/int8_convrot/pruned_fp8_scaled 档可选。
 
-### MiniMax H3 Turbo LoRA(4 步加速)
+### MiniMax H3 Turbo LoRA(官方 Comfy-Org 转换版,已就绪)
 
-> 由 larryvrh 发布在 HuggingFace(`MiniMax-H3-Turbo-Lora`),**4 步采样 ≈ 常规 20 步的 5 倍提速**;bf16 标准 LoRA,每文件约 744 MB(应用方式 `W_eff = W + lora_B @ lora_A`)。国内下载把前缀 `huggingface.co` 换成 `hf-mirror.com` 即可。配套要求:ComfyUI v0.30.0+、KJNodes、ComfyUI-ReservedVRAM、SageAttention、`pip install triton-windows`。
+> Comfy-Org 官方转换的 H3 Turbo 加速 LoRA(bf16,**约 5 倍提速**),来源 `Comfy-Org/MiniMax-H3` 仓库 `loras/` 目录;国内下载把前缀 `huggingface.co` 换成 `hf-mirror.com`。配套要求:ComfyUI v0.30.0+、KJNodes、ComfyUI-ReservedVRAM、SageAttention。
 
 | 模型 | 放置目录 | 状态 | 下载地址 |
 |------|---------|------|---------|
-| `minimax_h3_turbo_4step.safetensors`(训练权重,快速运动下更清晰,推荐) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora/resolve/main/minimax_h3_turbo_4step.safetensors> |
-
-> ⚠️ 注意:该 LoRA 为**早期预览(欠训练)**,原版仓库 README 声明暂不支持 ComfyUI(需 B 站社区转换版);预算充足建议 8 步而非 4 步。仓库首页:https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora
+| `minimax_h3_fl2v_turbo_4step_v1.0_768p_comfyui_bf16.safetensors`(fl2va 4 步,768p 训练域,1.82GB,工作流默认) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/loras/minimax_h3_fl2v_turbo_4step_v1.0_768p_comfyui_bf16.safetensors> |
+| `minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors`(fl2va 8 步,质量更高,1.82GB) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/loras/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors> |
+| `minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors`(ref2va 4 步,R2V 工作流用,0.36GB) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors> |
 
 ### MiniMax H3 加速方案(社区现状)
 
@@ -356,21 +386,21 @@ Comfy/
 
 ## 附录 D · 需安装的插件
 
-| 插件 | 用途 | 地址 |
-|------|------|------|
-| ComfyUI-Qwen3-TTS | 开源 TTS 主方案(克隆/音色设计/情绪标签/无限多角色对话,Apache-2.0) | <https://github.com/wanaigc/ComfyUI-Qwen3-TTS> |
-| ComfyUI-Angelo(可选) | Klein 点击式编辑(2026 趋势) | <https://github.com/shootthesound/ComfyUI-Angelo> |
+| 插件 | 用途 | 地址 | 状态 |
+|------|------|------|------|
+| ComfyUI-Qwen3-TTS | 开源 TTS 主方案(克隆/音色设计/情绪标签/无限多角色对话,Apache-2.0) | <https://github.com/wanaigc/ComfyUI-Qwen3-TTS> | ✅ 已装 |
+| ComfyUI-Angelo(可选) | Klein 点击式编辑 | <https://github.com/shootthesound/ComfyUI-Angelo> | 未装(需要时再装) |
 
 ### H3 加速插件(已装,2026-08-06)
 
 | 插件 | 用途 | GitHub | 状态 |
 |------|------|--------|------|
 | ComfyUI-Spectrum-MiniMax-H3 | 谱特征预测,减少采样求值(275★) | <https://github.com/xmarre/ComfyUI-Spectrum-MiniMax-H3> | ✅ submodule |
-| ComfyUI-MiniMaxH3-Cache | EasyCache 增强版块级缓存 | <https://github.com/lihaoyun6/ComfyUI-MiniMaxH3-Cache> | ✅ submodule |
 | ComfyUI-SolAttn_triton | Sol-Attn 稀疏注意力(kijai,仅 4090/5090 实测) | <https://github.com/kijai/ComfyUI-SolAttn_triton> | ✅ submodule |
 | ComfyUI-ReservedVRAM | 动态预留显存,防 OOM | <https://github.com/Windecay/ComfyUI-ReservedVRAM> | ✅ submodule |
-| H3ReferenceSuite(H3RefLoader) | H3 参考加载/工作流套件 | 随 <https://github.com/juemin4-source/minimax-h3-guide> | ✅ submodule |
-| ComfyUI_GJJ_Nodes | GJJ 节点合集(含 Bernini 1.3B 二采等) | <https://github.com/guojijun/ComfyUI_GJJ_Nodes> | ✅ submodule |
+| H3ReferenceSuite(H3RefLoader) | H3 参考加载/工作流套件 | 随 <https://github.com/juemin4-source/minimax-h3-guide> | ✅ 软链接(见附录 A) |
+
+> EasyCache 为 ComfyUI 内置节点(无需插件);曾考虑的 ComfyUI-MiniMaxH3-Cache / ComfyUI_GJJ_Nodes 未安装(前者以内置 EasyCache 等价替代,后者非必要)。
 
 ### 扩图/裁切放大插件(已装,2026-08-10)
 
@@ -424,22 +454,19 @@ Comfy/
 
 ### G.3 加速插件部署
 
-- 6 个插件 `git clone` 到项目根目录 → 注册为 **git submodule**(`branch=main`)→ 在 `ComfyUI\custom_nodes\` 建立 Windows 符号链接(Python `os.symlink`,因 Git Bash `ln -s` 会退化为目录复制)
-- **未装**:BlockCache(T8star,GitHub 无公开仓库,以 MiniMaxH3-Cache 等价替代);SHUO-Canvas(非开源商业画布,2026-08-10 已移除)
-- 顺带修复历史遗留:ComfyUI-Qwen3-TTS 补齐 `.gitmodules` 映射
+- 6 个插件 `git clone` 到项目根目录 → 注册为 **git submodule**(`branch=main`)→ 经 `ComfyUI\custom_nodes\` 目录级符号链接加载(Python `os.symlink`,因 Git Bash `ln -s` 会退化为目录复制)
+- **未装**:BlockCache(T8star,GitHub 无公开仓库,以内置 EasyCache 等价替代);SHUO-Canvas(非开源商业画布,已移除);ComfyUI_GJJ_Nodes(非必要)
 
 ### G.4 工作流加速改造
 
-- 本地 H3 工作流**仅** `视频-04-参考图音视频生视频.json`(视频-01/02/03 为 Seedance 火山引擎 API,非本地,无法加本地加速)
-- 已加入加速链:
+- 本地 H3 工作流(3000/3010/3020 与 4000/4010/4020/4030)均内置加速链:
 
 ```
-UNETLoader → Patch Sage Attention KJ(auto) → MiniMaxH3Cache(EasyCache)
+UNETLoader → Patch Sage Attention KJ(auto) → EasyCache(内置节点)
   → SpectrumApplyMiniMaxH3(默认关) → Sampler
 ```
 
-- 原文件备份:`workflows/backup-视频-04-加速前-20260806.json`
-- 兼容性:核心链(Sage + EasyCache)已验证共存;Spectrum 与它们叠加未验证(同为"减少求值"类),默认 `enabled=false`,需单独用时打开
+- 核心链(Sage + EasyCache)为 H3 工作流标配;Spectrum 与它们叠加未验证(同为"减少求值"类),默认 `enabled=false`,需单独用时打开
 
 ### G.5 结论
 
@@ -491,11 +518,11 @@ python main.py --enable-manager
 
 ### H.4 文件搬运与软链接
 
-- 超项目:`git clone --recurse-submodules <remote>`(17 个子模块)
-- **models 约 178.7GB 单独 rsync**(`rsync -avP`);服务器需预留 ≥250GB NVMe(还要补 MiniMax H3 缺的约 21.5GB)
-- 软链接重建(`ln -s` 相对路径):
+- 超项目:`git clone --recurse-submodules <remote>`(**49 个子模块**)
+- **models 约 189GB 单独 rsync**(`rsync -avP`);服务器需预留 ≥300GB NVMe
+- 软链接重建(`ln -s` 相对路径,共 7 个,见附录 A 清单):
   - `ComfyUI/input → ../media`、`ComfyUI/output → ../media`、`ComfyUI/models → ../models`、`ComfyUI/user/default/workflows → ../../../workflows`
-  - `custom_nodes/` 下 12 个插件链接 + 4 个基础链接共 **16 个全部为相对路径**,按[附录 A 清单](#软连接清单2026-08-07-实测-16-个全部为相对路径)重建即可
+  - `ComfyUI/custom_nodes → ../custom_nodes`(**目录级,聚合 42 插件**)、`custom_nodes/H3ReferenceSuite → ../h3/minimax-h3-guide/custom_nodes/H3ReferenceSuite`、`.claude → .agents`
 - `ComfyUI-FallingTS/.env`(API Key)不进 git,服务器上单独放置并 `chmod 600`
 - 中文文件名 / 路径在 Linux UTF-8 下无问题
 
