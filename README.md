@@ -31,7 +31,7 @@
   - `ComfyUI-FallingTS` —— 自研通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强)
   - `ComfyUI-GGUF` / `ComfyUI-KJNodes` —— GGUF 量化加载 / 大型工具节点包
   - `ComfyUI-SeedVR2_VideoUpscaler` / `ComfyUI-SUPIR` / `ComfyUI_UltimateSDUpscale` —— 超分放大/修复
-  - H3 生态 5 插件(Spectrum / SolAttn / ReservedVRAM / Qwen3-TTS / latent-upscaler)+ OrbitSheets(场景参考板)+ 其余 31 个
+  - H3 生态 6 插件(Spectrum / SolAttn / ReservedVRAM / Qwen3-TTS / latent-upscaler / OrbitSheets 场景参考板)+ 其余 31 个
 - **工作流方案**:24 个,按编号分组(1xxx 万物 / 2xxx 场景镜头 / 3xxx-4xxx 视频生成 / 5xxx 拆解 / 6xxx-7xxx 音频;见[附录 B](#附录-b工作流方案总览))
 - **模型目录**(`models\`,软链接到项目根)—— 见[附录 C](#附录-c模型下载清单)
 - **文档**:官方文档本地克隆 `docs\ComfyUI-Docs\`;工作区说明 `AGENTS.md`
@@ -184,7 +184,8 @@ Comfy/
 ├── custom_nodes/             # 插件聚合目录:43 个插件子模块 + H3ReferenceSuite 链接
 │   ├── ComfyUI-FallingTS/    # 自研通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo)
 │   ├── ComfyUI-GGUF/  ComfyUI-KJNodes/   # 量化加载 / 工具节点包
-│   └── ...(其余 40 个,见 AGENTS.md 目录结构)
+│   ├── ComfyUI-OrbitSheets/  # H3 场景/角色参考板(多视角运镜 + 视觉选帧拼网格图)
+│   └── ...(其余 39 个,见 AGENTS.md 目录结构)
 ├── docs/                     # 20 个分类文档 + 4 个子模块(ComfyUI-Docs/Obsidian-Dev-Docs/Obsidian-API/codex)
 ├── h3/                       # MiniMax H3 生态(MiniMax-H3 + minimax-h3-guide)
 ├── workflows/                # 用户工作流 24 个(1xxx~7xxx,见附录 B)
