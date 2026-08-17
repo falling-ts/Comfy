@@ -1,51 +1,59 @@
 # ComfyUI 本地工作区
 
-ComfyUI 及自定义节点的本地开发工作区。系统为 Windows,shell 为 PowerShell,路径均相对项目根目录。
+ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目根目录,不绑定特定操作系统或 shell;文中命令示例按当前本机环境给出,部署到其它平台时按实际环境替换路径分隔符/可执行文件位置即可。
 
-## 目录结构
+## 目录结构(展开至第二级)
 
 | 路径 | 说明 |
 |------|------|
-| `ComfyUI` | ComfyUI 主程序(git submodule,`master` 分支) |
-| `custom_nodes` | **插件聚合目录**(2026-08-10 起):41 个插件子模块 + `H3ReferenceSuite` 链接全部集中于此;`ComfyUI\custom_nodes` 经**目录级**相对软链接指向它,详见「软链接映射 §B」 |
-| `custom_nodes\ComfyUI-GGUF` | GGUF 量化模型加载/推理节点(git submodule,`main`) |
-| `custom_nodes\ComfyUI-KJNodes` | KJNodes 工具节点包(git submodule,`main`) |
-| `custom_nodes\ComfyUI-FallingTS` | 这是我的插件,通用工具节点集:Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强 |
-| `custom_nodes\ComfyUI_UltimateSDUpscale` | 分块重绘插件 Ultimate SD Upscale(git submodule,`main`,含 `repositories/ultimate_sd_upscale`) |
-| `custom_nodes\ComfyUI-Impact-Pack` | 局部放大/检测精修插件(git submodule,`main`,2026-08-10 加入):`DetailerForEach`/`FaceDetailer`/`ImpactImageCrop`,区域框选→裁剪→放大→重绘→贴回 |
-| `custom_nodes\ComfyUI_LayerStyle` | 图层风格化节点集(git submodule,`main`,2026-08-10 加入):`LayerUtility: CropByMask`/`LayerMask: MaskBoxDetect` 画遮罩选区域 |
-| `custom_nodes\ComfyUI-Easy-Use` | 易用节点集(git submodule,`main`,2026-08-10 加入):`easy imageCrop` 前端拖框截图、`easy imageSplitGrid` 九宫格拆块放大 |
-| `custom_nodes\ComfyUI-SeedVR2_VideoUpscaler` | SeedVR2 高清修复/放大插件(git submodule,`main`,2026-08-10 加入,支持图像与视频) |
-| `custom_nodes\ComfyUI-SUPIR` | SUPIR 超分放大插件(git submodule,`main`,2026-08-10 加入,kijai 维护) |
-| `custom_nodes\ComfyUI_LinkFX` | 连线视觉效果插件(git submodule,`main`,2026-08-12 加入):27 套连线动画预设(霓虹/矩阵/流动)+ 物理模拟,纯前端 |
-| `custom_nodes\ComfyUI-AnimatedLinks` | 连线动画插件(git submodule,`main`,2026-08-12 加入):悬停节点时连线显示流动箭头 + Set/Get 配对高亮,纯前端 |
-| 其余 25 个插件(2026-08-12 按下载量批量装入) | rgthree / VideoHelperSuite / essentials / controlnet_aux / Crystools / cg-use-everywhere / WanVideoWrapper / Frame-Interpolation / Florence2 / IPAdapter_plus / ReActor / Inspire-Pack / Inpaint-CropAndStitch / RMBG / MultiGPU / LogicUtils / mixlab-nodes / segment-anything-2 / audio-separation / DepthAnythingV2 / QwenEditUtils / post-processing-nodes / IC-Light / Custom-Scripts / Detail-Daemon,均 git submodule(`main`);ReActor/RMBG/SAM2 等需运行时下模型,详见 `docs\ComfyUI-扩展插件注册表-2026-08-12.md` |
-| `docs\ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,`main` 分支),2026-08-10 移入 `docs\` |
-| `docs\Obsidian-Dev-Docs` | Obsidian 官方**开发者文档**仓库(obsidianmd/obsidian-developer-docs,`main`,2026-08-10 加入),开发 Obsidian 插件参考 |
-| `docs\Obsidian-API` | Obsidian **API 类型定义**仓库(obsidianmd/obsidian-api,`master`,2026-08-10 加入),开发插件用 `obsidian.d.ts`/`publish.d.ts` |
-| `h3` | **MiniMax H3 生态聚合目录**(2026-08-10 建):`MiniMax-H3` + `minimax-h3-guide` 两个子模块 |
-| `h3\MiniMax-H3` | MiniMax H3 官方模型仓库(git submodule,`main`),自带官方 Skills(`h3\MiniMax-H3\skills\`,共 9 个) |
-| `custom_nodes\ComfyUI-MiniMaxH3-Cache` 等 5 个 H3 配套插件 | EasyCache/Spectrum/SolAttn/ReservedVRAM(加速)+ Qwen3-TTS(语音),均 git submodule(`main`),集中于 `custom_nodes\`,经目录级软链接加载,详见「软链接映射 §B」 |
-| `h3\minimax-h3-guide` | H3 参考加载套件(git submodule,`main`);其 `custom_nodes\H3ReferenceSuite` 由根 `custom_nodes\H3ReferenceSuite` 子链接指向 |
-| `workflows` | **用户工作流实际存储处**(当前仅 **`万物建模.json`** 1 个主工作流;原图片 8/视频 4/音频 5 共 17 个工作流已于 2026-08-09 移入 `templates\` 根目录归档),前端保存即在此,可经 `GET /userdata?dir=workflows` 读取 |
-| `models` | 模型目录(实际存放处,`ComfyUI\models` 为软链接) |
-| `media` | 输入/输出文件(input、output 均软链接到此) |
-| `templates` | ComfyUI 官方模板库本地缓存(按类分目录)+ **个人工作流归档**(根目录 17 个 json:图片 8 / 视频 4 / 音频 5,2026-08-09 移入) |
-| `webs` | **三方网站调研聚合目录**(非 git,2026-08-10 移入):`RunningHub\` + `Bilibili\` + `AutoDL\` |
-| `webs\RunningHub` | RunningHub 调研(非 git):`RunningHub-API读取指南.md` + `API.md` + `workflows\`(429 个) |
-| `webs\Bilibili` | B 站调研(非 git):`B站教程调研.md` + `工作流大全\`(153 个配套工作流) |
-| `webs\AutoDL` | 云端 GPU 调研(非 git):`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4015 条模型清单) |
-| `stories` | Obsidian 故事写作工作区(`.obsidian\`):`template\` + `七纹刻印\` 两本 |
-| `docs` | 本地参考文档(7 个 md)+ **文档子模块**(`docs\ComfyUI-Docs` + `docs\Obsidian-Dev-Docs` + `docs\Obsidian-API`):启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、模型调研报告等 |
+| `ComfyUI` | ComfyUI 主程序(git submodule,`master` 分支):源码/入口在本目录;`models`/`input`/`output`/`user\default\workflows`/`custom_nodes` 均为相对软链接(见「软链接映射」);`blueprints\` 内置 89 个蓝图;其余结构遵循上游官方布局,不再逐一展开 |
+| **`custom_nodes`** | **插件聚合目录**:42 个插件子模块 + `H3ReferenceSuite` 链接集中于此,`ComfyUI\custom_nodes` 为目录级相对软链接指向它(§B)。按功能归类: |
+| └ 自有插件 | `ComfyUI-FallingTS`:通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强,已开源) |
+| └ H3 生态(5 插件 + 链接) | `ComfyUI-Spectrum-MiniMax-H3`(加速)、`ComfyUI-SolAttn_triton`(注意力加速)、`ComfyUI-ReservedVRAM`(显存预留)、`ComfyUI-Qwen3-TTS`(H3 语音)、`h3-latent-upscaler`(latent 放大)、`H3ReferenceSuite`(软链接,见 `h3`) |
+| └ 放大/修复/局部重绘 | `ComfyUI-SeedVR2_VideoUpscaler`(视频高清修复)、`ComfyUI-SUPIR`(超分放大)、`ComfyUI_UltimateSDUpscale`(分块重绘)、`ComfyUI-Impact-Pack`(Detailer 局部精修)、`ComfyUI_LayerStyle`(图层/遮罩)、`ComfyUI-Inpaint-CropAndStitch`(裁剪贴回) |
+| └ 视频 | `ComfyUI-VideoHelperSuite`、`ComfyUI-WanVideoWrapper`、`ComfyUI-Frame-Interpolation`(补帧)、`ComfyUI-qwenmultiangle`(Qwen 多镜头) |
+| └ 图像/编辑/生成 | `ComfyUI-Easy-Use`、`ComfyUI_IPAdapter_plus`、`ComfyUI-ReActor`(换脸)、`ComfyUI-RMBG`、`ComfyUI-segment-anything-2`、`comfyui_controlnet_aux`、`ComfyUI-IC-Light`、`ComfyUI-DepthAnythingV2`、`Comfyui-QwenEditUtils`、`comfyui-mixlab-nodes`、`ComfyUI-Florence2`、`ComfyUI-post-processing-nodes`(后期处理) |
+| └ 工具/其它 | `ComfyUI-GGUF`(GGUF 量化加载)、`ComfyUI-KJNodes`(KJ 工具包)、`rgthree-comfy`、`ComfyUI-Custom-Scripts`、`ComfyUI-Detail-Daemon`、`ComfyUI-Crystools`、`ComfyUI-MultiGPU`、`ComfyUI-LogicUtils`、`ComfyUI-Inspire-Pack`、`cg-use-everywhere`、`audio-separation-nodes-comfyui`、`ComfyUI_essentials`、`ComfyUI_LinkFX`(连线动画)、`ComfyUI-AnimatedLinks`(连线动画) |
+| `docs` | 本地参考文档:17 个分类 md + 4 个子目录 | 
+| └ `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,子模块) |
+| └ `Obsidian-Dev-Docs` | Obsidian 官方开发者文档(插件开发参考,子模块) |
+| └ `Obsidian-API` | Obsidian API 类型定义(`obsidian.d.ts`/`publish.d.ts`,子模块) |
+| └ `Qwen-Image-Edit-Skills` | Qwen-Image-Edit 官方 Skills 参考 |
+| └ `codex` | Codex 协作约定/调研归档 |
+| └ 分类 md | 启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、节点输入类型总表、插件注册表、模型调研报告、H3 提示词格式调研、FallingTS 分段执行机制等 |
+| `h3` | **MiniMax H3 生态聚合目录**(2026-08-10 建):两个子模块 |
+| └ `MiniMax-H3` | MiniMax H3 官方模型仓库(git submodule,`main`),自带官方 Skills(`skills\`,9 个) |
+| └ `minimax-h3-guide` | H3 参考加载套件(git submodule,`main`);其 `custom_nodes\H3ReferenceSuite` 由根 `custom_nodes` 子链接指向 |
+| **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 22 个,按编号-用途分组: |
+| └ `1xxx` 万物 | `1000-万物建模`(主线主流程)/ `1001-灰度遮罩` / `1010-万物变化` |
+| └ `2xxx` 场景镜头 | `2000-场景首帧` / `2010-场景拉镜` / `2020-场景推镜` / `2030-场景旋镜` |
+| └ `3xxx` 场景生成 | `3000-文生场景`(H3 T2VA,仅画面)/ `3010-图生场景`(I2V)/ `3020-参考场景`(R2V 多图多视频参考) |
+| └ `4xxx` 视频生成 | `4000-文生视频` / `4010-图生视频` / `4020-首尾视频` / `4030-参考视频` |
+| └ `5xxx` 拆解 | `5000-视频拆帧` / `5010-视频拆音` |
+| └ `6xxx` 音频生成 | `6000-背景音乐` / `6010-环境音效` / `6020-效果音效` / `6030-文生人声` / `6040-参考人声` |
+| └ `7xxx` 截取 | `7000-截取声音` |
+| `models` | 模型实际存放处(`ComfyUI\models` 软链接指向);38 个标准槽位子目录,每个目录带 `.gitignore`(内容 `*`+`!.gitignore`)忽略模型文件、仅占位入库。已就绪模型见「模型与蓝图」 |
+| └ 核心生成 | `diffusion_models` / `text_encoders` / `vae` / `loras` / `checkpoints` / `upscale_models` / `background_removal`(已就绪) |
+| └ 语音 | `TTS`(Qwen3-TTS 五变体 + SenseVoice)/ `ASR` / `speaker_models` / `audio_encoders` |
+| └ 标准空槽位 | `controlnet` / `clip` / `clip_vision` / `unet` / `embeddings` / `detection` / `facerestore_models` / `frame_interpolation` / `geometry_estimation` / `gligen` / `hypernetworks` / `latent_upscale_models` / `mesh2motion` / `model_patches` / `nlf` / `optical_flow` / `photomaker` / `reactor` / `SEEDVR2` / `style_models` / `ultralytics` / `yolo` / `classifiers` / `configs` / `diffusers` 等(多数尚未放置模型) |
+| `media` | 输入/输出文件(`ComfyUI\input`、`output` 软链接到此):`3d\` / `qwen3tts\` / `clipspace\` 及历史生成图;⚠️ 真实数据,严禁删除/批量清理 |
+| `templates` | ComfyUI 官方模板库本地缓存:10 个分类子目录(`图像`/`视频`/`音频`/`3D模型`/`LLM`/`工具`/`快速开始`/`自定义节点`/`节点基础`/`使用案例`)+ `workflow-templates-list.md` 索引(2026-08-09 曾归档的个人工作流已迁回 `workflows\`) |
+| `webs` | 三方网站调研聚合目录(已入库跟踪):三个调研源 |
+| └ `RunningHub` | RunningHub 调研:`RunningHub-API读取指南.md` + `API.md` + `workflows-list.md` + `workflows\`(429 个收集工作流,按 图像/视频/音频/数字人/室内外设计/风格化/插件 等子目录分类) |
+| └ `Bilibili` | B 站教程调研:`B站教程调研.md` + `工作流大全\`(153 个配套工作流) |
+| └ `AutoDL` | 云端 GPU 调研:`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4015 条模型清单) |
+| `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置):`template\`(新建故事模板)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
+| `scripts` | 临时/可复用工具脚本(被 `scripts\.gitignore` 忽略,仅存本地不入库):工作流连线校验/修复/对比(`check-workflow-*`/`fix-*`/`diff-*`/`dump-*`)、布局校验、模型使用分析、模板/模型清单更新、H3/SeedVR2 调试等 |
 | `logs` | ComfyUI 运行日志(`comfyui*.log`/`comfyui-console*.log`,已 gitignore) |
-| `backups` | **工作流/重要文件的修改前备份目录**(2026-08-04 起,替代原 `.claude\` 存放位置) |
+| `backups` | **工作流/重要文件的修改前备份**(2026-08-04 起):`backup-<文件名>-<YYYYMMDD>-<说明>.*` 命名;含 `backup-20260805-路径清理\`(官方/分类文档归档)、`sageattention\`(本地 wheel)、环境迁移快照(pip-freeze/conda export)等 |
+| `.claude` | SymbolicLink → `.agents`(Claude Code 兼容垫片,技能聚合目录,见「软链接映射 §C」) |
 | `README.md` / `LICENSE` | 项目说明与许可 |
-| `.gitmodules` | 47 个子模块登记(git submodule) |
-| `comfy-server.cmd` | 后台服务式启动脚本(参考 harness-server.cmd 改造:杀 8188 旧进程 → 静默后台启动 → 等待就绪,日志 `%TEMP%\comfy-server-8188.log`;开始菜单同款 `comfy-server` 快捷方式;等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`) |
+| `.gitmodules` | 子模块登记(git submodule) |
+| `comfy-server.cmd` | 后台服务式启动脚本(杀 8188 旧进程 → 静默后台启动 → 等待就绪,日志 `%TEMP%\comfy-server-8188.log`;等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`) |
 
 ## 软链接映射(重要,共 7 个,全部为相对路径 SymbolicLink;2026-08-07 建,08-10 插件收敛为目录级链接,08-13 加 Claude Code 兼容链接)
 
-全部为 Windows **相对路径**符号链接,**项目根目录整体移动后不失效**。
+全部为 **相对路径**符号链接,**项目根目录整体移动后不失效**(不依赖具体文件系统/平台)。
 
 ### A. 基础链接(4 个)
 
@@ -155,7 +163,7 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
 - 修改工作流或重要文件前,先备份到 `backups\`,命名 `backup-<文件名>-<YYYYMMDD>-<说明>.json`;**备份一律放 `backups`,不要再放 `.claude\`**
 - 新增/修改自定义节点:直接改对应子项目,经软链接即时生效,无需复制到 custom_nodes
 - 验证节点加载:启动后查日志中 custom node 加载输出,或访问 `/object_info` 检查节点是否注册
-- 挑选/运行工作流:先核对「模型与蓝图」确认组件就位,再开 `blueprints\`、`templates\`(官方子目录 + 根目录个人归档 17 个)、`webs\Bilibili\工作流大全\`、`webs\RunningHub\workflows\` 的 json
+- 挑选/运行工作流:先核对「模型与蓝图」确认组件就位,再开 `blueprints\`、`templates\`(官方子目录)、`webs\Bilibili\工作流大全\`、`webs\RunningHub\workflows\` 的 json
 - 清理临时输出残留:删 `temp\` 里 `ComfyUI_temp_*.png` 后,前端「资产 → 已生成」可能仍显示内容 —— 那是任务历史(`GET /history`)中的输出记录,文件已删但引用还在。清理:`POST /history` + `{"clear": true}` 全清(等价 `server.py` 的 `wipe_history()`),或 `{"delete": ["<prompt_id>", ...]}` 定向删除;验证 `GET /history` 归零,前端 F5 刷新。注:资产系统默认禁用(`--enable-assets` 才启用),任务历史是「已生成」面板唯一来源;清空前确认 history 输出均为 `temp` 类型(无 output/input 真实数据)
 
 ## 工作流布局规范(修改与创作必须遵守)

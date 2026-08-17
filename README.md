@@ -40,7 +40,7 @@
 
 ## 开始之前
 
-- **系统**:Windows 10/11(推荐;本文以 Windows 为准)
+- **系统**:Windows 10/11 或 Linux(本仓库默认按 Windows 部署编写,Linux/macOS 部署见「附录 H 迁移 Linux」)
 - **硬件**:内存 16G 以上;**有 NVIDIA 显卡**(N 卡)体验最佳;无 N 卡也能跑,但慢
 - **网络**:能访问外网即可;部分地区需代理;国内下载模型可用 `hf-mirror.com` 镜像(见附录 E)
 - **你不需要提前装任何东西**——Python、CUDA、虚拟环境、各种 CLI 都由 AI 帮你装
