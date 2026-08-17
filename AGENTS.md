@@ -49,7 +49,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | `.claude` | SymbolicLink → `.agents`(Claude Code 兼容垫片,技能聚合目录,见「软链接映射 §C」) |
 | `README.md` / `LICENSE` | 项目说明与许可 |
 | `.gitmodules` | 子模块登记(git submodule) |
-| `comfy-server.cmd` | 后台服务式启动脚本(杀 8188 旧进程 → 静默后台启动 → 等待就绪,日志 `%TEMP%\comfy-server-8188.log`;等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`) |
+| `comfy-server.cmd` | 后台服务式启动脚本(杀 8188 旧进程 → 静默后台启动 → 等待就绪,日志写入系统临时目录 `comfy-server-8188.log`;等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`) |
 
 ## 软链接映射(重要,共 7 个,全部为相对路径 SymbolicLink;2026-08-07 建,08-10 插件收敛为目录级链接,08-13 加 Claude Code 兼容链接)
 
@@ -83,28 +83,29 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 
 ## 版本与运行
 
-- **Python 虚拟环境:项目内 `.venv`**(`D:\Comfy\.venv`,2026-08-16 由 conda 环境迁移而来,官方 `python -m venv` 基于系统 Python 3.13.13 创建;原 `C:\Users\zghyu\Miniconda3\envs\ComfyUI` 已删除)。启动一律用 `.venv\Scripts\python.exe`(或先 `.venv\Scripts\activate` 再 `python`),不要用系统级 Python(`C:\Program Files\Python313`)运行主程序
-- **运行环境 `.venv`:Python 3.13.13 / torch 2.13.0+cu130(CUDA 13.0,RTX 4060 8GB VRAM)**,`comfy-server.cmd` 与本文档均用它,路径 `D:\Comfy\.venv\Scripts\python.exe`;依赖安装顺序:torch(cu130 index)→ `ComfyUI\requirements.txt` → 插件 requirements → 加速依赖,迁移后与旧 conda 环境包版本对齐(见 `backups\pip-freeze-ComfyUI-20260816-020146.txt` 与 `pip-freeze-venv-final.txt` 对比)
+- **Python 虚拟环境:项目内 `.venv`**(2026-08-16 由 conda 环境迁移而来,官方 `python -m venv` 基于系统 Python 3.13.13 创建;原 conda 专用环境已删除)。启动一律用 `.venv\Scripts\python.exe`(类 Unix 为 `.venv\bin/python`),不要用系统级 Python 或任何 conda 环境运行主程序
+- **运行环境 `.venv`:Python 3.13.13 / torch 2.13.0+cu130(CUDA 13.0,RTX 4060 8GB VRAM)**,启动脚本与本文档均用它(`.venv\Scripts\python.exe`,类 Unix 为 `.venv\bin/python`);依赖安装顺序:torch(cu130 index)→ `ComfyUI\requirements.txt` → 插件 requirements → 加速依赖,迁移后与旧 conda 环境包版本对齐(见 `backups\pip-freeze-ComfyUI-20260816-020146.txt` 与 `pip-freeze-venv-final.txt` 对比)
 - 共享关键版本:comfyui-frontend-package **1.48.7**、comfyui-manager **4.2.2**、comfyui-workflow-templates **0.11.34**、sageattention **2.2.0**(cu130,本地 wheel `backups\sageattention\`)、triton-windows **3.7.1.post27**、comfy-kitchen **0.2.28**、comfy-aimdo 0.4.13、transformers 4.57.3、diffusers 0.39.0、numpy 2.4.6、onnxruntime-gpu 1.28.0、safetensors 0.8.0
-- 前端打包目录(web_root,`server.py:251` 经 `FrontendManager.init_frontend()` 定位)= `<虚拟环境>/Lib/site-packages/comfyui_frontend_package/static/`(即 `D:\Comfy\.venv\Lib\site-packages\comfyui_frontend_package\static\`):主入口 `index.html`,打包产物在 `assets\`(421 个 `<分块名>-<hash>.js`,含 `core-*.js`/`api-*.js`/`index-*.js`),`scripts\` 保留 `app.js`/`api.js`/`domWidget.js` 等扩展 import 入口;插件 `web\js` 经 `GET /extensions`(`server.py:356`)运行时加载,**不参与前端打包**,重建 `assets\` 不影响扩展
+- 前端打包目录(web_root,`server.py:251` 经 `FrontendManager.init_frontend()` 定位)= `<venv>/Lib/site-packages/comfyui_frontend_package/static/`(相对 `.venv\`):主入口 `index.html`,打包产物在 `assets\`(421 个 `<分块名>-<hash>.js`,含 `core-*.js`/`api-*.js`/`index-*.js`),`scripts\` 保留 `app.js`/`api.js`/`domWidget.js` 等扩展 import 入口;插件 `web\js` 经 `GET /extensions`(`server.py:356`)运行时加载,**不参与前端打包**,重建 `assets\` 不影响扩展
 - 测试插件「从零安装」是否正常时:需清理**浏览器缓存**的前端打包文件(即 `assets\` 下载到浏览器侧的 `-hash.js`/`-hash.css`),对 `http://127.0.0.1:8188` 强刷(`Ctrl+Shift+R`)或清除该站点数据,以验证扩展在无陈旧缓存的干净状态下能正常加载;**磁盘 `assets\` 目录勿删**(是前端真实构建产物,删了页面白屏/无法加载)
 - 启动:
 
-```powershell
-D:\Comfy\.venv\Scripts\activate
-cd D:\Comfy\ComfyUI
+先激活虚拟环境(`.venv\Scripts\activate` 或 `.venv/bin/activate`),再:
+
+```text
+cd ComfyUI
 python main.py --enable-manager
 ```
 
-- 或直接 `D:\Comfy\.venv\Scripts\python.exe main.py --enable-manager`(在 `ComfyUI` 下);双击开始菜单 `comfy-server` 或运行 `comfy-server.cmd` 等价(后台无窗口服务式,已带 `--disable-pinned-memory --fast-disk`,适配 8GB VRAM/16GB RAM;想看前台实时日志则手动执行 `D:\Comfy\.venv\Scripts\python.exe main.py --enable-manager --disable-pinned-memory --fast-disk`)
+- 或直接 `.venv\Scripts\python.exe main.py --enable-manager`(在 `ComfyUI` 下;类 Unix 用 `.venv/bin/python`);或运行 `comfy-server.cmd` 启动脚本等价(后台无窗口服务式,已带 `--disable-pinned-memory --fast-disk`,适配 8GB VRAM/16GB RAM;想看前台实时日志则手动执行 `.venv\Scripts\python.exe main.py --enable-manager --disable-pinned-memory --fast-disk`)
 - 前端默认地址 `http://127.0.0.1:8188`
-- 注意:主程序必须用 `.venv` 的 Python 运行(`.venv\Scripts\python.exe`),不要用系统级 Python(`C:\Program Files\Python313`,3.13.13)或任何 conda 环境运行
+- 注意:主程序必须用 `.venv` 的 Python 运行(`.venv\Scripts\python.exe`,类 Unix 为 `.venv/bin/python`),不要用系统级 Python 或任何 conda 环境运行
 - 改自定义节点代码后**重启 ComfyUI 生效**,无需复制文件(经软链接即时加载)
 
 ### ComfyUI 官方日志(排查插件/请求问题优先看这里)
 
 - **官方日志文件**:`ComfyUI\user\comfyui.log`;多实例同时跑时按端口命名 `comfyui_<port>.log`(如 `comfyui_8188.log`);轮转保留 `comfyui.prev.log` / `comfyui.prev2.log`。启动时日志会打印一行 `** Log path: <路径>` 指明当前文件。
-- **CLI 配置**:`--verbose LEVEL FILE` 可自定义控制台级别与文件输出(可重复),如 `--verbose INFO D:\Comfy\ComfyUI\user\comfyui_8188.log`;`--log-stdout` 把普通输出切到 stdout。
+- **CLI 配置**:`--verbose LEVEL FILE` 可自定义控制台级别与文件输出(可重复),如 `--verbose INFO ComfyUI\user\comfyui_8188.log`;`--log-stdout` 把普通输出切到 stdout。
 - **日志类别/格式**:行首 `[YYYY-MM-DD HH:MM:SS.mmm]` 时间戳,含级别(DEBUG/DETAIL/INFO/WARNING/ERROR/CRITICAL)。内容包括:启动信息(版本/设备/VRAM)、插件加载(`Import times for custom nodes`)、模型加载、报错 traceback、ComfyUI-Manager 网络操作,以及**自定义节点通过 `logging` 输出**的信息(插件里用 `print` 不一定进文件,建议用 `logging` 才稳定落盘)。
 - **前端终端**:浏览器 ComfyUI 界面底部终端(经 WebSocket 推送的环形缓冲)也能实时看到同样的日志,排查前端扩展报错可直接看它。
 - **注意**:`logs\comfyui*.log` 是用户自建重定向(如启动脚本),**不是官方位置**,可能缺部分输出;查不到关键日志时先看 `user\comfyui_<port>.log`。
@@ -139,7 +140,7 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
 ## 开发规范
 
 - **临时脚本(一次性调研/修改/校验用的 `.py`/`.ps1` 等)一律写入 `scripts\` 目录**,严禁散落在项目根目录或其它目录;用完即删或留存在 `scripts\` 内,不得在根目录遗留 `_*.py` 之类临时文件
-- 项目根目录 `D:\Comfy` **本身是一个 git 仓库**(`main`),经 `.gitmodules` 登记 21 个子模块;根仓库跟踪的是各子模块的**指针提交**(`git ls-files -s` 中模式 `160000`)。不要误以为"根目录不是 git 仓库、不能在根目录执行 git 操作"
+- **项目根目录本身是一个 git 仓库**(`main`),经 `.gitmodules` 登记子模块;根仓库跟踪的是各子模块的**指针提交**(`git ls-files -s` 中模式 `160000`)。不要误以为"根目录不是 git 仓库、不能在根目录执行 git 操作"
 - 各子项目(ComfyUI 及全部插件、ComfyUI-Docs、MiniMax-H3 等)是根仓库的 git **子模块**:各自独立仓库、自身维护与上游一致。改动子模块代码在**子模块目录内**正常 commit/push,再回到根仓库 `git add <子模块路径>` 提交一次"指针更新";不要留着子模块脏工作树不提交,也不要往根仓库混入无关文件
 - 修改 ComfyUI 主程序时遵守 `ComfyUI\AGENTS.md` 上游规范:改动小且直接、尽量少改文件、不引入新依赖、核心代码不发网络请求(见其 "No Internet Requests")、保持节点/API/工作流兼容、删除死代码、代码须看起来像手写
 - 节点注册(V1 `NODE_CLASS_MAPPINGS` / V3 `comfy_entrypoint()`)与 ComfyUI API 使用约定见各插件仓库及 `ComfyUI\AGENTS.md`;代码书写规范(卫语句优先、switch 代替 if-else、缩进)与网络/代理策略见全局 `~/.claude\CLAUDE.md`
