@@ -49,16 +49,7 @@
 
 ## 第 1 步:安装 Git
 
-Git 用于克隆本仓库、后续管理子项目。
-
-1. 浏览器打开 **https://git-scm.com/download/win**,下载安装包(64-bit),一路「下一步」默认安装即可
-2. 验证:按 `Win` 键,搜索并打开「Git Bash」,输入:
-
-```bash
-git --version
-```
-
-能打印出版本号即成功。
+Git 用于克隆本仓库、管理子模块。到 **https://git-scm.com/download/win** 下载安装包(64-bit,默认选项一路「下一步」),装完在终端执行 `git --version` 能打印版本号即成功。
 
 ---
 
@@ -110,23 +101,13 @@ OpenCode 是你和这套工作区之间的 AI 主力,负责装软件、配环境
 
 ## 第 5 步:让 OpenCode 装它自己的 CLI(可选)
 
-如果你更习惯在命令行里用 OpenCode,直接对它说:
-
-> 帮我安装 opencode cli 版本,具体下载安装,你从网络搜索。
-
-它会在你的终端里装好 `opencode` 命令,以后 `cd Comfy && opencode` 即可使用。
+习惯命令行的话,对它说「帮我安装 opencode cli 版本,具体下载安装,你从网络搜索」,装好后 `cd Comfy && opencode` 即可使用。
 
 ---
 
 ## 第 6 步:让 OpenCode 安装其它 AI 工具(可选)
 
-继续以 OpenCode 为基地,让它帮你把常用的 AI CLI 都装上(这样你可以随时切换):
-
-> 帮我安装以下 AI 工具:codex、claude code、cc-switch。具体下载安装,你从网络搜索。
-
-- **codex** —— OpenAI 的 AI 编码 CLI
-- **claude code** —— Anthropic 的 AI 编码 CLI
-- **cc-switch** —— AI CLI 配置切换工具(在多个服务商之间一键切换)
+需要时对它说「帮我安装以下 AI 工具:codex、claude code、cc-switch。具体下载安装,你从网络搜索」,即可获得可随时切换的 AI CLI 组合。
 
 ---
 
@@ -216,33 +197,9 @@ Comfy/
 └── AGENTS.md                 # 工作区说明(供 AI 读取,目录结构/软链接/规范全在此)
 ```
 
-### 软连接清单(2026-08-17 实测 7 个,全部为相对路径)
+### 软连接(共 7 个,全部相对路径)
 
-全部为**相对路径**符号链接,**项目整体移动后不失效**。创建/修复需管理员权限(或以管理员运行 OpenCode / 开启开发者模式)。
-
-**A. 基础链接(4 个)**
-
-| ComfyUI 内路径 | 相对目标 | 实际指向 |
-|---|---|---|
-| `input` | `..\media` | `media` |
-| `output` | `..\media` | `media` |
-| `models` | `..\models` | `models`(模型实际存放处) |
-| `user\default\workflows` | `..\..\..\workflows` | `workflows`(用户工作流实际存储处) |
-
-**B. custom_nodes 目录级链接 + H3ReferenceSuite 子链接(2 个)**
-
-| ComfyUI 内路径 | 相对目标 | 实际指向 |
-|---|---|---|
-| `custom_nodes` | `..\custom_nodes` | 根 `custom_nodes`(插件聚合目录,42 插件 + H3ReferenceSuite 链接) |
-| `custom_nodes\H3ReferenceSuite` | `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
-
-**C. 根目录 Claude Code 兼容链接(1 个)**
-
-| 根内路径 | 相对目标 | 实际指向 |
-|---|---|---|
-| `.claude` | `.agents` | 根 `.agents`(技能聚合目录,Claude Code 兼容垫片) |
-
-> 说明:`ComfyUI\custom_nodes` 为目录级链接,插件目录的增删不影响它;`ComfyUI\temp\` 为真实目录(非链接),可随时清理。
+`ComfyUI\input`/`output` → `media`、`ComfyUI\models` → `models`、`ComfyUI\user\default\workflows` → `workflows`、`ComfyUI\custom_nodes` → `custom_nodes`(**目录级,聚合 42 插件**)、`custom_nodes\H3ReferenceSuite` → `h3\minimax-h3-guide\...`、`.claude` → `.agents`。全部为**相对路径**符号链接,项目整体移动后不失效;创建/修复需管理员权限,完整清单见 `AGENTS.md`「软链接映射」;`ComfyUI\temp\` 为真实目录(非链接),可随时清理。
 
 ## 附录 B · 工作流方案总览
 
@@ -301,7 +258,7 @@ Comfy/
 
 ## 附录 C · 模型下载清单
 
-> 方案原则:全开源、本地推理、零 API 费用。以下清单与本地 `models\` 目录**一一对应**(2026-08-17 核查),状态列反映本地实际就绪情况;全新环境(Linux 5090 服务器)需按下载地址重新获取,或按[附录 H.4](#h4-文件搬运与软链接)随 `models` 整体 rsync 迁移。
+> 方案原则:全开源、本地推理、零 API 费用。以下清单与本地 `models\` 目录**一一对应**(2026-08-17 核查),状态列反映本地实际就绪情况;全新环境(Linux 5090 服务器)需按下载地址重新获取,或按[附录 H.4](#h4-文件搬运与软链接)随 `models` 整体 rsync 迁移。**下载顺序建议**:先音频小件(Qwen3-TTS 全套、SenseVoice、Stable Audio 3)→ 视频大件(MiniMax H3 全套,fl2va 与 ref2va 都要下)→ 图片大件(Qwen-Image 2512/Edit 2511、FLUX.2 Klein)。注意 `flux-2-klein-9b-fp8` 为**门控仓库**(需登录 HF 接受 BFL 协议);模型放好后**重启 ComfyUI** 才会被识别。
 
 ### 图片类
 
@@ -336,16 +293,7 @@ Comfy/
 | Qwen3-TTS-12Hz-0.6B-Base(低显存克隆,约 4GB VRAM,~2.5 GB) | 同上 | ✅ 已就绪 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base> |
 | Qwen3-TTS-12Hz-0.6B-CustomVoice(低显存预设音色,~2.5 GB) | 同上 | ✅ 已就绪 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice> |
 | SenseVoiceSmall(ASR 自动转写参考文本,工作流 ⑤ 必需,~0.9 GB) | 插件自动下载 | ✅ 已就绪 | <https://huggingface.co/FunAudioLLM/SenseVoiceSmall> |
-> **Qwen3-TTS 下载说明**:均为**目录型模型**,必须整目录下载(`config.json`/`tokenizer` 词表/`speech_tokenizer/` 等,仅下 safetensors 无法加载)。推荐直接开 `Qwen3TTSLoader` 的 `auto_download`(默认开),插件自动从 ModelScope 整目录快照下载并自动建目录;**手动下载**时按以下结构放入(`models/` 是软链接,实际落点 `D:\Comfy\models\`):
->
-> ```
-> models/TTS/Qwen/Qwen3-TTS-12Hz-1.7B-Base/          ← 5 个 Qwen3-TTS 模型都放 TTS/Qwen/ 下
-> models/TTS/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice/
-> models/TTS/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign/
-> models/TTS/Qwen/Qwen3-TTS-12Hz-0.6B-Base/
-> models/TTS/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice/
-> models/TTS/SenseVoiceSmall/                        ← SenseVoice 直接放 TTS/ 下,无 Qwen 子目录
-> ```
+> **Qwen3-TTS 下载说明**:均为**目录型模型**,必须整目录下载(仅下 safetensors 无法加载);`Qwen3TTSLoader` 的 `auto_download`(默认开)会自动从 ModelScope 整目录下载。手动下载时:5 个 Qwen3-TTS 放 `models/TTS/Qwen/<模型名>/`,`SenseVoiceSmall` 放 `models/TTS/SenseVoiceSmall/`。
 
 | `qwen3.5_2b_bf16.safetensors`(音频编码) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen3.5/resolve/main/text_encoders/qwen3.5_2b_bf16.safetensors> |
 
@@ -371,18 +319,10 @@ Comfy/
 | `minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors`(fl2va 8 步,质量更高,1.82GB) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/loras/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors> |
 | `minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors`(ref2va 4 步,R2V 工作流用,0.36GB) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors> |
 
-### MiniMax H3 加速方案(社区现状)
+### MiniMax H3 加速要点
 
-| 方案 | 提速 | 做法 | 代价 |
-|------|------|------|------|
-| Sage Attention | +20~30% | KJNodes `Patch Sage Attention KJ` 节点(已有 KJNodes) | 无害 dtype 警告 |
-| EasyCache | 显著 | 参数 0.30/0.20/0.90 | 失帧/模糊,长视频连贯性下降 |
-| GGUF 量化 | 显存↓ | `qwen3vl-32B-MiniMax-H3-Q4_K.gguf`(Q2 效果差) | 社区有分歧,需 A/B |
-| INT4 文本编码器 | 显存↓ | 替代 nvfp4_awq | 更小可用 |
-| 显存优化 | 防 OOM | `🎈VRAM/RAM-Cleanup` 节点;启动 `--fast-disk`、`--vram-headroom` | 编码器频繁重载 |
-| 4-step 加速 LoRA(Turbo) | ~5x | MiniMax-H3-Turbo-Lora(见上节);配套 ReservedVRAM / SageAttention | 早期预览(欠训练),EMA 未成熟;原版需社区转换 |
-
-**低显存**:8G/12G/16G 均可跑(动态卸载,clip 编码器放 CPU);本地最高 768p,2K 需官方 API。
+- **标配(工作流已内置)**:Sage Attention(+20~30%,KJNodes `Patch Sage Attention KJ`)+ EasyCache(ComfyUI 内置节点,参数 0.30/0.20/0.90,代价为长视频连贯性下降)+ Turbo LoRA(~5x,见上节)
+- **显存**:8G/12G/16G 均可跑(动态卸载,clip 编码器放 CPU);本地最高 768p,2K 需官方 API;显存紧张可加 `🎈VRAM/RAM-Cleanup` 节点或 `--vram-headroom`
 
 ## 附录 D · 需安装的插件
 
@@ -412,7 +352,7 @@ Comfy/
 | ComfyUI-SeedVR2_VideoUpscaler | SeedVR2 高清修复/放大(图像+视频,2723★) | <https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler> | ✅ submodule |
 | ComfyUI-SUPIR | SUPIR 超分放大修复(2303★) | <https://github.com/kijai/ComfyUI-SUPIR> | ✅ submodule |
 
-> 以上全部 `git clone` 到根目录 `custom_nodes\`、注册为 **git submodule**、经 `ComfyUI\custom_nodes\` **目录级**相对符号链接加载(单链接聚合全部插件)。加速启用细节见[附录 G](#附录-g--h3-加速环境部署与核查记录2026-08-06)。
+> 以上全部注册为 **git submodule**,经 `ComfyUI\custom_nodes\` **目录级**相对符号链接加载(单链接聚合全部插件)。加速启用细节见[附录 C 加速要点](#minimax-h3-加速要点)。
 
 ## 附录 E · 网络与镜像
 
@@ -420,60 +360,6 @@ Comfy/
 - **HuggingFace 国内镜像**:把下载链接前缀 `huggingface.co` 换成 `hf-mirror.com` 即可,例:
   `https://hf-mirror.com/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors`
 - 部分站点(如 OpenAI 系域名)直连会被 Cloudflare 拦截,需走允许对应域名的代理节点
-
-## 附录 F · 注意事项
-
-- **门控仓库**:`black-forest-labs/FLUX.2-klein-9b-fp8` 需登录 HF 并接受 BFL 协议
-- **显存**:Klein 9B 蒸馏版占用较高(24G 卡跑 1024 tile 偏紧,爆显存时降到 768);MiniMax H3 需大显存,低显存建议量化或云端
-- **下载顺序建议**:先补音频小件(Qwen3-TTS 全套、SenseVoice、Stable Audio 3)→ 视频大件(MiniMax H3 全套 5 文件,fl2va 与 ref2va 都要下)→ 图片大件(Qwen-Image 2512/Edit 2511、FLUX.2 Klein 9B)
-- **模型放好后重启 ComfyUI**;`stable_audio_3_medium` + `t5gemma` 就绪后,背景音乐工作流可立即运行
-
-## 附录 G · H3 加速环境部署与核查记录(2026-08-06)
-
-### G.1 加速依赖安装
-
-| 包 | 版本 | 说明 |
-|----|------|------|
-| torch / torchvision / torchaudio | 2.13.0+cu130 / 0.28.0+cu130 / 2.11.0+cu130 | CUDA 13.0 版,已激活 comfy-kitchen CUDA 后端 |
-| **sageattention** | **2.2.0+cu130torch2.10.0andhigher.post6** | 预编译 wheel,备份在 `backups/sageattention/` |
-| triton-windows | 3.7.1.post27 | torch 2.13 配套 |
-| nvidia-ml-py / ninja / diffusers / timm / spandrel-extra-arches 等 | 最新 | 各插件依赖 |
-
-**sageattention 版本选型过程**:
-- PyPI 上最高只有 **1.0.6(V1)**,2.2.0(V2++,含 SageAttention2++)仅在 GitHub / 社区预编译 wheel
-- 源码编译 2.2.0 在 Windows(MSVC + CUDA 13.2)下失败 → cccl 标准库与 MSVC 兼容问题
-- 改用社区预编译 wheel **`2.2.0.post6`**(woct0rdho 构建,专为 torch 2.12/2.13 编译,修复了此前版本的黑图/NaN bug)
-- 下载注意:GitHub release 直连被限速(约 22KB/s)→ 走代理 `127.0.0.1:7890` 提速(2.5MB/s)
-
-### G.2 重要核查发现:torch 2.13 的 SDPA 损坏
-
-- **现象**:`F.scaled_dot_product_attention` 与 fp64 高精度权威计算的 cosine 仅 ≈0.01(MATH / EFFICIENT / CUDNN 三个 backend 全部错误,连纯 fp64 输入也错)
-- **sageattn 数值正确**:2.2.0.post6 所有 kernel 与 fp64 权威 cosine ≥ **0.9993**(fp16/bf16,RTX 4060 实测)
-- **影响范围**:ComfyUI 默认 `attention_sub_quad` 不走 SDPA → 不受影响;`--use-pytorch-cross-attention` 及直接调 SDPA 的第三方节点会中招
-- **结论**:sage attention **数值正确可放心用**(文生图/H3 均可),通过工作流节点定向启用;勿用 `--use-sage-attention` 全局替换(黑图史 + 影响所有模型)
-
-### G.3 加速插件部署
-
-- 6 个插件 `git clone` 到项目根目录 → 注册为 **git submodule**(`branch=main`)→ 经 `ComfyUI\custom_nodes\` 目录级符号链接加载(Python `os.symlink`,因 Git Bash `ln -s` 会退化为目录复制)
-- **未装**:BlockCache(T8star,GitHub 无公开仓库,以内置 EasyCache 等价替代);SHUO-Canvas(非开源商业画布,已移除);ComfyUI_GJJ_Nodes(非必要)
-
-### G.4 工作流加速改造
-
-- 本地 H3 工作流(3000/3010/3020 与 4000/4010/4020/4030)均内置加速链:
-
-```
-UNETLoader → Patch Sage Attention KJ(auto) → EasyCache(内置节点)
-  → SpectrumApplyMiniMaxH3(默认关) → Sampler
-```
-
-- 核心链(Sage + EasyCache)为 H3 工作流标配;Spectrum 与它们叠加未验证(同为"减少求值"类),默认 `enabled=false`,需单独用时打开
-
-### G.5 结论
-
-1. **H3 提速核心是 torch cu130 激活的 comfy-kitchen CUDA 后端**(INT8/NVFP4 硬件直算,6-8×),已就绪,无需额外配置
-2. **sageattn 2.2.0.post6 数值正确**,通过工作流节点(KJNodes `Patch Sage Attention KJ`)定向启用
-3. 启动命令保持 `python.exe main.py --enable-manager --disable-pinned-memory --fast-disk`(8GB 显存/16GB 内存设备最佳)
-4. 相关文档:`docs/启动参数推荐-8GB-16GB设备-2026-08-06.md`、`docs/ComfyUI-启动参数参考-2026-08-06.md`
 
 ## 附录 H · 迁移到 Linux + RTX 5090D 服务器（2026-08-06）
 
@@ -531,9 +417,3 @@ python main.py --enable-manager
 - 内存 **≥64GB**(H3 视频流程吃内存,32G 是底线);配 32~64GB swap 兜底
 - 远程访问:SSH 端口转发到 `127.0.0.1:8188`,或 `--listen 0.0.0.0` + 防火墙白名单
 - 5090D 满载 575W,确认电源与散热余量
-
-### H.6 性能预期
-
-- 32GB 显存 + 1.79TB/s 带宽:20B 模型完全常驻显存,消除 NVMe→RAM→VRAM 换页;4 步 Lightning LoRA 基本秒级出图
-- 8G 卡时代工作流里的妥协(tile 768、分块降噪、低分辨率+放大)大多可以放开
-- 5090D AI 算力约为 5090 的 71%,相比 4060 仍是数量级提升
