@@ -7,7 +7,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | 路径 | 说明 |
 |------|------|
 | `ComfyUI` | ComfyUI 主程序(git submodule,`master` 分支):源码/入口在本目录;`models`/`input`/`output`/`user\default\workflows`/`custom_nodes` 均为相对软链接(见「软链接映射」);`blueprints\` 内置 90 个蓝图;其余结构遵循上游官方布局,不再逐一展开 |
-| **`custom_nodes`** | **插件聚合目录**:42 个插件子模块 + `H3ReferenceSuite` 链接集中于此,`ComfyUI\custom_nodes` 为目录级相对软链接指向它(§B)。按功能归类: |
+| **`custom_nodes`** | **插件聚合目录**:43 个插件子模块 + `H3ReferenceSuite` 链接集中于此,`ComfyUI\custom_nodes` 为目录级相对软链接指向它(§B)。按功能归类: |
 | └ 自有插件 | `ComfyUI-FallingTS`:通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强,已开源) |
 | └ H3 生态(5 插件 + 链接) | `ComfyUI-Spectrum-MiniMax-H3`(加速)、`ComfyUI-SolAttn_triton`(注意力加速)、`ComfyUI-ReservedVRAM`(显存预留)、`ComfyUI-Qwen3-TTS`(H3 语音)、`h3-latent-upscaler`(latent 放大)、`H3ReferenceSuite`(软链接,见 `h3`) |
 | └ 放大/修复/局部重绘 | `ComfyUI-SeedVR2_VideoUpscaler`(视频高清修复)、`ComfyUI-SUPIR`(超分放大)、`ComfyUI_UltimateSDUpscale`(分块重绘)、`ComfyUI-Impact-Pack`(Detailer 局部精修)、`ComfyUI_LayerStyle`(图层/遮罩)、`ComfyUI-Inpaint-CropAndStitch`(裁剪贴回) |
@@ -25,7 +25,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 22 个,按编号-用途分组: |
 | └ `1xxx` 万物 | `1000-万物建模`(主线主流程)/ `1001-灰度遮罩` / `1010-万物变化` |
 | └ `2xxx` 场景镜头 | `2000-场景首帧` / `2010-场景拉镜` / `2020-场景推镜` / `2030-场景旋镜` |
-| └ `3xxx` 场景生成 | `3000-文生场景`(H3 T2VA,仅画面)/ `3010-图生场景`(I2V)/ `3020-参考场景`(R2V 多图多视频参考) |
+| └ `3xxx` 场景生成 | `3000-文生场景`(H3 T2VA,仅画面)/ `3010-图生场景`(I2V)/ `3020-参考场景`(R2V 多图多视频参考)/ `3030-OrbitSheets场景`(Location Sheet 参考板:锚点图+H3 多视角选帧拼板)/ `3040-Skythread场景`(R2V 三参考法:角色/道具/空场景) |
 | └ `4xxx` 视频生成 | `4000-文生视频` / `4010-图生视频` / `4020-首尾视频` / `4030-参考视频` |
 | └ `5xxx` 拆解 | `5000-视频拆帧` / `5010-视频拆音` |
 | └ `6xxx` 音频生成 | `6000-背景音乐` / `6010-环境音效` / `6020-效果音效` / `6030-文生人声` / `6040-参考人声` |
@@ -66,10 +66,10 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 
 | ComfyUI 内路径 | 类型 | 相对目标 | 实际指向 |
 |------|------|------|------|
-| `ComfyUI\custom_nodes` | SymbolicLink(目录级) | `..\custom_nodes` | 根 `custom_nodes`(插件聚合目录,42 插件 + H3ReferenceSuite 链接) |
+| `ComfyUI\custom_nodes` | SymbolicLink(目录级) | `..\custom_nodes` | 根 `custom_nodes`(插件聚合目录,43 插件 + H3ReferenceSuite 链接) |
 | `custom_nodes\H3ReferenceSuite` | SymbolicLink(子链接) | `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
 
-- 根 `custom_nodes` 由**根仓库**跟踪:42 个插件以 gitlink 形式登记(全仓共 49 个子模块:`ComfyUI` 1 + 插件 42 + `docs\` 4 + `h3\` 2),`H3ReferenceSuite` 为符号链接;本地文件 `example_node.py.example`、`websocket_image_save.py` 被根 `.gitignore` 排除(保留磁盘副本供加载)。`ComfyUI\custom_nodes` 是目录级符号链接,其目标内容不受 ComfyUI 子模块 git 影响
+- 根 `custom_nodes` 由**根仓库**跟踪:43 个插件以 gitlink 形式登记(全仓共 50 个子模块:`ComfyUI` 1 + 插件 43 + `docs\` 4 + `h3\` 2),`H3ReferenceSuite` 为符号链接;本地文件 `example_node.py.example`、`websocket_image_save.py` 被根 `.gitignore` 排除(保留磁盘副本供加载)。`ComfyUI\custom_nodes` 是目录级符号链接,其目标内容不受 ComfyUI 子模块 git 影响
 - `ComfyUI\temp\`(真实目录,非链接):运行中生成的临时文件/预览图(如 `ComfyUI_temp_*.png`),可随时清理
 - ⚠️ **`ComfyUI\input\`(用户上传)与 `output\`(生成结果)是真实数据:严禁删除、移动或批量清理**;只有 `temp\` 可清理
 
