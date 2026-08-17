@@ -6,7 +6,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 
 | 路径 | 说明 |
 |------|------|
-| `ComfyUI` | ComfyUI 主程序(git submodule,`master` 分支):源码/入口在本目录;`models`/`input`/`output`/`user\default\workflows`/`custom_nodes` 均为相对软链接(见「软链接映射」);`blueprints\` 内置 89 个蓝图;其余结构遵循上游官方布局,不再逐一展开 |
+| `ComfyUI` | ComfyUI 主程序(git submodule,`master` 分支):源码/入口在本目录;`models`/`input`/`output`/`user\default\workflows`/`custom_nodes` 均为相对软链接(见「软链接映射」);`blueprints\` 内置 90 个蓝图;其余结构遵循上游官方布局,不再逐一展开 |
 | **`custom_nodes`** | **插件聚合目录**:42 个插件子模块 + `H3ReferenceSuite` 链接集中于此,`ComfyUI\custom_nodes` 为目录级相对软链接指向它(§B)。按功能归类: |
 | └ 自有插件 | `ComfyUI-FallingTS`:通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强,已开源) |
 | └ H3 生态(5 插件 + 链接) | `ComfyUI-Spectrum-MiniMax-H3`(加速)、`ComfyUI-SolAttn_triton`(注意力加速)、`ComfyUI-ReservedVRAM`(显存预留)、`ComfyUI-Qwen3-TTS`(H3 语音)、`h3-latent-upscaler`(latent 放大)、`H3ReferenceSuite`(软链接,见 `h3`) |
@@ -14,12 +14,12 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ 视频 | `ComfyUI-VideoHelperSuite`、`ComfyUI-WanVideoWrapper`、`ComfyUI-Frame-Interpolation`(补帧)、`ComfyUI-qwenmultiangle`(Qwen 多镜头) |
 | └ 图像/编辑/生成 | `ComfyUI-Easy-Use`、`ComfyUI_IPAdapter_plus`、`ComfyUI-ReActor`(换脸)、`ComfyUI-RMBG`、`ComfyUI-segment-anything-2`、`comfyui_controlnet_aux`、`ComfyUI-IC-Light`、`ComfyUI-DepthAnythingV2`、`Comfyui-QwenEditUtils`、`comfyui-mixlab-nodes`、`ComfyUI-Florence2`、`ComfyUI-post-processing-nodes`(后期处理) |
 | └ 工具/其它 | `ComfyUI-GGUF`(GGUF 量化加载)、`ComfyUI-KJNodes`(KJ 工具包)、`rgthree-comfy`、`ComfyUI-Custom-Scripts`、`ComfyUI-Detail-Daemon`、`ComfyUI-Crystools`、`ComfyUI-MultiGPU`、`ComfyUI-LogicUtils`、`ComfyUI-Inspire-Pack`、`cg-use-everywhere`、`audio-separation-nodes-comfyui`、`ComfyUI_essentials`、`ComfyUI_LinkFX`(连线动画)、`ComfyUI-AnimatedLinks`(连线动画) |
-| `docs` | 本地参考文档:17 个分类 md + 4 个子目录 | 
+| `docs` | 本地参考文档:20 个分类 md + 4 个子目录(均为 git submodule) | 
 | └ `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,子模块) |
 | └ `Obsidian-Dev-Docs` | Obsidian 官方开发者文档(插件开发参考,子模块) |
 | └ `Obsidian-API` | Obsidian API 类型定义(`obsidian.d.ts`/`publish.d.ts`,子模块) |
-| └ `Qwen-Image-Edit-Skills` | Qwen-Image-Edit 官方 Skills 参考 |
-| └ `codex` | Codex 协作约定/调研归档 |
+| └ `codex` | Codex CLI 源码/文档子模块(上游 OpenCode 体系,子模块) |
+| └ `Qwen-Image-Edit-Skills` | Qwen-Image-Edit 官方 Skills 参考(本地目录,非子模块) |
 | └ 分类 md | 启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、节点输入类型总表、插件注册表、模型调研报告、H3 提示词格式调研、FallingTS 分段执行机制等 |
 | `h3` | **MiniMax H3 生态聚合目录**(2026-08-10 建):两个子模块 |
 | └ `MiniMax-H3` | MiniMax H3 官方模型仓库(git submodule,`main`),自带官方 Skills(`skills\`,9 个) |
@@ -39,8 +39,8 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | `media` | 输入/输出文件(`ComfyUI\input`、`output` 软链接到此):`3d\` / `qwen3tts\` / `clipspace\` 及历史生成图;⚠️ 真实数据,严禁删除/批量清理 |
 | `templates` | ComfyUI 官方模板库本地缓存:10 个分类子目录(`图像`/`视频`/`音频`/`3D模型`/`LLM`/`工具`/`快速开始`/`自定义节点`/`节点基础`/`使用案例`)+ `workflow-templates-list.md` 索引(2026-08-09 曾归档的个人工作流已迁回 `workflows\`) |
 | `webs` | 三方网站调研聚合目录(已入库跟踪):三个调研源 |
-| └ `RunningHub` | RunningHub 调研:`RunningHub-API读取指南.md` + `API.md` + `workflows-list.md` + `workflows\`(429 个收集工作流,按 图像/视频/音频/数字人/室内外设计/风格化/插件 等子目录分类) |
-| └ `Bilibili` | B 站教程调研:`B站教程调研.md` + `工作流大全\`(153 个配套工作流) |
+| └ `RunningHub` | RunningHub 调研:`RunningHub-API读取指南.md` + `API.md` + `workflows-list.md` + `workflows\`(1360 个收集工作流,按 图像/视频/音频/数字人/室内外设计/风格化/插件 等子目录分类) |
+| └ `Bilibili` | B 站教程调研:`B站教程调研.md` + `工作流大全\`(474 个配套工作流) |
 | └ `AutoDL` | 云端 GPU 调研:`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4015 条模型清单) |
 | `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置):`template\`(新建故事模板)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
 | `scripts` | 临时/可复用工具脚本(被 `scripts\.gitignore` 忽略,仅存本地不入库):工作流连线校验/修复/对比(`check-workflow-*`/`fix-*`/`diff-*`/`dump-*`)、布局校验、模型使用分析、模板/模型清单更新、H3/SeedVR2 调试等 |
@@ -68,10 +68,10 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 
 | ComfyUI 内路径 | 类型 | 相对目标 | 实际指向 |
 |------|------|------|------|
-| `ComfyUI\custom_nodes` | SymbolicLink(目录级) | `..\custom_nodes` | 根 `custom_nodes`(插件聚合目录,15 插件 + H3ReferenceSuite 链接) |
+| `ComfyUI\custom_nodes` | SymbolicLink(目录级) | `..\custom_nodes` | 根 `custom_nodes`(插件聚合目录,42 插件 + H3ReferenceSuite 链接) |
 | `custom_nodes\H3ReferenceSuite` | SymbolicLink(子链接) | `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
 
-- 根 `custom_nodes` 由**根仓库**跟踪:41 个插件以 gitlink 形式登记,`H3ReferenceSuite` 为符号链接;本地文件 `example_node.py.example`、`websocket_image_save.py` 被根 `.gitignore` 排除(保留磁盘副本供加载)。`ComfyUI\custom_nodes` 是目录级符号链接,其目标内容不受 ComfyUI 子模块 git 影响
+- 根 `custom_nodes` 由**根仓库**跟踪:42 个插件以 gitlink 形式登记(全仓共 49 个子模块:`ComfyUI` 1 + 插件 42 + `docs\` 4 + `h3\` 2),`H3ReferenceSuite` 为符号链接;本地文件 `example_node.py.example`、`websocket_image_save.py` 被根 `.gitignore` 排除(保留磁盘副本供加载)。`ComfyUI\custom_nodes` 是目录级符号链接,其目标内容不受 ComfyUI 子模块 git 影响
 - `ComfyUI\temp\`(真实目录,非链接):运行中生成的临时文件/预览图(如 `ComfyUI_temp_*.png`),可随时清理
 - ⚠️ **`ComfyUI\input\`(用户上传)与 `output\`(生成结果)是真实数据:严禁删除、移动或批量清理**;只有 `temp\` 可清理
 
@@ -86,7 +86,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 - **Python 虚拟环境:项目内 `.venv`**(2026-08-16 由 conda 环境迁移而来,官方 `python -m venv` 基于系统 Python 3.13.13 创建;原 conda 专用环境已删除)。启动一律用 `.venv\Scripts\python.exe`(类 Unix 为 `.venv\bin/python`),不要用系统级 Python 或任何 conda 环境运行主程序
 - **运行环境 `.venv`:Python 3.13.13 / torch 2.13.0+cu130(CUDA 13.0,RTX 4060 8GB VRAM)**,启动脚本与本文档均用它(`.venv\Scripts\python.exe`,类 Unix 为 `.venv\bin/python`);依赖安装顺序:torch(cu130 index)→ `ComfyUI\requirements.txt` → 插件 requirements → 加速依赖,迁移后与旧 conda 环境包版本对齐(见 `backups\pip-freeze-ComfyUI-20260816-020146.txt` 与 `pip-freeze-venv-final.txt` 对比)
 - 共享关键版本:comfyui-frontend-package **1.48.7**、comfyui-manager **4.2.2**、comfyui-workflow-templates **0.11.34**、sageattention **2.2.0**(cu130,本地 wheel `backups\sageattention\`)、triton-windows **3.7.1.post27**、comfy-kitchen **0.2.28**、comfy-aimdo 0.4.13、transformers 4.57.3、diffusers 0.39.0、numpy 2.4.6、onnxruntime-gpu 1.28.0、safetensors 0.8.0
-- 前端打包目录(web_root,`server.py:251` 经 `FrontendManager.init_frontend()` 定位)= `<venv>/Lib/site-packages/comfyui_frontend_package/static/`(相对 `.venv\`):主入口 `index.html`,打包产物在 `assets\`(421 个 `<分块名>-<hash>.js`,含 `core-*.js`/`api-*.js`/`index-*.js`),`scripts\` 保留 `app.js`/`api.js`/`domWidget.js` 等扩展 import 入口;插件 `web\js` 经 `GET /extensions`(`server.py:356`)运行时加载,**不参与前端打包**,重建 `assets\` 不影响扩展
+- 前端打包目录(web_root,`server.py:251` 经 `FrontendManager.init_frontend()` 定位)= `<venv>/Lib/site-packages/comfyui_frontend_package/static/`(相对 `.venv\`):主入口 `index.html`,打包产物在 `assets\`(431 个 `<分块名>-<hash>.js`,含 `core-*.js`/`api-*.js`/`index-*.js`),`scripts\` 保留 `app.js`/`api.js`/`domWidget.js` 等扩展 import 入口;插件 `web\js` 经 `GET /extensions`(`server.py:356`)运行时加载,**不参与前端打包**,重建 `assets\` 不影响扩展
 - 测试插件「从零安装」是否正常时:需清理**浏览器缓存**的前端打包文件(即 `assets\` 下载到浏览器侧的 `-hash.js`/`-hash.css`),对 `http://127.0.0.1:8188` 强刷(`Ctrl+Shift+R`)或清除该站点数据,以验证扩展在无陈旧缓存的干净状态下能正常加载;**磁盘 `assets\` 目录勿删**(是前端真实构建产物,删了页面白屏/无法加载)
 - 启动:
 
@@ -110,16 +110,16 @@ python main.py --enable-manager
 - **前端终端**:浏览器 ComfyUI 界面底部终端(经 WebSocket 推送的环形缓冲)也能实时看到同样的日志,排查前端扩展报错可直接看它。
 - **注意**:`logs\comfyui*.log` 是用户自建重定向(如启动脚本),**不是官方位置**,可能缺部分输出;查不到关键日志时先看 `user\comfyui_<port>.log`。
 
-## 模型与蓝图(2026-08-07 现状)
+## 模型与蓝图(2026-08-17 现状)
 
-模型实际存放在 `models\` 下(`ComfyUI\models` 为软链接),当前合计约 178.7 GB。已就绪:
+模型实际存放在 `models\` 下(`ComfyUI\models` 为软链接),当前合计约 189.1 GB。已就绪:
 
 | 目录 | 已就绪 |
 |------|--------|
-| diffusion_models | `qwen_image_2512_fp8_e4m3fn`、`qwen_image_edit_2511_fp8mixed`、`flux-2-klein-9b-fp8`、`minimax_h3_fl2va_pruned_int8_convrot`、`minimax_h3_ref2va_pruned_int8_convrot` |
+| diffusion_models | `qwen_image_2512_fp8_e4m3fn`、`qwen_image_fp8_e4m3fn`、`qwen_image_edit_2511_fp8mixed`、`flux-2-klein-9b-fp8`、`minimax_h3_fl2va_pruned_int8_convrot`、`minimax_h3_ref2va_pruned_int8_convrot` |
 | text_encoders | `qwen_2.5_vl_7b_fp8_scaled`(Qwen-Edit)、`qwen_3_8b_fp8mixed`(Klein)、`qwen3.5_2b_bf16`(音频)、`t5gemma_b_b_ul2`(音频)、`qwen3vl_32b_minimax_h3_nvfp4_awq`(H3 视频) |
 | vae | `qwen_image_vae`、`full_encoder_small_decoder`(Klein/FLUX.2)、`minimax_h3_video_vae_fp16`、`minimax_h3_audio_vae_fp32` |
-| loras | `Qwen-Image-2512-Lightning-4steps-V1.0-fp32`、`Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16`、`minimax_h3_turbo_4step`、`[Qwen-Edit]3DChineseStyle_25`、`Kook_Qwen_2512_真实幻想` |
+| loras | `Qwen-Image-2512-Lightning-4steps-V1.0-fp32`、`Qwen-Image-Lightning-4steps-V1.0`、`Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16`、`qwen-image-edit-2511-multiple-angles-lora`(多视角,配 `ComfyUI-qwenmultiangle` 插件)、`[Qwen-Edit]3DChineseStyle_25`、`Kook_Qwen_2512_真实幻想`、H3 加速三件:`minimax_h3_fl2v_turbo_4step_v1.0_768p_comfyui_bf16`(4 步 768p)/ `minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16` / `minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16` |
 | checkpoints | `stable_audio_3_medium.safetensors`(音频) |
 | upscale_models | `4xNomos8kDAT`(原 `4x-UltraSharp.pth`、`RealESRGAN_x4plus.pth` 已移除) |
 | background_removal | `birefnet.safetensors` |
@@ -129,7 +129,7 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
 
 空目录(尚未放置模型):`ASR\`、`audio_encoders\`、`diffusers\` 等其余标准目录。
 
-已删除(2026-08-03):FLUX.2 文生图全套 5 文件 69.28G、qwen_image 文生图全家、qwen_edit 2509、LTX-2.3/Wan 2.2 视频、TripoSplat 3D;路线转向 Qwen-Image(国漫/中文更优)。`ComfyUI\blueprints\` 内置 89 个蓝图(注意:位于 ComfyUI 目录内,不在项目根);除 Qwen 2511 外其余蓝图均缺模型。
+历史上曾清理并转向的模型(2026-08-03):FLUX.2 文生图全套、旧版 qwen_image 文生图、qwen_edit 2509、LTX-2.3/Wan 2.2 视频、TripoSplat 3D;此后按需重新引入了部分 Qwen 文生图/编辑模型(见上表,以表为准)。路线:Qwen-Image(国漫/中文更优)+ MiniMax H3(视频)+ FLUX.2-Klein(图像)。`ComfyUI\blueprints\` 内置 90 个蓝图(注意:位于 ComfyUI 目录内,不在项目根);除 Qwen 2511 外其余蓝图均缺模型。
 
 ## 官方文档与分类文档
 
