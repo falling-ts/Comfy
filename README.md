@@ -1,6 +1,6 @@
 # Comfy — AI 驱动的 ComfyUI 全模态工作区
 
-> 本仓库是一套开箱即用的 **ComfyUI 全模态工作区**:包含 ComfyUI 主程序、MiniMax H3 视频 + Qwen 系列图像 + Stable Audio/Qwen3-TTS 音频生成、42 个自定义节点(GGUF/KJNodes/超分/加速等)、22 个图片/视频/音频工作流,以及模型目录规划。
+> 本仓库是一套开箱即用的 **ComfyUI 全模态工作区**:包含 ComfyUI 主程序、MiniMax H3 视频 + Qwen 系列图像 + Stable Audio/Qwen3-TTS 音频生成、43 个自定义节点(GGUF/KJNodes/超分/加速等)、24 个图片/视频/音频工作流,以及模型目录规划。
 >
 > **核心思路:所有安装、配置、运行、出图、训练工作流,都交给 AI(OpenCode)来做。** 你只需要:装 Git → 克隆本仓库 → 装 OpenCode → 让它干活。
 
@@ -26,13 +26,13 @@
 
 ## 这是什么
 
-- **ComfyUI 主程序**(`ComfyUI\` 子模块,master 分支,v0.31.0)—— 本地节点式 AI 图像/视频/音频生成引擎
-- **自定义节点**(42 个,集中于根 `custom_nodes\`,经 `ComfyUI\custom_nodes\` **目录级**软链接加载;完整清单见 `AGENTS.md`):
+- **ComfyUI 主程序**(`ComfyUI\` 子模块,master 分支,v0.33.1)—— 本地节点式 AI 图像/视频/音频生成引擎
+- **自定义节点**(43 个,集中于根 `custom_nodes\`,经 `ComfyUI\custom_nodes\` **目录级**软链接加载;完整清单见 `AGENTS.md`):
   - `ComfyUI-FallingTS` —— 自研通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强)
   - `ComfyUI-GGUF` / `ComfyUI-KJNodes` —— GGUF 量化加载 / 大型工具节点包
   - `ComfyUI-SeedVR2_VideoUpscaler` / `ComfyUI-SUPIR` / `ComfyUI_UltimateSDUpscale` —— 超分放大/修复
-  - H3 生态 5 插件(Spectrum / SolAttn / ReservedVRAM / Qwen3-TTS / latent-upscaler)+ 其余 30 个
-- **工作流方案**:22 个,按编号分组(1xxx 万物 / 2xxx 场景镜头 / 3xxx-4xxx 视频生成 / 5xxx 拆解 / 6xxx-7xxx 音频;见[附录 B](#附录-b工作流方案总览))
+  - H3 生态 5 插件(Spectrum / SolAttn / ReservedVRAM / Qwen3-TTS / latent-upscaler)+ OrbitSheets(场景参考板)+ 其余 31 个
+- **工作流方案**:24 个,按编号分组(1xxx 万物 / 2xxx 场景镜头 / 3xxx-4xxx 视频生成 / 5xxx 拆解 / 6xxx-7xxx 音频;见[附录 B](#附录-b工作流方案总览))
 - **模型目录**(`models\`,软链接到项目根)—— 见[附录 C](#附录-c模型下载清单)
 - **文档**:官方文档本地克隆 `docs\ComfyUI-Docs\`;工作区说明 `AGENTS.md`
 
@@ -88,7 +88,7 @@ OpenCode 是你和这套工作区之间的 AI 主力,负责装软件、配环境
 
 > 请按以下「软连接方案」检查并修复本项目的软链接(全部用**相对路径**符号链接,共 7 个,完整清单见 `AGENTS.md`「软链接映射」):
 >
-> 1. **目录级插件链接**:确认 `ComfyUI\custom_nodes` 是符号链接,指向 `..\custom_nodes`(根目录插件聚合目录,42 个插件全部经这一个链接加载;**不是**旧方案的一插件一链接);
+> 1. **目录级插件链接**:确认 `ComfyUI\custom_nodes` 是符号链接,指向 `..\custom_nodes`(根目录插件聚合目录,43 个插件全部经这一个链接加载;**不是**旧方案的一插件一链接);
 > 2. **基础链接**:`ComfyUI\input` → `..\media`、`ComfyUI\output` → `..\media`、`ComfyUI\models` → `..\models`、`ComfyUI\user\default\workflows` → `..\..\..\workflows`;
 > 3. **子链接**:`custom_nodes\H3ReferenceSuite` → `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite`;`.claude` → `.agents`;
 > 4. 全部完成后,确认这些路径显示为「符号链接」,并验证 `ComfyUI\models\diffusion_models` 等子目录可正常进入。
@@ -138,7 +138,7 @@ python --version
 >    `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130`
 >    (先检测我的 NVIDIA 显卡和驱动支持哪个 CUDA 版本,选择匹配的 `cuXXX`;若没有 N 卡则装 CPU 版)
 > 2. 再装剩余依赖:`pip install -r requirements.txt`
-> 3. 然后进入 `custom_nodes\` 下全部插件目录(42 个,见 `AGENTS.md` 目录结构),逐个检查各自需要的依赖(如各自的 `requirements.txt` 或 README),都帮我安装好。
+> 3. 然后进入 `custom_nodes\` 下全部插件目录(43 个,见 `AGENTS.md` 目录结构),逐个检查各自需要的依赖(如各自的 `requirements.txt` 或 README),都帮我安装好。
 > 4. 最后回到 `ComfyUI` 目录启动:`python main.py --enable-manager`
 >
 > 启动成功后告诉我前端地址。
@@ -163,7 +163,7 @@ python --version
 ## 常见问题
 
 - **代理 / 下载慢**:默认直连;失败时用本机代理(如 Clash 的 `127.0.0.1:7890`);HuggingFace 模型国内可用 `hf-mirror.com` 镜像,把链接前缀 `huggingface.co` 换成 `hf-mirror.com` 即可(见附录 E)
-- **符号链接**:`ComfyUI\custom_nodes`(目录级,聚合 42 插件)、`models`/`input`/`output`/`workflows` 等共 7 个相对路径符号链接。创建链接需要管理员权限,推荐**以管理员身份运行 OpenCode**再让它修复(见[第 4 步](#第-4-步以管理员身份运行-opencode按软连接方案建立软连接));或手动开启「开发者模式」(设置 → 隐私和安全性 → 开发者选项 → 开启开发者模式)
+- **符号链接**:`ComfyUI\custom_nodes`(目录级,聚合 43 插件)、`models`/`input`/`output`/`workflows` 等共 7 个相对路径符号链接。创建链接需要管理员权限,推荐**以管理员身份运行 OpenCode**再让它修复(见[第 4 步](#第-4-步以管理员身份运行-opencode按软连接方案建立软连接));或手动开启「开发者模式」(设置 → 隐私和安全性 → 开发者选项 → 开启开发者模式)
 - **显存不足**:Klein 9B 蒸馏版较吃显存(24G 卡跑 1024 tile 偏紧,爆显存降到 768);MiniMax H3 需大显存,低显存建议用量化版或云端(详见附录 C 备注)
 - **模型放好后记得重启 ComfyUI**,加载节点才会识别新模型
 
@@ -181,13 +181,13 @@ Comfy/
 │   ├── input/  output/       # 输入/输出(软链接 → ../media)
 │   ├── user/default/workflows  # 用户工作流(软链接 → ../../../../workflows)
 │   └── models/               # 模型(软链接 → ../models)
-├── custom_nodes/             # 插件聚合目录:42 个插件子模块 + H3ReferenceSuite 链接
+├── custom_nodes/             # 插件聚合目录:43 个插件子模块 + H3ReferenceSuite 链接
 │   ├── ComfyUI-FallingTS/    # 自研通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo)
 │   ├── ComfyUI-GGUF/  ComfyUI-KJNodes/   # 量化加载 / 工具节点包
-│   └── ...(其余 39 个,见 AGENTS.md 目录结构)
+│   └── ...(其余 40 个,见 AGENTS.md 目录结构)
 ├── docs/                     # 20 个分类文档 + 4 个子模块(ComfyUI-Docs/Obsidian-Dev-Docs/Obsidian-API/codex)
 ├── h3/                       # MiniMax H3 生态(MiniMax-H3 + minimax-h3-guide)
-├── workflows/                # 用户工作流 22 个(1xxx~7xxx,见附录 B)
+├── workflows/                # 用户工作流 24 个(1xxx~7xxx,见附录 B)
 ├── models/                   # 模型实际存放处(约 189GB,38 个槽位目录,见附录 C)
 ├── media/                    # 输入图片/音频 + 生成结果(3d/qwen3tts/clipspace)
 ├── templates/  webs/         # 官方模板缓存 + 三方调研(RunningHub/Bilibili/AutoDL)
@@ -199,11 +199,11 @@ Comfy/
 
 ### 软连接(共 7 个,全部相对路径)
 
-`ComfyUI\input`/`output` → `media`、`ComfyUI\models` → `models`、`ComfyUI\user\default\workflows` → `workflows`、`ComfyUI\custom_nodes` → `custom_nodes`(**目录级,聚合 42 插件**)、`custom_nodes\H3ReferenceSuite` → `h3\minimax-h3-guide\...`、`.claude` → `.agents`。全部为**相对路径**符号链接,项目整体移动后不失效;创建/修复需管理员权限,完整清单见 `AGENTS.md`「软链接映射」;`ComfyUI\temp\` 为真实目录(非链接),可随时清理。
+`ComfyUI\input`/`output` → `media`、`ComfyUI\models` → `models`、`ComfyUI\user\default\workflows` → `workflows`、`ComfyUI\custom_nodes` → `custom_nodes`(**目录级,聚合 43 插件**)、`custom_nodes\H3ReferenceSuite` → `h3\minimax-h3-guide\...`、`.claude` → `.agents`。全部为**相对路径**符号链接,项目整体移动后不失效;创建/修复需管理员权限,完整清单见 `AGENTS.md`「软链接映射」;`ComfyUI\temp\` 为真实目录(非链接),可随时清理。
 
 ## 附录 B · 工作流方案总览
 
-`workflows\` 下共 **22 个**主工作流,按「编号-用途」命名分组(前端保存即在此):
+`workflows\` 下共 **24 个**主工作流,按「编号-用途」命名分组(前端保存即在此):
 
 ### 图片/万物类(1xxx,3 个,基于 Qwen-Image-2512 / Qwen-Edit 2511 / FLUX.2-Klein)
 
@@ -222,19 +222,21 @@ Comfy/
 | `2020-场景推镜` | 镜头推进变换 |
 | `2030-场景旋镜` | 镜头环绕旋转 |
 
-### 视频生成类(3xxx-4xxx,7 个,MiniMax H3)
+### 视频生成类(3xxx-4xxx,9 个,MiniMax H3)
 
 | 工作流 | 用途 | H3 模式 |
 |--------|------|---------|
 | `3000-文生场景` | 文本 → 场景视频(仅画面,无音轨) | T2VA(fl2va) |
 | `3010-图生场景` | 首帧图 → 场景视频 | I2V(fl2va) |
 | `3020-参考场景` | 多图 + 多视频参考 → 视频 | R2V(ref2va) |
+| `3030-OrbitSheets场景` | 锚点图 → H3 多视角运镜 → 视觉选帧拼「场景参考板」网格图 | I2V(fl2va)+ OrbitSheets 插件 |
+| `3040-Skythread场景` | 角色/道具/空场景三参考(职责单一)→ 场景视频 | R2V(ref2va) |
 | `4000-文生视频` | 文本 → 视频(与 3000 同构的通用版) | T2VA(fl2va) |
 | `4010-图生视频` | 首帧图 → 视频 | I2V(fl2va) |
 | `4020-首尾视频` | 首尾帧 → 视频 | fl2va |
 | `4030-参考视频` | 参考图/视频 → 视频 | R2V(ref2va) |
 
-> 3000/3010/3020 与 4000/4010/4020/4030 结构一一对应(前者为场景流水线版,后者为通用版);均已去除音频轨道,视频 + 音频在后期流水线(5xxx-7xxx)中合并。
+> 3000/3010/3020 与 4000/4010/4020/4030 结构一一对应(前者为场景流水线版,后者为通用版);均已去除音频轨道,视频 + 音频在后期流水线(5xxx-7xxx)中合并。3030/3040 为场景参考生产补充:3030 产出「场景参考板」网格图(供 3020/4030 作参考输入),3040 为 Skythread 式三参考精简法。
 
 ### 拆解类(5xxx,2 个)
 
@@ -404,11 +406,11 @@ python main.py --enable-manager
 
 ### H.4 文件搬运与软链接
 
-- 超项目:`git clone --recurse-submodules <remote>`(**49 个子模块**)
+- 超项目:`git clone --recurse-submodules <remote>`(**50 个子模块**)
 - **models 约 189GB 单独 rsync**(`rsync -avP`);服务器需预留 ≥300GB NVMe
 - 软链接重建(`ln -s` 相对路径,共 7 个,见附录 A 清单):
   - `ComfyUI/input → ../media`、`ComfyUI/output → ../media`、`ComfyUI/models → ../models`、`ComfyUI/user/default/workflows → ../../../workflows`
-  - `ComfyUI/custom_nodes → ../custom_nodes`(**目录级,聚合 42 插件**)、`custom_nodes/H3ReferenceSuite → ../h3/minimax-h3-guide/custom_nodes/H3ReferenceSuite`、`.claude → .agents`
+  - `ComfyUI/custom_nodes → ../custom_nodes`(**目录级,聚合 43 插件**)、`custom_nodes/H3ReferenceSuite → ../h3/minimax-h3-guide/custom_nodes/H3ReferenceSuite`、`.claude → .agents`
 - `ComfyUI-FallingTS/.env`(API Key)不进 git,服务器上单独放置并 `chmod 600`
 - 中文文件名 / 路径在 Linux UTF-8 下无问题
 

@@ -22,7 +22,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ `Qwen-Image-Edit-Skills` | Qwen-Image-Edit 官方 Skills 参考(本地目录,非子模块) |
 | └ 分类 md | 启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、节点输入类型总表、插件注册表、模型调研报告、H3 提示词格式调研、FallingTS 分段执行机制等 |
 | `h3` | **MiniMax H3 生态聚合目录**(2026-08-10 建):`MiniMax-H3`(官方模型仓库,自带 9 个官方 Skills)+ `minimax-h3-guide`(参考加载套件,其 `H3ReferenceSuite` 由根 `custom_nodes` 子链接指向) |
-| **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 22 个,按编号-用途分组: |
+| **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 24 个,按编号-用途分组: |
 | └ `1xxx` 万物 | `1000-万物建模`(主线主流程)/ `1001-灰度遮罩` / `1010-万物变化` |
 | └ `2xxx` 场景镜头 | `2000-场景首帧` / `2010-场景拉镜` / `2020-场景推镜` / `2030-场景旋镜` |
 | └ `3xxx` 场景生成 | `3000-文生场景`(H3 T2VA,仅画面)/ `3010-图生场景`(I2V)/ `3020-参考场景`(R2V 多图多视频参考)/ `3030-OrbitSheets场景`(Location Sheet 参考板:锚点图+H3 多视角选帧拼板)/ `3040-Skythread场景`(R2V 三参考法:角色/道具/空场景) |
