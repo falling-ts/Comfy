@@ -421,6 +421,41 @@ integrated_multimodal_description 先在图像中确立场景风格、主体、�
 @3020-参考场景.md
 ```
 
+### OrbitSheets场景
+
+即利用 OrbitSheets 插件(Location Sheet Prompt + Frame Select + Contact Sheet)从现有场景图生成「场景参考板」：锚点图经 H3 多视角运镜(硬切或连续旋转)，视觉模型内容聚类选帧，拼成一张网格参考板图，供后续参考生视频使用。包含ID，原场景(IMAGE)，场景描述(TEXT)，视觉风格(TEXT)，取景秒数(FLOAT)，宽度(INT)，高度(INT)，视频帧率(INT)
+
+#### OrbitSheets场景 提示词提取规范
+
+- **原场景**：锚点图，引用已有的场景图(`@{场景首帧-...}` / `@{场景拉镜-...}` / `@{场景旋镜-...}` 等)，作为 H3 运镜的第一帧
+- **场景描述**：location_description，用简洁文字交代场景的空间大小、布局、主要物件与方位关系（供 OrbitSheetsLocationPrompt 生成多视角镜头提示词）
+- **视觉风格**：visual_style，如 `Cinematic, live-action`；默认值即此
+- **取景秒数**：take_seconds，驱动 H3 运镜时长与帧数(17k+5 网格)；默认 5.0（硬切多视角），连续旋转 360° 需 9.0+
+- 空间类型(interior/exterior)、覆盖方式(cut views/continuous move)、旋转(auto/quarter/half/full)、宽景/细节开关为工作流内固定下拉（默认 interior / cut views / auto / True / True），按需在节点上改，不必进表
+- 输出：场景视频(`{ID}.mp4`) + 参考板网格图(`{ID}.png`)；选帧默认 shots=6 按内容聚类、count=6、CLIP 图内判定
+
+```
+@3030-OrbitSheets场景.md
+```
+
+### Skythread场景
+
+即按 Skythread 三参考法(角色/道具/空场景各一张、职责单一)用 H3 Ref2VA 生成场景视频。包含ID，<Picture 1>角色/主体(IMAGE)，<Picture 2>道具(IMAGE)，<Picture 3>空场景(IMAGE)，视频提示词(TEXT)，宽度(INT)，高度(INT)，视频帧率(INT)，视频秒数(INT)
+
+#### Skythread场景 提示词提取规范
+
+视频提示词按 Skythread 风格书写（非六段式 Ref2VA，而是 I2VA 风味的 R2V 提示）：
+
+1. **三行 `<Picture N>` 定义**：每张图声明为某一内容的「唯一权威」（身份/道具/空场景），并写明保留特征与「不使用此参考中的任何背景」，三者材质与空间相互独立
+2. **integrated_multimodal_description**：沿时间线描述连续镜头（第一帧状态 → 动作展开 → 收尾），标注各 `<Picture N>` 在画面中对应的位置与状态，声明镜头机位/稳定性约束与一致性要求，禁止剪切/跳变/穿模/重复对象
+3. **overall_soundscape**：环境音与物理声；**non_diegetic_music**：背景音乐（无则 N/A）
+
+参考精简是 Skythread 法的核心：角色只负责身份与服装，道具只负责物件形态，空场景只负责地点/光照/构图/风格，三图各管各的，不要互相转移材质。
+
+```
+@3040-Skythread场景.md
+```
+
 ### 文生视频
 
 即通过描述和秒数以及提示词生成视频，包含ID，视频提示词(TEXT)，宽度(INT)，高度(INT)，视频帧率(INT)，视频秒数(INT)
