@@ -14,16 +14,14 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ 视频 | `ComfyUI-VideoHelperSuite`、`ComfyUI-WanVideoWrapper`、`ComfyUI-Frame-Interpolation`(补帧)、`ComfyUI-qwenmultiangle`(Qwen 多镜头) |
 | └ 图像/编辑/生成 | `ComfyUI-Easy-Use`、`ComfyUI_IPAdapter_plus`、`ComfyUI-ReActor`(换脸)、`ComfyUI-RMBG`、`ComfyUI-segment-anything-2`、`comfyui_controlnet_aux`、`ComfyUI-IC-Light`、`ComfyUI-DepthAnythingV2`、`Comfyui-QwenEditUtils`、`comfyui-mixlab-nodes`、`ComfyUI-Florence2`、`ComfyUI-post-processing-nodes`(后期处理) |
 | └ 工具/其它 | `ComfyUI-GGUF`(GGUF 量化加载)、`ComfyUI-KJNodes`(KJ 工具包)、`rgthree-comfy`、`ComfyUI-Custom-Scripts`、`ComfyUI-Detail-Daemon`、`ComfyUI-Crystools`、`ComfyUI-MultiGPU`、`ComfyUI-LogicUtils`、`ComfyUI-Inspire-Pack`、`cg-use-everywhere`、`audio-separation-nodes-comfyui`、`ComfyUI_essentials`、`ComfyUI_LinkFX`(连线动画)、`ComfyUI-AnimatedLinks`(连线动画) |
-| `docs` | 本地参考文档:20 个分类 md + 4 个子目录(均为 git submodule) | 
+| `docs` | 本地参考文档:20 个分类 md + 5 个子目录(4 个 git submodule + `Qwen-Image-Edit-Skills` 本地目录) | 
 | └ `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,子模块) |
 | └ `Obsidian-Dev-Docs` | Obsidian 官方开发者文档(插件开发参考,子模块) |
 | └ `Obsidian-API` | Obsidian API 类型定义(`obsidian.d.ts`/`publish.d.ts`,子模块) |
 | └ `codex` | Codex CLI 源码/文档子模块(上游 OpenCode 体系,子模块) |
 | └ `Qwen-Image-Edit-Skills` | Qwen-Image-Edit 官方 Skills 参考(本地目录,非子模块) |
 | └ 分类 md | 启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、节点输入类型总表、插件注册表、模型调研报告、H3 提示词格式调研、FallingTS 分段执行机制等 |
-| `h3` | **MiniMax H3 生态聚合目录**(2026-08-10 建):两个子模块 |
-| └ `MiniMax-H3` | MiniMax H3 官方模型仓库(git submodule,`main`),自带官方 Skills(`skills\`,9 个) |
-| └ `minimax-h3-guide` | H3 参考加载套件(git submodule,`main`);其 `custom_nodes\H3ReferenceSuite` 由根 `custom_nodes` 子链接指向 |
+| `h3` | **MiniMax H3 生态聚合目录**(2026-08-10 建):`MiniMax-H3`(官方模型仓库,自带 9 个官方 Skills)+ `minimax-h3-guide`(参考加载套件,其 `H3ReferenceSuite` 由根 `custom_nodes` 子链接指向) |
 | **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 22 个,按编号-用途分组: |
 | └ `1xxx` 万物 | `1000-万物建模`(主线主流程)/ `1001-灰度遮罩` / `1010-万物变化` |
 | └ `2xxx` 场景镜头 | `2000-场景首帧` / `2010-场景拉镜` / `2020-场景推镜` / `2030-场景旋镜` |
@@ -35,7 +33,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | `models` | 模型实际存放处(`ComfyUI\models` 软链接指向);38 个标准槽位子目录,每个目录带 `.gitignore`(内容 `*`+`!.gitignore`)忽略模型文件、仅占位入库。已就绪模型见「模型与蓝图」 |
 | └ 核心生成 | `diffusion_models` / `text_encoders` / `vae` / `loras` / `checkpoints` / `upscale_models` / `background_removal`(已就绪) |
 | └ 语音 | `TTS`(Qwen3-TTS 五变体 + SenseVoice)/ `ASR` / `speaker_models` / `audio_encoders` |
-| └ 标准空槽位 | `controlnet` / `clip` / `clip_vision` / `unet` / `embeddings` / `detection` / `facerestore_models` / `frame_interpolation` / `geometry_estimation` / `gligen` / `hypernetworks` / `latent_upscale_models` / `mesh2motion` / `model_patches` / `nlf` / `optical_flow` / `photomaker` / `reactor` / `SEEDVR2` / `style_models` / `ultralytics` / `yolo` / `classifiers` / `configs` / `diffusers` 等(多数尚未放置模型) |
+| └ 标准空槽位 | 其余 25 个标准槽位目录(如 `controlnet` / `clip` / `clip_vision` / `unet` / `embeddings` / `detection` / `SEEDVR2` / `ultralytics` 等,多数尚未放置模型) |
 | `media` | 输入/输出文件(`ComfyUI\input`、`output` 软链接到此):`3d\` / `qwen3tts\` / `clipspace\` 及历史生成图;⚠️ 真实数据,严禁删除/批量清理 |
 | `templates` | ComfyUI 官方模板库本地缓存:10 个分类子目录(`图像`/`视频`/`音频`/`3D模型`/`LLM`/`工具`/`快速开始`/`自定义节点`/`节点基础`/`使用案例`)+ `workflow-templates-list.md` 索引(2026-08-09 曾归档的个人工作流已迁回 `workflows\`) |
 | `webs` | 三方网站调研聚合目录(已入库跟踪):三个调研源 |
@@ -86,8 +84,8 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 - **Python 虚拟环境:项目内 `.venv`**(2026-08-16 由 conda 环境迁移而来,官方 `python -m venv` 基于系统 Python 3.13.13 创建;原 conda 专用环境已删除)。启动一律用 `.venv\Scripts\python.exe`(类 Unix 为 `.venv\bin/python`),不要用系统级 Python 或任何 conda 环境运行主程序
 - **运行环境 `.venv`:Python 3.13.13 / torch 2.13.0+cu130(CUDA 13.0,RTX 4060 8GB VRAM)**,启动脚本与本文档均用它(`.venv\Scripts\python.exe`,类 Unix 为 `.venv\bin/python`);依赖安装顺序:torch(cu130 index)→ `ComfyUI\requirements.txt` → 插件 requirements → 加速依赖,迁移后与旧 conda 环境包版本对齐(见 `backups\pip-freeze-ComfyUI-20260816-020146.txt` 与 `pip-freeze-venv-final.txt` 对比)
 - 共享关键版本:comfyui-frontend-package **1.48.7**、comfyui-manager **4.2.2**、comfyui-workflow-templates **0.11.34**、sageattention **2.2.0**(cu130,本地 wheel `backups\sageattention\`)、triton-windows **3.7.1.post27**、comfy-kitchen **0.2.28**、comfy-aimdo 0.4.13、transformers 4.57.3、diffusers 0.39.0、numpy 2.4.6、onnxruntime-gpu 1.28.0、safetensors 0.8.0
-- 前端打包目录(web_root,`server.py:251` 经 `FrontendManager.init_frontend()` 定位)= `<venv>/Lib/site-packages/comfyui_frontend_package/static/`(相对 `.venv\`):主入口 `index.html`,打包产物在 `assets\`(431 个 `<分块名>-<hash>.js`,含 `core-*.js`/`api-*.js`/`index-*.js`),`scripts\` 保留 `app.js`/`api.js`/`domWidget.js` 等扩展 import 入口;插件 `web\js` 经 `GET /extensions`(`server.py:356`)运行时加载,**不参与前端打包**,重建 `assets\` 不影响扩展
-- 测试插件「从零安装」是否正常时:需清理**浏览器缓存**的前端打包文件(即 `assets\` 下载到浏览器侧的 `-hash.js`/`-hash.css`),对 `http://127.0.0.1:8188` 强刷(`Ctrl+Shift+R`)或清除该站点数据,以验证扩展在无陈旧缓存的干净状态下能正常加载;**磁盘 `assets\` 目录勿删**(是前端真实构建产物,删了页面白屏/无法加载)
+- 前端打包目录 = `<venv>/Lib/site-packages/comfyui_frontend_package/static/`:主入口 `index.html`,打包产物 `assets\`;插件 `web\js` 经 `GET /extensions` 运行时加载、**不参与前端打包**(重建 `assets\` 不影响扩展;`scripts\` 保留 `app.js`/`api.js` 等扩展 import 入口)
+- 测试插件「从零安装」:清理浏览器缓存的 `assets\` 打包文件后,对 `http://127.0.0.1:8188` 强刷(`Ctrl+Shift+R`)再验证;**磁盘 `assets\` 勿删**(删了页面白屏)
 - 启动:
 
 先激活虚拟环境(`.venv\Scripts\activate` 或 `.venv/bin/activate`),再:
@@ -97,7 +95,7 @@ cd ComfyUI
 python main.py --enable-manager
 ```
 
-- 或直接 `.venv\Scripts\python.exe main.py --enable-manager`(在 `ComfyUI` 下;类 Unix 用 `.venv/bin/python`);或运行 `comfy-server.cmd` 启动脚本等价(后台无窗口服务式,已带 `--disable-pinned-memory --fast-disk`,适配 8GB VRAM/16GB RAM;想看前台实时日志则手动执行 `.venv\Scripts\python.exe main.py --enable-manager --disable-pinned-memory --fast-disk`)
+- 或直接 `.venv\Scripts\python.exe main.py --enable-manager`(在 `ComfyUI` 下;类 Unix 用 `.venv/bin/python`);或运行 `comfy-server.cmd`(后台无窗口服务式,已带 `--disable-pinned-memory --fast-disk`)
 - 前端默认地址 `http://127.0.0.1:8188`
 - 注意:主程序必须用 `.venv` 的 Python 运行(`.venv\Scripts\python.exe`,类 Unix 为 `.venv/bin/python`),不要用系统级 Python 或任何 conda 环境运行
 - 改自定义节点代码后**重启 ComfyUI 生效**,无需复制文件(经软链接即时加载)
@@ -125,23 +123,16 @@ python main.py --enable-manager
 | background_removal | `birefnet.safetensors` |
 | TTS | `TTS\Qwen\` 下 Qwen3-TTS-12Hz 五变体(0.6B-Base / 0.6B-CustomVoice / 1.7B-Base / 1.7B-CustomVoice / 1.7B-VoiceDesign,各含主模型 + speech_tokenizer);`TTS\SenseVoiceSmall`(ASR,`model.pt`) |
 
-MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\minimax_h3_video_vae_fp16`(~4.9GB)、`vae\minimax_h3_audio_vae_fp32`(~0.6GB)、`text_encoders\qwen3vl_32b_minimax_h3_nvfp4_awq`(~14.6GB)。
-
-空目录(尚未放置模型):`ASR\`、`audio_encoders\`、`diffusers\` 等其余标准目录。
-
-历史上曾清理并转向的模型(2026-08-03):FLUX.2 文生图全套、旧版 qwen_image 文生图、qwen_edit 2509、LTX-2.3/Wan 2.2 视频、TripoSplat 3D;此后按需重新引入了部分 Qwen 文生图/编辑模型(见上表,以表为准)。路线:Qwen-Image(国漫/中文更优)+ MiniMax H3(视频)+ FLUX.2-Klein(图像)。`ComfyUI\blueprints\` 内置 90 个蓝图(注意:位于 ComfyUI 目录内,不在项目根);除 Qwen 2511 外其余蓝图均缺模型。
+路线:Qwen-Image(国漫/中文更优)+ MiniMax H3(视频)+ FLUX.2-Klein(图像);曾清理 FLUX.2 全套、旧版 qwen_image、LTX-2.3/Wan 2.2、TripoSplat 等,后续按需重新引入(以表格为准)。`ComfyUI\blueprints\` 内置 90 个蓝图(位于 ComfyUI 目录内;除 Qwen 2511 外均缺模型)。
 
 ## 官方文档与分类文档
 
-- 本地克隆 `docs\ComfyUI-Docs`(SSH,`main`,保持纯净);在线源码为 GitHub `Comfy-Org/docs`(内容规则详见该仓库,不在此展开)
-- 分类文档已归档到 `backups\backup-20260805-路径清理\`(01-08 全量;05 含 Codex 协作约定与 Claude 协作约定两版)
-- 专题资料:`webs\Bilibili\B站教程调研.md`(含 MiniMax H3 专题);`webs\RunningHub\RunningHub-API读取指南.md` + `API.md` + `workflows-list.md`
+- `docs\ComfyUI-Docs` 为官方文档本地克隆(在线源码 GitHub `Comfy-Org/docs`);历史归档在 `backups\backup-20260805-路径清理\`;专题资料见 `webs\Bilibili\B站教程调研.md`(含 H3 专题)与 `webs\RunningHub\`(API 读取指南 / API.md / workflows-list.md)
 
 ## 开发规范
 
 - **临时脚本(一次性调研/修改/校验用的 `.py`/`.ps1` 等)一律写入 `scripts\` 目录**,严禁散落在项目根目录或其它目录;用完即删或留存在 `scripts\` 内,不得在根目录遗留 `_*.py` 之类临时文件
-- **项目根目录本身是一个 git 仓库**(`main`),经 `.gitmodules` 登记子模块;根仓库跟踪的是各子模块的**指针提交**(`git ls-files -s` 中模式 `160000`)。不要误以为"根目录不是 git 仓库、不能在根目录执行 git 操作"
-- 各子项目(ComfyUI 及全部插件、ComfyUI-Docs、MiniMax-H3 等)是根仓库的 git **子模块**:各自独立仓库、自身维护与上游一致。改动子模块代码在**子模块目录内**正常 commit/push,再回到根仓库 `git add <子模块路径>` 提交一次"指针更新";不要留着子模块脏工作树不提交,也不要往根仓库混入无关文件
+- **项目根目录本身是一个 git 仓库**(`main`),子模块经 `.gitmodules` 登记、以**指针提交**(gitlink,模式 `160000`)跟踪;子模块改动在**子模块目录内** commit/push 后,再回根仓库 `git add <子模块路径>` 提交指针更新;不要留着子模块脏工作树,也不要往根仓库混入无关文件
 - 修改 ComfyUI 主程序时遵守 `ComfyUI\AGENTS.md` 上游规范:改动小且直接、尽量少改文件、不引入新依赖、核心代码不发网络请求(见其 "No Internet Requests")、保持节点/API/工作流兼容、删除死代码、代码须看起来像手写
 - 节点注册(V1 `NODE_CLASS_MAPPINGS` / V3 `comfy_entrypoint()`)与 ComfyUI API 使用约定见各插件仓库及 `ComfyUI\AGENTS.md`;代码书写规范(卫语句优先、switch 代替 if-else、缩进)与网络/代理策略见全局 `~/.claude\CLAUDE.md`
 
@@ -150,14 +141,13 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
 - 默认直连外网;直连失败(超时/403/TLS 被掐)时改用本机代理 `127.0.0.1:7890`(Clash Verge 混合端口,HTTP 与 SOCKS5 均可):
   - HTTP 代理:`http://127.0.0.1:7890`(curl `-x http://127.0.0.1:7890`、`HTTPS_PROXY`/`HTTP_PROXY` 环境变量)
   - SOCKS5:`socks5h://127.0.0.1:7890`(curl `-x socks5h://127.0.0.1:7890`)
-- 注意:部分站点(如 OpenAI 系域名)直连会被 Cloudflare 拦截,普通代理节点也可能被按 SNI 掐断,需走允许对应域名的专用节点;huggingface 下载失败时优先重试直连,再带代理(国内可用 `hf-mirror.com` 镜像)
+- 注意:OpenAI 系域名等会被 Cloudflare/SNI 拦截,需走专用节点;huggingface 下载失败时优先直连、再带代理(国内可用 `hf-mirror.com` 镜像)
 
 ## 工作树现状(已知事项)
 
 - `ComfyUI` 工作树含已删除的占位文件(`models/*/put_*_here` 等),属安装后正常现象,不要恢复或提交
-- `ComfyUI-FallingTS` 已完成开源发布准备(README/.gitignore 完善、web 扩展入库、`.claude/` 已忽略),工作树干净
 - `custom_nodes\websocket_image_save.py` 与 `example_node.py.example` 是本地文件,不属于任何仓库
-- `media`(input/output 软链接目标)已有内容(2026-08-07 实测):`audio_00001.mp3`、`qwen3tts\`、`3d\` 等;部分旧工作流引用的输入文件可能仍缺失,运行前核对
+- `media`(input/output 软链接目标)已有内容(`audio_00001.mp3`、`qwen3tts\`、`3d\` 等);部分旧工作流引用的输入文件可能仍缺失,运行前核对
 
 ## 常见任务
 
@@ -165,7 +155,7 @@ MiniMax H3 视频类此前缺的 3 个文件已全部补齐(2026-08-07):`vae\min
 - 新增/修改自定义节点:直接改对应子项目,经软链接即时生效,无需复制到 custom_nodes
 - 验证节点加载:启动后查日志中 custom node 加载输出,或访问 `/object_info` 检查节点是否注册
 - 挑选/运行工作流:先核对「模型与蓝图」确认组件就位,再开 `blueprints\`、`templates\`(官方子目录)、`webs\Bilibili\工作流大全\`、`webs\RunningHub\workflows\` 的 json
-- 清理临时输出残留:删 `temp\` 里 `ComfyUI_temp_*.png` 后,前端「资产 → 已生成」可能仍显示内容 —— 那是任务历史(`GET /history`)中的输出记录,文件已删但引用还在。清理:`POST /history` + `{"clear": true}` 全清(等价 `server.py` 的 `wipe_history()`),或 `{"delete": ["<prompt_id>", ...]}` 定向删除;验证 `GET /history` 归零,前端 F5 刷新。注:资产系统默认禁用(`--enable-assets` 才启用),任务历史是「已生成」面板唯一来源;清空前确认 history 输出均为 `temp` 类型(无 output/input 真实数据)
+- 清理临时输出残留:删 `temp\` 里 `ComfyUI_temp_*.png` 后,「资产 → 已生成」仍显示属正常(任务历史 `GET /history` 的引用)。清理:`POST /history` + `{"clear": true}` 全清,或 `{"delete": ["<prompt_id>",...]}` 定向删;验证归零后前端 F5。⚠️ 清空前确认 history 输出均为 `temp` 类型,勿误清 output/input 真实数据
 
 ## 工作流布局规范(修改与创作必须遵守)
 
