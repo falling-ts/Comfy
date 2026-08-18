@@ -7,7 +7,13 @@
 ## 如何使用这些模型
 
 1. **拷贝到实例**:模型在云上按 `/.autodl/<前2位>/<前2位>/<前2位>/<md5>` 结构存放,上表"实例路径"即实例内可直接使用的路径;
-2. **落到 ComfyUI**:拷贝/挂载到 `/root/autodl-tmp/` 后,`ln -s` 到 `ComfyUI/models/` 对应子目录(diffusion_models / text_encoders / vae / loras / checkpoints 等),或配置 `extra_model_paths.yaml`;
+2. **落到 ComfyUI**:进入 `ComfyUI/models/` 对应子目录后,用软链接指到实例路径(一步到位,不占系统盘空间):
+   ```bash
+   cd ComfyUI/models/<子目录>               # 按类型: diffusion_models / text_encoders / vae / loras / checkpoints ...
+   ln -s {实例路径} {模型名称}                # {实例路径}=上表「实例路径」列, {模型名称}=上表「模型名称」列
+   # 例: ln -s /.autodl/a3/d4/99/a3d499fde128c535aa751e68bb87f852 minimax_h3_turbo_4step_diffusion_model.safetensors
+   ```
+   或先放 `/root/autodl-tmp/` 再挂链接,或配置 `extra_model_paths.yaml` 免链接;
 3. **文件名对齐**:工作流按 `file_name` 引用模型,拷贝后须保持文件名与工作流一致;大文件用 `md5` 校验完整性;
 4. **目录型模型**(如 Qwen3-TTS)需整目录拷贝,不能只取单文件;接口查询方法见 `Autodl/api.md` §5。
 
