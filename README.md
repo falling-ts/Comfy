@@ -261,7 +261,7 @@ Comfy/
 
 ## 附录 C · 模型下载清单
 
-> 方案原则:全开源、本地推理、零 API 费用。以下清单与本地 `models\` 目录**一一对应**(2026-08-17 核查),状态列反映本地实际就绪情况;全新环境(Linux 5090 服务器)需按下载地址重新获取,或按[附录 H.4](#h4-文件搬运与软链接)随 `models` 整体 rsync 迁移。**下载顺序建议**:先音频小件(Qwen3-TTS 全套、SenseVoice、Stable Audio 3)→ 视频大件(MiniMax H3 全套,fl2va 与 ref2va 都要下)→ 图片大件(Qwen-Image 2512/Edit 2511、FLUX.2 Klein)。注意 `flux-2-klein-9b-fp8` 为**门控仓库**(需登录 HF 接受 BFL 协议);模型放好后**重启 ComfyUI** 才会被识别。
+> 方案原则:全开源、本地推理、零 API 费用。以下清单与本地 `models\` 目录**一一对应**(2026-08-19 核查),状态列反映本地实际就绪情况;全新环境(Linux 5090 服务器)需按下载地址重新获取,或按[附录 H.4](#h4-文件搬运与软链接)随 `models` 整体 rsync 迁移。**下载顺序建议**:先音频小件(Qwen3-TTS 全套、SenseVoice、Stable Audio 3)→ 视频大件(MiniMax H3 全套,fl2va 与 ref2va 都要下)→ 图片大件(Qwen-Image 2512/Edit 2511、FLUX.2 Klein)。注意 `flux-2-klein-9b-fp8` 为**门控仓库**(需登录 HF 接受 BFL 协议);模型放好后**重启 ComfyUI** 才会被识别。
 
 ### 图片类
 
@@ -283,6 +283,16 @@ Comfy/
 | `birefnet.safetensors`(抠图/背景移除) | `models\background_removal\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/birefnet> |
 | `Kook_Qwen_2512_真实幻想.safetensors`(2512 写实/幻想风格 LoRA,图片-01 文生图在用) | `models\loras\` | ✅ 已就绪 | 本地文件(社区 LoRA,无固定 URL;5090 随 `models` 迁移,见[附录 H.4](#h4-文件搬运与软链接)) |
 | `[Qwen-Edit]3DChineseStyle_25.safetensors`(Qwen-Edit 3D 国风 LoRA,图片-01 文生图在用) | `models\loras\` | ✅ 已就绪 | 本地文件(社区 LoRA,无固定 URL;5090 随 `models` 迁移,见[附录 H.4](#h4-文件搬运与软链接)) |
+| `Qwen-Image-InstantX-ControlNet-Inpainting.safetensors`(Qwen-Image Inpainting ControlNet,扩图/局部重绘;场景拉镜/推镜「扩图」段在用) | `models\controlnet\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image-InstantX-ControlNets/resolve/main/split_files/controlnet/Qwen-Image-InstantX-ControlNet-Inpainting.safetensors> |
+
+### 人脸修复(facerestore_models,Impact-Pack Detailer / ReActor 首次使用时自动下载)
+
+| 模型 | 放置目录 | 状态 | 下载地址 |
+|------|---------|------|---------|
+| `GFPGANv1.4.pth`(通用人脸修复,优先) | `models\facerestore_models\` | ✅ 已就绪 | <https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/facerestore_models/GFPGANv1.4.pth> |
+| `GFPGANv1.3.pth`(备用) | 同上 | ✅ 已就绪 | <https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/facerestore_models/GFPGANv1.3.pth> |
+| `codeformer-v0.1.0.pth`(CodeFormer 细节增强,非商用许可) | 同上 | ✅ 已就绪 | <https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/facerestore_models/codeformer-v0.1.0.pth> |
+| `GPEN-BFR-512.onnx`(GPEN,轻量提速) | 同上 | ✅ 已就绪 | <https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/facerestore_models/GPEN-BFR-512.onnx> |
 
 ### 音频类
 

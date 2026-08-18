@@ -108,7 +108,7 @@ python main.py --enable-manager
 - **前端终端**:浏览器 ComfyUI 界面底部终端(经 WebSocket 推送的环形缓冲)也能实时看到同样的日志,排查前端扩展报错可直接看它。
 - **注意**:`logs\comfyui*.log` 是用户自建重定向(如启动脚本),**不是官方位置**,可能缺部分输出;查不到关键日志时先看 `user\comfyui_<port>.log`。
 
-## 模型与蓝图(2026-08-17 现状)
+## 模型与蓝图(2026-08-19 现状)
 
 模型实际存放在 `models\` 下(`ComfyUI\models` 为软链接),当前合计约 189.1 GB。已就绪:
 
@@ -121,6 +121,8 @@ python main.py --enable-manager
 | checkpoints | `stable_audio_3_medium.safetensors`(音频) |
 | upscale_models | `4xNomos8kDAT`(原 `4x-UltraSharp.pth`、`RealESRGAN_x4plus.pth` 已移除) |
 | background_removal | `birefnet.safetensors` |
+| controlnet | `Qwen-Image-InstantX-ControlNet-Inpainting`(InstantX Inpainting,扩图/局部重绘用) |
+| facerestore_models | `GFPGANv1.4`、`GFPGANv1.3`、`codeformer-v0.1.0`、`GPEN-BFR-512`(人脸修复,Impact-Pack/ReActor 自动下载) |
 | TTS | `TTS\Qwen\` 下 Qwen3-TTS-12Hz 五变体(0.6B-Base / 0.6B-CustomVoice / 1.7B-Base / 1.7B-CustomVoice / 1.7B-VoiceDesign,各含主模型 + speech_tokenizer);`TTS\SenseVoiceSmall`(ASR,`model.pt`) |
 
 路线:Qwen-Image(国漫/中文更优)+ MiniMax H3(视频)+ FLUX.2-Klein(图像);曾清理 FLUX.2 全套、旧版 qwen_image、LTX-2.3/Wan 2.2、TripoSplat 等,后续按需重新引入(以表格为准)。`ComfyUI\blueprints\` 内置 90 个蓝图(位于 ComfyUI 目录内;除 Qwen 2511 外均缺模型)。
