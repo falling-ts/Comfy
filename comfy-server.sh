@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ComfyUI Linux 后台启动脚本(与 comfy-server.cmd 对标)
-#   - 面向本机 AutoDL 容器 RTX 4080 32GB: llama.cpp 服务占用约 27GB 显存,
-#     故 --reserve-vram 26 把这部分留给其它服务; 系统内存 503GB 充足,
+#   - 面向本机 AutoDL 容器 RTX 5090 D 32GB: llama.cpp 服务占用约 25GB 显存,
+#     故 --reserve-vram 26 把这部分留给其它服务; 系统内存 754GB 充足,
 #     大模型动态卸载走内存, 不需要 --fast-disk
 #   - Python 环境: conda 环境 comfy (/root/miniconda3/envs/comfy, Python 3.13), 不使用 .venv
 #   - 三步: 停旧服务 → 后台启动 → 等待就绪

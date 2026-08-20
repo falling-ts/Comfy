@@ -5,6 +5,13 @@
 **Git** 负责 Comfy 代码(根仓库文件 + 子模块指针)的提交级同步。冲突策略统一为
 "谁最后修改谁赢"。
 
+> **2026-08-20 换实例注记**: 服务器已换新实例 `connect.westd.seetacloud.com:16362`(旧
+> `bjb1:40871` / `bjb2:41215` 均已失效,RTX 5090 D 32GB / 754GB 内存)。沿用状态:Syncthing
+> 配置与设备 ID 未变(三个双向文件夹直接可用)、`/root/Comfy` 为同一 GitHub 仓库
+> (`receive.denyCurrentBranch=updateInstead` 已设、本地公钥已在新实例 authorized_keys)、
+> `/etc/autodl.sh` 自启钩子在位;新实例**无**旧实例的 `/root/AGENTS.md` 运维手册。
+> 下文 `server` remote 地址已更新为新实例。
+
 ## 1. 背景与选型
 
 需求:两端 ComfyUI 工作区实时互通,文件按最后修改者同步给对方。
@@ -60,8 +67,9 @@ Syncthing 决定性优势:**默认冲突处理就是"谁最后修改谁赢"**(�
 
 ### 2.2 服务器端(SysV 服务,AutoDL 容器)
 
-AutoDL 容器无 systemd(PID 1 是平台 boot 脚本),服务规范见服务器 `/root/AGENTS.md`
-(SysV LSB init 脚本 + `/etc/autodl.sh` 开机钩子,规范副本存 `/root` 防 `/etc` 重置)。
+AutoDL 容器无 systemd(PID 1 是平台 boot 脚本),服务规范见旧实例 `/root/AGENTS.md`
+(SysV LSB init 脚本 + `/etc/autodl.sh` 开机钩子,规范副本存 `/root` 防 `/etc` 重置;
+2026-08-20 新实例无此文件,但 `/etc/autodl.sh` 与 `/root/.harness` 在位)。
 
 - 程序:`/usr/local/bin/syncthing`(官方 linux-amd64 二进制)
 - 服务:`/etc/init.d/syncthing`,规范副本 `/root/.syncthing/init.d/syncthing`;开机由
@@ -108,13 +116,13 @@ AutoDL 容器无 systemd(PID 1 是平台 boot 脚本),服务规范见服务器 `
 
 - 两端都是 GitHub 仓库 `git@github.com:falling-ts/Comfy.git` 的克隆(分支 `main`),
   互为备份与中转;日常直连不走 GitHub
-- 直连通道:本地 → 服务器 SSH(`connect.bjb1.seetacloud.com:40871`,root 用户)
+- 直连通道:本地 → 服务器 SSH(`connect.westd.seetacloud.com:16362`,root 用户,2026-08-20 换实例)
   - 本地 `~/.ssh/id_rsa` 公钥已加入服务器 `/root/.ssh/authorized_keys`
   - 服务器自带密钥 `id_rsa` + `~/.ssh/config` 中 github.com 走 Clash 代理
     (`ProxyCommand /usr/bin/connect -H 127.0.0.1:7890 %h %p`),供服务器直连 GitHub
 - 本地 remote:
   - `origin` = `git@github.com:falling-ts/Comfy.git`
-  - `server` = `ssh://root@connect.bjb1.seetacloud.com:40871/root/Comfy` ← 直连服务器
+  - `server` = `ssh://root@connect.westd.seetacloud.com:16362/root/Comfy` ← 直连服务器
 - 服务器仓库已设 `receive.denyCurrentBranch=updateInstead`:本地 push 会自动更新
   服务器工作树(若服务器工作树对将更新的文件有本地修改,push 会被安全拒绝,不会静默
   覆盖)
