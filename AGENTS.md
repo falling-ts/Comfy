@@ -47,7 +47,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | `.claude` | SymbolicLink → `.agents`(Claude Code 兼容垫片,技能聚合目录,见「软链接映射 §C」) |
 | `README.md` / `LICENSE` | 项目说明与许可 |
 | `.gitmodules` | 子模块登记(git submodule) |
-| `comfy-server.sh` | **统一**后台服务式启动脚本(跨平台: Linux + Windows Git Bash;杀 8188 旧进程 → 静默后台启动 → 等待端口就绪,日志默认写系统临时目录/`/tmp` 的 `comfy-server-8188.log`;Windows 等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`,Linux 用 conda 环境 comfy + `--reserve-vram 22`;覆盖 `PORT`/`WAIT`/`PY_BIN`/`LOG`/`RESERVE_VRAM`) |
+| `comfy-server.sh` | **统一**后台服务式启动脚本(跨平台: Linux + Windows Git Bash;杀 8188 旧进程 → 静默后台启动 → 等待端口就绪,日志默认写调用时所在目录 `comfy-server-8188.log`;Windows 等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`,Linux 用 conda 环境 comfy + `--reserve-vram 22`;覆盖 `PORT`/`WAIT`/`PY_BIN`/`LOG`/`RESERVE_VRAM`) |
 
 ## 软链接映射(重要,共 7 个,全部为相对路径 SymbolicLink;2026-08-07 建,08-10 插件收敛为目录级链接,08-13 加 Claude Code 兼容链接)
 

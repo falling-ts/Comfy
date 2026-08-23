@@ -13,14 +13,13 @@
 #
 # 平台自适应:
 #   - Windows (Git Bash): 解释器默认 .venv/Scripts/python.exe,
-#     参数 --enable-manager --disable-pinned-memory --fast-disk(本地 RTX 4060 8GB),
-#     日志默认 %USERPROFILE%\AppData\Local\Temp(即系统临时目录)下
-#     comfy-server-<port>.log(不用 $TEMP: Git Bash 里 TEMP 可能被设为 /tmp)
+#     参数 --enable-manager --disable-pinned-memory --fast-disk(本地 RTX 4060 8GB)
 #   - Linux: 解释器默认 .venv/bin/python, 缺失时回退 conda 环境 comfy
 #     (/root/miniconda3/envs/comfy/bin/python, ai-server 实例),
 #     参数 --enable-manager --reserve-vram $RESERVE_VRAM(默认 22,
 #     ai-server 上 llama.cpp 占 ~22GB 显存, 留给 ComfyUI 余量; RESERVE_VRAM=0 则不带该参数),
-#     有 setsid 时 detach 会话(SSH 断开后存活), 日志默认 /tmp/comfy-server-<port>.log
+#     有 setsid 时 detach 会话(SSH 断开后存活)
+#   - 日志默认写**调用时所在目录** comfy-server-<port>.log(两平台一致, 同 harness-server.sh)
 #   - 停旧服务: Windows 用 netstat + taskkill; Linux 用 fuser, 缺失时回退解析 /proc/net/tcp
 #
 # 说明: 就绪检测用 bash 内建 /dev/tcp 探测端口(两平台均可用),
@@ -31,6 +30,7 @@ ROOT="$(cd "$(dirname "$0")" && pwd)"
 PORT="${PORT:-8188}"
 WAIT_SECS="${WAIT:-120}"
 COMFY_DIR="$ROOT/ComfyUI"
+LOG="${LOG:-$(pwd)/comfy-server-${PORT}.log}"   # 日志写调用时所在目录
 
 IS_WINDOWS=0
 case "$(uname -s 2>/dev/null)" in
@@ -40,14 +40,12 @@ esac
 if [ "$IS_WINDOWS" -eq 1 ]; then
   PY_BIN="${PY_BIN:-$ROOT/.venv/Scripts/python.exe}"
   ARGS=(--enable-manager --disable-pinned-memory --fast-disk)
-  LOG="${LOG:-${USERPROFILE:-$HOME}/AppData/Local/Temp/comfy-server-${PORT}.log}"
 else
   PY_BIN="${PY_BIN:-$ROOT/.venv/bin/python}"
   [ -x "$PY_BIN" ] || PY_BIN="/root/miniconda3/envs/comfy/bin/python"
   RESERVE_VRAM="${RESERVE_VRAM:-22}"
   ARGS=(--enable-manager)
   [ "$RESERVE_VRAM" = "0" ] || ARGS+=(--reserve-vram "$RESERVE_VRAM")
-  LOG="${LOG:-/tmp/comfy-server-${PORT}.log}"
 fi
 
 # [1/3] 停掉占用端口的旧服务
