@@ -47,7 +47,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | `.claude` | SymbolicLink → `.agents`(Claude Code 兼容垫片,技能聚合目录,见「软链接映射 §C」) |
 | `README.md` / `LICENSE` | 项目说明与许可 |
 | `.gitmodules` | 子模块登记(git submodule) |
-| `comfy-server.cmd` | 后台服务式启动脚本(杀 8188 旧进程 → 静默后台启动 → 等待就绪,日志写入系统临时目录 `comfy-server-8188.log`;等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`) |
+| `comfy-server.sh` | **统一**后台服务式启动脚本(跨平台: Linux + Windows Git Bash;杀 8188 旧进程 → 静默后台启动 → 等待端口就绪,日志默认写系统临时目录/`/tmp` 的 `comfy-server-8188.log`;Windows 等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`,Linux 用 conda 环境 comfy + `--reserve-vram 22`;覆盖 `PORT`/`WAIT`/`PY_BIN`/`LOG`/`RESERVE_VRAM`) |
 
 ## 软链接映射(重要,共 7 个,全部为相对路径 SymbolicLink;2026-08-07 建,08-10 插件收敛为目录级链接,08-13 加 Claude Code 兼容链接)
 
@@ -95,7 +95,7 @@ cd ComfyUI
 python main.py --enable-manager
 ```
 
-- 或直接 `.venv\Scripts\python.exe main.py --enable-manager`(在 `ComfyUI` 下;类 Unix 用 `.venv/bin/python`);或运行 `comfy-server.cmd`(后台无窗口服务式,已带 `--disable-pinned-memory --fast-disk`)
+- 或直接 `.venv\Scripts\python.exe main.py --enable-manager`(在 `ComfyUI` 下;类 Unix 用 `.venv/bin/python`);或运行 `bash comfy-server.sh`(统一跨平台后台服务式,Windows Git Bash / Linux 均可:停旧服务 → 后台启动 → 等端口;Windows 已带 `--disable-pinned-memory --fast-disk`,Linux 用 conda 环境 comfy + `--reserve-vram 22`,可覆盖 `PORT`/`WAIT`/`PY_BIN`/`LOG`/`RESERVE_VRAM`)
 - 前端默认地址 `http://127.0.0.1:8188`
 - 注意:主程序必须用 `.venv` 的 Python 运行(`.venv\Scripts\python.exe`,类 Unix 为 `.venv/bin/python`),不要用系统级 Python 或任何 conda 环境运行
 - 改自定义节点代码后**重启 ComfyUI 生效**,无需复制文件(经软链接即时加载)
