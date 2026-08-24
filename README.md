@@ -1,412 +1,412 @@
-# Comfy — AI 驱动的 ComfyUI 全模态工作区
+# Comfy — AI-driven ComfyUI all-modal workspace
 
-> 本仓库是一套开箱即用的 **ComfyUI 全模态工作区**:包含 ComfyUI 主程序、MiniMax H3 视频 + Qwen 系列图像 + Stable Audio/Qwen3-TTS 音频生成、43 个自定义节点(GGUF/KJNodes/超分/加速等)、24 个图片/视频/音频工作流,以及模型目录规划。
+> This repository is a **ready-to-use ComfyUI all-modal workspace**: the ComfyUI main program, MiniMax H3 video + Qwen-series image + Stable Audio/Qwen3-TTS audio generation, 43 custom node packs (GGUF/KJNodes/upscaling/speedup, etc.), 24 image/video/audio workflows, and a model catalog plan.
 >
-> **核心思路:所有安装、配置、运行、出图、训练工作流,都交给 AI(OpenCode)来做。** 你只需要:装 Git → 克隆本仓库 → 装 OpenCode → 让它干活。
+> **Core idea: all installing, configuring, running, generating, and workflow training is delegated to the AI (OpenCode).** You only need to: install Git → clone this repository → install OpenCode → let it work.
 
 ---
 
-## 目录
+## Table of Contents
 
-- [这是什么](#这是什么)
-- [开始之前](#开始之前)
-- [第 1 步:安装 Git](#第-1-步安装-git)
-- [第 2 步:克隆本项目](#第-2-步克隆本项目)
-- [第 3 步:安装 OpenCode(桌面版)](#第-3-步安装-opencode桌面版)
-- [第 4 步:以管理员身份运行 OpenCode,建立软连接](#第-4-步以管理员身份运行-opencode按软连接方案建立软连接)
-- [第 5 步:让 OpenCode 装它自己的 CLI(可选)](#第-5-步让-opencode-装它自己的-cli可选)
-- [第 6 步:让 OpenCode 安装其它 AI 工具(可选)](#第-6-步让-opencode-安装其它-ai-工具可选)
-- [第 7 步:让 OpenCode 配置 Python 环境](#第-7-步让-opencode-配置-python-环境)
-- [第 8 步:让 OpenCode 安装 ComfyUI 依赖并启动](#第-8-步让-opencode-安装-comfyui-依赖并启动)
-- [第 9 步:之后一切都交给 AI](#第-9-步之后一切都交给-ai)
-- [常见问题](#常见问题)
-- [附录](#附录)
-
----
-
-## 这是什么
-
-- **ComfyUI 主程序**(`ComfyUI\` 子模块,master 分支,v0.33.1)—— 本地节点式 AI 图像/视频/音频生成引擎
-- **自定义节点**(43 个,集中于根 `custom_nodes\`,经 `ComfyUI\custom_nodes\` **目录级**软链接加载;完整清单见 `AGENTS.md`):
-  - `ComfyUI-FallingTS` —— 自研通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强)
-  - `ComfyUI-GGUF` / `ComfyUI-KJNodes` —— GGUF 量化加载 / 大型工具节点包
-  - `ComfyUI-SeedVR2_VideoUpscaler` / `ComfyUI-SUPIR` / `ComfyUI_UltimateSDUpscale` —— 超分放大/修复
-  - H3 生态 6 插件(Spectrum / SolAttn / ReservedVRAM / Qwen3-TTS / latent-upscaler / OrbitSheets 场景参考板)+ 其余 31 个
-- **工作流方案**:24 个,按编号分组(1xxx 万物 / 2xxx 场景镜头 / 3xxx-4xxx 视频生成 / 5xxx 拆解 / 6xxx-7xxx 音频;见[附录 B](#附录-b工作流方案总览))
-- **模型目录**(`models\`,软链接到项目根)—— 见[附录 C](#附录-c模型下载清单)
-- **文档**:官方文档本地克隆 `docs\ComfyUI-Docs\`;工作区说明 `AGENTS.md`
+- [What is this](#what-is-this)
+- [Before you start](#before-you-start)
+- [Step 1: Install Git](#step-1-install-git)
+- [Step 2: Clone this project](#step-2-clone-this-project)
+- [Step 3: Install OpenCode (Desktop)](#step-3-install-opencode-desktop)
+- [Step 4: Run OpenCode as administrator and set up the symlinks](#step-4-run-opencode-as-administrator-and-set-up-the-symlinks)
+- [Step 5: Have OpenCode install its own CLI (optional)](#step-5-have-opencode-install-its-own-cli-optional)
+- [Step 6: Have OpenCode install other AI tools (optional)](#step-6-have-opencode-install-other-ai-tools-optional)
+- [Step 7: Have OpenCode set up the Python environment](#step-7-have-opencode-set-up-the-python-environment)
+- [Step 8: Have OpenCode install ComfyUI dependencies and start it](#step-8-have-opencode-install-comfyui-dependencies-and-start-it)
+- [Step 9: From here on, everything is the AI's job](#step-9-from-here-on-everything-is-the-ais-job)
+- [FAQ](#faq)
+- [Appendices](#appendices)
 
 ---
 
-## 开始之前
+## What is this
 
-- **系统**:Windows 10/11 或 Linux(本仓库默认按 Windows 部署编写,Linux/macOS 部署见「附录 H 迁移 Linux」)
-- **硬件**:内存 16G 以上;**有 NVIDIA 显卡**(N 卡)体验最佳;无 N 卡也能跑,但慢
-- **网络**:能访问外网即可;部分地区需代理;国内下载模型可用 `hf-mirror.com` 镜像(见附录 E)
-- **你不需要提前装任何东西**——Python、CUDA、虚拟环境、各种 CLI 都由 AI 帮你装
+- **ComfyUI main program** (`ComfyUI\` submodule, master branch, v0.33.1) — a local node-based AI image/video/audio generation engine
+- **Custom nodes** (43, centralized in the root `custom_nodes\`, loaded via a **directory-level** symlink at `ComfyUI\custom_nodes\`; the full list is in `AGENTS.md`):
+  - `ComfyUI-FallingTS` — our own general-purpose utility node pack (5 nodes: Continue/Selector/Table/Switch/PreviewVideo + frontend enhancements)
+  - `ComfyUI-GGUF` / `ComfyUI-KJNodes` — GGUF quantized loading / large utility node pack
+  - `ComfyUI-SeedVR2_VideoUpscaler` / `ComfyUI-SUPIR` / `ComfyUI_UltimateSDUpscale` — super-resolution upscaling/restoration
+  - The 6 H3-ecosystem plugins (Spectrum / SolAttn / ReservedVRAM / Qwen3-TTS / latent-upscaler / OrbitSheets scene reference boards) + the other 31
+- **Workflow suite**: 24, grouped by number (1xxx Everything / 2xxx Scene camera / 3xxx-4xxx Video generation / 5xxx Decomposition / 6xxx-7xxx Audio; see [Appendix B](#appendix-b--workflow-catalog))
+- **Model directory** (`models\`, symlinked to the project root) — see [Appendix C](#appendix-c--model-download-list)
+- **Docs**: a local clone of the official docs at `docs\ComfyUI-Docs\`; the workspace description in `AGENTS.md`
 
 ---
 
-## 第 1 步:安装 Git
+## Before you start
 
-Git 用于克隆本仓库、管理子模块。到 **https://git-scm.com/download/win** 下载安装包(64-bit,默认选项一路「下一步」),装完在终端执行 `git --version` 能打印版本号即成功。
+- **System**: Windows 10/11 or Linux (this repo is written for Windows deployment by default; see "Appendix H: Migrating to Linux" for Linux/macOS deployment)
+- **Hardware**: 16 GB+ RAM; an **NVIDIA GPU** gives the best experience; it runs without an NVIDIA card, but slowly
+- **Network**: just needs external internet access; some regions need a proxy; for model downloads inside China use the `hf-mirror.com` mirror (see Appendix E)
+- **You don't need to install anything in advance** — Python, CUDA, the virtualenv, and all the CLIs are installed by the AI for you
 
 ---
 
-## 第 2 步:克隆本项目
+## Step 1: Install Git
 
-在 Git Bash 里执行:
+Git is used to clone this repository and manage the submodules. Download the installer from **https://git-scm.com/download/win** (64-bit, click "Next" through the default options); after installing, run `git --version` in a terminal — if it prints a version number, you're good.
+
+---
+
+## Step 2: Clone this project
+
+Run in Git Bash:
 
 ```bash
 git clone https://github.com/falling-ts/Comfy
 cd Comfy
 ```
 
-完成后,你会得到一个包含 `ComfyUI\`、各 `ComfyUI-*\` 插件、`workflows\`、`models\` 的完整工作区。**后续所有操作都在这个 `Comfy` 目录里进行。**
+When done you have a complete workspace containing `ComfyUI\`, the various `ComfyUI-*\` plugins, `workflows\`, `models\`. **All subsequent work happens inside this `Comfy` directory.**
 
-> 提示:克隆后 `models\` 是空的(模型体积大,不随仓库分发),需要按[附录 C](#附录-c模型下载清单)下载;`media\` 是空的,是输入/输出文件的家。
-
----
-
-## 第 3 步:安装 OpenCode(桌面版)
-
-OpenCode 是你和这套工作区之间的 AI 主力,负责装软件、配环境、跑工作流。
-
-1. 浏览器打开 **https://opencode.ai/zh/download** ,下载「**桌面端**」
-2. 安装并启动 OpenCode
-3. 在左侧「**添加项目**」,选择刚才克隆的 `Comfy` 目录
-4. 之后在这个项目里和 AI 对话即可
+> Note: after cloning, `models\` is empty (models are too large to ship with the repo) — download them per [Appendix C](#appendix-c--model-download-list); `media\` is empty too; it's home for input/output files.
 
 ---
 
-## 第 4 步:以管理员身份运行 OpenCode,按软连接方案建立软连接
+## Step 3: Install OpenCode (Desktop)
 
-> ⚠️ **很重要**:本工作区依赖「相对路径符号链接」,把 `ComfyUI\` 里的相关目录指向项目根(`models\`、`media\`、`workflows\`、各插件目录)。**创建符号链接需要管理员权限,所以必须以管理员身份运行 OpenCode。**
+OpenCode is the AI workhorse between you and this workspace — it installs software, configures the environment, and runs workflows.
 
-1. 在开始菜单找到 OpenCode,右键 →「**以管理员身份运行**」
-2. 打开本项目(添加 `Comfy` 目录),把下面这段话发给它:
+1. Open **https://opencode.ai/zh/download** in a browser and download the **Desktop** edition
+2. Install and launch OpenCode
+3. In the left panel, **Add project**, and select the `Comfy` directory you just cloned
+4. After that, just talk to the AI inside this project
 
-> 请按以下「软连接方案」检查并修复本项目的软链接(全部用**相对路径**符号链接,共 7 个,完整清单见 `AGENTS.md`「软链接映射」):
+---
+
+## Step 4: Run OpenCode as administrator and set up the symlinks
+
+> ⚠️ **Important**: this workspace relies on **relative-path symbolic links** pointing the relevant directories inside `ComfyUI\` at the project root (`models\`, `media\`, `workflows\`, the plugin directories). **Creating symlinks requires administrator privileges, so run OpenCode as administrator.**
+
+1. Find OpenCode in the Start menu, right-click → **Run as administrator**
+2. Open this project (add the `Comfy` directory) and send it the following:
+
+> Please check and repair this project's symlinks per the "symlink plan" below (all **relative-path** symlinks, 7 total; the full list is in `AGENTS.md` "Symlink map"):
 >
-> 1. **目录级插件链接**:确认 `ComfyUI\custom_nodes` 是符号链接,指向 `..\custom_nodes`(根目录插件聚合目录,43 个插件全部经这一个链接加载;**不是**旧方案的一插件一链接);
-> 2. **基础链接**:`ComfyUI\input` → `..\media`、`ComfyUI\output` → `..\media`、`ComfyUI\models` → `..\models`、`ComfyUI\user\default\workflows` → `..\..\..\workflows`;
-> 3. **子链接**:`custom_nodes\H3ReferenceSuite` → `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite`;`.claude` → `.agents`;
-> 4. 全部完成后,确认这些路径显示为「符号链接」,并验证 `ComfyUI\models\diffusion_models` 等子目录可正常进入。
+> 1. **Directory-level plugin link**: make sure `ComfyUI\custom_nodes` is a symlink pointing to `..\custom_nodes` (the root plugin aggregation directory; all 43 plugins are loaded through this single link; **not** the old one-link-per-plugin scheme);
+> 2. **Base links**: `ComfyUI\input` → `..\media`, `ComfyUI\output` → `..\media`, `ComfyUI\models` → `..\models`, `ComfyUI\user\default\workflows` → `..\..\..\workflows`;
+> 3. **Sub-links**: `custom_nodes\H3ReferenceSuite` → `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite`; `.claude` → `.agents`;
+> 4. Once everything is done, confirm these paths show as "symbolic links" and verify subdirectories like `ComfyUI\models\diffusion_models` can be entered normally.
 >
-> 注意:只能替换真实目录;`ComfyUI\temp\` 等真实目录保留;所有链接一律用相对路径,保证整个项目文件夹移动后不失效。
+> Note: only replace real directories; keep real directories like `ComfyUI\temp\`; all links use relative paths so they survive moving the whole project folder.
 
-3. 软链接就绪后,继续[第 5 步](#第-5-步让-opencode-装它自己的-cli可选)。
-
----
-
-## 第 5 步:让 OpenCode 装它自己的 CLI(可选)
-
-习惯命令行的话,对它说「帮我安装 opencode cli 版本,具体下载安装,你从网络搜索」,装好后 `cd Comfy && opencode` 即可使用。
+3. With the symlinks ready, continue to [Step 5](#step-5-have-opencode-install-its-own-cli-optional).
 
 ---
 
-## 第 6 步:让 OpenCode 安装其它 AI 工具(可选)
+## Step 5: Have OpenCode install its own CLI (optional)
 
-需要时对它说「帮我安装以下 AI 工具:codex、claude code、cc-switch。具体下载安装,你从网络搜索」,即可获得可随时切换的 AI CLI 组合。
+If you like the command line, say "install the opencode CLI for me — search the web for the specific download/install"; once installed, `cd Comfy && opencode` and go.
 
 ---
 
-## 第 7 步:让 OpenCode 配置 Python 环境
+## Step 6: Have OpenCode install other AI tools (optional)
 
-把这段话发给 OpenCode(让它在项目根目录创建 `.venv` 虚拟环境):
+When needed, say "install the following AI tools for me: codex, claude code, cc-switch — search the web for the specific download/install"; you get a swappable AI CLI suite.
 
-> 在项目根目录创建 Python 3.13 虚拟环境 `.venv`(若系统没有 Python 3.13,先安装官方 Python 3.13)。具体下载安装,你从网络搜索。
+---
+
+## Step 7: Have OpenCode set up the Python environment
+
+Send this to OpenCode (to create a `.venv` virtualenv at the project root):
+
+> Create a Python 3.13 virtualenv `.venv` in the project root (if the system has no Python 3.13, install the official Python 3.13 first). Search the web for the specific download/install.
 >
-> 注意:环境必须在项目根目录 `.venv`(不是系统 Python),后面所有依赖都装进这个环境,不要用系统 Python。
+> Note: the environment must live at the project root `.venv` (not the system Python); all subsequent dependencies go into this environment — don't use system Python.
 
-完成后验证(它会在终端里执行):
+Once done, verify (it will run in the terminal):
 
 ```powershell
-.\.venv\Scripts\activate   # 类 Unix 用 source .venv/bin/activate
+.\.venv\Scripts\activate   # on Unix-like systems: source .venv/bin/activate
 python --version
 ```
 
 ---
 
-## 第 8 步:让 OpenCode 安装 ComfyUI 依赖并启动
+## Step 8: Have OpenCode install ComfyUI dependencies and start it
 
-把这段话发给 OpenCode(它会依次完成:装 CUDA 版 PyTorch → 装主程序依赖 → 装各插件依赖 → 启动):
+Send this to OpenCode (it will, in order: install the CUDA build of PyTorch → install the main dependencies → install each plugin's dependencies → start):
 
-> 进入 `ComfyUI` 目录,按顺序:
+> Enter the `ComfyUI` directory and, in order:
 >
-> 1. **先装 CUDA 版 PyTorch**:执行
+> 1. **First install the CUDA build of PyTorch**: run
 >    `pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130`
->    (先检测我的 NVIDIA 显卡和驱动支持哪个 CUDA 版本,选择匹配的 `cuXXX`;若没有 N 卡则装 CPU 版)
-> 2. 再装剩余依赖:`pip install -r requirements.txt`
-> 3. 然后进入 `custom_nodes\` 下全部插件目录(43 个,见 `AGENTS.md` 目录结构),逐个检查各自需要的依赖(如各自的 `requirements.txt` 或 README),都帮我安装好。
-> 4. 最后回到 `ComfyUI` 目录启动:`python main.py --enable-manager`
+>    (first detect which CUDA version my NVIDIA GPU/driver supports and pick the matching `cuXXX`; if there's no NVIDIA card, install the CPU build)
+> 2. Then install the rest: `pip install -r requirements.txt`
+> 3. Then go into every plugin directory under `custom_nodes\` (43 of them, see the directory layout in `AGENTS.md`), check each one's required dependencies (its `requirements.txt` or README) and install them all.
+> 4. Finally, back in `ComfyUI`, start it: `python main.py --enable-manager`
 >
-> 启动成功后告诉我前端地址。
+> Once it starts successfully, tell me the frontend address.
 
-启动后,浏览器打开 **http://127.0.0.1:8188** 即是 ComfyUI 前端界面。
-
----
-
-## 第 9 步:之后一切都交给 AI
-
-环境就绪后,所有工作都可以让 AI 帮你做:
-
-- 下载模型(按[附录 C](#附录-c模型下载清单),直接说"下载 xx 模型到 models\yyy\")
-- 运行 / 修改 / 新建工作流(在 `workflows\` 里)
-- 安装新自定义节点、排错、调参、出图、训练
-- 视频/音频/图片生成(MiniMax H3、Stable Audio、Qwen 系列等)
-
-一句话总结:**你负责"想要什么",AI 负责"怎么做"。**
+After startup, open **http://127.0.0.1:8188** in a browser — that's the ComfyUI frontend.
 
 ---
 
-## 常见问题
+## Step 9: From here on, everything is the AI's job
 
-- **代理 / 下载慢**:默认直连;失败时用本机代理(如 Clash 的 `127.0.0.1:7890`);HuggingFace 模型国内可用 `hf-mirror.com` 镜像,把链接前缀 `huggingface.co` 换成 `hf-mirror.com` 即可(见附录 E)
-- **符号链接**:`ComfyUI\custom_nodes`(目录级,聚合 43 插件)、`models`/`input`/`output`/`workflows` 等共 7 个相对路径符号链接。创建链接需要管理员权限,推荐**以管理员身份运行 OpenCode**再让它修复(见[第 4 步](#第-4-步以管理员身份运行-opencode按软连接方案建立软连接));或手动开启「开发者模式」(设置 → 隐私和安全性 → 开发者选项 → 开启开发者模式)
-- **显存不足**:Klein 9B 蒸馏版较吃显存(24G 卡跑 1024 tile 偏紧,爆显存降到 768);MiniMax H3 需大显存,低显存建议用量化版或云端(详见附录 C 备注)
-- **模型放好后记得重启 ComfyUI**,加载节点才会识别新模型
+Once the environment is ready, you can have the AI do everything:
+
+- Download models (per [Appendix C](#appendix-c--model-download-list); just say "download model xx into models\yyy\")
+- Run / modify / create workflows (in `workflows\`)
+- Install new custom nodes, debug, tune parameters, generate images, train
+- Video/audio/image generation (MiniMax H3, Stable Audio, Qwen series, etc.)
+
+In one sentence: **you say "what you want"; the AI handles "how to do it".**
 
 ---
 
-# 附录
+## FAQ
 
-## 附录 A · 项目结构
+- **Proxy / slow downloads**: direct connection by default; on failure use a local proxy (e.g. Clash's `127.0.0.1:7890`); for HuggingFace models inside China use the `hf-mirror.com` mirror — just replace the `huggingface.co` prefix in the link with `hf-mirror.com` (see Appendix E)
+- **Symlinks**: `ComfyUI\custom_nodes` (directory-level, aggregates 43 plugins), `models`/`input`/`output`/`workflows`, etc. — 7 relative-path symlinks in total. Creating links needs administrator privileges; the recommended way is to **run OpenCode as administrator** and have it repair them (see [Step 4](#step-4-run-opencode-as-administrator-and-set-up-the-symlinks)); or manually enable "Developer Mode" (Settings → Privacy & security → For developers → Developer mode on)
+- **Not enough VRAM**: the Klein 9B distilled version is VRAM-hungry (a 24G card is tight at 1024 tiles; drop to 768 if OOM); MiniMax H3 needs a lot of VRAM — for low-VRAM cards use the quantized version or the cloud (see the Appendix C notes)
+- **After placing models, remember to restart ComfyUI** so the loaders pick up the new models
+
+---
+
+# Appendices
+
+## Appendix A · Project structure
 
 ```
 Comfy/
-├── ComfyUI/                  # ComfyUI 主程序(master 分支,子模块)
-│   ├── main.py               # 启动入口(python main.py --enable-manager)
-│   ├── custom_nodes/         # 自定义节点(目录级软链接 → ../custom_nodes)
-│   ├── input/  output/       # 输入/输出(软链接 → ../media)
-│   ├── user/default/workflows  # 用户工作流(软链接 → ../../../../workflows)
-│   └── models/               # 模型(软链接 → ../models)
-├── custom_nodes/             # 插件聚合目录:43 个插件子模块 + H3ReferenceSuite 链接
-│   ├── ComfyUI-FallingTS/    # 自研通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo)
-│   ├── ComfyUI-GGUF/  ComfyUI-KJNodes/   # 量化加载 / 工具节点包
-│   ├── ComfyUI-OrbitSheets/  # H3 场景/角色参考板(多视角运镜 + 视觉选帧拼网格图)
-│   └── ...(其余 39 个,见 AGENTS.md 目录结构)
-├── docs/                     # 20 个分类文档 + 4 个子模块(ComfyUI-Docs/Obsidian-Dev-Docs/Obsidian-API/codex)
-├── h3/                       # MiniMax H3 生态(MiniMax-H3 + minimax-h3-guide)
-├── workflows/                # 用户工作流 24 个(1xxx~7xxx,见附录 B)
-├── models/                   # 模型实际存放处(约 189GB,38 个槽位目录,见附录 C)
-├── media/                    # 输入图片/音频 + 生成结果(3d/qwen3tts/clipspace)
-├── templates/  webs/         # 官方模板缓存 + 三方调研(RunningHub/Bilibili/AutoDL)
-├── stories/                  # Obsidian 故事写作工作区
-├── scripts/                  # 工具脚本(连线校验/布局校验等,仅本地不入库)
-├── backups/                  # 工作流/文档修改前备份
-└── AGENTS.md                 # 工作区说明(供 AI 读取,目录结构/软链接/规范全在此)
+├── ComfyUI/                  # ComfyUI main program (master branch, submodule)
+│   ├── main.py               # startup entry (python main.py --enable-manager)
+│   ├── custom_nodes/         # custom nodes (directory-level symlink → ../custom_nodes)
+│   ├── input/  output/       # input/output (symlink → ../media)
+│   ├── user/default/workflows  # user workflows (symlink → ../../../../workflows)
+│   └── models/               # models (symlink → ../models)
+├── custom_nodes/             # plugin aggregation directory: 43 plugin submodules + H3ReferenceSuite link
+│   ├── ComfyUI-FallingTS/    # our own general-purpose utility node pack (Continue/Selector/Table/Switch/PreviewVideo)
+│   ├── ComfyUI-GGUF/  ComfyUI-KJNodes/   # quantized loading / utility node pack
+│   ├── ComfyUI-OrbitSheets/  # H3 scene/character reference boards (multi-angle camera + visual frame picking into grid images)
+│   └── ...(the other 39, see the directory layout in AGENTS.md)
+├── docs/                     # 20 categorized docs + 4 submodules (ComfyUI-Docs/Obsidian-Dev-Docs/Obsidian-API/codex)
+├── h3/                       # MiniMax H3 ecosystem (MiniMax-H3 + minimax-h3-guide)
+├── workflows/                # 24 user workflows (1xxx~7xxx, see Appendix B)
+├── models/                   # where models actually live (~189 GB, 38 slot directories, see Appendix C)
+├── media/                    # input images/audio + generated results (3d/qwen3tts/clipspace)
+├── templates/  webs/         # official template cache + third-party research (RunningHub/Bilibili/AutoDL)
+├── stories/                  # Obsidian story-writing workspace
+├── scripts/                  # utility scripts (connection checks/layout checks, etc., local only, not committed)
+├── backups/                  # pre-change backups of workflows/docs
+└── AGENTS.md                 # workspace description (for AI to read; directory layout/symlinks/conventions all here)
 ```
 
-### 软连接(共 7 个,全部相对路径)
+### Symlinks (7 total, all relative paths)
 
-`ComfyUI\input`/`output` → `media`、`ComfyUI\models` → `models`、`ComfyUI\user\default\workflows` → `workflows`、`ComfyUI\custom_nodes` → `custom_nodes`(**目录级,聚合 43 插件**)、`custom_nodes\H3ReferenceSuite` → `h3\minimax-h3-guide\...`、`.claude` → `.agents`。全部为**相对路径**符号链接,项目整体移动后不失效;创建/修复需管理员权限,完整清单见 `AGENTS.md`「软链接映射」;`ComfyUI\temp\` 为真实目录(非链接),可随时清理。
+`ComfyUI\input`/`output` → `media`, `ComfyUI\models` → `models`, `ComfyUI\user\default\workflows` → `workflows`, `ComfyUI\custom_nodes` → `custom_nodes` (**directory-level, aggregates 43 plugins**), `custom_nodes\H3ReferenceSuite` → `h3\minimax-h3-guide\...`, `.claude` → `.agents`. All are **relative-path** symlinks — they survive moving the whole project; creating/repairing them needs administrator privileges; the full list is in `AGENTS.md` "Symlink map"; `ComfyUI\temp\` is a real directory (not a link) and can be cleaned up anytime.
 
-## 附录 B · 工作流方案总览
+## Appendix B · Workflow catalog
 
-`workflows\` 下共 **24 个**主工作流,按「编号-用途」命名分组(前端保存即在此):
+`workflows\` contains **24** main workflows, named "number-purpose" and grouped (the frontend saves right here):
 
-### 图片/万物类(1xxx,3 个,基于 Qwen-Image-2512 / Qwen-Edit 2511 / FLUX.2-Klein)
+### Image / "Everything" class (1xxx, 3, based on Qwen-Image-2512 / Qwen-Edit 2511 / FLUX.2-Klein)
 
-| 工作流 | 用途 |
+| Workflow | Purpose |
 |--------|------|
-| `1000-万物建模` | 主线主流程(万物建模) |
-| `1001-灰度遮罩` | 灰度遮罩工具 |
-| `1010-万物变化` | 万物变化/变换 |
+| `1000-万物建模` | Main pipeline (everything modeling) |
+| `1001-灰度遮罩` | Grayscale mask tool |
+| `1010-万物变化` | Everything change/transform |
 
-### 场景镜头类(2xxx,4 个)
+### Scene camera class (2xxx, 4)
 
-| 工作流 | 用途 |
+| Workflow | Purpose |
 |--------|------|
-| `2000-场景首帧` | 场景首帧生成 |
-| `2010-场景拉镜` | 镜头拉远/拉近变换 |
-| `2020-场景推镜` | 镜头推进变换 |
-| `2030-场景旋镜` | 镜头环绕旋转 |
+| `2000-场景首帧` | Scene first-frame generation |
+| `2010-场景拉镜` | Camera pull-out / push-in transform |
+| `2020-场景推镜` | Camera push-in transform |
+| `2030-场景旋镜` | Camera orbit rotation |
 
-### 视频生成类(3xxx-4xxx,9 个,MiniMax H3)
+### Video generation class (3xxx-4xxx, 9, MiniMax H3)
 
-| 工作流 | 用途 | H3 模式 |
+| Workflow | Purpose | H3 mode |
 |--------|------|---------|
-| `3000-文生场景` | 文本 → 场景视频(仅画面,无音轨) | T2VA(fl2va) |
-| `3010-图生场景` | 首帧图 → 场景视频 | I2V(fl2va) |
-| `3020-参考场景` | 多图 + 多视频参考 → 视频 | R2V(ref2va) |
-| `3030-OrbitSheets场景` | 锚点图 → H3 多视角运镜 → 视觉选帧拼「场景参考板」网格图 | I2V(fl2va)+ OrbitSheets 插件 |
-| `3040-Skythread场景` | 角色/道具/空场景三参考(职责单一)→ 场景视频 | R2V(ref2va) |
-| `4000-文生视频` | 文本 → 视频(与 3000 同构的通用版) | T2VA(fl2va) |
-| `4010-图生视频` | 首帧图 → 视频 | I2V(fl2va) |
-| `4020-首尾视频` | 首尾帧 → 视频 | fl2va |
-| `4030-参考视频` | 参考图/视频 → 视频 | R2V(ref2va) |
+| `3000-文生场景` | text → scene video (visual only, no audio track) | T2VA (fl2va) |
+| `3010-图生场景` | first-frame image → scene video | I2V (fl2va) |
+| `3020-参考场景` | multi-image + multi-video reference → video | R2V (ref2va) |
+| `3030-OrbitSheets场景` | anchor image → H3 multi-angle camera → visual frame picking into a "scene reference board" grid image | I2V (fl2va) + OrbitSheets plugin |
+| `3040-Skythread场景` | character/prop/empty-scene three references (single responsibility) → scene video | R2V (ref2va) |
+| `4000-文生视频` | text → video (generic version isomorphic to 3000) | T2VA (fl2va) |
+| `4010-图生视频` | first-frame image → video | I2V (fl2va) |
+| `4020-首尾视频` | first+last frame → video | fl2va |
+| `4030-参考视频` | reference image/video → video | R2V (ref2va) |
 
-> 3000/3010/3020 与 4000/4010/4020/4030 结构一一对应(前者为场景流水线版,后者为通用版);均已去除音频轨道,视频 + 音频在后期流水线(5xxx-7xxx)中合并。3030/3040 为场景参考生产补充:3030 产出「场景参考板」网格图(供 3020/4030 作参考输入),3040 为 Skythread 式三参考精简法。
+> 3000/3010/3020 correspond one-to-one with 4000/4010/4020/4030 (the former is the scene-pipeline version, the latter the generic version); the audio track has been removed from all — video + audio are merged in the post pipeline (5xxx-7xxx). 3030/3040 supplement scene-reference production: 3030 produces "scene reference board" grid images (for use as reference input to 3020/4030), 3040 is the Skythread-style three-reference simplified method.
 
-### 拆解类(5xxx,2 个)
+### Decomposition class (5xxx, 2)
 
-| 工作流 | 用途 |
+| Workflow | Purpose |
 |--------|------|
-| `5000-视频拆帧` | 视频 → 逐帧图片 |
-| `5010-视频拆音` | 视频 → 分离音频 |
+| `5000-视频拆帧` | video → per-frame images |
+| `5010-视频拆音` | video → separated audio |
 
-### 音频生成类(6xxx-7xxx,6 个)
+### Audio generation class (6xxx-7xxx, 6)
 
-| 工作流 | 用途 | 核心模型 |
+| Workflow | Purpose | Core model |
 |--------|------|---------|
-| `6000-背景音乐` | 纯器乐 BGM | Stable Audio 3(内置 Sage 加速) |
-| `6010-环境音效` | 环境/氛围音 | Stable Audio 3 |
-| `6020-效果音效` | 一次性/打击音效 | Stable Audio 3 |
-| `6030-文生人声` | 文本描述音色 → 说话 | Qwen3-TTS VoiceDesign |
-| `6040-参考人声` | 3s 参考音频克隆 → 说话 | Qwen3-TTS CustomVoice |
-| `7000-截取声音` | 音频裁剪/截取工具 | — |
+| `6000-背景音乐` | Pure instrumental BGM | Stable Audio 3 (built-in Sage acceleration) |
+| `6010-环境音效` | Ambient/atmosphere sound | Stable Audio 3 |
+| `6020-效果音效` | One-shot / SFX | Stable Audio 3 |
+| `6030-文生人声` | text voice description → speech | Qwen3-TTS VoiceDesign |
+| `6040-参考人声` | 3-second reference audio clone → speech | Qwen3-TTS CustomVoice |
+| `7000-截取声音` | Audio crop/extract tool | — |
 
-> 2026-08-09 前曾归档于 `templates\` 的旧版图片 8/视频 4/音频 5 工作流已删除,全部以当前编号体系为准。
+> The old image 8 / video 4 / audio 5 workflows that used to be archived under `templates\` before 2026-08-09 have been deleted; the current numbering scheme is canonical.
 
-## 附录 C · 模型下载清单
+## Appendix C · Model download list
 
-> 方案原则:全开源、本地推理、零 API 费用。以下清单与本地 `models\` 目录**一一对应**(2026-08-19 核查),状态列反映本地实际就绪情况;全新环境(Linux 5090 服务器)需按下载地址重新获取,或按[附录 H.4](#h4-文件搬运与软链接)随 `models` 整体 rsync 迁移。**下载顺序建议**:先音频小件(Qwen3-TTS 全套、SenseVoice、Stable Audio 3)→ 视频大件(MiniMax H3 全套,fl2va 与 ref2va 都要下)→ 图片大件(Qwen-Image 2512/Edit 2511、FLUX.2 Klein)。注意 `flux-2-klein-9b-fp8` 为**门控仓库**(需登录 HF 接受 BFL 协议);模型放好后**重启 ComfyUI** 才会被识别。
+> Scheme principles: fully open-source, local inference, zero API cost. The list below corresponds **one-to-one** with the local `models\` directory (verified 2026-08-19); the status column reflects what is actually ready locally. A brand-new environment (Linux 5090 server) must re-fetch from the download URLs, or migrate `models` wholesale via rsync per [Appendix H.4](#h4--file-transfer-and-symlinks). **Recommended download order**: audio small items first (the full Qwen3-TTS set, SenseVoice, Stable Audio 3) → video large items (the full MiniMax H3 set — download both fl2va and ref2va) → image large items (Qwen-Image 2512/Edit 2511, FLUX.2 Klein). Note that `flux-2-klein-9b-fp8` is a **gated repo** (you must log in to HF and accept the BFL terms); after placing models, **restart ComfyUI** so they are recognized.
 
-### 图片类
+### Image class
 
-| 模型 | 放置目录 | 状态 | 下载地址 |
+| Model | Target directory | Status | Download URL |
 |------|---------|------|---------|
-| `qwen_image_2512_fp8_e4m3fn.safetensors` | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_2512_fp8_e4m3fn.safetensors> |
-| `qwen_image_fp8_e4m3fn.safetensors`(2512 前代,备用) | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_fp8_e4m3fn.safetensors> |
-| `qwen_image_edit_2511_fp8mixed.safetensors` | `models\diffusion_models\` | ✅ 已就绪 | <https://www.modelscope.cn/models/Kakazhuce/qwen_image_edit_2511_fp8mixed/resolve/master/qwen_image_edit_2511_fp8mixed.safetensors> |
-| `flux-2-klein-9b-fp8.safetensors` | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/black-forest-labs/FLUX.2-klein-9b-fp8/resolve/main/flux-2-klein-9b-fp8.safetensors> ⚠️门控 |
-| `qwen_3_8b_fp8mixed.safetensors`(Klein 文本编码器) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors> |
-| `full_encoder_small_decoder.safetensors`(Klein/FLUX.2 解码器) | `models\vae\` | ✅ 已就绪 | <https://huggingface.co/black-forest-labs/FLUX.2-small-decoder/resolve/main/full_encoder_small_decoder.safetensors> |
-| `qwen_2.5_vl_7b_fp8_scaled.safetensors`(Qwen-Edit 文本编码器) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/HunyuanVideo_1.5_repackaged/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors> |
-| `qwen_image_vae.safetensors` | `models\vae\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors> |
-| `4xNomos8kDAT.safetensors`(放大,推荐) | `models\upscale_models\` | ✅ 已就绪 | <https://huggingface.co/Phips/4xNomos8kDAT/resolve/main/4xNomos8kDAT.safetensors> |
-| `Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors`(2512 加速 LoRA) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/loras/Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors> |
-| `Qwen-Image-Lightning-4steps-V1.0.safetensors`(2512 前代加速 LoRA,备用) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/loras/Qwen-Image-Lightning-4steps-V1.0.safetensors> |
-| `Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors`(2511 加速 LoRA) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors> |
-| `qwen-image-edit-2511-multiple-angles-lora.safetensors`(多视角 LoRA,配 `ComfyUI-qwenmultiangle` 插件) | `models\loras\` | ✅ 已就绪 | 社区 LoRA(本地文件,5090 随 `models` 迁移) |
-| `birefnet.safetensors`(抠图/背景移除) | `models\background_removal\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/birefnet> |
-| `Kook_Qwen_2512_真实幻想.safetensors`(2512 写实/幻想风格 LoRA,图片-01 文生图在用) | `models\loras\` | ✅ 已就绪 | 本地文件(社区 LoRA,无固定 URL;5090 随 `models` 迁移,见[附录 H.4](#h4-文件搬运与软链接)) |
-| `[Qwen-Edit]3DChineseStyle_25.safetensors`(Qwen-Edit 3D 国风 LoRA,图片-01 文生图在用) | `models\loras\` | ✅ 已就绪 | 本地文件(社区 LoRA,无固定 URL;5090 随 `models` 迁移,见[附录 H.4](#h4-文件搬运与软链接)) |
-| `Qwen-Image-InstantX-ControlNet-Inpainting.safetensors`(Qwen-Image Inpainting ControlNet,扩图/局部重绘;场景拉镜/推镜「扩图」段在用) | `models\controlnet\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen-Image-InstantX-ControlNets/resolve/main/split_files/controlnet/Qwen-Image-InstantX-ControlNet-Inpainting.safetensors> |
+| `qwen_image_2512_fp8_e4m3fn.safetensors` | `models\diffusion_models\` | ✅ ready | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_2512_fp8_e4m3fn.safetensors> |
+| `qwen_image_fp8_e4m3fn.safetensors` (predecessor of 2512, backup) | `models\diffusion_models\` | ✅ ready | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_fp8_e4m3fn.safetensors> |
+| `qwen_image_edit_2511_fp8mixed.safetensors` | `models\diffusion_models\` | ✅ ready | <https://www.modelscope.cn/models/Kakazhuce/qwen_image_edit_2511_fp8mixed/resolve/master/qwen_image_edit_2511_fp8mixed.safetensors> |
+| `flux-2-klein-9b-fp8.safetensors` | `models\diffusion_models\` | ✅ ready | <https://huggingface.co/black-forest-labs/FLUX.2-klein-9b-fp8/resolve/main/flux-2-klein-9b-fp8.safetensors> ⚠️ gated |
+| `qwen_3_8b_fp8mixed.safetensors` (Klein text encoder) | `models\text_encoders\` | ✅ ready | <https://huggingface.co/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors> |
+| `full_encoder_small_decoder.safetensors` (Klein/FLUX.2 decoder) | `models\vae\` | ✅ ready | <https://huggingface.co/black-forest-labs/FLUX.2-small-decoder/resolve/main/full_encoder_small_decoder.safetensors> |
+| `qwen_2.5_vl_7b_fp8_scaled.safetensors` (Qwen-Edit text encoder) | `models\text_encoders\` | ✅ ready | <https://huggingface.co/Comfy-Org/HunyuanVideo_1.5_repackaged/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors> |
+| `qwen_image_vae.safetensors` | `models\vae\` | ✅ ready | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors> |
+| `4xNomos8kDAT.safetensors` (upscaling, recommended) | `models\upscale_models\` | ✅ ready | <https://huggingface.co/Phips/4xNomos8kDAT/resolve/main/4xNomos8kDAT.safetensors> |
+| `Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors` (2512 acceleration LoRA) | `models\loras\` | ✅ ready | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/loras/Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors> |
+| `Qwen-Image-Lightning-4steps-V1.0.safetensors` (predecessor 2512 acceleration LoRA, backup) | `models\loras\` | ✅ ready | <https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/loras/Qwen-Image-Lightning-4steps-V1.0.safetensors> |
+| `Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors` (2511 acceleration LoRA) | `models\loras\` | ✅ ready | <https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors> |
+| `qwen-image-edit-2511-multiple-angles-lora.safetensors` (multi-angle LoRA, pairs with the `ComfyUI-qwenmultiangle` plugin) | `models\loras\` | ✅ ready | community LoRA (local file; migrated with `models` on 5090) |
+| `birefnet.safetensors` (matting/background removal) | `models\background_removal\` | ✅ ready | <https://huggingface.co/Comfy-Org/birefnet> |
+| `Kook_Qwen_2512_真实幻想.safetensors` (2512 realistic/fantasy style LoRA, used by image-01 text-to-image) | `models\loras\` | ✅ ready | local file (community LoRA, no fixed URL; migrated with `models` on 5090, see [Appendix H.4](#h4--file-transfer-and-symlinks)) |
+| `[Qwen-Edit]3DChineseStyle_25.safetensors` (Qwen-Edit 3D Chinese-style LoRA, used by image-01 text-to-image) | `models\loras\` | ✅ ready | local file (community LoRA, no fixed URL; migrated with `models` on 5090, see [Appendix H.4](#h4--file-transfer-and-symlinks)) |
+| `Qwen-Image-InstantX-ControlNet-Inpainting.safetensors` (Qwen-Image Inpainting ControlNet, outpainting/partial redraw; used by the scene pull/push "outpainting" stage) | `models\controlnet\` | ✅ ready | <https://huggingface.co/Comfy-Org/Qwen-Image-InstantX-ControlNets/resolve/main/split_files/controlnet/Qwen-Image-InstantX-ControlNet-Inpainting.safetensors> |
 
-### 人脸修复(facerestore_models,Impact-Pack Detailer / ReActor 首次使用时自动下载)
+### Face restoration (facerestore_models, auto-downloaded on first use of Impact-Pack Detailer / ReActor)
 
-| 模型 | 放置目录 | 状态 | 下载地址 |
+| Model | Target directory | Status | Download URL |
 |------|---------|------|---------|
-| `GFPGANv1.4.pth`(通用人脸修复,优先) | `models\facerestore_models\` | ✅ 已就绪 | <https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/facerestore_models/GFPGANv1.4.pth> |
-| `GFPGANv1.3.pth`(备用) | 同上 | ✅ 已就绪 | <https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/facerestore_models/GFPGANv1.3.pth> |
-| `codeformer-v0.1.0.pth`(CodeFormer 细节增强,非商用许可) | 同上 | ✅ 已就绪 | <https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/facerestore_models/codeformer-v0.1.0.pth> |
-| `GPEN-BFR-512.onnx`(GPEN,轻量提速) | 同上 | ✅ 已就绪 | <https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/facerestore_models/GPEN-BFR-512.onnx> |
+| `GFPGANv1.4.pth` (general face restoration, preferred) | `models\facerestore_models\` | ✅ ready | <https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/facerestore_models/GFPGANv1.4.pth> |
+| `GFPGANv1.3.pth` (backup) | same as above | ✅ ready | <https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/facerestore_models/GFPGANv1.3.pth> |
+| `codeformer-v0.1.0.pth` (CodeFormer detail enhancement, non-commercial license) | same as above | ✅ ready | <https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/facerestore_models/codeformer-v0.1.0.pth> |
+| `GPEN-BFR-512.onnx` (GPEN, lightweight speedup) | same as above | ✅ ready | <https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/facerestore_models/GPEN-BFR-512.onnx> |
 
-### 音频类
+### Audio class
 
-| 模型 | 放置目录 | 状态 | 下载地址 |
+| Model | Target directory | Status | Download URL |
 |------|---------|------|---------|
-| `stable_audio_3_medium.safetensors` | `models\checkpoints\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/stable-audio-3/resolve/main/checkpoints/stable_audio_3_medium.safetensors> |
-| `t5gemma_b_b_ul2.safetensors`(StableAudio 文本编码器) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/stable-audio-3/resolve/main/text_encoders/t5gemma_b_b_ul2.safetensors> |
-| Qwen3-TTS-12Hz-1.7B-Base(万能:克隆+对话,工作流 ④⑤ 默认,~4.5 GB) | 插件自动下载至 `models/TTS/Qwen/` | ✅ 已就绪 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-Base> |
-| Qwen3-TTS-12Hz-1.7B-CustomVoice(9 预设音色,~4.5 GB) | 同上 | ✅ 已就绪 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice> |
-| Qwen3-TTS-12Hz-1.7B-VoiceDesign(自然语言造声,~4.5 GB) | 同上 | ✅ 已就绪 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign> |
-| Qwen3-TTS-12Hz-0.6B-Base(低显存克隆,约 4GB VRAM,~2.5 GB) | 同上 | ✅ 已就绪 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base> |
-| Qwen3-TTS-12Hz-0.6B-CustomVoice(低显存预设音色,~2.5 GB) | 同上 | ✅ 已就绪 | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice> |
-| SenseVoiceSmall(ASR 自动转写参考文本,工作流 ⑤ 必需,~0.9 GB) | 插件自动下载 | ✅ 已就绪 | <https://huggingface.co/FunAudioLLM/SenseVoiceSmall> |
-> **Qwen3-TTS 下载说明**:均为**目录型模型**,必须整目录下载(仅下 safetensors 无法加载);`Qwen3TTSLoader` 的 `auto_download`(默认开)会自动从 ModelScope 整目录下载。手动下载时:5 个 Qwen3-TTS 放 `models/TTS/Qwen/<模型名>/`,`SenseVoiceSmall` 放 `models/TTS/SenseVoiceSmall/`。
+| `stable_audio_3_medium.safetensors` | `models\checkpoints\` | ✅ ready | <https://huggingface.co/Comfy-Org/stable-audio-3/resolve/main/checkpoints/stable_audio_3_medium.safetensors> |
+| `t5gemma_b_b_ul2.safetensors` (StableAudio text encoder) | `models\text_encoders\` | ✅ ready | <https://huggingface.co/Comfy-Org/stable-audio-3/resolve/main/text_encoders/t5gemma_b_b_ul2.safetensors> |
+| Qwen3-TTS-12Hz-1.7B-Base (all-purpose: clone + dialogue, default for workflows ④⑤, ~4.5 GB) | auto-downloaded by the plugin to `models/TTS/Qwen/` | ✅ ready | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-Base> |
+| Qwen3-TTS-12Hz-1.7B-CustomVoice (9 preset voices, ~4.5 GB) | same as above | ✅ ready | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice> |
+| Qwen3-TTS-12Hz-1.7B-VoiceDesign (natural-language voice design, ~4.5 GB) | same as above | ✅ ready | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign> |
+| Qwen3-TTS-12Hz-0.6B-Base (low-VRAM cloning, ~4 GB VRAM, ~2.5 GB) | same as above | ✅ ready | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base> |
+| Qwen3-TTS-12Hz-0.6B-CustomVoice (low-VRAM preset voices, ~2.5 GB) | same as above | ✅ ready | <https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice> |
+| SenseVoiceSmall (ASR auto-transcription of reference text, required by workflow ⑤, ~0.9 GB) | auto-downloaded by the plugin | ✅ ready | <https://huggingface.co/FunAudioLLM/SenseVoiceSmall> |
+> **Notes on downloading Qwen3-TTS**: all are **directory-type models** and must be downloaded as whole directories (downloading only the safetensors won't load); `Qwen3TTSLoader`'s `auto_download` (on by default) automatically downloads the whole directory from ModelScope. For manual download: place the 5 Qwen3-TTS models at `models/TTS/Qwen/<model-name>/`, and `SenseVoiceSmall` at `models/TTS/SenseVoiceSmall/`.
 
-| `qwen3.5_2b_bf16.safetensors`(音频编码) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/Qwen3.5/resolve/main/text_encoders/qwen3.5_2b_bf16.safetensors> |
+| `qwen3.5_2b_bf16.safetensors` (audio encoder) | `models\text_encoders\` | ✅ ready | <https://huggingface.co/Comfy-Org/Qwen3.5/resolve/main/text_encoders/qwen3.5_2b_bf16.safetensors> |
 
-### 视频类(MiniMax H3,Comfy-Org/MiniMax-H3 仓库)
+### Video class (MiniMax H3, Comfy-Org/MiniMax-H3 repo)
 
-| 模型 | 放置目录 | 状态 | 下载地址 |
+| Model | Target directory | Status | Download URL |
 |------|---------|------|---------|
-| `minimax_h3_fl2va_pruned_int8_convrot.safetensors`(FL2VA,T2V/I2V 用) | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors> |
-| `minimax_h3_ref2va_pruned_int8_convrot.safetensors`(Ref2VA,**R2V 参考生视频用,独立文件**) | `models\diffusion_models\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors> |
-| `qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors`(文本编码器) | `models\text_encoders\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors> |
-| `minimax_h3_video_vae_fp16.safetensors`(视频 VAE) | `models\vae\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors> |
-| `minimax_h3_audio_vae_fp32.safetensors`(音频 VAE) | `models\vae\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors> |
+| `minimax_h3_fl2va_pruned_int8_convrot.safetensors` (FL2VA, for T2V/I2V) | `models\diffusion_models\` | ✅ ready | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors> |
+| `minimax_h3_ref2va_pruned_int8_convrot.safetensors` (Ref2VA, **for R2V reference-to-video, a separate file**) | `models\diffusion_models\` | ✅ ready | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors> |
+| `qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors` (text encoder) | `models\text_encoders\` | ✅ ready | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors> |
+| `minimax_h3_video_vae_fp16.safetensors` (video VAE) | `models\vae\` | ✅ ready | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors> |
+| `minimax_h3_audio_vae_fp32.safetensors` (audio VAE) | `models\vae\` | ✅ ready | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors> |
 
-> **fl2va 与 ref2va 是同一基座的任务变体**:文生/图生工作流(3000/3010/4000/4010)用 fl2va,参考生成工作流(3020/4030)用 ref2va,两者都要下。仓库另有 bf16/int8_convrot/pruned_fp8_scaled 档可选。
+> **fl2va and ref2va are task variants of the same base**: the text/image-to-video workflows (3000/3010/4000/4010) use fl2va, the reference-generation workflows (3020/4030) use ref2va — download both. The repo also has bf16/int8_convrot/pruned_fp8_scaled variants to choose from.
 
-### MiniMax H3 Turbo LoRA(官方 Comfy-Org 转换版,已就绪)
+### MiniMax H3 Turbo LoRA (official Comfy-Org conversion, ready)
 
-> Comfy-Org 官方转换的 H3 Turbo 加速 LoRA(bf16,**约 5 倍提速**),来源 `Comfy-Org/MiniMax-H3` 仓库 `loras/` 目录;国内下载把前缀 `huggingface.co` 换成 `hf-mirror.com`。配套要求:ComfyUI v0.30.0+、KJNodes、ComfyUI-ReservedVRAM、SageAttention。
+> The H3 Turbo acceleration LoRA (bf16, **~5x speedup**) officially converted by Comfy-Org, from the `loras/` directory of the `Comfy-Org/MiniMax-H3` repo; for downloads inside China, replace the `huggingface.co` prefix with `hf-mirror.com`. Companion requirements: ComfyUI v0.30.0+, KJNodes, ComfyUI-ReservedVRAM, SageAttention.
 
-| 模型 | 放置目录 | 状态 | 下载地址 |
+| Model | Target directory | Status | Download URL |
 |------|---------|------|---------|
-| `minimax_h3_fl2v_turbo_4step_v1.0_768p_comfyui_bf16.safetensors`(fl2va 4 步,768p 训练域,1.82GB,工作流默认) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/loras/minimax_h3_fl2v_turbo_4step_v1.0_768p_comfyui_bf16.safetensors> |
-| `minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors`(fl2va 8 步,质量更高,1.82GB) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/loras/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors> |
-| `minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors`(ref2va 4 步,R2V 工作流用,0.36GB) | `models\loras\` | ✅ 已就绪 | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors> |
+| `minimax_h3_fl2v_turbo_4step_v1.0_768p_comfyui_bf16.safetensors` (fl2va 4-step, 768p training domain, 1.82 GB, workflow default) | `models\loras\` | ✅ ready | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/loras/minimax_h3_fl2v_turbo_4step_v1.0_768p_comfyui_bf16.safetensors> |
+| `minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors` (fl2va 8-step, higher quality, 1.82 GB) | `models\loras\` | ✅ ready | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/loras/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors> |
+| `minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors` (ref2va 4-step, for R2V workflows, 0.36 GB) | `models\loras\` | ✅ ready | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors> |
 
-### MiniMax H3 加速要点
+### MiniMax H3 speedup essentials
 
-- **标配(工作流已内置)**:Sage Attention(+20~30%,KJNodes `Patch Sage Attention KJ`)+ EasyCache(ComfyUI 内置节点,参数 0.30/0.20/0.90,代价为长视频连贯性下降)+ Turbo LoRA(~5x,见上节)
-- **显存**:8G/12G/16G 均可跑(动态卸载,clip 编码器放 CPU);本地最高 768p,2K 需官方 API;显存紧张可加 `🎈VRAM/RAM-Cleanup` 节点或 `--vram-headroom`
+- **Standard kit (built into the workflows)**: Sage Attention (+20–30%, KJNodes `Patch Sage Attention KJ`) + EasyCache (built-in ComfyUI node, parameters 0.30/0.20/0.90, at the cost of long-video coherence) + Turbo LoRA (~5x, see above)
+- **VRAM**: runs on 8G/12G/16G (dynamic offloading, clip encoder on CPU); local max is 768p, 2K needs the official API; when VRAM is tight, add a `🎈VRAM/RAM-Cleanup` node or `--vram-headroom`
 
-## 附录 D · 需安装的插件
+## Appendix D · Plugins to install
 
-| 插件 | 用途 | 地址 | 状态 |
+| Plugin | Purpose | URL | Status |
 |------|------|------|------|
-| ComfyUI-Qwen3-TTS | 开源 TTS 主方案(克隆/音色设计/情绪标签/无限多角色对话,Apache-2.0) | <https://github.com/wanaigc/ComfyUI-Qwen3-TTS> | ✅ 已装 |
-| ComfyUI-Angelo(可选) | Klein 点击式编辑 | <https://github.com/shootthesound/ComfyUI-Angelo> | 未装(需要时再装) |
+| ComfyUI-Qwen3-TTS | The open-source TTS main option (clone/voice design/emotion tags/unlimited multi-character dialogue, Apache-2.0) | <https://github.com/wanaigc/ComfyUI-Qwen3-TTS> | ✅ installed |
+| ComfyUI-Angelo (optional) | Klein click-to-edit | <https://github.com/shootthesound/ComfyUI-Angelo> | not installed (install when needed) |
 
-### H3 加速插件(已装,2026-08-06)
+### H3 speedup plugins (installed 2026-08-06)
 
-| 插件 | 用途 | GitHub | 状态 |
+| Plugin | Purpose | GitHub | Status |
 |------|------|--------|------|
-| ComfyUI-Spectrum-MiniMax-H3 | 谱特征预测,减少采样求值(275★) | <https://github.com/xmarre/ComfyUI-Spectrum-MiniMax-H3> | ✅ submodule |
-| ComfyUI-SolAttn_triton | Sol-Attn 稀疏注意力(kijai,仅 4090/5090 实测) | <https://github.com/kijai/ComfyUI-SolAttn_triton> | ✅ submodule |
-| ComfyUI-ReservedVRAM | 动态预留显存,防 OOM | <https://github.com/Windecay/ComfyUI-ReservedVRAM> | ✅ submodule |
-| H3ReferenceSuite(H3RefLoader) | H3 参考加载/工作流套件 | 随 <https://github.com/juemin4-source/minimax-h3-guide> | ✅ 软链接(见附录 A) |
+| ComfyUI-Spectrum-MiniMax-H3 | Spectral feature prediction, reduces sampling evaluations (275★) | <https://github.com/xmarre/ComfyUI-Spectrum-MiniMax-H3> | ✅ submodule |
+| ComfyUI-SolAttn_triton | Sol-Attn sparse attention (kijai, verified only on 4090/5090) | <https://github.com/kijai/ComfyUI-SolAttn_triton> | ✅ submodule |
+| ComfyUI-ReservedVRAM | Dynamic VRAM reservation, prevents OOM | <https://github.com/Windecay/ComfyUI-ReservedVRAM> | ✅ submodule |
+| H3ReferenceSuite (H3RefLoader) | H3 reference loading / workflow suite | ships with <https://github.com/juemin4-source/minimax-h3-guide> | ✅ symlink (see Appendix A) |
 
-> EasyCache 为 ComfyUI 内置节点(无需插件);曾考虑的 ComfyUI-MiniMaxH3-Cache / ComfyUI_GJJ_Nodes 未安装(前者以内置 EasyCache 等价替代,后者非必要)。
+> EasyCache is a built-in ComfyUI node (no plugin needed); the ComfyUI-MiniMaxH3-Cache / ComfyUI_GJJ_Nodes that were once considered are not installed (the former is replaced by the built-in EasyCache, the latter is unnecessary).
 
-### 扩图/裁切放大插件(已装,2026-08-10)
+### Outpainting/crop-upscale plugins (installed 2026-08-10)
 
-| 插件 | 用途 | GitHub | 状态 |
+| Plugin | Purpose | GitHub | Status |
 |------|------|--------|------|
-| ComfyUI-Impact-Pack | 局部放大/检测精修:`DetailerForEach`/`FaceDetailer` 区域框选→裁剪→放大→重绘→贴回(3251★) | <https://github.com/ltdrdata/ComfyUI-Impact-Pack> | ✅ submodule |
-| ComfyUI_LayerStyle | 图层风格化节点集:`LayerUtility: CropByMask`/`LayerMask: MaskBoxDetect` 画遮罩选区域(3118★) | <https://github.com/chflame163/ComfyUI_LayerStyle> | ✅ submodule |
-| ComfyUI-Easy-Use | 易用节点集:`easy imageCrop` 前端拖框截图、`easy imageSplitGrid` 九宫格拆块放大(2651★) | <https://github.com/yolain/ComfyUI-Easy-Use> | ✅ submodule |
-| ComfyUI-SeedVR2_VideoUpscaler | SeedVR2 高清修复/放大(图像+视频,2723★) | <https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler> | ✅ submodule |
-| ComfyUI-SUPIR | SUPIR 超分放大修复(2303★) | <https://github.com/kijai/ComfyUI-SUPIR> | ✅ submodule |
+| ComfyUI-Impact-Pack | Local upscaling/detection refinement: `DetailerForEach`/`FaceDetailer` region box-select → crop → upscale → redraw → paste back (3251★) | <https://github.com/ltdrdata/ComfyUI-Impact-Pack> | ✅ submodule |
+| ComfyUI_LayerStyle | Layer stylization node pack: `LayerUtility: CropByMask` / `LayerMask: MaskBoxDetect` draw a mask and select a region (3118★) | <https://github.com/chflame163/ComfyUI_LayerStyle> | ✅ submodule |
+| ComfyUI-Easy-Use | Usability node pack: `easy imageCrop` frontend box-drag screenshot, `easy imageSplitGrid` nine-grid split-upscale (2651★) | <https://github.com/yolain/ComfyUI-Easy-Use> | ✅ submodule |
+| ComfyUI-SeedVR2_VideoUpscaler | SeedVR2 HD restoration/upscaling (image + video, 2723★) | <https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler> | ✅ submodule |
+| ComfyUI-SUPIR | SUPIR super-resolution upscale restoration (2303★) | <https://github.com/kijai/ComfyUI-SUPIR> | ✅ submodule |
 
-> 以上全部注册为 **git submodule**,经 `ComfyUI\custom_nodes\` **目录级**相对符号链接加载(单链接聚合全部插件)。加速启用细节见[附录 C 加速要点](#minimax-h3-加速要点)。
+> All of the above are registered as **git submodules** and loaded via the **directory-level** relative symlink at `ComfyUI\custom_nodes\` (a single link aggregates all plugins). For acceleration enablement details see [Appendix C speedup essentials](#minimax-h3-speedup-essentials).
 
-## 附录 E · 网络与镜像
+## Appendix E · Network and mirrors
 
-- **默认直连外网**;直连失败(超时/403/TLS 被掐)时,改用本机代理,如 Clash Verge 混合端口 `127.0.0.1:7890`(HTTP 与 SOCKS5 均可)
-- **HuggingFace 国内镜像**:把下载链接前缀 `huggingface.co` 换成 `hf-mirror.com` 即可,例:
+- **Direct external connection by default**; on direct-connection failure (timeout/403/TLS cut), switch to a local proxy, e.g. the Clash Verge mixed port `127.0.0.1:7890` (both HTTP and SOCKS5 work)
+- **HuggingFace China mirror**: just replace the `huggingface.co` prefix in the download link with `hf-mirror.com`, e.g.
   `https://hf-mirror.com/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors`
-- 部分站点(如 OpenAI 系域名)直连会被 Cloudflare 拦截,需走允许对应域名的代理节点
+- Some sites (e.g. OpenAI-family domains) get blocked by Cloudflare on direct connection; you need a proxy node that allows the corresponding domain
 
-## 附录 H · 迁移到 Linux + RTX 5090D 服务器（2026-08-06）
+## Appendix H · Migrating to a Linux + RTX 5090D server (2026-08-06)
 
-> 目标:Windows(8GB 显存 / 16GB 内存)→ Linux 服务器(RTX 5090D,32GB GDDR7)。
-> 本机基准环境:torch 2.13.0+cu130、sageattention 2.2.0+cu130(post6)、triton-windows 3.7.1.post27(Windows 专属,Linux 换 `triton`)。
+> Goal: Windows (8 GB VRAM / 16 GB RAM) → Linux server (RTX 5090D, 32 GB GDDR7).
+> Baseline environment: torch 2.13.0+cu130, sageattention 2.2.0+cu130 (post6), triton-windows 3.7.1.post27 (Windows-only; on Linux use `triton`).
 
-### H.1 硬件 / 驱动(先决条件)
+### H.1 Hardware / drivers (prerequisites)
 
-- RTX 5090D = Blackwell 架构,**sm_120**,32GB GDDR7;CUDA 核心与 5090 相同(21760),但 AI 算力约为 5090 的 71%(2375 vs 3352 TOPS)
-- **Linux 驱动必须 ≥ 570**(CUDA 12.8+),建议直接装最新 580/6xx 系;装完 `nvidia-smi` 能识别 sm_120 才可继续
-- torch 必须支持 sm_120:**2.7+cu128 及以上**;本机用的 2.13.0+cu130 满足。切勿用旧 torch(2.5.x/cu124 会报 `no kernel image available for sm_120`)
+- RTX 5090D = Blackwell architecture, **sm_120**, 32 GB GDDR7; the CUDA cores are the same as the 5090 (21760), but the AI throughput is about 71% of the 5090 (2375 vs 3352 TOPS)
+- **The Linux driver must be ≥ 570** (CUDA 12.8+); just install the latest 580/6xx series; only continue once `nvidia-smi` recognizes sm_120
+- torch must support sm_120: **2.7+cu128 or later**; the 2.13.0+cu130 used here satisfies it. Never use an old torch (2.5.x/cu124 will report `no kernel image available for sm_120`)
 
-### H.2 环境重建(Linux 不能直接复用 Windows 环境)
+### H.2 Rebuilding the environment (Linux cannot directly reuse the Windows environment)
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install torch==2.13.0+cu130 torchvision==0.28.0+cu130 torchaudio==2.11.0+cu130 \
   --index-url https://download.pytorch.org/whl/cu130
-# 其余依赖从 Windows `pip freeze` 生成 requirements,唯一替换:
-#   triton-windows==3.7.1.post27 → triton(与 torch 2.13 匹配)
+# The remaining dependencies come from a `pip freeze` of the Windows environment as requirements; the only replacement:
+#   triton-windows==3.7.1.post27 → triton (matching torch 2.13)
 ```
 
-- **sageattention**:2.2 支持 Blackwell;源码编译前设置 `TORCH_CUDA_ARCH_LIST="12.0"`(**只写 12.0,不要加 9.0**,否则编译失败);Blackwell 上相对 torch attention 提速约 6%(社区实测,低于 Ada)
+- **sageattention**: 2.2 supports Blackwell; before compiling from source, set `TORCH_CUDA_ARCH_LIST="12.0"` (**only 12.0, do not add 9.0**, or the compile fails); on Blackwell it's about 6% faster than torch attention (community measurement, lower than Ada)
 
-### H.3 启动参数(与 Windows 的差异,重点)
+### H.3 Startup parameters (differences from Windows, key points)
 
-| Windows 参数 | Linux 处理 |
+| Windows parameter | Linux handling |
 |---|---|
-| `--disable-pinned-memory` | **删除**(Windows 0.30.x 回归修复用;Linux pinned 内存可用到 95% RAM,是加速项) |
-| `--fast-disk` | **删除**(8G 显存/16G 内存的妥协;32G 显存可整体装下 Qwen-2512 fp8 约 19.5G,无需磁盘换页) |
-| `--enable-manager` | 保留 |
-| 建议新增 | 默认 dynamic VRAM 即可;模型常驻不吃紧时可试 `--highvram`(主模型 19.5G + 文本编码器 7.9G ≈ 27.4G) |
+| `--disable-pinned-memory` | **Remove** (a Windows 0.30.x regression workaround; on Linux, pinned memory can use up to 95% of RAM — it's a speedup item) |
+| `--fast-disk` | **Remove** (a compromise for 8G VRAM / 16G RAM; with 32G VRAM, Qwen-2512 fp8 ~19.5G fits entirely, no disk paging needed) |
+| `--enable-manager` | Keep |
+| Suggested addition | The default dynamic VRAM is fine; when models can stay resident, try `--highvram` (main model 19.5G + text encoder 7.9G ≈ 27.4G) |
 
-启动脚本改为 `start-comfyui.sh`:
+Change the startup script to `start-comfyui.sh`:
 
 ```bash
 #!/usr/bin/env bash
@@ -415,18 +415,18 @@ source ../.venv/bin/activate
 python main.py --enable-manager
 ```
 
-### H.4 文件搬运与软链接
+### H.4 File transfer and symlinks
 
-- 超项目:`git clone --recurse-submodules <remote>`(**50 个子模块**)
-- **models 约 189GB 单独 rsync**(`rsync -avP`);服务器需预留 ≥300GB NVMe
-- 软链接重建(`ln -s` 相对路径,共 7 个,见附录 A 清单):
-  - `ComfyUI/input → ../media`、`ComfyUI/output → ../media`、`ComfyUI/models → ../models`、`ComfyUI/user/default/workflows → ../../../workflows`
-  - `ComfyUI/custom_nodes → ../custom_nodes`(**目录级,聚合 43 插件**)、`custom_nodes/H3ReferenceSuite → ../h3/minimax-h3-guide/custom_nodes/H3ReferenceSuite`、`.claude → .agents`
-- `ComfyUI-FallingTS/.env`(API Key)不进 git,服务器上单独放置并 `chmod 600`
-- 中文文件名 / 路径在 Linux UTF-8 下无问题
+- The super-project: `git clone --recurse-submodules <remote>` (**50 submodules**)
+- **models ~189 GB are rsynced separately** (`rsync -avP`); the server needs ≥300 GB NVMe reserved
+- Rebuild the symlinks (`ln -s` relative paths, 7 total, see the Appendix A list):
+  - `ComfyUI/input → ../media`, `ComfyUI/output → ../media`, `ComfyUI/models → ../models`, `ComfyUI/user/default/workflows → ../../../workflows`
+  - `ComfyUI/custom_nodes → ../custom_nodes` (**directory-level, aggregates 43 plugins**), `custom_nodes/H3ReferenceSuite → ../h3/minimax-h3-guide/custom_nodes/H3ReferenceSuite`, `.claude → .agents`
+- `ComfyUI-FallingTS/.env` (API keys) does not go into git; place it separately on the server and `chmod 600`
+- Chinese file names/paths are fine under Linux UTF-8
 
-### H.5 服务器建议
+### H.5 Server recommendations
 
-- 内存 **≥64GB**(H3 视频流程吃内存,32G 是底线);配 32~64GB swap 兜底
-- 远程访问:SSH 端口转发到 `127.0.0.1:8188`,或 `--listen 0.0.0.0` + 防火墙白名单
-- 5090D 满载 575W,确认电源与散热余量
+- RAM **≥64 GB** (the H3 video pipeline eats RAM; 32G is the floor); pair it with 32–64 GB swap as a safety net
+- Remote access: SSH port-forward to `127.0.0.1:8188`, or `--listen 0.0.0.0` + firewall allowlist
+- The 5090D at full load is 575 W; confirm the power supply and cooling headroom
