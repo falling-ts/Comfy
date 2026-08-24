@@ -39,12 +39,12 @@ esac
 
 if [ "$IS_WINDOWS" -eq 1 ]; then
   PY_BIN="${PY_BIN:-$ROOT/.venv/Scripts/python.exe}"
-  ARGS=(--enable-manager --disable-pinned-memory --fast-disk)
+  ARGS=(--enable-manager --disable-pinned-memory --fast-disk --port "$PORT")
 else
   PY_BIN="${PY_BIN:-$ROOT/.venv/bin/python}"
   [ -x "$PY_BIN" ] || PY_BIN="/root/miniconda3/envs/comfy/bin/python"
   RESERVE_VRAM="${RESERVE_VRAM:-22}"
-  ARGS=(--enable-manager)
+  ARGS=(--enable-manager --port "$PORT")
   [ "$RESERVE_VRAM" = "0" ] || ARGS+=(--reserve-vram "$RESERVE_VRAM")
 fi
 
@@ -71,7 +71,7 @@ kill_port() {
   fi
   local port_hex inodes fd pid i
   port_hex=$(printf '%04X' "$PORT")
-  inodes="$(awk -v p="$port_hex " '$2 ~ ":" p "\\$" && $4 == "0A" {print $10}' /proc/net/tcp /proc/net/tcp6 2>/dev/null | sort -u)"
+  inodes="$(awk -v p=":$port_hex" 'substr($2, length($2)-length(p)+1) == p && $4 == "0A" {print $10}' /proc/net/tcp /proc/net/tcp6 2>/dev/null | sort -u)"
   for inode in $inodes; do
     for fd in /proc/[0-9]*/fd/*; do
       [ "$(readlink "$fd" 2>/dev/null)" = "socket:[$inode]" ] || continue
@@ -81,7 +81,7 @@ kill_port() {
   done
   # 等端口释放; 10 秒后仍在则强杀(有些进程挂起不响应 TERM)
   for i in $(seq 1 10); do
-    inodes="$(awk -v p="$port_hex " '$2 ~ ":" p "\\$" && $4 == "0A" {print $10}' /proc/net/tcp /proc/net/tcp6 2>/dev/null | sort -u)"
+    inodes="$(awk -v p=":$port_hex" 'substr($2, length($2)-length(p)+1) == p && $4 == "0A" {print $10}' /proc/net/tcp /proc/net/tcp6 2>/dev/null | sort -u)"
     [ -z "$inodes" ] && return 0
     sleep 1
   done
