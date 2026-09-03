@@ -14,11 +14,10 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ 视频 | `ComfyUI-VideoHelperSuite`、`ComfyUI-WanVideoWrapper`、`ComfyUI-Frame-Interpolation`(补帧)、`ComfyUI-qwenmultiangle`(Qwen 多镜头) |
 | └ 图像/编辑/生成 | `ComfyUI-Easy-Use`、`ComfyUI_IPAdapter_plus`、`ComfyUI-ReActor`(换脸)、`ComfyUI-RMBG`、`ComfyUI-segment-anything-2`、`comfyui_controlnet_aux`、`ComfyUI-IC-Light`、`ComfyUI-DepthAnythingV2`、`Comfyui-QwenEditUtils`、`comfyui-mixlab-nodes`、`ComfyUI-Florence2`、`ComfyUI-post-processing-nodes`(后期处理) |
 | └ 工具/其它 | `ComfyUI-GGUF`(GGUF 量化加载)、`ComfyUI-KJNodes`(KJ 工具包)、`rgthree-comfy`、`ComfyUI-Custom-Scripts`、`ComfyUI-Detail-Daemon`、`ComfyUI-Crystools`、`ComfyUI-MultiGPU`、`ComfyUI-LogicUtils`、`ComfyUI-Inspire-Pack`、`cg-use-everywhere`、`audio-separation-nodes-comfyui`、`ComfyUI_essentials`、`ComfyUI_LinkFX`(连线动画)、`ComfyUI-AnimatedLinks`(连线动画) |
-| `docs` | 本地参考文档:20 个分类 md + 5 个子目录(4 个 git submodule + `Qwen-Image-Edit-Skills` 本地目录) | 
+| `docs` | 本地参考文档:20 个分类 md + 4 个子目录(3 个 git submodule + `Qwen-Image-Edit-Skills` 本地目录) | 
 | └ `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,子模块) |
 | └ `Obsidian-Dev-Docs` | Obsidian 官方开发者文档(插件开发参考,子模块) |
 | └ `Obsidian-API` | Obsidian API 类型定义(`obsidian.d.ts`/`publish.d.ts`,子模块) |
-| └ `codex` | Codex CLI 源码/文档子模块(上游 OpenCode 体系,子模块) |
 | └ `Qwen-Image-Edit-Skills` | Qwen-Image-Edit 官方 Skills 参考(本地目录,非子模块) |
 | └ 分类 md | 启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、节点输入类型总表、插件注册表、模型调研报告、H3 提示词格式调研、FallingTS 分段执行机制等 |
 | `h3` | **MiniMax H3 生态聚合目录**(2026-08-10 建):`MiniMax-H3`(官方模型仓库,自带 9 个官方 Skills)+ `minimax-h3-guide`(参考加载套件,其 `H3ReferenceSuite` 由根 `custom_nodes` 子链接指向) |

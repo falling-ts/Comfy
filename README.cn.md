@@ -186,7 +186,7 @@ Comfy/
 │   ├── ComfyUI-GGUF/  ComfyUI-KJNodes/   # 量化加载 / 工具节点包
 │   ├── ComfyUI-OrbitSheets/  # H3 场景/角色参考板(多视角运镜 + 视觉选帧拼网格图)
 │   └── ...(其余 39 个,见 AGENTS.md 目录结构)
-├── docs/                     # 20 个分类文档 + 4 个子模块(ComfyUI-Docs/Obsidian-Dev-Docs/Obsidian-API/codex)
+├── docs/                     # 20 个分类文档 + 3 个子模块(ComfyUI-Docs/Obsidian-Dev-Docs/Obsidian-API)
 ├── h3/                       # MiniMax H3 生态(MiniMax-H3 + minimax-h3-guide)
 ├── workflows/                # 用户工作流 24 个(1xxx~7xxx,见附录 B)
 ├── models/                   # 模型实际存放处(约 189GB,38 个槽位目录,见附录 C)

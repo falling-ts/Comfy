@@ -186,7 +186,7 @@ Comfy/
 │   ├── ComfyUI-GGUF/  ComfyUI-KJNodes/   # quantized loading / utility node pack
 │   ├── ComfyUI-OrbitSheets/  # H3 scene/character reference boards (multi-angle camera + visual frame picking into grid images)
 │   └── ...(the other 39, see the directory layout in AGENTS.md)
-├── docs/                     # 20 categorized docs + 4 submodules (ComfyUI-Docs/Obsidian-Dev-Docs/Obsidian-API/codex)
+├── docs/                     # 20 categorized docs + 3 submodules (ComfyUI-Docs/Obsidian-Dev-Docs/Obsidian-API)
 ├── h3/                       # MiniMax H3 ecosystem (MiniMax-H3 + minimax-h3-guide)
 ├── workflows/                # 24 user workflows (1xxx~7xxx, see Appendix B)
 ├── models/                   # where models actually live (~189 GB, 38 slot directories, see Appendix C)
