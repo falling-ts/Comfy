@@ -1,9 +1,9 @@
-# ComfyUI 工作流模板清单(全部 754 个)
+# ComfyUI 工作流模板清单(全部 765 个)
 
-- 数据来源:本地 ComfyUI 服务 `http://127.0.0.1:8188`(v0.34.2 / 模板包 0.11.50)
-- 核心模板:521 个(来自 `GET /templates/index.zh.json`,8 分类),本地缓存补遗 18 个(快速开始×10、其它分类×8,不在当前 API 索引,下载链接指向本地文件),自定义节点模板 215 个(20 插件,来自 `GET /api/workflow_templates`)
-- 下载链接验证:736 个中 736 个返回 HTTP 200;预览图 404 的写作 `-`
-- 生成时间:2026-08-30
+- 数据来源:本地 ComfyUI 服务 `http://127.0.0.1:8188`(v0.34.3 / 模板包 0.11.54)
+- 核心模板:530 个(来自 `GET /templates/index.zh.json`,9 分类),本地缓存补遗 18 个(快速开始×10、其它分类×8,不在当前 API 索引,下载链接指向本地文件),自定义节点模板 215 个(20 插件,来自 `GET /api/workflow_templates`)
+- 下载链接验证:747 个中 747 个返回 HTTP 200;预览图 404 的写作 `-`
+- 生成时间:2026-09-04(更新:补充模板包 0.11.54 新增的 11 个官方模板)
 
 ## 目录
 
@@ -18,6 +18,7 @@
 - 节点基础(5 个)
 - 本地缓存补遗(8 个)
 - 自定义节点模板(215 个)
+- 2026-09-04 新增(11 个)
 
 ## 视频(165 个)
 
@@ -829,3 +830,19 @@
 | comfyui-mixlab-nodes | 3D-workflow | [下载](http://127.0.0.1:8188/api/workflow_templates/comfyui-mixlab-nodes/3D-workflow.json) |
 | comfyui-mixlab-nodes | poster-layers-workflow | [下载](http://127.0.0.1:8188/api/workflow_templates/comfyui-mixlab-nodes/poster-layers-workflow.json) |
 | comfyui-mixlab-nodes | swarm制作的播客节点workflow | [下载](http://127.0.0.1:8188/api/workflow_templates/comfyui-mixlab-nodes/swarm%E5%88%B6%E4%BD%9C%E7%9A%84%E6%92%AD%E5%AE%A2%E8%8A%82%E7%82%B9workflow.json) |
+
+## 2026-09-04 新增模板(模板包 0.11.54,共 11 个)
+
+| # | 模板名称 | 标题 | 模型 | 大小 | 显存 | 使用量 | 日期 | 开源 | 下载链接 | 预览图 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | api_fishaudio_speech_to_text | Fish Audio：语音转文字 | Fish Audio | - | - | 0 | 2026-08-31 | 否 | [下载](http://127.0.0.1:8188/templates/api_fishaudio_speech_to_text.json) | - |
+| 2 | api_fishaudio_text_to_speech | Fish Audio：文本转语音 | Fish Audio | - | - | 0 | 2026-08-31 | 否 | [下载](http://127.0.0.1:8188/templates/api_fishaudio_text_to_speech.json) | - |
+| 3 | api_fishaudio_voice_clone_tts | Fish Audio：语音克隆转语音 | Fish Audio | - | - | 0 | 2026-08-31 | 否 | [下载](http://127.0.0.1:8188/templates/api_fishaudio_voice_clone_tts.json) | - |
+| 4 | api_minimax_h3_max_flf2v | MiniMax H3 Max：FLF2V | MiniMax H3 | - | - | 0 | 2026-09-01 | 否 | [下载](http://127.0.0.1:8188/templates/api_minimax_h3_max_flf2v.json) | - |
+| 5 | api_minimax_h3_max_i2v | MiniMax H3 Max：图生视频 | MiniMax H3 | - | - | 0 | 2026-09-01 | 否 | [下载](http://127.0.0.1:8188/templates/api_minimax_h3_max_i2v.json) | [预览](http://127.0.0.1:8188/templates/api_minimax_h3_max_i2v.json) |
+| 6 | api_minimax_h3_max_r2v | MiniMax H3 Max：参考生视频 | MiniMax H3 | - | - | 0 | 2026-09-02 | 否 | [下载](http://127.0.0.1:8188/templates/api_minimax_h3_max_r2v.json) | - |
+| 7 | api_minimax_h3_max_t2v | MiniMax H3 Max：文生视频 | MiniMax H3 | - | - | 0 | 2026-09-01 | 否 | [下载](http://127.0.0.1:8188/templates/api_minimax_h3_max_t2v.json) | - |
+| 8 | api_pixverse6_i2v | PixVerse 6.0：图生视频 | PixVerse | - | - | 0 | 2026-08-30 | 否 | [下载](http://127.0.0.1:8188/templates/api_pixverse6_i2v.json) | - |
+| 9 | api_pixverse6_r2v | PixVerse 6.0：参考生视频 | PixVerse | - | - | 0 | 2026-08-02 | 否 | [下载](http://127.0.0.1:8188/templates/api_pixverse6_r2v.json) | - |
+| 10 | api_pixverse6_t2v | PixVerse 6.0：文生视频 | PixVerse | - | - | 0 | 2026-08-30 | 否 | [下载](http://127.0.0.1:8188/templates/api_pixverse6_t2v.json) | - |
+| 11 | utility_bria_increase_resolution | 图像放大：Bria 提高分辨率 | BRIA | - | - | 0 | 2026-09-02 | 否 | [下载](http://127.0.0.1:8188/templates/utility_bria_increase_resolution.json) | - |
