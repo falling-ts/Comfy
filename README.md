@@ -228,7 +228,7 @@ Comfy/
 | Workflow | Purpose | H3 mode |
 |--------|------|---------|
 | `3000-文生场景` | text → scene video (visual only, no audio track) | T2VA (fl2va) |
-| `3010-图生场景` | first-frame image → scene video | I2V (fl2va) |
+| `3010-首帧场景` | first-frame image → scene video | I2V (fl2va) |
 | `3020-参考场景` | multi-image + multi-video reference → video | R2V (ref2va) |
 | `3030-OrbitSheets场景` | anchor image → H3 multi-angle camera → visual frame picking into a "scene reference board" grid image | I2V (fl2va) + OrbitSheets plugin |
 | `3040-Skythread场景` | character/prop/empty-scene three references (single responsibility) → scene video | R2V (ref2va) |
