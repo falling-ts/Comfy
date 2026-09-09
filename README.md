@@ -233,7 +233,7 @@ Comfy/
 | `3030-OrbitSheets场景` | anchor image → H3 multi-angle camera → visual frame picking into a "scene reference board" grid image | I2V (fl2va) + OrbitSheets plugin |
 | `3040-Skythread场景` | character/prop/empty-scene three references (single responsibility) → scene video | R2V (ref2va) |
 | `4000-文生视频` | text → video (generic version isomorphic to 3000) | T2VA (fl2va) |
-| `4010-图生视频` | first-frame image → video | I2V (fl2va) |
+| `4010-首帧视频` | first-frame image → video | I2V (fl2va) |
 | `4020-首尾视频` | first+last frame → video | fl2va |
 | `4030-参考视频` | reference image/video → video | R2V (ref2va) |
 
