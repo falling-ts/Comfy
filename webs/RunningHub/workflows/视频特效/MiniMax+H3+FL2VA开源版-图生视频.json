@@ -1,149 +1,7 @@
 {
-	"last_link_id":45,
+	"last_link_id":47,
 	"nodes":[
 		{
-			"mode":0,
-			"outputs":[
-				{
-					"name":"frames",
-					"slot_index":0,
-					"links":[
-						4
-					],
-					"label":"frames",
-					"type":"IMAGE",
-					"localized_name":"frames"
-				},
-				{
-					"name":"audio",
-					"slot_index":1,
-					"links":[
-						5
-					],
-					"label":"audio",
-					"type":"AUDIO",
-					"localized_name":"audio"
-				}
-			],
-			"size":[
-				380,
-				100
-			],
-			"pos":[
-				2105.158203125,
-				206.83335876464844
-			],
-			"widgets_values":[
-				
-			],
-			"inputs":[
-				{
-					"name":"h3_vae_bundle",
-					"link":15,
-					"label":"h3_vae_bundle",
-					"type":"MINIMAX_H3_VAE_BUNDLE",
-					"localized_name":"h3_vae_bundle"
-				},
-				{
-					"name":"sampled_av_latent",
-					"link":3,
-					"label":"sampled_av_latent",
-					"type":"MINIMAX_H3_AV_LATENT",
-					"localized_name":"sampled_av_latent"
-				}
-			],
-			"flags":{
-				
-			},
-			"id":10,
-			"type":"RHMiniMaxH3DecodeAV",
-			"title":"Decode Video + Audio",
-			"properties":{
-				"widget_ue_connectable":{
-					
-				},
-				"Node name for S&R":"RHMiniMaxH3DecodeAV"
-			},
-			"order":13
-		},
-		{
-			"mode":0,
-			"outputs":[
-				{
-					"name":"VIDEO",
-					"slot_index":0,
-					"links":[
-						6
-					],
-					"label":"VIDEO",
-					"type":"VIDEO",
-					"localized_name":"视频"
-				}
-			],
-			"size":[
-				300,
-				102
-			],
-			"pos":[
-				2512.83447265625,
-				199.99989318847656
-			],
-			"widgets_values":[
-				24,
-				8
-			],
-			"inputs":[
-				{
-					"name":"images",
-					"link":4,
-					"label":"images",
-					"type":"IMAGE",
-					"localized_name":"图像"
-				},
-				{
-					"shape":7,
-					"name":"audio",
-					"link":5,
-					"label":"audio",
-					"type":"AUDIO",
-					"localized_name":"音频"
-				},
-				{
-					"widget":{
-						"name":"fps"
-					},
-					"name":"fps",
-					"label":"fps",
-					"type":"FLOAT",
-					"localized_name":"帧率"
-				},
-				{
-					"widget":{
-						"name":"bit_depth"
-					},
-					"shape":7,
-					"name":"bit_depth",
-					"label":"bit_depth",
-					"type":"INT",
-					"localized_name":"bit_depth"
-				}
-			],
-			"flags":{
-				
-			},
-			"id":11,
-			"type":"CreateVideo",
-			"properties":{
-				"widget_ue_connectable":{
-					"fps":true,
-					"bit_depth":true
-				},
-				"Node name for S&R":"CreateVideo"
-			},
-			"order":14
-		},
-		{
-			"mode":0,
 			"outputs":[
 				{
 					"name":"h3_model",
@@ -156,18 +14,12 @@
 					"localized_name":"h3_model"
 				}
 			],
-			"size":[
-				380,
-				178
-			],
-			"pos":[
-				1152.8035888671875,
-				40.013145446777344
-			],
+			"color":"#2a363b",
 			"widgets_values":[
 				"MiniMax-H3",
 				"auto",
-				"MiniMax-H3-FL2VA-int8_convrot.safetensors"
+				"MiniMax-H3-FL2VA-int8_convrot.safetensors",
+				"auto"
 			],
 			"inputs":[
 				{
@@ -196,14 +48,34 @@
 					"label":"transformer_path",
 					"type":"COMBO",
 					"localized_name":"transformer_path"
+				},
+				{
+					"widget":{
+						"name":"attention_backend"
+					},
+					"shape":7,
+					"name":"attention_backend",
+					"label":"attention_backend",
+					"type":"COMBO",
+					"localized_name":"attention_backend"
 				}
 			],
 			"flags":{
 				
 			},
-			"id":2,
 			"type":"RHMiniMaxH3FL2VAModelLoader",
 			"title":"FL2VA DiT Loader",
+			"mode":0,
+			"bgcolor":"#3f5159",
+			"size":[
+				380,
+				178
+			],
+			"pos":[
+				1152.8035888671875,
+				40.013145446777344
+			],
+			"id":2,
 			"properties":{
 				"widget_ue_connectable":{
 					
@@ -213,237 +85,6 @@
 			"order":0
 		},
 		{
-			"mode":0,
-			"outputs":[
-				{
-					"name":"h3_vae_bundle",
-					"slot_index":0,
-					"links":[
-						10,
-						15
-					],
-					"label":"h3_vae_bundle",
-					"type":"MINIMAX_H3_VAE_BUNDLE",
-					"localized_name":"h3_vae_bundle"
-				}
-			],
-			"size":[
-				380,
-				178
-			],
-			"pos":[
-				613.5001831054688,
-				261.5711975097656
-			],
-			"widgets_values":[
-				"MiniMax-H3",
-				"MiniMax-H3-video_vae.safetensors",
-				"MiniMax-H3-audio_vae.safetensors"
-			],
-			"inputs":[
-				{
-					"widget":{
-						"name":"model_root"
-					},
-					"name":"model_root",
-					"label":"model_root",
-					"type":"COMBO",
-					"localized_name":"model_root"
-				},
-				{
-					"widget":{
-						"name":"video_vae_path"
-					},
-					"name":"video_vae_path",
-					"label":"video_vae_path",
-					"type":"COMBO",
-					"localized_name":"video_vae_path"
-				},
-				{
-					"widget":{
-						"name":"audio_vae_path"
-					},
-					"name":"audio_vae_path",
-					"label":"audio_vae_path",
-					"type":"COMBO",
-					"localized_name":"audio_vae_path"
-				}
-			],
-			"flags":{
-				
-			},
-			"id":3,
-			"type":"RHMiniMaxH3FL2VAVAELoader",
-			"title":"FL2VA Dual VAE Loader",
-			"properties":{
-				"widget_ue_connectable":{
-					
-				},
-				"Node name for S&R":"RHMiniMaxH3FL2VAVAELoader"
-			},
-			"order":1
-		},
-		{
-			"mode":0,
-			"outputs":[
-				{
-					"name":"h3_text_encoder",
-					"slot_index":0,
-					"links":[
-						9
-					],
-					"label":"h3_text_encoder",
-					"type":"MINIMAX_H3_TEXT_ENCODER",
-					"localized_name":"h3_text_encoder"
-				}
-			],
-			"size":[
-				380,
-				178
-			],
-			"pos":[
-				604.2122802734375,
-				7.315154552459717
-			],
-			"widgets_values":[
-				"MiniMax-H3",
-				"auto",
-				"qwen3-vl-32b-int8_convrot.safetensors"
-			],
-			"inputs":[
-				{
-					"widget":{
-						"name":"model_root"
-					},
-					"name":"model_root",
-					"label":"model_root",
-					"type":"COMBO",
-					"localized_name":"model_root"
-				},
-				{
-					"widget":{
-						"name":"dtype"
-					},
-					"name":"dtype",
-					"label":"dtype",
-					"type":"COMBO",
-					"localized_name":"dtype"
-				},
-				{
-					"widget":{
-						"name":"text_encoder_path"
-					},
-					"name":"text_encoder_path",
-					"label":"text_encoder_path",
-					"type":"COMBO",
-					"localized_name":"text_encoder_path"
-				}
-			],
-			"flags":{
-				
-			},
-			"id":1,
-			"type":"RHMiniMaxH3FL2VATextEncoderLoader",
-			"title":"FL2VA Qwen3-VL Loader",
-			"properties":{
-				"widget_ue_connectable":{
-					
-				},
-				"Node name for S&R":"RHMiniMaxH3FL2VATextEncoderLoader"
-			},
-			"order":2
-		},
-		{
-			"mode":0,
-			"outputs":[
-				{
-					"name":"video_url",
-					"label":"video_url",
-					"type":"STRING",
-					"localized_name":"video_url"
-				},
-				{
-					"name":"video",
-					"label":"video",
-					"type":"VIDEO",
-					"localized_name":"video"
-				}
-			],
-			"size":[
-				210,
-				204
-			],
-			"pos":[
-				2833.956787109375,
-				184.38587951660156
-			],
-			"widgets_values":[
-				"minimax_h3/fl2va_first_frame",
-				"mp4",
-				"h264",
-				"auto"
-			],
-			"inputs":[
-				{
-					"name":"video",
-					"link":6,
-					"label":"video",
-					"type":"VIDEO",
-					"localized_name":"视频"
-				},
-				{
-					"widget":{
-						"name":"filename_prefix"
-					},
-					"name":"filename_prefix",
-					"label":"filename_prefix",
-					"type":"STRING",
-					"localized_name":"文件名前缀"
-				},
-				{
-					"widget":{
-						"name":"format"
-					},
-					"name":"format",
-					"label":"format",
-					"type":"COMBO",
-					"localized_name":"格式"
-				},
-				{
-					"widget":{
-						"name":"codec"
-					},
-					"name":"codec",
-					"label":"codec",
-					"type":"COMFY_DYNAMICCOMBO_V3",
-					"localized_name":"编码器"
-				},
-				{
-					"widget":{
-						"name":"codec.encoding"
-					},
-					"shape":7,
-					"name":"codec.encoding",
-					"label":"codec.encoding",
-					"type":"COMFY_DYNAMICCOMBO_V3",
-					"localized_name":"encoding"
-				}
-			],
-			"flags":{
-				
-			},
-			"id":12,
-			"type":"SaveVideo",
-			"properties":{
-				"widget_ue_connectable":{
-					
-				},
-				"Node name for S&R":"SaveVideo"
-			},
-			"order":15
-		},
-		{
-			"mode":0,
 			"outputs":[
 				{
 					"name":"IMAGE",
@@ -457,7 +98,7 @@
 				{
 					"name":"width",
 					"links":[
-						29
+						46
 					],
 					"label":"宽度",
 					"type":"INT",
@@ -466,21 +107,14 @@
 				{
 					"name":"height",
 					"links":[
-						30
+						47
 					],
 					"label":"高度",
 					"type":"INT",
 					"localized_name":"height"
 				}
 			],
-			"size":[
-				270,
-				218
-			],
-			"pos":[
-				-1612.0626220703125,
-				61.51075744628906
-			],
+			"color":"#2a363b",
 			"widgets_values":[
 				832,
 				832,
@@ -555,8 +189,18 @@
 			"flags":{
 				
 			},
-			"id":30,
 			"type":"ImageResize+",
+			"mode":0,
+			"bgcolor":"#3f5159",
+			"size":[
+				270,
+				218
+			],
+			"pos":[
+				-123.15272521972656,
+				101.44782257080078
+			],
+			"id":30,
 			"properties":{
 				"widget_ue_connectable":{
 					
@@ -566,286 +210,6 @@
 			"order":4
 		},
 		{
-			"mode":0,
-			"outputs":[
-				{
-					"name":"IMAGE",
-					"links":[
-						37
-					],
-					"label":"图像",
-					"type":"IMAGE",
-					"localized_name":"图像"
-				},
-				{
-					"name":"width",
-					"links":[
-						39
-					],
-					"label":"宽度",
-					"type":"INT",
-					"localized_name":"width"
-				},
-				{
-					"name":"height",
-					"links":[
-						40
-					],
-					"label":"高度",
-					"type":"INT",
-					"localized_name":"height"
-				}
-			],
-			"size":[
-				270,
-				218
-			],
-			"pos":[
-				-818.4856567382812,
-				91.50984191894531
-			],
-			"widgets_values":[
-				832,
-				832,
-				"nearest",
-				"fill / crop",
-				"always",
-				32
-			],
-			"inputs":[
-				{
-					"name":"image",
-					"link":41,
-					"label":"图像",
-					"type":"IMAGE",
-					"localized_name":"image"
-				},
-				{
-					"widget":{
-						"name":"width"
-					},
-					"name":"width",
-					"link":44,
-					"label":"width",
-					"type":"INT",
-					"localized_name":"宽度"
-				},
-				{
-					"widget":{
-						"name":"height"
-					},
-					"name":"height",
-					"link":45,
-					"label":"height",
-					"type":"INT",
-					"localized_name":"高度"
-				},
-				{
-					"widget":{
-						"name":"interpolation"
-					},
-					"name":"interpolation",
-					"label":"interpolation",
-					"type":"COMBO",
-					"localized_name":"插值"
-				},
-				{
-					"widget":{
-						"name":"method"
-					},
-					"name":"method",
-					"label":"method",
-					"type":"COMBO",
-					"localized_name":"method"
-				},
-				{
-					"widget":{
-						"name":"condition"
-					},
-					"name":"condition",
-					"label":"condition",
-					"type":"COMBO",
-					"localized_name":"条件"
-				},
-				{
-					"widget":{
-						"name":"multiple_of"
-					},
-					"name":"multiple_of",
-					"label":"multiple_of",
-					"type":"INT",
-					"localized_name":"乘数"
-				}
-			],
-			"flags":{
-				
-			},
-			"id":31,
-			"type":"ImageResize+",
-			"properties":{
-				"widget_ue_connectable":{
-					
-				},
-				"Node name for S&R":"ImageResize+"
-			},
-			"order":7
-		},
-		{
-			"mode":0,
-			"outputs":[
-				{
-					"name":"INT",
-					"links":[
-						44
-					],
-					"label":"整数",
-					"type":"INT",
-					"localized_name":"整数"
-				}
-			],
-			"size":[
-				270,
-				58
-			],
-			"pos":[
-				-1191.3277587890625,
-				145.2451171875
-			],
-			"widgets_values":[
-				768
-			],
-			"inputs":[
-				{
-					"widget":{
-						"name":"value"
-					},
-					"name":"value",
-					"link":29,
-					"label":"value",
-					"type":"INT",
-					"localized_name":"值"
-				}
-			],
-			"flags":{
-				
-			},
-			"id":28,
-			"type":"Int",
-			"properties":{
-				"widget_ue_connectable":{
-					
-				},
-				"Node name for S&R":"Int"
-			},
-			"order":5
-		},
-		{
-			"mode":0,
-			"outputs":[
-				{
-					"name":"INT",
-					"links":[
-						45
-					],
-					"label":"整数",
-					"type":"INT",
-					"localized_name":"整数"
-				}
-			],
-			"size":[
-				270,
-				58
-			],
-			"pos":[
-				-1230.37060546875,
-				300.55572509765625
-			],
-			"widgets_values":[
-				432
-			],
-			"inputs":[
-				{
-					"widget":{
-						"name":"value"
-					},
-					"name":"value",
-					"link":30,
-					"label":"value",
-					"type":"INT",
-					"localized_name":"值"
-				}
-			],
-			"flags":{
-				
-			},
-			"id":29,
-			"type":"Int",
-			"properties":{
-				"widget_ue_connectable":{
-					
-				},
-				"Node name for S&R":"Int"
-			},
-			"order":6
-		},
-		{
-			"mode":0,
-			"outputs":[
-				{
-					"name":"keyframes",
-					"slot_index":0,
-					"links":[
-						7,
-						8
-					],
-					"label":"keyframes",
-					"type":"MINIMAX_H3_FL_KEYFRAMES",
-					"localized_name":"keyframes"
-				}
-			],
-			"size":[
-				380,
-				100
-			],
-			"pos":[
-				-468.8013916015625,
-				154.21234130859375
-			],
-			"widgets_values":[
-				
-			],
-			"inputs":[
-				{
-					"name":"first_frame",
-					"link":37,
-					"label":"first_frame",
-					"type":"IMAGE",
-					"localized_name":"first_frame"
-				},
-				{
-					"shape":7,
-					"name":"last_frame",
-					"label":"last_frame",
-					"type":"IMAGE",
-					"localized_name":"last_frame"
-				}
-			],
-			"flags":{
-				
-			},
-			"id":5,
-			"type":"RHMiniMaxH3FL2VAFirstFrameCondition",
-			"title":"First / First+Last",
-			"properties":{
-				"widget_ue_connectable":{
-					
-				},
-				"Node name for S&R":"RHMiniMaxH3FL2VAFirstFrameCondition"
-			},
-			"order":8
-		},
-		{
-			"mode":0,
 			"outputs":[
 				{
 					"name":"conditioning",
@@ -858,14 +222,7 @@
 					"localized_name":"conditioning"
 				}
 			],
-			"size":[
-				439.3175048828125,
-				352.4482727050781
-			],
-			"pos":[
-				1155.2237548828125,
-				290.18817138671875
-			],
+			"color":"#2a363b",
 			"widgets_values":[
 				"自行生成视频"
 			],
@@ -911,18 +268,27 @@
 			"flags":{
 				
 			},
-			"id":7,
 			"type":"RHMiniMaxH3FL2VAEncode",
+			"mode":0,
+			"bgcolor":"#3f5159",
+			"size":[
+				439.3175048828125,
+				352.4482727050781
+			],
+			"pos":[
+				1155.2237548828125,
+				290.18817138671875
+			],
+			"id":7,
 			"properties":{
 				"widget_ue_connectable":{
 					
 				},
 				"Node name for S&R":"RHMiniMaxH3FL2VAEncode"
 			},
-			"order":10
+			"order":8
 		},
 		{
-			"mode":0,
 			"outputs":[
 				{
 					"name":"target",
@@ -946,14 +312,7 @@
 					"localized_name":"shape_info"
 				}
 			],
-			"size":[
-				380,
-				204
-			],
-			"pos":[
-				76.52882385253906,
-				64.10816955566406
-			],
+			"color":"#2a363b",
 			"widgets_values":[
 				"auto",
 				5,
@@ -1012,66 +371,27 @@
 			"flags":{
 				
 			},
-			"id":6,
 			"type":"RHMiniMaxH3FL2VATarget",
+			"mode":0,
+			"bgcolor":"#3f5159",
+			"size":[
+				380,
+				204
+			],
+			"pos":[
+				702.138916015625,
+				105.39205932617188
+			],
+			"id":6,
 			"properties":{
 				"widget_ue_connectable":{
 					
 				},
 				"Node name for S&R":"RHMiniMaxH3FL2VATarget"
 			},
-			"order":9
+			"order":7
 		},
 		{
-			"mode":0,
-			"outputs":[
-				{
-					"name":"av_latent",
-					"slot_index":0,
-					"links":[
-						2
-					],
-					"label":"av_latent",
-					"type":"MINIMAX_H3_AV_LATENT",
-					"localized_name":"av_latent"
-				}
-			],
-			"size":[
-				380,
-				100
-			],
-			"pos":[
-				72.8729248046875,
-				365.0429992675781
-			],
-			"widgets_values":[
-				
-			],
-			"inputs":[
-				{
-					"name":"target",
-					"link":12,
-					"label":"target",
-					"type":"MINIMAX_H3_TARGET",
-					"localized_name":"target"
-				}
-			],
-			"flags":{
-				
-			},
-			"id":8,
-			"type":"RHMiniMaxH3EmptyAVLatent",
-			"title":"Empty AV Latent",
-			"properties":{
-				"widget_ue_connectable":{
-					
-				},
-				"Node name for S&R":"RHMiniMaxH3EmptyAVLatent"
-			},
-			"order":11
-		},
-		{
-			"mode":0,
 			"outputs":[
 				{
 					"name":"sampled_av_latent",
@@ -1084,14 +404,7 @@
 					"localized_name":"sampled_av_latent"
 				}
 			],
-			"size":[
-				380,
-				386
-			],
-			"pos":[
-				1645.802978515625,
-				75.1141357421875
-			],
+			"color":"#2a363b",
 			"widgets_values":[
 				42,
 				"fixed",
@@ -1128,6 +441,13 @@
 					"label":"av_latent",
 					"type":"MINIMAX_H3_AV_LATENT",
 					"localized_name":"av_latent"
+				},
+				{
+					"shape":7,
+					"name":"sampler_config",
+					"label":"sampler_config",
+					"type":"MINIMAX_H3_SAMPLER_CONFIG",
+					"localized_name":"sampler_config"
 				},
 				{
 					"widget":{
@@ -1247,16 +567,639 @@
 			"flags":{
 				
 			},
-			"id":9,
 			"type":"RHMiniMaxH3DualSigmaSampler",
 			"title":"Dual Sigma Sampler",
+			"mode":0,
+			"bgcolor":"#3f5159",
+			"size":[
+				380,
+				406
+			],
+			"pos":[
+				1645.802978515625,
+				75.1141357421875
+			],
+			"id":9,
 			"properties":{
 				"widget_ue_connectable":{
 					
 				},
 				"Node name for S&R":"RHMiniMaxH3DualSigmaSampler"
 			},
+			"order":10
+		},
+		{
+			"outputs":[
+				{
+					"name":"IMAGE",
+					"links":[
+						37
+					],
+					"label":"图像",
+					"type":"IMAGE",
+					"localized_name":"图像"
+				},
+				{
+					"name":"width",
+					"links":[
+						39
+					],
+					"label":"宽度",
+					"type":"INT",
+					"localized_name":"width"
+				},
+				{
+					"name":"height",
+					"links":[
+						40
+					],
+					"label":"高度",
+					"type":"INT",
+					"localized_name":"height"
+				}
+			],
+			"color":"#2a363b",
+			"widgets_values":[
+				832,
+				832,
+				"nearest",
+				"fill / crop",
+				"always",
+				32
+			],
+			"inputs":[
+				{
+					"name":"image",
+					"link":41,
+					"label":"图像",
+					"type":"IMAGE",
+					"localized_name":"image"
+				},
+				{
+					"widget":{
+						"name":"width"
+					},
+					"name":"width",
+					"link":46,
+					"label":"width",
+					"type":"INT",
+					"localized_name":"宽度"
+				},
+				{
+					"widget":{
+						"name":"height"
+					},
+					"name":"height",
+					"link":47,
+					"label":"height",
+					"type":"INT",
+					"localized_name":"高度"
+				},
+				{
+					"widget":{
+						"name":"interpolation"
+					},
+					"name":"interpolation",
+					"label":"interpolation",
+					"type":"COMBO",
+					"localized_name":"插值"
+				},
+				{
+					"widget":{
+						"name":"method"
+					},
+					"name":"method",
+					"label":"method",
+					"type":"COMBO",
+					"localized_name":"method"
+				},
+				{
+					"widget":{
+						"name":"condition"
+					},
+					"name":"condition",
+					"label":"condition",
+					"type":"COMBO",
+					"localized_name":"条件"
+				},
+				{
+					"widget":{
+						"name":"multiple_of"
+					},
+					"name":"multiple_of",
+					"label":"multiple_of",
+					"type":"INT",
+					"localized_name":"乘数"
+				}
+			],
+			"flags":{
+				
+			},
+			"type":"ImageResize+",
+			"mode":0,
+			"bgcolor":"#3f5159",
+			"size":[
+				270,
+				218
+			],
+			"pos":[
+				-114.82203674316406,
+				383.16082763671875
+			],
+			"id":31,
+			"properties":{
+				"widget_ue_connectable":{
+					
+				},
+				"Node name for S&R":"ImageResize+"
+			},
+			"order":5
+		},
+		{
+			"outputs":[
+				{
+					"name":"keyframes",
+					"slot_index":0,
+					"links":[
+						7,
+						8
+					],
+					"label":"keyframes",
+					"type":"MINIMAX_H3_FL_KEYFRAMES",
+					"localized_name":"keyframes"
+				}
+			],
+			"color":"#2a363b",
+			"widgets_values":[
+				
+			],
+			"inputs":[
+				{
+					"name":"first_frame",
+					"link":37,
+					"label":"first_frame",
+					"type":"IMAGE",
+					"localized_name":"first_frame"
+				},
+				{
+					"shape":7,
+					"name":"last_frame",
+					"label":"last_frame",
+					"type":"IMAGE",
+					"localized_name":"last_frame"
+				}
+			],
+			"flags":{
+				
+			},
+			"type":"RHMiniMaxH3FL2VAFirstFrameCondition",
+			"title":"First / First+Last",
+			"mode":0,
+			"bgcolor":"#3f5159",
+			"size":[
+				380,
+				100
+			],
+			"pos":[
+				267.2459716796875,
+				308.6275939941406
+			],
+			"id":5,
+			"properties":{
+				"widget_ue_connectable":{
+					
+				},
+				"Node name for S&R":"RHMiniMaxH3FL2VAFirstFrameCondition"
+			},
+			"order":6
+		},
+		{
+			"outputs":[
+				{
+					"name":"h3_text_encoder",
+					"slot_index":0,
+					"links":[
+						9
+					],
+					"label":"h3_text_encoder",
+					"type":"MINIMAX_H3_TEXT_ENCODER",
+					"localized_name":"h3_text_encoder"
+				}
+			],
+			"color":"#2a363b",
+			"widgets_values":[
+				"MiniMax-H3",
+				"auto",
+				"qwen3-vl-32b-int8_convrot.safetensors"
+			],
+			"inputs":[
+				{
+					"widget":{
+						"name":"model_root"
+					},
+					"name":"model_root",
+					"label":"model_root",
+					"type":"COMBO",
+					"localized_name":"model_root"
+				},
+				{
+					"widget":{
+						"name":"dtype"
+					},
+					"name":"dtype",
+					"label":"dtype",
+					"type":"COMBO",
+					"localized_name":"dtype"
+				},
+				{
+					"widget":{
+						"name":"text_encoder_path"
+					},
+					"name":"text_encoder_path",
+					"label":"text_encoder_path",
+					"type":"COMBO",
+					"localized_name":"text_encoder_path"
+				}
+			],
+			"flags":{
+				
+			},
+			"type":"RHMiniMaxH3FL2VATextEncoderLoader",
+			"title":"FL2VA Qwen3-VL Loader",
+			"mode":0,
+			"bgcolor":"#3f5159",
+			"size":[
+				380,
+				178
+			],
+			"pos":[
+				235.8324737548828,
+				32.72052764892578
+			],
+			"id":1,
+			"properties":{
+				"widget_ue_connectable":{
+					
+				},
+				"Node name for S&R":"RHMiniMaxH3FL2VATextEncoderLoader"
+			},
+			"order":1
+		},
+		{
+			"outputs":[
+				{
+					"name":"h3_vae_bundle",
+					"slot_index":0,
+					"links":[
+						10,
+						15
+					],
+					"label":"h3_vae_bundle",
+					"type":"MINIMAX_H3_VAE_BUNDLE",
+					"localized_name":"h3_vae_bundle"
+				}
+			],
+			"color":"#2a363b",
+			"widgets_values":[
+				"MiniMax-H3",
+				"MiniMax-H3-video_vae.safetensors",
+				"MiniMax-H3-audio_vae.safetensors"
+			],
+			"inputs":[
+				{
+					"widget":{
+						"name":"model_root"
+					},
+					"name":"model_root",
+					"label":"model_root",
+					"type":"COMBO",
+					"localized_name":"model_root"
+				},
+				{
+					"widget":{
+						"name":"video_vae_path"
+					},
+					"name":"video_vae_path",
+					"label":"video_vae_path",
+					"type":"COMBO",
+					"localized_name":"video_vae_path"
+				},
+				{
+					"widget":{
+						"name":"audio_vae_path"
+					},
+					"name":"audio_vae_path",
+					"label":"audio_vae_path",
+					"type":"COMBO",
+					"localized_name":"audio_vae_path"
+				}
+			],
+			"flags":{
+				
+			},
+			"type":"RHMiniMaxH3FL2VAVAELoader",
+			"title":"FL2VA Dual VAE Loader",
+			"mode":0,
+			"bgcolor":"#3f5159",
+			"size":[
+				380,
+				178
+			],
+			"pos":[
+				241.94471740722656,
+				490.2203063964844
+			],
+			"id":3,
+			"properties":{
+				"widget_ue_connectable":{
+					
+				},
+				"Node name for S&R":"RHMiniMaxH3FL2VAVAELoader"
+			},
+			"order":2
+		},
+		{
+			"outputs":[
+				{
+					"name":"av_latent",
+					"slot_index":0,
+					"links":[
+						2
+					],
+					"label":"av_latent",
+					"type":"MINIMAX_H3_AV_LATENT",
+					"localized_name":"av_latent"
+				}
+			],
+			"color":"#2a363b",
+			"widgets_values":[
+				
+			],
+			"inputs":[
+				{
+					"name":"target",
+					"link":12,
+					"label":"target",
+					"type":"MINIMAX_H3_TARGET",
+					"localized_name":"target"
+				}
+			],
+			"flags":{
+				
+			},
+			"type":"RHMiniMaxH3EmptyAVLatent",
+			"title":"Empty AV Latent",
+			"mode":0,
+			"bgcolor":"#3f5159",
+			"size":[
+				380,
+				100
+			],
+			"pos":[
+				698.4830322265625,
+				406.3268737792969
+			],
+			"id":8,
+			"properties":{
+				"widget_ue_connectable":{
+					
+				},
+				"Node name for S&R":"RHMiniMaxH3EmptyAVLatent"
+			},
+			"order":9
+		},
+		{
+			"outputs":[
+				{
+					"name":"frames",
+					"slot_index":0,
+					"links":[
+						4
+					],
+					"label":"frames",
+					"type":"IMAGE",
+					"localized_name":"frames"
+				},
+				{
+					"name":"audio",
+					"slot_index":1,
+					"links":[
+						5
+					],
+					"label":"audio",
+					"type":"AUDIO",
+					"localized_name":"audio"
+				}
+			],
+			"color":"#2a363b",
+			"widgets_values":[
+				
+			],
+			"inputs":[
+				{
+					"name":"h3_vae_bundle",
+					"link":15,
+					"label":"h3_vae_bundle",
+					"type":"MINIMAX_H3_VAE_BUNDLE",
+					"localized_name":"h3_vae_bundle"
+				},
+				{
+					"name":"sampled_av_latent",
+					"link":3,
+					"label":"sampled_av_latent",
+					"type":"MINIMAX_H3_AV_LATENT",
+					"localized_name":"sampled_av_latent"
+				}
+			],
+			"flags":{
+				
+			},
+			"type":"RHMiniMaxH3DecodeAV",
+			"title":"Decode Video + Audio",
+			"mode":0,
+			"bgcolor":"#3f5159",
+			"size":[
+				380,
+				100
+			],
+			"pos":[
+				2092.45556640625,
+				130.61688232421875
+			],
+			"id":10,
+			"properties":{
+				"widget_ue_connectable":{
+					
+				},
+				"Node name for S&R":"RHMiniMaxH3DecodeAV"
+			},
+			"order":11
+		},
+		{
+			"outputs":[
+				{
+					"name":"VIDEO",
+					"slot_index":0,
+					"links":[
+						6
+					],
+					"label":"VIDEO",
+					"type":"VIDEO",
+					"localized_name":"视频"
+				}
+			],
+			"color":"#2a363b",
+			"widgets_values":[
+				24,
+				8
+			],
+			"inputs":[
+				{
+					"name":"images",
+					"link":4,
+					"label":"images",
+					"type":"IMAGE",
+					"localized_name":"图像"
+				},
+				{
+					"shape":7,
+					"name":"audio",
+					"link":5,
+					"label":"audio",
+					"type":"AUDIO",
+					"localized_name":"音频"
+				},
+				{
+					"widget":{
+						"name":"fps"
+					},
+					"name":"fps",
+					"label":"fps",
+					"type":"FLOAT",
+					"localized_name":"帧率"
+				},
+				{
+					"widget":{
+						"name":"bit_depth"
+					},
+					"shape":7,
+					"name":"bit_depth",
+					"label":"bit_depth",
+					"type":"INT",
+					"localized_name":"bit_depth"
+				}
+			],
+			"flags":{
+				
+			},
+			"type":"CreateVideo",
+			"mode":0,
+			"bgcolor":"#3f5159",
+			"size":[
+				363.5139465332031,
+				102
+			],
+			"pos":[
+				2099.99365234375,
+				323.8517761230469
+			],
+			"id":11,
+			"properties":{
+				"widget_ue_connectable":{
+					"fps":true,
+					"bit_depth":true
+				},
+				"Node name for S&R":"CreateVideo"
+			},
 			"order":12
+		},
+		{
+			"mode":0,
+			"outputs":[
+				{
+					"name":"video_url",
+					"label":"video_url",
+					"type":"STRING",
+					"localized_name":"video_url"
+				},
+				{
+					"name":"video",
+					"label":"video",
+					"type":"VIDEO",
+					"localized_name":"video"
+				}
+			],
+			"size":[
+				210,
+				204
+			],
+			"pos":[
+				2579.901611328125,
+				139.9261932373047
+			],
+			"widgets_values":[
+				"minimax_h3/fl2va_first_frame",
+				"mp4",
+				"h264",
+				"auto"
+			],
+			"inputs":[
+				{
+					"name":"video",
+					"link":6,
+					"label":"video",
+					"type":"VIDEO",
+					"localized_name":"视频"
+				},
+				{
+					"widget":{
+						"name":"filename_prefix"
+					},
+					"name":"filename_prefix",
+					"label":"filename_prefix",
+					"type":"STRING",
+					"localized_name":"文件名前缀"
+				},
+				{
+					"widget":{
+						"name":"format"
+					},
+					"name":"format",
+					"label":"format",
+					"type":"COMBO",
+					"localized_name":"格式"
+				},
+				{
+					"widget":{
+						"name":"codec"
+					},
+					"name":"codec",
+					"label":"codec",
+					"type":"COMFY_DYNAMICCOMBO_V3",
+					"localized_name":"codec"
+				},
+				{
+					"widget":{
+						"name":"codec.encoding"
+					},
+					"name":"codec.encoding",
+					"label":"codec.encoding",
+					"type":"COMFY_DYNAMICCOMBO_V3",
+					"localized_name":"encoding mode"
+				}
+			],
+			"flags":{
+				
+			},
+			"id":12,
+			"type":"SaveVideo",
+			"properties":{
+				"widget_ue_connectable":{
+					
+				},
+				"Node name for S&R":"SaveVideo"
+			},
+			"order":13
 		},
 		{
 			"mode":0,
@@ -1287,11 +1230,11 @@
 				532.947509765625
 			],
 			"pos":[
-				-1953.1796875,
-				60.65754699707031
+				-518.2567749023438,
+				100.59461212158203
 			],
 			"widgets_values":[
-				"d7b6054c250a2198489a818e65a34c6950555e38c3d1199bbdf281e1a71a4c80.png",
+				"d2409945be76a2914ff99f9c7021104a185db3f646c8f2e9a0cd838477117259.jpg",
 				"image"
 			],
 			"inputs":[
@@ -1332,29 +1275,32 @@
 		"links_added_by_ue":[
 			
 		],
-		"VHS_KeepIntermediate":true,
 		"KKvideo_latentpreview":false,
-		"ue_links":[
-			
-		],
-		"VHS_MetadataImage":true,
-		"KKvideo_latentpreviewrate":0,
 		"0246.VERSION":[
 			0,
 			0,
 			4
 		],
-		"VHS_latentpreviewrate":0,
-		"workflow_note":"FL2VA（首帧）：三种合法条件签名之一。运行前把 LoadImage 换成已上传到 ComfyUI input/ 的真实图片；Target 与 Encode 必须接同一个 keyframes。",
-		"frontendVersion":"1.23.0",
 		"VHS_latentpreview":false,
 		"ds":{
 			"offset":[
-				2480.517927171506,
-				287.5643062440811
+				596.5683061542829,
+				676.6413889051612
 			],
-			"scale":0.8769226950000005
-		}
+			"scale":0.4090909090909093
+		},
+		"VHS_KeepIntermediate":true,
+		"ue_links":[
+			
+		],
+		"VHS_MetadataImage":true,
+		"KKvideo_latentpreviewrate":0,
+		"pixaromaGroups":[
+			
+		],
+		"VHS_latentpreviewrate":0,
+		"workflow_note":"FL2VA（首帧）：三种合法条件签名之一。运行前把 LoadImage 换成已上传到 ComfyUI input/ 的真实图片；Target 与 Encode 必须接同一个 keyframes。",
+		"frontendVersion":"1.23.0"
 	},
 	"groups":[
 		
@@ -1473,22 +1419,6 @@
 			"MINIMAX_H3_VAE_BUNDLE"
 		],
 		[
-			29,
-			30,
-			1,
-			28,
-			0,
-			"INT"
-		],
-		[
-			30,
-			30,
-			2,
-			29,
-			0,
-			"INT"
-		],
-		[
 			37,
 			31,
 			0,
@@ -1529,17 +1459,17 @@
 			"IMAGE"
 		],
 		[
-			44,
-			28,
-			0,
+			46,
+			30,
+			1,
 			31,
 			1,
 			"INT"
 		],
 		[
-			45,
-			29,
-			0,
+			47,
+			30,
+			2,
 			31,
 			2,
 			"INT"
