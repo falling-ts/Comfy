@@ -119,11 +119,20 @@ def build(wf_path: str, refresh_md: bool):
 
         if t == "FallingTSMarkDownTable":
             state = (n.get("widgets_values") or [{}])[0]
-            before = len(((state.get("selected") or {}).get("values") or {}).get("场景提示词", ""))
+
+            def longest_field(st: dict) -> int:
+                """取最长字段的长度作为提示词规模指标。
+
+                字段名各表不同(场景提示词/视频提示词/...), 不能写死, 否则统计恒为 0。
+                """
+                vals = (st.get("selected") or {}).get("values") or {}
+                return max((len(str(v)) for v in vals.values()), default=0)
+
+            before = longest_field(state)
             if refresh_md:
                 state = refresh_state(state)
-            after = len(((state.get("selected") or {}).get("values") or {}).get("场景提示词", ""))
-            notes.append(f"mdtable: 提示词 {before} -> {after} 字符" + (" (已按 md 刷新)" if refresh_md else ""))
+            after = longest_field(state)
+            notes.append(f"mdtable: 最长字段 {before} -> {after} 字符" + (" (已按 md 刷新)" if refresh_md else ""))
             inputs["data"] = state
         else:
             wv = n.get("widgets_values") or []
