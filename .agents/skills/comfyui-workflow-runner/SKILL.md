@@ -7,7 +7,9 @@ description: |
   verify the produced artifact by probing it and extracting frames. Use whenever a workflow must be
   executed or re-run autonomously, when a prompt or model edited inside an md data table has to actually
   take effect, or when a render needs objective inspection (duration, fps, audio presence, motion,
-  continuity). Not for authoring prompt text or for developing custom nodes.
+  continuity). Also carries measured findings on H3 scene video: which reference/prompt variants actually
+  win, rotation speed ceilings, and the OrbitSheets parameter recipe. Not for authoring prompt text or for
+  developing custom nodes.
 ---
 
 # ComfyUI Workflow Runner
@@ -73,3 +75,7 @@ therefore equivalent — and needs no browser at all.
 - `references/workflow-to-prompt.md` — conversion rules and the full pitfall list.
 - `references/mdtable-refresh.md` — FallingTS mdtable state shape, endpoints, and refresh mechanism.
 - `references/output-verification.md` — probing, contact sheets, and motion/audio analysis recipes.
+- `references/h3-scene-generation.md` — **measured findings for H3 scene video**: the variant performance
+  table, why a single anchor image beats multi-image references, four prompt rules (positive phrasing,
+  fixed camera, one action per shot, never describe the reference's own layout), rotation speed ceilings,
+  the OrbitSheets parameter recipe and its limits, plus the parameter-editing and frame-extraction traps.

@@ -59,3 +59,6 @@ description: |
 - `references/workflow-to-prompt.md` —— 转换规则与完整陷阱清单。
 - `references/mdtable-refresh.md` —— FallingTS mdtable 的状态结构、接口与刷新机制。
 - `references/output-verification.md` —— 探测、抽帧拼板、运动与音频分析配方。
+- `references/h3-scene-generation.md` —— **H3 场景视频的多轮实测结论**：各方案性能对比表、
+  为什么单图锚点反超多图参考、四条提示词硬经验（正面陈述／固定机位／一镜一事／不描述参考图自身版式）、
+  旋转速率上限、OrbitSheets 的参数配方与其局限，以及改参数与抽帧的陷阱清单。
