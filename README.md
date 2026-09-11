@@ -231,13 +231,12 @@ Comfy/
 | `3010-首帧场景` | first-frame image → scene video | I2V (fl2va) |
 | `3020-参考场景` | multi-image + multi-video reference → video | R2V (ref2va) |
 | `3030-OrbitSheets场景` | anchor image → H3 multi-angle camera → visual frame picking into a "scene reference board" grid image | I2V (fl2va) + OrbitSheets plugin |
-| `3040-Skythread场景` | character/prop/empty-scene three references (single responsibility) → scene video | R2V (ref2va) |
 | `4000-文生视频` | text → video (generic version isomorphic to 3000) | T2VA (fl2va) |
 | `4010-首帧视频` | first-frame image → video | I2V (fl2va) |
 | `4020-首尾视频` | first+last frame → video | fl2va |
 | `4030-参考视频` | reference image/video → video | R2V (ref2va) |
 
-> 3000/3010/3020 correspond one-to-one with 4000/4010/4020/4030 (the former is the scene-pipeline version, the latter the generic version); the audio track has been removed from all — video + audio are merged in the post pipeline (5xxx-7xxx). 3030/3040 supplement scene-reference production: 3030 produces "scene reference board" grid images (for use as reference input to 3020/4030), 3040 is the Skythread-style three-reference simplified method.
+> 3000/3010/3020 correspond one-to-one with 4000/4010/4020/4030 (the former is the scene-pipeline version, the latter the generic version); the audio track has been removed from all — video + audio are merged in the post pipeline (5xxx-7xxx). 3030 supplements scene-reference production: it produces "scene reference board" grid images (for use as reference input to 3020/4030).
 
 ### Decomposition class (5xxx, 2)
 
