@@ -23,7 +23,10 @@ import urllib.request
 
 API = "http://127.0.0.1:8188"
 SKIP_TYPES = {"MarkdownNote", "Note", "Reroute"}
-WIDGET_TYPES = ("INT", "FLOAT", "STRING", "BOOLEAN", "COMBO")
+# COMFY_DYNAMICCOMBO_V3 = io.DynamicCombo(如 SaveVideo 的 format/format.codec): 值来自
+# widgets_values, 不是连线输入; 漏掉它会让 format 不进 prompt, 执行时报
+# `SaveVideo.execute() missing 1 required positional argument: 'format'`(采样已白跑)。
+WIDGET_TYPES = ("INT", "FLOAT", "STRING", "BOOLEAN", "COMBO", "COMFY_DYNAMICCOMBO_V3")
 
 
 def api_get(path: str, timeout: int = 180):
