@@ -146,7 +146,7 @@
 
 视频类资源（文生场景、首帧场景、文生视频、首帧视频、首尾视频、关键帧视频、参考视频）的宽度/高度按 MiniMax H3 官方 canvas 规则填写：
 
-- H3 固定 **24fps**（视频帧率列一律填 24，严禁填 8）；视频秒数按需求填 5~15 秒（官方训练域）
+- H3 固定 **24fps**（模型架构常量：表内**不设「视频帧率」列**，工作流的帧数换算一律写死 ×24，输出容器帧率亦恒为 24；要变速/补帧另用 `FallingTSFrameRateConvert` 节点）；视频秒数按需求填 5~15 秒（官方训练域）
 - canvas 硬规则：**短边 ≤ 768**、**面积 ≤ 768×1344（≈1.03MP）**、每轴为 **32 的倍数**；宽度/高度直接决定生成尺寸，超限不会被自动纠正
 - 默认统一 16:9 = **832×480**（480p 低显存档，0.4MP，官方原生工作流默认，适配 8G 显卡）
 - 显存充足（16G+）可升档 16:9 = **1344×768**（768p 官方主推档，与 turbo 4 步 LoRA 训练域一致）
@@ -312,7 +312,7 @@
 
 ### 文生场景
 
-即利用文生视频获取具体描述的场景360度视频，包含ID，场景提示词(TEXT)，宽度(INT)，高度(INT)，视频帧率(INT)，视频秒数(INT)
+即利用文生视频获取具体描述的场景360度视频，包含ID，场景提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
 
 #### 写入时机
 
@@ -330,7 +330,7 @@
 
 ### 首帧场景
 
-即利用首帧生视频获取具体秒数的场景360度视频，包含ID，<Picture 1>(IMAGE)，场景提示词(TEXT)，宽度(INT)，高度(INT)，视频帧率(INT)，视频秒数(INT)
+即利用首帧生视频获取具体秒数的场景360度视频，包含ID，<Picture 1>(IMAGE)，场景提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
 
 #### 写入时机
 
@@ -351,7 +351,7 @@ integrated_multimodal_description 先在图像中确立场景风格、主体、�
 
 ### 参考场景
 
-即通过最高9张图片，3个视频，3个音频参考生场景360度视频，包含ID，<Picture 1>(IMAGE)，<Picture 2>(IMAGE)，<Picture 3>(IMAGE)，<Picture 4>(IMAGE)，<Picture 5>(IMAGE)，<Picture 6>(IMAGE)，<Picture 7>(IMAGE)，<Picture 8>(IMAGE)，<Picture 9>(IMAGE)，<Video 1>(VIDEO)，<Video 2>(VIDEO)，<Video 3>(VIDEO)，<Audio 1>(AUDIO)，<Audio 2>(AUDIO)，<Audio 3>(AUDIO)，场景提示词(TEXT)，宽度(INT)，高度(INT)，视频帧率(INT)，视频秒数(INT)
+即通过最高9张图片，3个视频，3个音频参考生场景360度视频，包含ID，<Picture 1>(IMAGE)，<Picture 2>(IMAGE)，<Picture 3>(IMAGE)，<Picture 4>(IMAGE)，<Picture 5>(IMAGE)，<Picture 6>(IMAGE)，<Picture 7>(IMAGE)，<Picture 8>(IMAGE)，<Picture 9>(IMAGE)，<Video 1>(VIDEO)，<Video 2>(VIDEO)，<Video 3>(VIDEO)，<Audio 1>(AUDIO)，<Audio 2>(AUDIO)，<Audio 3>(AUDIO)，场景提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
 
 #### 写入时机
 
@@ -435,7 +435,7 @@ integrated_multimodal_description 先在图像中确立场景风格、主体、�
 
 ### OrbitSheets场景
 
-即利用 OrbitSheets 插件(Location Sheet Prompt + Frame Select + Contact Sheet)从现有场景图生成「场景参考板」：锚点图经 H3 多视角运镜(硬切或连续旋转)，视觉模型内容聚类选帧，拼成一张网格参考板图，供后续参考生视频使用。包含ID，原场景(IMAGE)，场景描述(TEXT)，视觉风格(TEXT)，取景秒数(FLOAT)，宽度(INT)，高度(INT)，视频帧率(INT)
+即利用 OrbitSheets 插件(Location Sheet Prompt + Frame Select + Contact Sheet)从现有场景图生成「场景参考板」：锚点图经 H3 多视角运镜(硬切或连续旋转)，视觉模型内容聚类选帧，拼成一张网格参考板图，供后续参考生视频使用。包含ID，原场景(IMAGE)，场景描述(TEXT)，视觉风格(TEXT)，取景秒数(FLOAT)，宽度(INT)，高度(INT)
 
 #### 写入时机
 
@@ -651,7 +651,7 @@ integrated_multimodal_description 先在图像中确立场景风格、主体、�
 
 ### 文生视频
 
-即通过描述和秒数以及提示词生成视频，包含ID，视频提示词(TEXT)，宽度(INT)，高度(INT)，视频帧率(INT)，视频秒数(INT)
+即通过描述和秒数以及提示词生成视频，包含ID，视频提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
 
 #### 写入时机
 
@@ -669,7 +669,7 @@ integrated_multimodal_description 先在图像中确立场景风格、主体、�
 
 ### 首帧视频
 
-即通过首帧和秒数以及提示词生成视频，包含ID，<Picture 1>(IMAGE)，视频提示词(TEXT)，宽度(INT)，高度(INT)，视频帧率(INT)，视频秒数(INT)
+即通过首帧和秒数以及提示词生成视频，包含ID，<Picture 1>(IMAGE)，视频提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
 
 #### 写入时机
 
@@ -688,7 +688,7 @@ integrated_multimodal_description 采用「首帧锚点 → 动作发起 → 连
 
 ### 首尾视频
 
-即通过首尾帧和秒数以及提示词生成视频，包含ID，<Picture 1>(IMAGE)，<Picture 2>(IMAGE)，视频提示词(TEXT)，宽度(INT)，高度(INT)，视频帧率(INT)，视频秒数(INT)
+即通过首尾帧和秒数以及提示词生成视频，包含ID，<Picture 1>(IMAGE)，<Picture 2>(IMAGE)，视频提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
 
 #### 写入时机
 
@@ -709,9 +709,9 @@ integrated_multimodal_description 采用「首帧状态 → 可观察的中间�
 
 ### 关键帧视频
 
-即通过首帧、尾帧与任意数量中间关键帧和秒数以及提示词生成视频，包含ID，锚点数(INT)，<Picture 1> 首帧(IMAGE)，<Picture 2>(IMAGE)，关键帧2所在秒数(FLOAT)，<Picture 3>(IMAGE)，关键帧3所在秒数(FLOAT)，<Picture 4>(IMAGE)，关键帧4所在秒数(FLOAT)，<Picture 5>(IMAGE)，关键帧5所在秒数(FLOAT)，<Picture 6>(IMAGE)，关键帧6所在秒数(FLOAT)，<Picture 7>(IMAGE)，关键帧7所在秒数(FLOAT)，<Picture 8>(IMAGE)，关键帧8所在秒数(FLOAT)，<Picture 9> 尾帧(IMAGE)，视频提示词(TEXT)，宽度(INT)，高度(INT)，视频帧率(INT)，视频秒数(INT)
+即通过首帧、尾帧与任意数量中间关键帧和秒数以及提示词生成视频，包含ID，锚点数(INT)，<Picture 1> 首帧(IMAGE)，<Picture 2>(IMAGE)，关键帧2所在秒数(FLOAT)，<Picture 3>(IMAGE)，关键帧3所在秒数(FLOAT)，<Picture 4>(IMAGE)，关键帧4所在秒数(FLOAT)，<Picture 5>(IMAGE)，关键帧5所在秒数(FLOAT)，<Picture 6>(IMAGE)，关键帧6所在秒数(FLOAT)，<Picture 7>(IMAGE)，关键帧7所在秒数(FLOAT)，<Picture 8>(IMAGE)，关键帧8所在秒数(FLOAT)，<Picture 9> 尾帧(IMAGE)，视频提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
 
-共 **23 列**。首帧列列名写作 `<Picture 1> 首帧`、尾帧列写作 `<Picture 9> 尾帧`（角色词写在类型后缀 `(IMAGE)` 之前——表头解析取**最后一对括号**为类型，角色词写到括号后面会导致类型识别失败）。
+共 **22 列**。首帧列列名写作 `<Picture 1> 首帧`、尾帧列写作 `<Picture 9> 尾帧`（角色词写在类型后缀 `(IMAGE)` 之前——表头解析取**最后一对括号**为类型，角色词写到括号后面会导致类型识别失败）。
 
 九张图为**固定语义槽位**：`<Picture 1> 首帧` 恒钉视频第 0 帧，`<Picture 9> 尾帧` 恒钉视频末帧，`<Picture 2>` ~ `<Picture 8>` 为 7 个中间帧槽位。**首帧、尾帧的位置是固定的，因此它们没有秒数列**：首帧在画布上由 `#40` 的 `frame_idx` 控件硬钉 `0`；尾帧由表达式 `max(0, a − 1)`（a = 吸附后总帧数 `length`）钉到第 `length − 1` 帧。**只有中间帧需要秒数**：第 2 ~ 8 槽每槽右侧跟一个「关键帧n所在秒数」列，工作流内每个中间帧配一个 `ComfyMathExpression`，把该秒数换算成帧索引 `frame_idx = max(0, min(round(关键帧n所在秒数 × 24), length − 1))`（24 为 H3 固定帧率），秒数留空按 0 处理。**槽位的先后与秒数大小无需单调**——中间帧按秒数各自独立定位，谁前谁后由秒数决定，不由槽位序决定。
 
@@ -753,7 +753,7 @@ integrated_multimodal_description 采用「首帧状态 → 可观察的中间�
 **帧数换算**：总帧数 `length` 由 `视频秒数` 按 17k+5 网格向上吸附，单段合法 **124 ~ 362 帧**（5.17 ~ 15.08 秒），15 秒 = 362 帧。帧索引落点：**首帧 = 第 0 帧**（固定）；**第 n 个中间帧 = `max(0, min(round(关键帧n所在秒数 × 24), length − 1))`**；**尾帧 = 第 `length − 1` 帧**（固定）。以 `视频秒数 = 15` 为例：`length = 362`（实际时长 15.083 秒），尾帧落在第 361 帧 = `15.04` 秒——**提示词里的尾帧时点要写 `15.04`，写 `15` 会指向第 360 帧**（末帧时刻恒为 `(length − 1) / 24`，改 `视频秒数` 时必须同步改提示词里的尾帧时点）。
 ### 参考视频
 
-即通过最高9张图片，3个视频，3个音频参考生视频，包含ID，<Picture 1>(IMAGE)，<Picture 2>(IMAGE)，<Picture 3>(IMAGE)，<Picture 4>(IMAGE)，<Picture 5>(IMAGE)，<Picture 6>(IMAGE)，<Picture 7>(IMAGE)，<Picture 8>(IMAGE)，<Picture 9>(IMAGE)，<Video 1>(VIDEO)，<Video 2>(VIDEO)，<Video 3>(VIDEO)，<Audio 1>(AUDIO)，<Audio 2>(AUDIO)，<Audio 3>(AUDIO)，视频提示词(TEXT)，宽度(INT)，高度(INT)，视频帧率(INT)，视频秒数(INT)
+即通过最高9张图片，3个视频，3个音频参考生视频，包含ID，<Picture 1>(IMAGE)，<Picture 2>(IMAGE)，<Picture 3>(IMAGE)，<Picture 4>(IMAGE)，<Picture 5>(IMAGE)，<Picture 6>(IMAGE)，<Picture 7>(IMAGE)，<Picture 8>(IMAGE)，<Picture 9>(IMAGE)，<Video 1>(VIDEO)，<Video 2>(VIDEO)，<Video 3>(VIDEO)，<Audio 1>(AUDIO)，<Audio 2>(AUDIO)，<Audio 3>(AUDIO)，视频提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
 
 #### 写入时机
 
