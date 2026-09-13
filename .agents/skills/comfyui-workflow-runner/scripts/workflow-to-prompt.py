@@ -89,6 +89,18 @@ def build(wf_path: str, refresh_md: bool):
             l = links.get(inp.get("link"))
             if l:
                 return resolve(l[1], l[2])
+        elif n.get("mode") == 4:
+            # 旁路节点不进 prompt, 其输出须透传到同名(否则同类型)的已连输入;
+            # 否则下游仍指向那个被跳过的 id, ComfyUI 校验时报 KeyError。
+            outs = n.get("outputs") or []
+            out = outs[slot] if slot < len(outs) else {}
+            wired = [i for i in (n.get("inputs") or []) if i.get("link") is not None]
+            src = next((i for i in wired if i.get("name") == out.get("name")), None)
+            if src is None:
+                src = next((i for i in wired if i.get("type") == out.get("type")), None)
+            l = links.get(src["link"]) if src else None
+            if l:
+                return resolve(l[1], l[2])
         return (nid, slot)
 
     prompt = {}
