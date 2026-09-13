@@ -14,12 +14,12 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ 视频 | `ComfyUI-VideoHelperSuite`、`ComfyUI-WanVideoWrapper`、`ComfyUI-Frame-Interpolation`(补帧)、`ComfyUI-qwenmultiangle`(Qwen 多镜头) |
 | └ 图像/编辑/生成 | `ComfyUI-Easy-Use`、`ComfyUI_IPAdapter_plus`、`ComfyUI-ReActor`(换脸)、`ComfyUI-RMBG`、`ComfyUI-segment-anything-2`、`comfyui_controlnet_aux`、`ComfyUI-IC-Light`、`ComfyUI-DepthAnythingV2`、`Comfyui-QwenEditUtils`、`comfyui-mixlab-nodes`、`ComfyUI-Florence2`、`ComfyUI-post-processing-nodes`(后期处理) |
 | └ 工具/其它 | `ComfyUI-GGUF`(GGUF 量化加载)、`ComfyUI-KJNodes`(KJ 工具包)、`rgthree-comfy`、`ComfyUI-Custom-Scripts`、`ComfyUI-Detail-Daemon`、`ComfyUI-Crystools`、`ComfyUI-MultiGPU`、`ComfyUI-LogicUtils`、`ComfyUI-Inspire-Pack`、`cg-use-everywhere`、`audio-separation-nodes-comfyui`、`ComfyUI_essentials`、`ComfyUI_LinkFX`(连线动画)、`ComfyUI-AnimatedLinks`(连线动画) |
-| `docs` | 本地参考文档:20 个分类 md + 4 个子目录(3 个 git submodule + `Qwen-Image-Edit-Skills` 本地目录) | 
+| `docs` | 本地参考文档:24 个分类 md + 4 个子目录(3 个 git submodule + `Qwen-Image-Edit-Skills` 本地目录) | 
 | └ `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,子模块) |
 | └ `Obsidian-Dev-Docs` | Obsidian 官方开发者文档(插件开发参考,子模块) |
 | └ `Obsidian-API` | Obsidian API 类型定义(`obsidian.d.ts`/`publish.d.ts`,子模块) |
 | └ `Qwen-Image-Edit-Skills` | Qwen-Image-Edit 官方 Skills 参考(本地目录,非子模块) |
-| └ 分类 md | 启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、节点输入类型总表、插件注册表、模型调研报告、H3 提示词格式调研、FallingTS 分段执行机制等 |
+| └ 分类 md | 启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、节点输入类型总表、插件注册表、模型调研报告、H3 提示词格式调研、FallingTS 分段执行机制、视频音频分析工具链(读产物全链 + 工具源码)等 |
 | `h3` | **MiniMax H3 生态聚合目录**(2026-08-10 建):`MiniMax-H3`(官方模型仓库,自带 9 个官方 Skills)+ `minimax-h3-guide`(参考加载套件,其 `H3ReferenceSuite` 由根 `custom_nodes` 子链接指向) |
 | **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 24 个,按编号-用途分组: |
 | └ `1xxx` 万物 | `1000-万物建模`(主线主流程)/ `1001-灰度遮罩` / `1010-万物变化` |
@@ -157,6 +157,21 @@ python main.py --enable-manager
 - 验证节点加载:启动后查日志中 custom node 加载输出,或访问 `/object_info` 检查节点是否注册
 - 挑选/运行工作流:先核对「模型与蓝图」确认组件就位,再开 `blueprints\`、`templates\`(官方子目录)、`webs\Bilibili\工作流大全\`、`webs\RunningHub\workflows\` 的 json
 - 清理临时输出残留:删 `temp\` 里 `ComfyUI_temp_*.png` 后,「资产 → 已生成」仍显示属正常(任务历史 `GET /history` 的引用)。清理:`POST /history` + `{"clear": true}` 全清,或 `{"delete": ["<prompt_id>",...]}` 定向删;验证归零后前端 F5。⚠️ 清空前确认 history 输出均为 `temp` 类型,勿误清 output/input 真实数据
+
+## 视频/音频分析工具链(产物必须真读, 2026-09-13 补)
+
+生成视频/音频后**不能只看 `status: success`**: 画面要抽帧后用 `read_image` 逐张看, 音频要转成文字/特征/频谱图后再判断。**AI 没有听觉, 唯一"看"的通道是 `read_image`(只认图)** ⇒ 视频/音频必须先落成帧图/频谱图。**完整链路、能力边界、已知坑与两个工具的完整源码见 `docs\视频音频分析工具链.md`**(`scripts\` 是临时目录随时会被清空, 源码以该文档为准)。
+
+全链四步(全部离线, 实测样本 = 4025 关键帧视频):
+
+1. **定位产物**: `GET /history?max_items=N` → `outputs.<node>.{images,videos,audio,gifs}[].{filename,type}`; `type: temp` → `ComfyUI\temp\`, `type: output` → `media\`(真实数据勿删); `history.prompt[<n>]` 是当时的 API 图(可查节点数/mdtable `selected.id`)。同名前缀的 temp 文件会累积, 只用 mtime 最新那个。
+2. **探针**: `ffprobe -v error -print_format json -show_format -show_streams <文件>`; 核对视频 宽高/fps/总帧数、音频 采样率/声道/**有没有音轨**(H3 无音轨多为 `overall_soundscape` 段没写对)。`总帧数 ÷ fps = 时长`(H3 固定 24 fps: 362 帧 = 15.083s)。
+3. **画面**: `ffmpeg -y -i in.mp4 -ss 11.000 -frames:v 1 f011.png`(精确; `-ss` 放 `-i` 之前 = 快但可能偏几帧) + 联络表 `-vf "fps=1/2,scale=640:-1,tile=4x3" -frames:v 1 grid.png` → `read_image` 判读: 锚点主体在不在、数量/位置对不对、有没有被文字描述替换掉(实测: 提示词写"摊开的手稿", 中段笔记本就变成了摊开的书)。
+4. **音频**: `ffmpeg -y -i in.mp4 -ac 1 -ar 16000 mono16k.wav` → **SenseVoiceSmall**(`models\TTS\SenseVoiceSmall`, funasr 加载, 传本地路径 + `disable_update=True` ⇒ 不发网络请求) 出 `<|语种|><|情绪|><|事件|>文本`, 即 转写(中/英/日/韩/粤)/情感(HAPPY·SAD·ANGRY·NEUTRAL)/事件(Speech·BGM·Applause·Laughter 等); 声学特征用 librosa + pyloudnorm(响度 LUFS/节奏 BPM/频谱质心/谱平坦度/F0); 频谱图与波形图用 `ffmpeg -lavfi "showspectrumpic=s=1024x512"` / `"showwavespic=s=1024x256"` 落 PNG 后再 `read_image` 看。
+
+能力边界(**别承诺做不到的**): 转写/情绪/事件/响度/节奏/结构 ✅; **性别**仅"有人声时按 F0 中位数"启发式(纯音乐无效, 实测把贝斯基频判成了男声) ⚠️; 音色只能客观化描述(低沉/明亮/沙哑), 不能"像谁" ⚠️; **说话人分离、认出具体曲目、认人、主观听感(自然不自然/口音) ❌**(缺声纹与 diarization 模型, 曲目识别需联网指纹库, 听感需人耳)。可升级项(faster-whisper 权重 / pyannote·3D-Speaker / CLAP·AST / chromaprint)见该文档 §7。
+
+坑: ① 脚本报 `exit code 1` 常是 torch `pynvml` FutureWarning 走 stderr 被 PowerShell 当 `NativeCommandError`, 判成功看业务输出不看退出码; ② funasr 与 ComfyUI 抢同一张 8 GB 卡, OOM 就改 `device="cpu"`; ③ 抽帧时间点别超 `duration`(ffmpeg 退出码 0 但不生成文件, 末帧用 `时长 - 1/fps`); ④ **图与数字必须一起看** —— 纯音乐时 `pyin` 的 F0、以及"低谱平坦度 ⇒ 没雨声"的推断都会骗人, 频谱图能纠正。
 
 ## 工作流布局规范(修改与创作必须遵守)
 
