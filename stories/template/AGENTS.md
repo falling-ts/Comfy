@@ -154,6 +154,29 @@
 - 低显存/加速档 9:16 = **480×832**
 - **严禁使用 1664×928 等生图桶值**：面积 1.54MP 超出 H3 上限约 50%，属分布外，易质量崩坏；2K 需另行二采放大（SeedVR2 / RTX VSR），不在宽度/高度列表达
 
+### H3 提示词语言规范（视频类资源通用）
+
+**写进资源表的提示词正文一律英文**，只有对白/歌词与画面内实际可见的文字保留原语言。
+
+依据：H3 官方提示词技能（`h3-prompt-writing`）与官方模板（`templates\视频\api_minimax_h3_max_r2v.json` 等）的示例 prompt 全为英文；官方 HF 仓库讨论 #32 中经官方人员编辑的答复为「除需要生成的文字和对白内容，其他都要用英文描述」；官方模型卡载明 H3-Encoder 取 **Qwen3-VL-32B 第 50 层隐状态**送进 H3-Omni-Transformer，生成主干是在英文条件上训练的，故中文条件落在分布外。本机 `qwen3vl_32b_minimax_h3_nvfp4_awq` 是 **4-bit** 量化编码器，多语言基准实测长提示词的词义错乱率为**英文 1.8 / 100 词、中文 3.1 / 100 词**（中文额外损失约 1.7 倍）——长提示词用英文可同时规避「条件分布外」与「量化损失」两笔代价。
+
+| 内容 | 填写语言 |
+| :--- | :--- |
+| 六部分 / 三部分核心字段的正文（画面、运镜、光影、动作、声音描述） | **英文** |
+| 固定字段名与标签 | **英文**：`subject_definitions`、`integrated_multimodal_description`、`<Subject N>`、`<Picture N>`、`<Video N>`、`<Audio N>`、`[Shot N]`、`At MM:SS.mmm`、`fully_preserved` 等；**严禁写成 `<图片 1>`、`[镜头 1]`、`[中文]`** |
+| 对白语言标签 | **英文语言名**：`<d>[Chinese] 我们现在出发。</d>`；说话人 ID 写 `(S1)`、`(S2)` 并置于 `<d>` 之外 |
+| `<d>` 内的对白 / 歌词 | **保留原语言**（中文对白直接写中文，不翻译、不改写） |
+| 画面内实际可见的文字（招牌 / 字幕 / 标签） | **保留原语言**，用英文双引号逐字包住，如 `a sign reading "营业中"` |
+| 镜头语言术语（见下文词汇表） | 写入提示词时取**英文术语**（push in / medium close-up / cross-dissolve），词汇表中的中文词仅供对照 |
+
+**本文档各节的规范说明与示例用中文书写是为便于阅读；填进资源表的提示词正文一律英文。** 各类对齐指令的官方英文原句如下（下列中文句仅作对照，实际填写用英文）：
+
+- I2VA 首行：`For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.`
+- FL2VA 首行：`Reference image alignment with the target video - Picture 1 (from [Shot 1]) aligns with the 0.00-second position of the target video; Picture 2 (from [Shot N]) aligns with the S.SS-second position of the target video.`
+- 关键帧锚定：`[Shot N] At S.SS, anchored to the frame established by <Picture N>.`
+
+**唯一的例外是短提示词**：官方多语言基准显示短提示词在 13 种语言下均无量化损失，日常氛围描述用中文不掉质量；但本库的视频 / 场景提示词普遍为数百至上千词的长结构化提示词，正落在损失区，故一律按英文写。
+
 ### 万物建模
 
 即文生图并优化图片，包含ID，主-正词(TEXT)，主-负词(TEXT)，宽度(INT)，高度(INT)，图2(IMAGE)，图3(IMAGE)，优化-正词(TEXT)，优化-负词(TEXT)
@@ -452,7 +475,7 @@ integrated_multimodal_description 先在图像中确立场景风格、主体、�
 
 ### 视频类镜头语言词汇表（静态景别 + 动态运动，提示词可直接使用）
 
-以下为影视行业完整镜头语言词汇表（静态 9 级景别 + 动态十大板块）。视频/场景生成类（文生场景、首帧场景、参考场景、文生视频、首帧视频、首尾视频、关键帧视频、参考视频）提示词提取时，可直接选用其中的术语精确描述镜头与景别，术语可原样写入提示词。注意与「小说写作 → 镜头语言」区分：小说中这些术语仅用于脑中构景，**严禁写进小说正文**。
+以下为影视行业完整镜头语言词汇表（静态 9 级景别 + 动态十大板块）。视频/场景生成类（文生场景、首帧场景、参考场景、文生视频、首帧视频、首尾视频、关键帧视频、参考视频）提示词提取时，可直接选用其中的术语精确描述镜头与景别；**写入提示词时取英文术语**（如 push in / medium close-up / cross-dissolve，本表中的中文词仅供对照，见「H3 提示词语言规范」）。注意与「小说写作 → 镜头语言」区分：小说中这些术语仅用于脑中构景，**严禁写进小说正文**。
 
 #### 静态镜头类别（依据景别）
 
@@ -665,7 +688,7 @@ integrated_multimodal_description 先在图像中确立场景风格、主体、�
 2. **overall_soundscape**：概括整个视频中的环境音、物理动作声和非语言人声
 3. **non_diegetic_music**：描述角色听不到、仅观众能听到的背景音乐
 
-`[Shot 1]` 描述开场镜头，不带时间戳；后续镜头以 `[Shot 2] At MM:SS.mmm` 递增标注切换时间并说明切换方式（cut / cross-dissolve / fade）。说话者用 (S1)、(S2) 稳定编号，对白写作 `<d>[语言] 内容</d>`。
+`[Shot 1]` 描述开场镜头，不带时间戳；后续镜头以 `[Shot 2] At MM:SS.mmm` 递增标注切换时间并说明切换方式（cut / cross-dissolve / fade）。说话者用 (S1)、(S2) 稳定编号并置于 `<d>` 之外，对白写作 `<d>[Chinese] 内容</d>` —— **方括号内一律填英文语言名**（Chinese / English / Japanese …），严禁写 `[中文]`（语言规则见「H3 提示词语言规范」）。
 
 ### 首帧视频
 
