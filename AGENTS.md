@@ -36,9 +36,9 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | `media` | 输入/输出文件(`ComfyUI\input`、`output` 软链接到此):`3d\` / `qwen3tts\` / `clipspace\` 及历史生成图;⚠️ 真实数据,严禁删除/批量清理 |
 | `templates` | ComfyUI 官方模板库本地缓存:10 个分类子目录(`图像`/`视频`/`音频`/`3D模型`/`LLM`/`工具`/`快速开始`/`自定义节点`/`节点基础`/`使用案例`)+ `workflow-templates-list.md` 索引(2026-08-09 曾归档的个人工作流已迁回 `workflows\`) |
 | `webs` | 三方网站调研聚合目录(已入库跟踪):三个调研源 |
-| └ `RunningHub` | RunningHub 调研:`RunningHub-API读取指南.md` + `API.md` + `workflows-list.md` + `workflows\`(1360 个收集工作流,按 图像/视频/音频/数字人/室内外设计/风格化/插件 等子目录分类) |
+| └ `RunningHub` | RunningHub 调研:`RunningHub-API读取指南.md` + `workflows-list.md` + `workflows\`(2522 个收集工作流,按 21 个分类子目录:图像/视频/音频/数字人/室内外设计/风格化/插件 等) |
 | └ `Bilibili` | B 站教程调研:`B站教程调研.md` + `工作流大全\`(474 个配套工作流) |
-| └ `AutoDL` | 云端 GPU 调研:`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4015 条模型清单) |
+| └ `AutoDL` | 云端 GPU 调研:`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4887 条模型清单) |
 | `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置):`template\`(新建故事模板)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
 | `scripts` | 临时/可复用工具脚本(被 `scripts\.gitignore` 忽略,仅存本地不入库):工作流连线校验/修复/对比(`check-workflow-*`/`fix-*`/`diff-*`/`dump-*`)、布局校验、模型使用分析、模板/模型清单更新、H3/SeedVR2 调试等 |
 | `logs` | ComfyUI 运行日志(`comfyui*.log`/`comfyui-console*.log`,已 gitignore) |
@@ -128,7 +128,7 @@ python main.py --enable-manager
 
 ## 官方文档与分类文档
 
-- `docs\ComfyUI-Docs` 为官方文档本地克隆(在线源码 GitHub `Comfy-Org/docs`);历史归档在 `backups\backup-20260805-路径清理\`;专题资料见 `webs\Bilibili\B站教程调研.md`(含 H3 专题)与 `webs\RunningHub\`(API 读取指南 / API.md / workflows-list.md)
+- `docs\ComfyUI-Docs` 为官方文档本地克隆(在线源码 GitHub `Comfy-Org/docs`);历史归档在 `backups\backup-20260805-路径清理\`;专题资料见 `webs\Bilibili\B站教程调研.md`(含 H3 专题)与 `webs\RunningHub\`(API 读取指南 / workflows-list.md)
 
 ## 开发规范
 
