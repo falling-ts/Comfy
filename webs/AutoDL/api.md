@@ -101,12 +101,30 @@
 ```
 
 - `file_name` / `model_repository` 二选一(分别按文件名、模型仓库名过滤);**传 `keyword` 会被忽略**(实测任意关键词都返回同一批最新上传,100 条封顶)
-- `page_size` 实测最大 100;`data.total` 恒为 null,翻页以「返回条数 < 100」为终止条件
+- `page_size` 实测最大 100
 - 返回 `data.list[]`,每条含:
   - `model_name` / `file_name`(文件名可能带 `<em>` 高亮标签,需清洗)
   - `file_size`(字节)、`md5`(可校验一致性)、`model_repository`(来源仓库)
   - `instance_path`(如 `/.autodl/93/e7/54/<md5>`,云上存储路径)
   - `user_info.username`(上传者)、`created_at` / `updated_at`
+
+#### 5.2.1 2026-09-17 复核修正(接口已比初版完善)
+
+- 返回体 `data` 现含 **`result_total` / `max_page` / `offset` / `page_index` / `page_size` / `page`**。
+  初版记的「`data.total` 恒为 null」**已过时**:本次实测 `result_total = 4887`、`max_page = 49`,可直接用于分页。
+- **终止条件必须用 `max_page` 循环**,不要用「返回条数 < page_size」:超出 `max_page` 后接口**重复返回最后一页**
+  (实测第 50、60 页均返回与第 49 页相同的 87 条),按条数判断会重复计数。
+- **必须按 `id` 去重**:跨页顺序不稳定 —— 实测第 48 页末条 `updated_at = 2025-10-30` 反而比第 47 页的 `2025-09-23` 更新,
+  说明排序会抖动、翻页可能漏或重。本次按 `max_page` 拉全(48 页 ×100 + 87 = 4887),以 `id` 为键去重后恰为
+  4887 条,与 `result_total` 完全吻合,无重复无遗漏。
+- 条目实际字段:`id` / `created_at` / `updated_at` / `deleted_at` / `uid` / `model_name` / `file_name` /
+  `model_repository` / `md5` / `note` / `file_size` / `file_status` / `instance_path` / `user_info` /
+  `architecture_taxonomies` / `training_paradigms`。
+  其中 **`model_name` 是归类时最有价值的信号**(同一 `model_name` 下的分片必属同一本地目录,可直接传播);
+  `architecture_taxonomies` / `training_paradigms` 实测多为 `others`,暂无区分力。
+- 更新脚本 `scripts/autodl-update-models.py`:token 走环境变量 `AUTODL_TOKEN`(不落盘);
+  `models.md` 的「本地目录」列优先沿用旧 md 的 `instance_path` 映射(归类含人工判断,无法纯规则复现),
+  再依次按 `model_name` 传播 → 仓库传播 → 文件名规则判定,判不出的标「未识别(需人工核对)」。
 
 ### 5.3 前端反推过程(接口变更后自查)
 
