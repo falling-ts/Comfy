@@ -33,7 +33,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ 核心生成 | `diffusion_models` / `text_encoders` / `vae` / `loras` / `checkpoints` / `upscale_models` / `background_removal`(已就绪) |
 | └ 语音 | `TTS`(Qwen3-TTS 五变体 + SenseVoice)/ `ASR` / `speaker_models` / `audio_encoders` |
 | └ 标准空槽位 | 其余 25 个标准槽位目录(如 `controlnet` / `clip` / `clip_vision` / `unet` / `embeddings` / `detection` / `SEEDVR2` / `ultralytics` 等,多数尚未放置模型) |
-| `media` | 输入/输出文件(`ComfyUI\input`、`output` 软链接到此):`3d\` / `qwen3tts\` / `clipspace\` 及历史生成图;⚠️ 真实数据,严禁删除/批量清理 |
+| `media` | 输入/输出文件(`ComfyUI\input`、`output` 软链接到 `media\七纹刻印`):按**项目**分目录——`template\`(模板, 入库占位)+ 各故事库目录(如 `七纹刻印\`, 实际产物, 不入库);input/output 指向哪个项目, 产物就落在哪个项目目录下 |
 | `templates` | ComfyUI 官方模板库本地缓存:10 个分类子目录(`图像`/`视频`/`音频`/`3D模型`/`LLM`/`工具`/`快速开始`/`自定义节点`/`节点基础`/`使用案例`)+ `workflow-templates-list.md` 索引(2026-08-09 曾归档的个人工作流已迁回 `workflows\`) |
 | `webs` | 三方网站调研聚合目录(已入库跟踪):三个调研源 |
 | └ `RunningHub` | RunningHub 调研:`RunningHub-API读取指南.md` + `workflows-list.md` + `workflows\`(2522 个收集工作流,按 21 个分类子目录:图像/视频/音频/数字人/室内外设计/风格化/插件 等) |
@@ -56,8 +56,8 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 
 | ComfyUI 内路径 | 类型 | 相对目标 | 实际指向 |
 |------|------|------|------|
-| `ComfyUI\input` | SymbolicLink | `..\media` | `media` |
-| `ComfyUI\output` | SymbolicLink | `..\media` | `media` |
+| `ComfyUI\input` | SymbolicLink | `..\media\七纹刻印` | `media\七纹刻印`(当前项目) |
+| `ComfyUI\output` | SymbolicLink | `..\media\七纹刻印` | `media\七纹刻印`(当前项目) |
 | `ComfyUI\models` | SymbolicLink | `..\models` | `models`(模型实际存放处) |
 | `ComfyUI\user\default\workflows` | SymbolicLink | `..\..\..\workflows` | `workflows`(用户工作流实际存储处) |
 
@@ -70,7 +70,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 
 - 根 `custom_nodes` 由**根仓库**跟踪:43 个插件以 gitlink 形式登记(全仓共 50 个子模块:`ComfyUI` 1 + 插件 43 + `docs\` 4 + `h3\` 2),`H3ReferenceSuite` 为符号链接;本地文件 `example_node.py.example`、`websocket_image_save.py` 被根 `.gitignore` 排除(保留磁盘副本供加载)。`ComfyUI\custom_nodes` 是目录级符号链接,其目标内容不受 ComfyUI 子模块 git 影响
 - `ComfyUI\temp\`(真实目录,非链接):运行中生成的临时文件/预览图(如 `ComfyUI_temp_*.png`),可随时清理
-- ⚠️ **`ComfyUI\input\`(用户上传)与 `output\`(生成结果)是真实数据:严禁删除、移动或批量清理**;只有 `temp\` 可清理
+- ⚠️ **`ComfyUI\input\`(用户上传)与 `output\`(生成结果)是真实数据所在(经软链落入 `media\<项目>\`):严禁整体删除、移动或批量清理**;只有 `temp\` 可清理
 
 ### C. 根目录 Claude Code 兼容链接(1 个)
 
@@ -148,7 +148,7 @@ python main.py --enable-manager
 
 - `ComfyUI` 工作树含已删除的占位文件(`models/*/put_*_here` 等),属安装后正常现象,不要恢复或提交
 - `custom_nodes\websocket_image_save.py` 与 `example_node.py.example` 是本地文件,不属于任何仓库
-- `media`(input/output 软链接目标)已有内容(`audio_00001.mp3`、`qwen3tts\`、`3d\` 等);部分旧工作流引用的输入文件可能仍缺失,运行前核对
+- `media`(input/output 软链目标)按项目分目录:`template\`(模板)+ `七纹刻印\`(当前项目, 软链指向);部分旧工作流引用的输入文件可能仍缺失,运行前核对
 
 ## 常见任务
 
@@ -164,7 +164,7 @@ python main.py --enable-manager
 
 全链四步(全部离线, 实测样本 = 0043 关键帧视频):
 
-1. **定位产物**: `GET /history?max_items=N` → `outputs.<node>.{images,videos,audio,gifs}[].{filename,type}`; `type: temp` → `ComfyUI\temp\`, `type: output` → `media\`(真实数据勿删); `history.prompt[<n>]` 是当时的 API 图(可查节点数/mdtable `selected.id`)。同名前缀的 temp 文件会累积, 只用 mtime 最新那个。
+1. **定位产物**: `GET /history?max_items=N` → `outputs.<node>.{images,videos,audio,gifs}[].{filename,type}`; `type: temp` → `ComfyUI\temp\`, `type: output` → `media\<项目>\`(真实数据勿删; 保存类节点还会再按工作流名建一层子目录, `filename` 不带该层级, 需从插件返回消息确认); `history.prompt[<n>]` 是当时的 API 图(可查节点数/mdtable `selected.id`)。同名前缀的 temp 文件会累积, 只用 mtime 最新那个。
 2. **探针**: `ffprobe -v error -print_format json -show_format -show_streams <文件>`; 核对视频 宽高/fps/总帧数、音频 采样率/声道/**有没有音轨**(H3 无音轨多为 `overall_soundscape` 段没写对)。`总帧数 ÷ fps = 时长`(H3 固定 24 fps: 362 帧 = 15.083s)。
 3. **画面**: `ffmpeg -y -i in.mp4 -ss 11.000 -frames:v 1 f011.png`(精确; `-ss` 放 `-i` 之前 = 快但可能偏几帧) + 联络表 `-vf "fps=1/2,scale=640:-1,tile=4x3" -frames:v 1 grid.png` → `read_image` 判读: 锚点主体在不在、数量/位置对不对、有没有被文字描述替换掉(实测: 提示词写"摊开的手稿", 中段笔记本就变成了摊开的书)。
 4. **音频**: `ffmpeg -y -i in.mp4 -ac 1 -ar 16000 mono16k.wav` → **SenseVoiceSmall**(`models\TTS\SenseVoiceSmall`, funasr 加载, 传本地路径 + `disable_update=True` ⇒ 不发网络请求) 出 `<|语种|><|情绪|><|事件|>文本`, 即 转写(中/英/日/韩/粤)/情感(HAPPY·SAD·ANGRY·NEUTRAL)/事件(Speech·BGM·Applause·Laughter 等); 声学特征用 librosa + pyloudnorm(响度 LUFS/节奏 BPM/频谱质心/谱平坦度/F0); 频谱图与波形图用 `ffmpeg -lavfi "showspectrumpic=s=1024x512"` / `"showwavespic=s=1024x256"` 落 PNG 后再 `read_image` 看。
