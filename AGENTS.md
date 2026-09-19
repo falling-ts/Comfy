@@ -39,7 +39,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ `RunningHub` | RunningHub 调研:`RunningHub-API读取指南.md` + `workflows-list.md` + `workflows\`(2522 个收集工作流,按 21 个分类子目录:图像/视频/音频/数字人/室内外设计/风格化/插件 等) |
 | └ `Bilibili` | B 站教程调研:`B站教程调研.md` + `工作流大全\`(474 个配套工作流) |
 | └ `AutoDL` | 云端 GPU 调研:`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4887 条模型清单) |
-| `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置):`template\`(新建故事模板)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
+| `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置 + 插件安装位相对软链,见「软链接映射 §D」):`template\`(新建故事模板)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
 | `scripts` | 临时/可复用工具脚本(被 `scripts\.gitignore` 忽略,仅存本地不入库):工作流连线校验/修复/对比(`check-workflow-*`/`fix-*`/`diff-*`/`dump-*`)、布局校验、模型使用分析、模板/模型清单更新、H3/SeedVR2 调试等 |
 | `logs` | ComfyUI 运行日志(`comfyui*.log`/`comfyui-console*.log`,已 gitignore) |
 | `backups` | **工作流/重要文件的修改前备份**(2026-08-04 起):`backup-<文件名>-<YYYYMMDD>-<说明>.*` 命名;含 `backup-20260805-路径清理\`(官方/分类文档归档)、`sageattention\`(本地 wheel)、环境迁移快照(pip-freeze/conda export)等 |
@@ -48,7 +48,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | `.gitmodules` | 子模块登记(git submodule) |
 | `comfy-server.sh` | **统一**后台服务式启动脚本(跨平台: Linux + Windows Git Bash;杀 8188 旧进程 → 静默后台启动 → 等待端口就绪,日志默认写调用时所在目录 `comfy-server-8188.log`;Windows 等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`,Linux 用 conda 环境 comfy + `--reserve-vram 22`;覆盖 `PORT`/`WAIT`/`PY_BIN`/`LOG`/`RESERVE_VRAM`) |
 
-## 软链接映射(重要,共 7 个,全部为相对路径 SymbolicLink;2026-08-07 建,08-10 插件收敛为目录级链接,08-13 加 Claude Code 兼容链接)
+## 软链接映射(重要,共 8 个,全部为相对路径 SymbolicLink;2026-08-07 建,08-10 插件收敛为目录级链接,08-13 加 Claude Code 兼容链接,09-20 加 Obsidian 插件安装位)
 
 全部为 **相对路径**符号链接,**项目根目录整体移动后不失效**(不依赖具体文件系统/平台)。
 
@@ -77,6 +77,21 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | 根内路径 | 类型 | 相对目标 | 实际指向 |
 |------|------|------|------|
 | `.claude` | SymbolicLink(目录级) | `.agents` | 根 `.agents`(技能聚合目录,Claude Code 兼容垫片,2026-08-13 建) |
+
+### D. stories Obsidian 插件安装位(1 个,**入库跟踪**)
+
+| 根内路径 | 类型 | 相对目标 | 实际指向 |
+|------|------|------|------|
+| `stories\.obsidian\plugins\obsidian-comfy` | SymbolicLink | `..\..\Obsidian-Comfy` | `stories\Obsidian-Comfy`(插件子模块,远程 `falling-ts/Obsidian-Comfy`) |
+
+- **用途**:Obsidian 只从 vault 的 `.obsidian\plugins\<id>\` 加载插件,目录名必须等于 `manifest.json` 的 `id`(此处即 `obsidian-comfy`);vault 根为 `stories\`,插件源码在子模块 `stories\Obsidian-Comfy`,靠此链接挂进安装位以保持**单一真源**(改子模块即生效,无需复制)
+- **入库方式**(与 A、B 组不同,本链接**入库跟踪**):`stories\.gitignore` 用 `.obsidian/plugins/*` + `!.obsidian/plugins/obsidian-comfy` 放行。⚠️ **必须写 `plugins/*` 而非 `plugins/`**:git 不会进入已被排除的目录,写 `plugins/` 时后面的放行规则永远不生效(其余插件仍不入库)。根仓库入库的相对软链共 3 个:`.claude`、`custom_nodes\H3ReferenceSuite`、本链接(均 mode `120000`)
+- ⚠️ **clone 端约束 —— `core.symlinks` 是本地配置、不入库,新机器必须自己配**:
+  - Windows:`git config core.symlinks true`,**且该机要有建链权限**(开发者模式或管理员);否则 git 会把链接检出成写着 `../../Obsidian-Comfy` 的**普通文本文件**,Obsidian 认不出插件。本机 local 已设 `true`(原 local 为 `false`,会覆盖 global 的 `true`;system 亦为 `false`)
+  - Linux/macOS:默认 `core.symlinks=true`,无需配置
+  - 子模块需初始化:`git submodule update --init stories/Obsidian-Comfy`,否则链接悬空(git 层面仍正确,只是插件无源码)
+- 相对目标以**链接自身所在目录**为基准解析,故仓库 clone 到任意绝对路径都直接生效;git 存储时统一规范为正斜杠(`../../Obsidian-Comfy`),checkout 时转回平台分隔符(`..\..\Obsidian-Comfy`)
+- **建链只能用 Python `os.symlink`**:PowerShell `New-Item` 会把相对 target 按 cwd 解析(建出 `D:\media\...` 之类错误目标),同 `scripts\link-media-dirs.py` 注释所述。验证口径:`(Get-Item <路径>).LinkType` 为 `SymbolicLink`、`Target` 为相对串、且经链接能读到 `main.js`
 
 ## 版本与运行
 
