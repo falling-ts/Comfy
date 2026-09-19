@@ -1,0 +1,339 @@
+/* ==========================================================================
+   Comfy 数据表 — 样式
+   目标: 表格严格单行、超长 TEXT 列省略号截断、允许横向滚动,
+        上方搜索栏 + 下方分页条。
+   ========================================================================== */
+
+/* ─── 外层容器 ─── */
+.oc-table-block {
+  margin: 1em 0;
+}
+
+/* ─── 工具条(搜索 / 排序状态) ─── */
+.oc-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: var(--font-ui-smaller, 12px);
+}
+
+.oc-toolbar input.oc-search {
+  flex: 1 1 220px;
+  min-width: 160px;
+  padding: 4px 8px;
+  font-size: var(--font-ui-smaller, 12px);
+}
+
+.oc-count {
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* 工具栏上的排序按钮 */
+.oc-toolbar button.oc-sort-btn {
+  padding: 3px 10px;
+  font-size: var(--font-ui-smaller, 12px);
+  font-family: var(--font-monospace);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* ─── 横向滚动容器: 单行 + 可横滚 ─── */
+.oc-table-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  /* 细滚动条, 不抢视觉 */
+  scrollbar-width: thin;
+}
+
+.oc-table-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.oc-table-scroll::-webkit-scrollbar-thumb {
+  background: var(--background-modifier-border);
+  border-radius: 4px;
+}
+
+/* 表格本身按内容展开, 至少占满容器宽度 */
+.oc-table-scroll > table {
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+}
+
+/* ─── 全列强制单行 ─── */
+.oc-table-scroll th,
+.oc-table-scroll td {
+  white-space: nowrap;
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 4px 8px;
+}
+
+/* TEXT 列: 超过上限即用省略号(源码不变, 仅渲染层截断)。
+   注意: td 自身的 max-width 在 table-layout:auto 下无效,
+   实际裁剪由单元格内的 .oc-clip 容器完成。 */
+.oc-table-scroll td.oc-cell-text {
+  max-width: none;
+}
+
+/* 非 TEXT 列给一个较宽上限, 避免单列吃掉整屏 */
+.oc-table-scroll td.oc-cell-other {
+  max-width: none;
+}
+
+/* 单元格内的裁剪容器: 这是省略号真正生效的地方 */
+.oc-clip {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.oc-clip-text {
+  max-width: var(--oc-text-max, 420px);
+}
+
+.oc-clip-other {
+  max-width: var(--oc-other-max, 720px);
+}
+
+/* 单元格里的多媒体缩略图 */
+.oc-table-scroll td img.oc-inline-thumb {
+  height: 22px;
+  width: auto;
+  max-width: 40px;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 4px;
+  border-radius: 3px;
+}
+
+/* ─── ID 列: 可点击排序 ─── */
+.oc-table-scroll th.oc-th-id {
+  cursor: pointer;
+  user-select: none;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--background-secondary);
+}
+
+.oc-table-scroll td.oc-td-id {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--background-primary);
+}
+
+.oc-sort-mark {
+  color: var(--text-accent);
+  font-size: 0.9em;
+}
+
+/* ─── 分页条 ─── */
+.oc-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: var(--font-ui-smaller, 12px);
+  color: var(--text-muted);
+}
+
+.oc-pager button {
+  padding: 2px 8px;
+  font-size: var(--font-ui-smaller, 12px);
+  line-height: 1.6;
+  cursor: pointer;
+}
+
+.oc-pager button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.oc-pager button.oc-page-active {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.oc-pager select,
+.oc-pager input.oc-jump {
+  padding: 2px 4px;
+  font-size: var(--font-ui-smaller, 12px);
+}
+
+.oc-pager input.oc-jump {
+  width: 52px;
+  text-align: center;
+}
+
+.oc-ellipsis {
+  color: var(--text-faint);
+}
+
+/* ==========================================================================
+   @ 文件浏览弹窗
+   ========================================================================== */
+
+.oc-modal {
+  width: min(860px, 86vw);
+}
+
+.oc-modal .oc-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: var(--font-ui-smaller, 12px);
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+.oc-modal .oc-crumbs a {
+  cursor: pointer;
+  color: var(--text-accent);
+}
+
+.oc-modal .oc-filter {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.oc-modal .oc-list {
+  max-height: 54vh;
+  overflow-y: auto;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+}
+
+.oc-modal .oc-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--background-modifier-border-focus, transparent);
+}
+
+.oc-modal .oc-row:hover {
+  background: var(--background-modifier-hover);
+}
+
+.oc-modal .oc-row.is-selected {
+  background: var(--background-modifier-active-hover, var(--background-modifier-hover));
+  outline: 1px solid var(--interactive-accent);
+}
+
+/* 缩略图: 图片 / 视频 / 音频 */
+.oc-modal .oc-thumb {
+  flex: 0 0 auto;
+  width: 72px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+}
+
+.oc-modal .oc-thumb img,
+.oc-modal .oc-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.oc-modal .oc-thumb .oc-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.oc-modal .oc-meta {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.oc-modal .oc-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.oc-modal .oc-sub {
+  font-size: var(--font-ui-smaller, 12px);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.oc-modal .oc-kind {
+  flex: 0 0 auto;
+  font-size: var(--font-ui-smaller, 12px);
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--background-secondary);
+  color: var(--text-muted);
+}
+
+.oc-modal .oc-preview {
+  flex: 0 0 auto;
+  font-size: var(--font-ui-smaller, 12px);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.oc-modal .oc-empty {
+  padding: 18px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.oc-modal .oc-result {
+  margin-top: 10px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--background-secondary);
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-smaller, 12px);
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.oc-modal .oc-hint {
+  margin-top: 6px;
+  font-size: var(--font-ui-smaller, 12px);
+  color: var(--text-faint);
+}
+
+/* 大图预览浮层 */
+.oc-preview-box {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.oc-preview-box img,
+.oc-preview-box video {
+  max-width: 100%;
+  max-height: 46vh;
+  border-radius: 6px;
+}
+
+.oc-preview-box audio {
+  width: 100%;
+}
