@@ -16,7 +16,7 @@ export const meta = {
 }
 
 const STORY_FILE = 'D:/Comfy/stories/template/0000-正文.md'
-const OUTLINE_FILE = 'D:/Comfy/stories/template/0010-大纲.md'
+const OUTLINE_FILE = 'D:/Comfy/stories/template/0001-大纲.md'
 const LB = '【', RB = '】'
 
 const MAX_ARCS = args?.arcs || 50

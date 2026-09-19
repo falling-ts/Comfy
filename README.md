@@ -32,7 +32,7 @@
   - `ComfyUI-GGUF` / `ComfyUI-KJNodes` — GGUF quantized loading / large utility node pack
   - `ComfyUI-SeedVR2_VideoUpscaler` / `ComfyUI-SUPIR` / `ComfyUI_UltimateSDUpscale` — super-resolution upscaling/restoration
   - The 6 H3-ecosystem plugins (Spectrum / SolAttn / ReservedVRAM / Qwen3-TTS / latent-upscaler / OrbitSheets scene reference boards) + the other 31
-- **Workflow suite**: 24, grouped by number (1xxx Everything / 2xxx Scene camera / 3xxx-4xxx Video generation / 5xxx Decomposition / 6xxx-7xxx Audio; see [Appendix B](#appendix-b--workflow-catalog))
+- **Workflow suite**: 24, grouped by number (001x Everything / 002x Scene camera / 003x-004x Video generation / 005x Decomposition / 006x-007x Audio; see [Appendix B](#appendix-b--workflow-catalog))
 - **Model directory** (`models\`, symlinked to the project root) — see [Appendix C](#appendix-c--model-download-list)
 - **Docs**: a local clone of the official docs at `docs\ComfyUI-Docs\`; the workspace description in `AGENTS.md`
 
@@ -188,7 +188,7 @@ Comfy/
 │   └── ...(the other 39, see the directory layout in AGENTS.md)
 ├── docs/                     # 20 categorized docs + 3 submodules (ComfyUI-Docs/Obsidian-Dev-Docs/Obsidian-API)
 ├── h3/                       # MiniMax H3 ecosystem (MiniMax-H3 + minimax-h3-guide)
-├── workflows/                # 24 user workflows (1xxx~7xxx, see Appendix B)
+├── workflows/                # 24 user workflows (001x~007x, see Appendix B)
 ├── models/                   # where models actually live (~189 GB, 38 slot directories, see Appendix C)
 ├── media/                    # input images/audio + generated results (3d/qwen3tts/clipspace)
 ├── templates/  webs/         # official template cache + third-party research (RunningHub/Bilibili/AutoDL)
@@ -206,55 +206,55 @@ Comfy/
 
 `workflows\` contains **24** main workflows, named "number-purpose" and grouped (the frontend saves right here):
 
-### Image / "Everything" class (1xxx, 3, based on Qwen-Image-2512 / Qwen-Edit 2511 / FLUX.2-Klein)
+### Image / "Everything" class (001x, 3, based on Qwen-Image-2512 / Qwen-Edit 2511 / FLUX.2-Klein)
 
 | Workflow | Purpose |
 |--------|------|
-| `1000-万物建模` | Main pipeline (everything modeling) |
-| `1001-灰度遮罩` | Grayscale mask tool |
-| `1010-万物变化` | Everything change/transform |
+| `0011-万物建模` | Main pipeline (everything modeling) |
+| `0010-灰度遮罩` | Grayscale mask tool |
+| `0012-万物变化` | Everything change/transform |
 
-### Scene camera class (2xxx, 4)
+### Scene camera class (002x, 4)
 
 | Workflow | Purpose |
 |--------|------|
-| `2000-场景首帧` | Scene first-frame generation |
-| `2010-场景拉镜` | Camera pull-out / push-in transform |
-| `2020-场景推镜` | Camera push-in transform |
-| `2030-场景旋镜` | Camera orbit rotation |
+| `0020-场景首帧` | Scene first-frame generation |
+| `0021-场景拉镜` | Camera pull-out / push-in transform |
+| `0022-场景推镜` | Camera push-in transform |
+| `0023-场景旋镜` | Camera orbit rotation |
 
-### Video generation class (3xxx-4xxx, 9, MiniMax H3)
+### Video generation class (003x-004x, 9, MiniMax H3)
 
 | Workflow | Purpose | H3 mode |
 |--------|------|---------|
-| `3000-文生场景` | text → scene video (visual only, no audio track) | T2VA (fl2va) |
-| `3010-首帧场景` | first-frame image → scene video | I2V (fl2va) |
-| `3020-参考场景` | multi-image + multi-video reference → video | R2V (ref2va) |
-| `3030-OrbitSheets场景` | anchor image → H3 multi-angle camera → visual frame picking into a "scene reference board" grid image | I2V (fl2va) + OrbitSheets plugin |
-| `4000-文生视频` | text → video (generic version isomorphic to 3000) | T2VA (fl2va) |
-| `4010-首帧视频` | first-frame image → video | I2V (fl2va) |
-| `4020-首尾视频` | first+last frame → video | fl2va |
-| `4030-参考视频` | reference image/video → video | R2V (ref2va) |
+| `0030-文生场景` | text → scene video (visual only, no audio track) | T2VA (fl2va) |
+| `0031-首帧场景` | first-frame image → scene video | I2V (fl2va) |
+| `0032-参考场景` | multi-image + multi-video reference → video | R2V (ref2va) |
+| `0033-OrbitSheets场景` | anchor image → H3 multi-angle camera → visual frame picking into a "scene reference board" grid image | I2V (fl2va) + OrbitSheets plugin |
+| `0040-文生视频` | text → video (generic version isomorphic to 0030) | T2VA (fl2va) |
+| `0041-首帧视频` | first-frame image → video | I2V (fl2va) |
+| `0042-首尾视频` | first+last frame → video | fl2va |
+| `0044-参考视频` | reference image/video → video | R2V (ref2va) |
 
-> 3000/3010/3020 correspond one-to-one with 4000/4010/4020/4030 (the former is the scene-pipeline version, the latter the generic version); the audio track has been removed from all — video + audio are merged in the post pipeline (5xxx-7xxx). 3030 supplements scene-reference production: it produces "scene reference board" grid images (for use as reference input to 3020/4030).
+> 0030/0031/0032 correspond one-to-one with 0040/0041/0042/0044 (the former is the scene-pipeline version, the latter the generic version); the audio track has been removed from all — video + audio are merged in the post pipeline (005x-007x). 0033 supplements scene-reference production: it produces "scene reference board" grid images (for use as reference input to 0032/0044).
 
-### Decomposition class (5xxx, 2)
+### Decomposition class (005x, 2)
 
 | Workflow | Purpose |
 |--------|------|
-| `5000-视频拆帧` | video → per-frame images |
-| `5010-视频拆音` | video → separated audio |
+| `0050-视频拆帧` | video → per-frame images |
+| `0051-视频拆音` | video → separated audio |
 
-### Audio generation class (6xxx-7xxx, 6)
+### Audio generation class (006x-007x, 6)
 
 | Workflow | Purpose | Core model |
 |--------|------|---------|
-| `6000-背景音乐` | Pure instrumental BGM | Stable Audio 3 (built-in Sage acceleration) |
-| `6010-环境音效` | Ambient/atmosphere sound | Stable Audio 3 |
-| `6020-效果音效` | One-shot / SFX | Stable Audio 3 |
-| `6030-文生人声` | text voice description → speech | Qwen3-TTS VoiceDesign |
-| `6040-参考人声` | 3-second reference audio clone → speech | Qwen3-TTS CustomVoice |
-| `7000-截取声音` | Audio crop/extract tool | — |
+| `0060-背景音乐` | Pure instrumental BGM | Stable Audio 3 (built-in Sage acceleration) |
+| `0061-环境音效` | Ambient/atmosphere sound | Stable Audio 3 |
+| `0062-效果音效` | One-shot / SFX | Stable Audio 3 |
+| `0063-文生人声` | text voice description → speech | Qwen3-TTS VoiceDesign |
+| `0064-参考人声` | 3-second reference audio clone → speech | Qwen3-TTS CustomVoice |
+| `0070-截取声音` | Audio crop/extract tool | — |
 
 > The old image 8 / video 4 / audio 5 workflows that used to be archived under `templates\` before 2026-08-09 have been deleted; the current numbering scheme is canonical.
 
@@ -319,7 +319,7 @@ Comfy/
 | `minimax_h3_video_vae_fp16.safetensors` (video VAE) | `models\vae\` | ✅ ready | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors> |
 | `minimax_h3_audio_vae_fp32.safetensors` (audio VAE) | `models\vae\` | ✅ ready | <https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors> |
 
-> **fl2va and ref2va are task variants of the same base**: the text/image-to-video workflows (3000/3010/4000/4010) use fl2va, the reference-generation workflows (3020/4030) use ref2va — download both. The repo also has bf16/int8_convrot/pruned_fp8_scaled variants to choose from.
+> **fl2va and ref2va are task variants of the same base**: the text/image-to-video workflows (0030/0031/0040/0041) use fl2va, the reference-generation workflows (0032/0044) use ref2va — download both. The repo also has bf16/int8_convrot/pruned_fp8_scaled variants to choose from.
 
 ### MiniMax H3 Turbo LoRA (official Comfy-Org conversion, ready)
 

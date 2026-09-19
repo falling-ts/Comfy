@@ -10,7 +10,7 @@
   - mode=4(bypass) 的节点按"透传"处理: 其下游引用解析到它的同名输入源。
 
 用法:
-  .venv\\Scripts\\python.exe scripts\\workflow-to-prompt.py "3020-*.json" [--refresh-md] [--submit] [--dump out.json]
+  .venv\\Scripts\\python.exe scripts\\workflow-to-prompt.py "0032-*.json" [--refresh-md] [--submit] [--dump out.json]
 """
 
 import glob

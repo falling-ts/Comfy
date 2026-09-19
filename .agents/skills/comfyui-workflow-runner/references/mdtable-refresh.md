@@ -6,7 +6,7 @@
 
 ```json
 {
-  "md_path": "stories/七纹刻印/3020-参考场景.md",
+  "md_path": "stories/七纹刻印/0032-参考场景.md",
   "fields": [{"name": "ID", "type": "STRING"}, {"name": "<Picture 1>", "type": "IMAGE"}, ...],
   "selected": {
     "id": "参考场景-书房360",

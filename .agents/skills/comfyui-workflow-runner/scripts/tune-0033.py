@@ -1,7 +1,7 @@
-"""调参并提交 3030-OrbitSheets场景(避开 GUI 覆写: 直接改磁盘 + 经 API 提交)。
+"""调参并提交 0033-OrbitSheets场景(避开 GUI 覆写: 直接改磁盘 + 经 API 提交)。
 
 用法:
-  .venv\\Scripts\\python.exe scripts\\tune-3030.py --wide off --detail off --shots 4 [--label ""] [--run]
+  .venv\\Scripts\\python.exe scripts\\tune-0033.py --wide off --detail off --shots 4 [--label ""] [--run]
 
 参数留空表示不改动该项。--run 时调用 workflow-to-prompt.py 提交并等待。
 """
@@ -21,7 +21,7 @@ def arg(name, default=None):
 
 
 def main() -> int:
-    p = pathlib.Path(glob.glob(str(WF / "3030-*.json"))[0])
+    p = pathlib.Path(glob.glob(str(WF / "0033-*.json"))[0])
     d = json.loads(p.read_text(encoding="utf-8"))
     changed = []
 
@@ -101,7 +101,7 @@ def main() -> int:
         print("\n提交中...")
         subprocess.run(
             [str(ROOT / ".venv" / "Scripts" / "python.exe"),
-             str(ROOT / "scripts" / "workflow-to-prompt.py"), "3030-*.json", "--refresh-md", "--submit"],
+             str(ROOT / "scripts" / "workflow-to-prompt.py"), "0033-*.json", "--refresh-md", "--submit"],
             cwd=str(ROOT), check=False,
         )
     return 0

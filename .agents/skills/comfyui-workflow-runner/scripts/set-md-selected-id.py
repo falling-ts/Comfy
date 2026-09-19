@@ -1,6 +1,6 @@
 """把工作流 mdtable 的 selected.id 改为指定值(供 workflow-to-prompt 的 --refresh-md 定位行)。
 
-用法: python scripts/set-md-selected-id.py "3030-*.json" "场景参考板-书房"
+用法: python scripts/set-md-selected-id.py "0033-*.json" "场景参考板-书房"
 """
 
 import glob
