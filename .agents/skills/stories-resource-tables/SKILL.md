@@ -295,8 +295,10 @@ description: Story-library resource-table and prompt conventions — frame termi
 
 (类型) 包含如下内容和说明:
 
-- (IMAGE)/(VIDEO)/(AUDIO)/(STRING)/(INT)/(FLOAT)/(BOOLEAN)：对应 ComfyUI 同名输出类型
+- (IMAGE)/(VIDEO)/(AUDIO)/(MASK)/(STRING)/(INT)/(FLOAT)/(BOOLEAN)：对应 ComfyUI 同名输出类型
 - (TEXT)：对应 ComfyUI 的 STRING 输出类型，但自定义节点渲染为多行文本框
+
+实际使用情况（扫描 `stories/` 下全部含表格 md 文件）：显式声明过的只有 `TEXT`、`IMAGE`、`INT`、`VIDEO`、`AUDIO`、`FLOAT`、`MASK` 七种；`STRING` 从未显式书写（各资源表的 ID 列等一律靠省略默认）；`BOOLEAN` 已登记但尚无一处使用。
 
 各类型的字段定义（ID + 各字段(类型)）见对应类型的技能（`stories-resource-tables` 的图片类、`stories-scene-video` 的场景类、`stories-video-prompts` 的视频类、`stories-audio-resources` 的音频类）；ID 命名规则见 `stories/AGENTS.md` 的「资源 ID 规则」。
 
