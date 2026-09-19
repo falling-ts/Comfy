@@ -5,8 +5,12 @@
 !.obsidian/**
 # 窗口布局状态每次开关 Obsidian 都会变, 不入库
 .obsidian/workspace.json
-# 插件安装位是 junction 链接(指向根级 Obsidian-Comfy), 不入库
-.obsidian/plugins/
+# 插件安装位是**相对软链接**(指向根级 Obsidian-Comfy 子模块), 入库跟踪(mode 120000):
+# 目标写相对路径 ..\..\Obsidian-Comfy, 相对"链接自身所在目录"解析, 故 clone 到任意路径都能直接生效。
+# 用 plugins/* 而非 plugins/ 排除: git 不会进入被排除的目录, 写 plugins/ 就无法再放行其子项。
+# 其余插件仍不入库, 只放行 obsidian-comfy 这一个安装位。
+.obsidian/plugins/*
+!.obsidian/plugins/obsidian-comfy
 !template/
 !template/**
 !AGENTS.md
