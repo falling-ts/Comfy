@@ -41,7 +41,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ `RunningHub` | RunningHub 调研:`RunningHub-API读取指南.md` + `workflows-list.md` + `workflows\`(2522 个收集工作流,按 21 个分类子目录:图像/视频/音频/数字人/室内外设计/风格化/插件 等) |
 | └ `Bilibili` | B 站教程调研:`B站教程调研.md` + `工作流大全\`(474 个配套工作流) |
 | └ `AutoDL` | 云端 GPU 调研:`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4887 条模型清单) |
-| `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置 + 插件安装位相对软链,见「软链接映射 §D」):**`plugins\`**(插件聚合目录,与 ComfyUI 侧 `custom_nodes` 同构:含 `Obsidian-Comfy` 与 `custom-sort` 两个插件子模块,目录名即各自线上仓库名)+ `template\`(新建故事模板)+ `sortspec.md`(文件浏览器排序配置)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
+| `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置 + 插件安装位相对软链,见「软链接映射 §D」):**`plugins\`**(插件聚合目录,与 ComfyUI 侧 `custom_nodes` 同构:含 `Obsidian-Comfy` 一个插件子模块,目录名即线上仓库名;该插件自带文件浏览器「编号分层」排序)+ `template\`(新建故事模板)+ `sortspec.md`(排序规则的说明文档)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
 | `scripts` | 临时/可复用工具脚本(被 `scripts\.gitignore` 忽略,仅存本地不入库):工作流连线校验/修复/对比(`check-workflow-*`/`fix-*`/`diff-*`/`dump-*`)、布局校验、模型使用分析、模板/模型清单更新、H3/SeedVR2 调试等 |
 | `logs` | ComfyUI 运行日志(`comfyui*.log`/`comfyui-console*.log`,已 gitignore) |
 | `backups` | **工作流/重要文件的修改前备份**(2026-08-04 起):`backup-<文件名>-<YYYYMMDD>-<说明>.*` 命名;含 `backup-20260805_路径清理\`(官方/分类文档归档)、`sageattention\`(本地 wheel)、环境迁移快照(pip-freeze/conda export)等 |
@@ -70,7 +70,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | `ComfyUI\custom_nodes` | SymbolicLink(目录级) | `..\custom_nodes` | 根 `custom_nodes`(插件聚合目录,43 插件 + H3ReferenceSuite 链接) |
 | `custom_nodes\H3ReferenceSuite` | SymbolicLink(子链接) | `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
 
-- 根 `custom_nodes` 由**根仓库**跟踪:43 个插件以 gitlink 形式登记(全仓共 51 个子模块:`ComfyUI` 1 + 插件 43 + `docs\` 4 + `h3\` 2 + Obsidian 插件 1),`H3ReferenceSuite` 为符号链接;本地文件 `example_node.py.example`、`websocket_image_save.py` 被根 `.gitignore` 排除(保留磁盘副本供加载)。`ComfyUI\custom_nodes` 是目录级符号链接,其目标内容不受 ComfyUI 子模块 git 影响
+- 根 `custom_nodes` 由**根仓库**跟踪:43 个插件以 gitlink 形式登记(全仓共 51 个子模块:`ComfyUI` 1 + `custom_nodes\` 44 + `docs\` 3 + `h3\` 2 + `stories\plugins\Obsidian-Comfy` 1),`H3ReferenceSuite` 为符号链接;本地文件 `example_node.py.example`、`websocket_image_save.py` 被根 `.gitignore` 排除(保留磁盘副本供加载)。`ComfyUI\custom_nodes` 是目录级符号链接,其目标内容不受 ComfyUI 子模块 git 影响
 - `ComfyUI\temp\`(真实目录,非链接):运行中生成的临时文件/预览图(如 `ComfyUI_temp_*.png`),可随时清理
 - ⚠️ **`ComfyUI\input\`(用户上传)与 `output\`(生成结果)是真实数据所在(经软链落入 `media\<项目>\`):严禁整体删除、移动或批量清理**;只有 `temp\` 可清理
 
@@ -80,24 +80,23 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 |------|------|------|------|
 | `.claude` | SymbolicLink(目录级) | `.agents` | 根 `.agents`(技能聚合目录,Claude Code 兼容垫片,2026-08-13 建) |
 
-### D. stories Obsidian 插件安装位(1 个软链 + 2 个插件子模块,**入库跟踪**;2026-09-22 改为「聚合目录 + 单层软链」)
+### D. stories Obsidian 插件安装位(1 个软链 + 1 个插件子模块,**入库跟踪**;2026-09-22 改为「聚合目录 + 单层软链」)
 
-与 ComfyUI 侧 `custom_nodes` 同构:vault 内 `.obsidian\plugins` 只是一个**指向聚合目录的链接**,插件本体是 `stories\plugins\` 下的**两个真实 git 子模块**(目录名与各自 GitHub 仓库名一致;⚠️ Obsidian 认的是插件 `manifest.json` 里的 `id`,**与目录名无关**,故 `Obsidian-Comfy\` 内 `manifest.json` 的 `id` 仍是小写 `obsidian-comfy`,`community-plugins.json` 里也照旧写小写 id)。
+与 ComfyUI 侧 `custom_nodes` 同构:vault 内 `.obsidian\plugins` 只是一个**指向聚合目录的链接**,插件本体是 `stories\plugins\` 下的**真实 git 子模块**(目录名与线上仓库名一致;⚠️ Obsidian 认的是插件 `manifest.json` 里的 `id`,**与目录名无关**,故 `Obsidian-Comfy\` 内 `manifest.json` 的 `id` 仍是小写 `obsidian-comfy`,`community-plugins.json` 里也照旧写小写 id)。
 
 | 根内路径 | 类型 | 相对目标 | 实际指向 |
 |------|------|------|------|
 | `stories\.obsidian\plugins` | SymbolicLink(目录级) | `..\plugins` | `stories\plugins`(插件聚合目录) |
 
-- **聚合目录内容**(`stories\plugins\`,**两个真实子模块,内无软链**):`Obsidian-Comfy`(远程 `falling-ts/Obsidian-Comfy`,2026-09-22 由 `stories\Obsidian-Comfy` 直接移入,同日目录名首字母改为大写以与线上仓库名对齐)+ `custom-sort`(远程 `SebastianMC/obsidian-custom-sort`,提供文件浏览器自定义排序)
+- **聚合目录内容**(`stories\plugins\`,**单个真实子模块,内无软链**):`Obsidian-Comfy`(远程 `falling-ts/Obsidian-Comfy`,2026-09-22 由 `stories\Obsidian-Comfy` 直接移入,同日目录名首字母改为大写以与线上仓库名对齐;同日接管文件浏览器排序)
+- ⚠️ **2026-09-22 卸载了第三方排序插件 custom-sort**:`SebastianMC/obsidian-custom-sort` 3.2.0(最新版)在 Obsidian 1.13.7 上解析 `sortspec.md` 的 YAML frontmatter 失败并自动挂起(ribbon 显示红图标 `ICON_SORT_SUSPENDED_SYNTAX_ERROR`),根因是 Obsidian 把块标量内容**连同缩进**交给插件,而它对 `target-folder:` 行要求前导零空格;`|` 块标量写法与官方文档示例的 1 空格缩进写法**均失败**。子模块已 deinit + rm,`.gitmodules` / 根 `.git/config` / `.git/modules` 均无残留,`community-plugins.json` 只剩 `obsidian-comfy`
 - **为什么只要一层软链**:Obsidian 只从 vault 的 `.obsidian\plugins\<id>\` 加载插件,而插件源码本就放在同级的 `stories\plugins\` —— 把 `.obsidian\plugins` 指向它即可,插件目录**直接就是子模块本体**(与 `custom_nodes\` 里各插件完全同构);再给 `Obsidian-Comfy` 套一层安装位软链是多余的(源码与聚合目录同层,不存在跨目录引用)
-- **入库方式**(与 A、B 组不同,本组**入库跟踪**):`stories\.gitignore` 首行 `*` 通配后逐条放行 —— `!.obsidian/plugins`(整目录软链)、`!plugins/`、`!plugins/Obsidian-Comfy`、`!plugins/custom-sort`(子模块)、`!sortspec.md`。⚠️ 放行**目录本身**即可:子模块内部文件由各自仓库管理,不递归放行。根仓库入库的相对软链共 **3** 个:`.claude`、`custom_nodes\H3ReferenceSuite`、本组一条(mode `120000`)
-- **custom-sort 的 `main.js` 是构建产物**(仓库只含 `src/` 源码,其自带 `.gitignore` 已忽略 `main.js` / `node_modules` / `data.json`)。子模块 clone 后须在 `stories\plugins\custom-sort\` 内构建:该仓库 `esbuild.config.mjs` 把产物输出到 **`dist/main.js`**,而 Obsidian 只认插件根目录的 `main.js`,故命令为 `npm install && npm run build && cp dist/main.js main.js`。⚠️ npm 会改写**已被跟踪的** `yarn.lock`(其 `.gitignore` 里的 `/yarn.lock` 对已跟踪文件无效),构建后需 `git checkout -- yarn.lock` 恢复;`package-lock.json` 已写入该子模块的 `.git/info/exclude`(本地配置,不入库),故子模块工作树保持干净
-- **排序配置**:`stories\sortspec.md`(vault 根,入库)写 `target-folder: /*`(官方文档口径 = vault 内**所有**文件夹的所有条目)+ `< true a-z`,把文件浏览器从 Obsidian 原生的自然排序(其内部写死 `new Intl.Collator(void 0,{usage:"sort",sensitivity:"base",numeric:!0})`)改为逐字节字典序;spec 语法与 YAML 解析均已实测正确
-- ⚠️ **custom-sort 装好后默认「挂起」,排序不会自动应用** —— 源码 `settings.ts` 的 `DEFAULT_SETTINGS.suspended` 出厂即 `true`(注释:为避免安装后立即自动解析),于是 `main.ts` 的 `delayedApplicationOfCustomSorting()` 被 `onLayoutReady` 触发后,在 `!suspended` 判断处直接 return,外部表现就是**左侧仍旧按原生数值排序**,且插件目录下**不会生成 `data.json`**(因为从未 `saveSettings()` 过)。两种启用方式:① 在 `data.json`(被插件自带 `.gitignore` 忽略、**不入库**)写 `suspended: false`,重启 Obsidian 后启动 1 秒自动应用;② 点左侧 ribbon 图标,或命令面板执行 `Enable and apply the custom sorting`(sort-on),立即生效并回写 `suspended: false`。图标状态:**灰=未应用、亮=已应用、红=spec 语法错误**(红是解析失败,此时插件会自动把 `suspended` 改回 `true`)。⚠️ 插件默认把**文件夹与文件混排**、不做分层,要文件夹优先须在 spec 里另加 `folders-first`
+- **入库方式**(与 A、B 组不同,本组**入库跟踪**):`stories\.gitignore` 首行 `*` 通配后逐条放行 —— `!.obsidian/plugins`(整目录软链)、`!plugins/`、`!plugins/Obsidian-Comfy`(子模块)、`!sortspec.md`;另按「Obsidian 维护的用户数据不入库」忽略 `.obsidian/workspace.json` 与 `.obsidian/bookmarks.json`。⚠️ 放行**目录本身**即可:子模块内部文件由各自仓库管理,不递归放行。根仓库入库的相对软链共 **3** 个:`.claude`、`custom_nodes\H3ReferenceSuite`、本组一条(mode `120000`)
+- **文件浏览器排序**(2026-09-22 起由自有插件 `Obsidian-Comfy` 接管):`main.js` 的 `setupExplorerSort()` 替换 FileExplorer 原型上的 `getSortedFolderItems`,保留 Obsidian 原实现的「文件夹优先 + 从 `this.fileItems` 取回渲染项」骨架,只换比较器 —— 故不依赖 items 内部结构,视图重建也不会掉。规则是**编号分层**(`compareNumberedName`):开头数字串按**字符串**比较(短的优先),于是 `0011_万物建模` → `00110_万物建模2.1` → `0012_万物变化`,5 位编号恰好插在它所属的 4 位编号之后。⚠️ **纯逐字节做不到这个顺序**:字符串比较里 `_`(0x5F) 大于 `1`(0x31),会把 `00110` 排到 `0011` **前面**。开关在插件设置页「文件浏览器排序」(编号分层 / 纯逐字节 / 关闭),改完即时生效,无需重启;`stories\sortspec.md` 已降级为纯说明文档
 - ⚠️ **clone 端约束 —— `core.symlinks` 是本地配置、不入库,新机器必须自己配**:
   - Windows:`git config core.symlinks true`,**且该机要有建链权限**(开发者模式或管理员);否则 git 会把链接检出成写着 `..\plugins` 的**普通文本文件**,Obsidian 认不出插件。本机 local 已设 `true`(原 local 为 `false`,会覆盖 global 的 `true`;system 亦为 `false`)
   - Linux/macOS:默认 `core.symlinks=true`,无需配置
-  - 子模块需初始化:`git submodule update --init stories/plugins/Obsidian-Comfy stories/plugins/custom-sort`,否则插件目录为空(git 层面仍正确,只是插件无源码)
+  - 子模块需初始化:`git submodule update --init stories/plugins/Obsidian-Comfy`,否则插件目录为空(git 层面仍正确,只是插件无源码)
 - 相对目标以**链接自身所在目录**为基准解析,故仓库 clone 到任意绝对路径都直接生效;git 存储时统一规范为正斜杠(`../plugins`),checkout 时转回平台分隔符
 - **建链只能用 Python `os.symlink`**:PowerShell `New-Item` 会把相对 target 按 cwd 解析(建出 `D:\media\...` 之类错误目标),同 `scripts\link-media-dirs.py` 注释所述。本组软链由 `scripts\link-obsidian-plugins.py` 建立(**幂等**,可重复执行;已改为只建 `.obsidian\plugins` 这**一条**,不再生成 Obsidian-Comfy 安装位软链)。验证口径:`(Get-Item <路径>).LinkType` 为 `SymbolicLink`、`Target` 为相对串、且经链接能读到 `main.js`
 - ⚠️ **移动 git 子模块时慎用 `git mv`,且搬运前先关掉会占用它的程序**(实测 2026-09-22:Obsidian 开着时移 `stories\Obsidian-Comfy` 报 `Permission denied`,随后 `Move-Item` 只完成一半 —— 工作树连 `.git` 目录一起被搬走,旧位置只留一个**空** `.git` 目录,而 `.git/modules/stories/<name>` 已不存在,子模块暂时"内联"成独立仓库,`git status` 因该空壳报 `not recognized as a git repository`)。完整修复三步:① `Move-Item <新位置>\.git` → `.git/modules/stories/plugins/<name>`(其 config 通常**没有** `core.worktree`,不必改;默认按 gitdir 反推 worktree 恰好正确);② 写回 `.git` **文件**(内容 `gitdir: ../../../.git/modules/stories/plugins/<name>`,无 BOM);③ 同步 `.gitmodules` 与根 `.git/config` 里该子模块的 **name 与 path**。完成后 `git submodule status` 显示 ` <hash> <path> (heads/<分支>)`(前导空格 = 已初始化且与 index 一致)
