@@ -41,7 +41,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ `RunningHub` | RunningHub 调研:`RunningHub-API读取指南.md` + `workflows-list.md` + `workflows\`(2522 个收集工作流,按 21 个分类子目录:图像/视频/音频/数字人/室内外设计/风格化/插件 等) |
 | └ `Bilibili` | B 站教程调研:`B站教程调研.md` + `工作流大全\`(474 个配套工作流) |
 | └ `AutoDL` | 云端 GPU 调研:`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4887 条模型清单) |
-| `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置 + 插件安装位相对软链,见「软链接映射 §D」):**`plugins\`**(插件聚合目录,与 ComfyUI 侧 `custom_nodes` 同构:含 `obsidian-comfy` 安装位软链与 `custom-sort` 子模块)+ `template\`(新建故事模板)+ `sortspec.md`(文件浏览器排序配置)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
+| `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置 + 插件安装位相对软链,见「软链接映射 §D」):**`plugins\`**(插件聚合目录,与 ComfyUI 侧 `custom_nodes` 同构:含 `obsidian-comfy` 与 `custom-sort` 两个插件子模块)+ `template\`(新建故事模板)+ `sortspec.md`(文件浏览器排序配置)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
 | `scripts` | 临时/可复用工具脚本(被 `scripts\.gitignore` 忽略,仅存本地不入库):工作流连线校验/修复/对比(`check-workflow-*`/`fix-*`/`diff-*`/`dump-*`)、布局校验、模型使用分析、模板/模型清单更新、H3/SeedVR2 调试等 |
 | `logs` | ComfyUI 运行日志(`comfyui*.log`/`comfyui-console*.log`,已 gitignore) |
 | `backups` | **工作流/重要文件的修改前备份**(2026-08-04 起):`backup-<文件名>-<YYYYMMDD>-<说明>.*` 命名;含 `backup-20260805_路径清理\`(官方/分类文档归档)、`sageattention\`(本地 wheel)、环境迁移快照(pip-freeze/conda export)等 |
@@ -50,7 +50,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | `.gitmodules` | 子模块登记(git submodule) |
 | `comfy-server.sh` | **统一**后台服务式启动脚本(跨平台: Linux + Windows Git Bash;杀 8188 旧进程 → 静默后台启动 → 等待端口就绪,日志默认写调用时所在目录 `comfy-server-8188.log`;Windows 等价 `python main.py --enable-manager --disable-pinned-memory --fast-disk`,Linux 用 conda 环境 comfy + `--reserve-vram 22`;覆盖 `PORT`/`WAIT`/`PY_BIN`/`LOG`/`RESERVE_VRAM`) |
 
-## 软链接映射(重要,共 9 个,全部为相对路径 SymbolicLink;2026-08-07 建,08-10 插件收敛为目录级链接,08-13 加 Claude Code 兼容链接,09-20 加 Obsidian 插件安装位,09-22 安装位改「聚合目录 + 两级软链」)
+## 软链接映射(重要,共 8 个,全部为相对路径 SymbolicLink;2026-08-07 建,08-10 插件收敛为目录级链接,08-13 加 Claude Code 兼容链接,09-20 加 Obsidian 插件安装位,09-22 安装位改「聚合目录 + 单层软链」,插件本体为聚合目录内的真实子模块)
 
 全部为 **相对路径**符号链接,**项目根目录整体移动后不失效**(不依赖具体文件系统/平台)。
 
@@ -80,26 +80,25 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 |------|------|------|------|
 | `.claude` | SymbolicLink(目录级) | `.agents` | 根 `.agents`(技能聚合目录,Claude Code 兼容垫片,2026-08-13 建) |
 
-### D. stories Obsidian 插件安装位(2 个,**入库跟踪**;2026-09-22 改为「聚合目录 + 两级软链」)
+### D. stories Obsidian 插件安装位(1 个软链 + 2 个插件子模块,**入库跟踪**;2026-09-22 改为「聚合目录 + 单层软链」)
 
-与 ComfyUI 侧 `custom_nodes` 同构:vault 内 `.obsidian\plugins` 只是一个**指向聚合目录的链接**,插件本体集中在 `stories\plugins\`,各自由独立 git 子模块(或子链接)管理。
+与 ComfyUI 侧 `custom_nodes` 同构:vault 内 `.obsidian\plugins` 只是一个**指向聚合目录的链接**,插件本体是 `stories\plugins\` 下的**两个真实 git 子模块**(目录名即各自 `manifest.json` 的 `id`)。
 
 | 根内路径 | 类型 | 相对目标 | 实际指向 |
 |------|------|------|------|
 | `stories\.obsidian\plugins` | SymbolicLink(目录级) | `..\plugins` | `stories\plugins`(插件聚合目录) |
-| `stories\plugins\obsidian-comfy` | SymbolicLink(安装位) | `..\Obsidian-Comfy` | `stories\Obsidian-Comfy`(插件子模块,远程 `falling-ts/Obsidian-Comfy`) |
 
-- **聚合目录内容**(`stories\plugins\`):`obsidian-comfy`(上面的安装位软链)+ `custom-sort`(子模块,远程 `SebastianMC/obsidian-custom-sort`,提供文件浏览器自定义排序)
-- **用途**:Obsidian 只从 vault 的 `.obsidian\plugins\<id>\` 加载插件,目录名必须等于 `manifest.json` 的 `id`(此处即 `obsidian-comfy` / `custom-sort`)。两级链接把「安装位结构」与「插件源码集中管理」解耦 —— 整目录软链保证 Obsidian 认得出,聚合目录内再各自挂载,插件源码始终只有一份(**单一真源**,改子模块即生效,无需复制)
-- **入库方式**(与 A、B 组不同,本组**入库跟踪**):`stories\.gitignore` 首行 `*` 通配后逐条放行 —— `!.obsidian/plugins`(整目录软链)、`!plugins/`、`!plugins/obsidian-comfy`、`!plugins/custom-sort`(子模块)、`!sortspec.md`。⚠️ 放行**目录本身**即可:子模块内部文件由各自仓库管理,不递归放行。根仓库入库的相对软链共 **4** 个:`.claude`、`custom_nodes\H3ReferenceSuite`、本组两条(均 mode `120000`)
+- **聚合目录内容**(`stories\plugins\`,**两个真实子模块,内无软链**):`obsidian-comfy`(远程 `falling-ts/Obsidian-Comfy`,2026-09-22 由 `stories\Obsidian-Comfy` 直接移入)+ `custom-sort`(远程 `SebastianMC/obsidian-custom-sort`,提供文件浏览器自定义排序)
+- **为什么只要一层软链**:Obsidian 只从 vault 的 `.obsidian\plugins\<id>\` 加载插件,而插件源码本就放在同级的 `stories\plugins\` —— 把 `.obsidian\plugins` 指向它即可,插件目录**直接就是子模块本体**(与 `custom_nodes\` 里各插件完全同构);再给 `obsidian-comfy` 套一层安装位软链是多余的(源码与聚合目录同层,不存在跨目录引用)
+- **入库方式**(与 A、B 组不同,本组**入库跟踪**):`stories\.gitignore` 首行 `*` 通配后逐条放行 —— `!.obsidian/plugins`(整目录软链)、`!plugins/`、`!plugins/obsidian-comfy`、`!plugins/custom-sort`(子模块)、`!sortspec.md`。⚠️ 放行**目录本身**即可:子模块内部文件由各自仓库管理,不递归放行。根仓库入库的相对软链共 **3** 个:`.claude`、`custom_nodes\H3ReferenceSuite`、本组一条(mode `120000`)
 - **custom-sort 的 `main.js` 是构建产物**(仓库只含 `src/` 源码,其自带 `.gitignore` 已忽略 `main.js` / `node_modules` / `data.json`)。子模块 clone 后须在 `stories\plugins\custom-sort\` 内构建:该仓库 `esbuild.config.mjs` 把产物输出到 **`dist/main.js`**,而 Obsidian 只认插件根目录的 `main.js`,故命令为 `npm install && npm run build && cp dist/main.js main.js`。⚠️ npm 会改写**已被跟踪的** `yarn.lock`(其 `.gitignore` 里的 `/yarn.lock` 对已跟踪文件无效),构建后需 `git checkout -- yarn.lock` 恢复;`package-lock.json` 已写入该子模块的 `.git/info/exclude`(本地配置,不入库),故子模块工作树保持干净
 - **排序配置**:`stories\sortspec.md`(vault 根,入库)写 `< true a-z`,把文件浏览器从 Obsidian 原生的自然排序(其内部写死 `new Intl.Collator(void 0,{usage:"sort",sensitivity:"base",numeric:!0})`)改为逐字节字典序;改完点左侧 ribbon 图标重新解析生效
 - ⚠️ **clone 端约束 —— `core.symlinks` 是本地配置、不入库,新机器必须自己配**:
   - Windows:`git config core.symlinks true`,**且该机要有建链权限**(开发者模式或管理员);否则 git 会把链接检出成写着 `..\plugins` 的**普通文本文件**,Obsidian 认不出插件。本机 local 已设 `true`(原 local 为 `false`,会覆盖 global 的 `true`;system 亦为 `false`)
   - Linux/macOS:默认 `core.symlinks=true`,无需配置
-  - 子模块需初始化:`git submodule update --init stories/Obsidian-Comfy stories/plugins/custom-sort`,否则链接悬空(git 层面仍正确,只是插件无源码)
-- 相对目标以**链接自身所在目录**为基准解析,故仓库 clone 到任意绝对路径都直接生效;git 存储时统一规范为正斜杠(`../plugins`、`../Obsidian-Comfy`),checkout 时转回平台分隔符
-- **建链只能用 Python `os.symlink`**:PowerShell `New-Item` 会把相对 target 按 cwd 解析(建出 `D:\media\...` 之类错误目标),同 `scripts\link-media-dirs.py` 注释所述。本组软链由 `scripts\link-obsidian-plugins.py` 建立(**幂等**,可重复执行)。验证口径:`(Get-Item <路径>).LinkType` 为 `SymbolicLink`、`Target` 为相对串、且经链接能读到 `main.js`
+  - 子模块需初始化:`git submodule update --init stories/plugins/obsidian-comfy stories/plugins/custom-sort`,否则插件目录为空(git 层面仍正确,只是插件无源码)
+- 相对目标以**链接自身所在目录**为基准解析,故仓库 clone 到任意绝对路径都直接生效;git 存储时统一规范为正斜杠(`../plugins`),checkout 时转回平台分隔符
+- **建链只能用 Python `os.symlink`**:PowerShell `New-Item` 会把相对 target 按 cwd 解析(建出 `D:\media\...` 之类错误目标),同 `scripts\link-media-dirs.py` 注释所述。本组软链由 `scripts\link-obsidian-plugins.py` 建立(**幂等**,可重复执行;已改为只建 `.obsidian\plugins` 这**一条**,不再生成 obsidian-comfy 安装位软链)。验证口径:`(Get-Item <路径>).LinkType` 为 `SymbolicLink`、`Target` 为相对串、且经链接能读到 `main.js`
 
 ## 版本与运行
 
