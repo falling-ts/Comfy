@@ -99,6 +99,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
   - 子模块需初始化:`git submodule update --init stories/plugins/obsidian-comfy stories/plugins/custom-sort`,否则插件目录为空(git 层面仍正确,只是插件无源码)
 - 相对目标以**链接自身所在目录**为基准解析,故仓库 clone 到任意绝对路径都直接生效;git 存储时统一规范为正斜杠(`../plugins`),checkout 时转回平台分隔符
 - **建链只能用 Python `os.symlink`**:PowerShell `New-Item` 会把相对 target 按 cwd 解析(建出 `D:\media\...` 之类错误目标),同 `scripts\link-media-dirs.py` 注释所述。本组软链由 `scripts\link-obsidian-plugins.py` 建立(**幂等**,可重复执行;已改为只建 `.obsidian\plugins` 这**一条**,不再生成 obsidian-comfy 安装位软链)。验证口径:`(Get-Item <路径>).LinkType` 为 `SymbolicLink`、`Target` 为相对串、且经链接能读到 `main.js`
+- ⚠️ **移动 git 子模块时慎用 `git mv`,且搬运前先关掉会占用它的程序**(实测 2026-09-22:Obsidian 开着时移 `stories\Obsidian-Comfy` 报 `Permission denied`,随后 `Move-Item` 只完成一半 —— 工作树连 `.git` 目录一起被搬走,旧位置只留一个**空** `.git` 目录,而 `.git/modules/stories/<name>` 已不存在,子模块暂时"内联"成独立仓库,`git status` 因该空壳报 `not recognized as a git repository`)。完整修复三步:① `Move-Item <新位置>\.git` → `.git/modules/stories/plugins/<name>`(其 config 通常**没有** `core.worktree`,不必改;默认按 gitdir 反推 worktree 恰好正确);② 写回 `.git` **文件**(内容 `gitdir: ../../../.git/modules/stories/plugins/<name>`,无 BOM);③ 同步 `.gitmodules` 与根 `.git/config` 里该子模块的 **name 与 path**。完成后 `git submodule status` 显示 ` <hash> <path> (heads/<分支>)`(前导空格 = 已初始化且与 index 一致)
 
 ## 版本与运行
 
