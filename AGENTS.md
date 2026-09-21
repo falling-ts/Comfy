@@ -21,9 +21,11 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ `Qwen-Image-Edit-Skills` | Qwen-Image-Edit 官方 Skills 参考(本地目录,非子模块) |
 | └ 分类 md | 启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、节点输入类型总表、插件注册表、模型调研报告、H3 提示词格式调研、FallingTS 分段执行机制、视频音频分析工具链(读产物全链 + 工具源码)等 |
 | `h3` | **MiniMax H3 生态聚合目录**(2026-08-10 建):`MiniMax-H3`(官方模型仓库,自带 9 个官方 Skills)+ `minimax-h3-guide`(参考加载套件,其 `H3ReferenceSuite` 由根 `custom_nodes` 子链接指向) |
-| **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 24 个,按编号-用途分组: |
+| **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 28 个,按编号-用途分组: |
 | └ `001x` 万物 | `0011-万物建模`(主线主流程)/ `0010-灰度遮罩` / `0012-万物变化` |
+| └ `001x` 万物 2.1 | `00110-万物建模2.1` / `00120-万物变化2.1`(Qwen-Image 2.1 版,见「Qwen-Image 2.1 工作流」) |
 | └ `002x` 场景镜头 | `0020-场景首帧` / `0021-场景拉镜` / `0022-场景推镜` / `0023-场景旋镜` |
+| └ `002x` 场景镜头 2.1 | `00200-场景首帧2.1` / `00220-场景推镜2.1`(Qwen-Image 2.1 版) |
 | └ `003x` 场景生成 | `0030-文生场景`(H3 T2VA,仅画面)/ `0031-首帧场景`(I2V)/ `0032-参考场景`(R2V 多图多视频参考)/ `0033-OrbitSheets场景`(Location Sheet 参考板:锚点图+H3 多视角选帧拼板) |
 | └ `004x` 视频生成 | `0040-文生视频` / `0041-首帧视频` / `0042-首尾视频` / `0043-关键帧视频`(AddGuide 锚定任意帧)/ `0044-参考视频` |
 | └ `005x` 拆解 | `0050-视频拆帧` / `0051-视频拆音` |
@@ -133,9 +135,9 @@ python main.py --enable-manager
 
 | 目录 | 已就绪 |
 |------|--------|
-| diffusion_models | `qwen_image_2512_fp8_e4m3fn`、`qwen_image_fp8_e4m3fn`、`qwen_image_edit_2511_fp8mixed`、`flux-2-klein-9b-fp8`、`minimax_h3_fl2va_pruned_int8_convrot`、`minimax_h3_ref2va_pruned_int8_convrot` |
-| text_encoders | `qwen_2.5_vl_7b_fp8_scaled`(Qwen-Edit)、`qwen_3_8b_fp8mixed`(Klein)、`qwen3.5_2b_bf16`(音频)、`t5gemma_b_b_ul2`(音频)、`qwen3vl_32b_minimax_h3_nvfp4_awq`(H3 视频) |
-| vae | `qwen_image_vae`、`full_encoder_small_decoder`(Klein/FLUX.2)、`minimax_h3_video_vae_fp16`、`minimax_h3_audio_vae_fp32` |
+| diffusion_models | `qwen_image_2512_fp8_e4m3fn`、`qwen_image_fp8_e4m3fn`、`qwen_image_edit_2511_fp8mixed`、`qwen_image_2.1_bf16`(2.1 基座)、`flux-2-klein-9b-fp8`、`minimax_h3_fl2va_pruned_int8_convrot`、`minimax_h3_ref2va_pruned_int8_convrot` |
+| text_encoders | `qwen_2.5_vl_7b_fp8_scaled`(Qwen-Edit)、`qwen3vl_8b_bf16`(Qwen-Image 2.1)、`qwen_3_8b_fp8mixed`(Klein)、`qwen3.5_2b_bf16`(音频)、`t5gemma_b_b_ul2`(音频)、`qwen3vl_32b_minimax_h3_nvfp4_awq`(H3 视频) |
+| vae | `qwen_image_vae`、`qwen_image_2.1_vae_bf16`(2.1,64 通道 RGBA)、`full_encoder_small_decoder`(Klein/FLUX.2)、`minimax_h3_video_vae_fp16`、`minimax_h3_audio_vae_fp32` |
 | loras | `Qwen-Image-2512-Lightning-4steps-V1.0-fp32`、`Qwen-Image-Lightning-4steps-V1.0`、`Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16`、`qwen-image-edit-2511-multiple-angles-lora`(多视角,配 `ComfyUI-qwenmultiangle` 插件)、`[Qwen-Edit]3DChineseStyle_25`、`Kook_Qwen_2512_真实幻想`、H3 加速三件:`minimax_h3_fl2v_turbo_4step_v1.0_768p_comfyui_bf16`(4 步 768p)/ `minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16` / `minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16` |
 | checkpoints | `stable_audio_3_medium.safetensors`(音频) |
 | upscale_models | `4xNomos8kDAT`(原 `4x-UltraSharp.pth`、`RealESRGAN_x4plus.pth` 已移除) |
@@ -145,6 +147,25 @@ python main.py --enable-manager
 | TTS | `TTS\Qwen\` 下 Qwen3-TTS-12Hz 五变体(0.6B-Base / 0.6B-CustomVoice / 1.7B-Base / 1.7B-CustomVoice / 1.7B-VoiceDesign,各含主模型 + speech_tokenizer);`TTS\SenseVoiceSmall`(ASR,`model.pt`) |
 
 路线:Qwen-Image(国漫/中文更优)+ MiniMax H3(视频)+ FLUX.2-Klein(图像);曾清理 FLUX.2 全套、旧版 qwen_image、LTX-2.3/Wan 2.2、TripoSplat 等,后续按需重新引入(以表格为准)。`ComfyUI\blueprints\` 内置 90 个蓝图(位于 ComfyUI 目录内;除 Qwen 2511 外均缺模型)。
+
+## Qwen-Image 2.1 工作流(2026-09-21 建)
+
+2.1 是 7B 统一"生成+编辑"模型(2026-09-20 发布), 与 2511/2512 **架构不兼容**(文本编码器换 Qwen3-VL 8B、VAE 换 64 通道 RGBA), 故旧 LoRA 全部不可用, 另建 4 个工作流并存而非替换原版:
+
+| 工作流 | 对应原版 | 链路 |
+|--------|----------|------|
+| `00110-万物建模2.1` | `0011-万物建模` | 两阶段: 文生图 → 带图编辑优化 |
+| `00120-万物变化2.1` | `0012-万物变化` | 单阶段: 图1/2/3 多图参考编辑 + 灰度遮罩局部重绘 |
+| `00200-场景首帧2.1` | `0020-场景首帧` | 两阶段: 文生场景 → 编辑优化 |
+| `00220-场景推镜2.1` | `0022-场景推镜` | 单阶段: 框选放大 → 编辑精修 |
+
+**关键差异(改这些工作流时注意)**:
+- **不加载任何 LoRA**。2.1 无 4 步蒸馏 LoRA(LightX2V 的 Day-0 支持是框架级 fp8 优化, 不是 LoRA), 故步数按官方域设 **标准 30 步 / 加速 15 步**, cfg 固定 1.0; 原版"4 步 Lightning 档"已不存在
+- 文本编码统一用 **`TextEncodeQwenImage21`** 一个节点同时产出 positive/negative(带参考图编码), 取代原版两个 `TextEncodeQwenImageEditPlus`; 其 `resolution` 默认 1024 控制参考图缩放
+- 新增 **`QwenImage21Cache`**(接在 UNETLoader 之后)复用 KV 前缀, 编辑任务提速明显; 参数 `device=auto` / `dtype=default`
+- latent 是 **64 通道**(旧版 16), 用 `EmptyLatentImage` 即可: `comfy/sample.py` 的 `fix_empty_latent_channels` 会把空 latent 自动扩展到模型通道数并按 `spacial_downscale_ratio`(16)修正分辨率
+- 数据表在 `stories\七纹刻印\` 下: `00110-万物建模2.1.md` / `00120-万物变化2.1.md` / `00200-场景首帧2.1.md` / `00220-场景推镜2.1.md`; 跨表引用走 `@{00110-万物建模2.1/ID}`、`@{00200-场景首帧2.1/ID}`
+- 布局由 `scripts\make_qwen21_common.py` 的布局引擎生成(拓扑分层 + 双向重心法 + 差分约束求列偏移), 生成脚本为 `scripts\make-00{110,120,200,220}.py`; 改完重跑即可(**幂等**), 自检函数会校验六条布局规范
 
 ## 官方文档与分类文档
 
