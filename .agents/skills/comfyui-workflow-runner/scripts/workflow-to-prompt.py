@@ -27,6 +27,9 @@ SKIP_TYPES = {"MarkdownNote", "Note", "Reroute"}
 # widgets_values, 不是连线输入; 漏掉它会让 format 不进 prompt, 执行时报
 # `SaveVideo.execute() missing 1 required positional argument: 'format'`(采样已白跑)。
 WIDGET_TYPES = ("INT", "FLOAT", "STRING", "BOOLEAN", "COMBO", "COMFY_DYNAMICCOMBO_V3")
+# 前端在 seed/noise_seed(以及 PrimitiveInt 的 value)后插入的控件, 后端定义里没有;
+# 它占 widgets_values 的一个位置, 补进名字表以便对齐, 但不注入 prompt。
+FRONTEND_CTRL = "\0control_after_generate"
 
 
 def api_get(path: str, timeout: int = 180):
@@ -42,19 +45,54 @@ def api_post(path: str, payload: dict, timeout: int = 120):
         return json.load(r)
 
 
-def widget_names(spec: dict) -> list:
-    """节点全部控件(非连线类型)输入名, 按定义顺序。
+def widget_default(name: str, spec: dict) -> object:
+    """控件缺 widgets_values 时的兜底值。
+
+    前端的图形控件(如 ImageCompare 的 compare_view)不进 widgets_values, 但后端把它
+    声明成 required, 直接提交会报 "Required input is missing: compare_view"。
+    优先用声明里的 default; 没有就按类型给一个能通过校验的空值。
+    """
+    for sec in ("required", "optional"):
+        d = (spec["input"].get(sec) or {}).get(name)
+        if d is None:
+            continue
+        t = d[0] if isinstance(d, list) else d
+        opt = d[1] if isinstance(d, list) and len(d) > 1 and isinstance(d[1], dict) else {}
+        if "default" in opt:
+            return opt["default"]
+        if isinstance(t, list):
+            return t[0] if t else ""
+        return {"INT": 0, "FLOAT": 0.0, "STRING": "", "BOOLEAN": False}.get(t, {})
+    return {}
+
+
+def widget_names(spec: dict, class_type: str = "") -> list:
+    """节点全部控件(非连线类型)输入名, 按前端序列化顺序。
 
     注意: 前端序列化的 widgets_values 与**全部** widget 一一对应 —— 即使某个 widget
     已被转成输入(有连线)它也仍占一个位置, 因此必须用完整列表 zip 后再过滤,
     否则会整体错位(如 PreviewImageSave 的 format 会拿到 filename_suffix 的值)。
+
+    前端还会额外插入一个**后端不存在的** control_after_generate 控件, 且位置在
+    seed 类控件**之后**而非数组末尾 —— 漏掉它会让其后的所有控件整体前移一格
+    (实测 KSampler: sampler_name 拿到 steps 的值, denoise 拿到 scheduler 的值)。
+    这里按前端规则补上同名占位, 由调用方跳过, 不注入 prompt。
     """
     names = []
     for sec in ("required", "optional"):
         for name, d in (spec["input"].get(sec) or {}).items():
             t = d[0] if isinstance(d, list) else d
-            if isinstance(t, list) or t in WIDGET_TYPES:
+            opt = d[1] if isinstance(d, list) and len(d) > 1 and isinstance(d[1], dict) else {}
+            # 控件判定: 常见标量类型, 或选项表(COMBO), 或后端标了 socketless
+            # (如 ImageCropV2 的 BOUNDING_BOX / ImageCompare 的 IMAGECOMPARE ——
+            #  它们是节点内控件而非可连线插槽, 只看类型名会漏掉, 报
+            #  "Required input is missing: crop_region")。
+            is_widget = isinstance(t, list) or t in WIDGET_TYPES or opt.get("socketless")
+            if is_widget:
                 names.append(name)
+                # 前端只在种子类控件与 PrimitiveInt 的 value 后追加该控件。
+                if name in ("seed", "noise_seed") or (class_type == "PrimitiveInt" and name == "value"):
+                    names.append(FRONTEND_CTRL)
     return names
 
 
@@ -151,17 +189,25 @@ def build(wf_path: str, refresh_md: bool):
             inputs["data"] = state
         else:
             wv = n.get("widgets_values") or []
-            all_names = widget_names(spec)
+            all_names = widget_names(spec, t)
             linked_names = {i["name"] for i in (n.get("inputs") or []) if i.get("link") is not None}
             used = 0
-            for name, val in zip(all_names, wv):
+            filled = 0
+            for idx, name in enumerate(all_names):
+                if name == FRONTEND_CTRL:
+                    continue
                 if any(lk == name or lk.startswith(name + ".") for lk in linked_names):
                     continue
-                inputs[name] = val
+                if idx < len(wv):
+                    inputs[name] = wv[idx]
+                else:
+                    # 前端图形控件(如 compare_view)不进 widgets_values, 用兜底值补上。
+                    inputs[name] = widget_default(name, spec)
+                    filled += 1
                 used += 1
-            if len(wv) > len(all_names):
-                notes.append(f"节点 {nid} {t}: widgets_values {len(wv)} 个 > 定义 {len(all_names)} 个 "
-                             f"(多出的是前端附加控件, 已忽略); 实际注入 {used} 个控件值")
+            if len(wv) != len(all_names) or filled:
+                notes.append(f"节点 {nid} {t}: widgets_values {len(wv)} 个 vs 对齐表 {len(all_names)} 个 "
+                             f"(差值含前端附加控件; 注入 {used} 个控件值, 其中 {filled} 个用默认值补齐)")
 
         prompt[str(nid)] = {"class_type": t, "inputs": inputs}
     return prompt, notes
