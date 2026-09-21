@@ -6,7 +6,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 
 | 路径 | 说明 |
 |------|------|
-| `ComfyUI` | ComfyUI 主程序(git submodule,`master` 分支):源码/入口在本目录;`models`/`input`/`output`/`user\default\workflows`/`custom_nodes` 均为相对软链接(见「软链接映射」);`blueprints\` 内置 90 个蓝图;其余结构遵循上游官方布局,不再逐一展开 |
+| `ComfyUI` | ComfyUI 主程序(git submodule,detached HEAD 跟随上游 release tag,当前 `v0.37.0`):源码/入口在本目录;`models`/`input`/`output`/`user\default\workflows`/`custom_nodes` 均为相对软链接(见「软链接映射」);`blueprints\` 内置 90 个蓝图;其余结构遵循上游官方布局,不再逐一展开 |
 | **`custom_nodes`** | **插件聚合目录**:43 个插件子模块 + `H3ReferenceSuite` 链接集中于此,`ComfyUI\custom_nodes` 为目录级相对软链接指向它(§B)。按功能归类: |
 | └ 自有插件 | `ComfyUI-FallingTS`:通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强,已开源) |
 | └ H3 生态(6 插件 + 链接) | `ComfyUI-Spectrum-MiniMax-H3`(加速)、`ComfyUI-SolAttn_triton`(注意力加速)、`ComfyUI-ReservedVRAM`(显存预留)、`ComfyUI-Qwen3-TTS`(H3 语音)、`h3-latent-upscaler`(latent 放大)、`ComfyUI-OrbitSheets`(场景/角色参考板:锚点图 + H3 多视角运镜 + 视觉选帧拼网格图,2026-08-17 装)、`H3ReferenceSuite`(软链接,见 `h3`) |
@@ -97,7 +97,10 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 
 - **Python 虚拟环境:项目内 `.venv`**(2026-08-16 由 conda 环境迁移而来,官方 `python -m venv` 基于系统 Python 3.13.13 创建;原 conda 专用环境已删除)。启动一律用 `.venv\Scripts\python.exe`(类 Unix 为 `.venv\bin/python`),不要用系统级 Python 或任何 conda 环境运行主程序
 - **运行环境 `.venv`:Python 3.13.13 / torch 2.13.0+cu130(CUDA 13.0,RTX 4060 8GB VRAM)**,启动脚本与本文档均用它(`.venv\Scripts\python.exe`,类 Unix 为 `.venv\bin/python`);依赖安装顺序:torch(cu130 index)→ `ComfyUI\requirements.txt` → 插件 requirements → 加速依赖,迁移后与旧 conda 环境包版本对齐(见 `backups\pip-freeze-ComfyUI-20260816-020146.txt` 与 `pip-freeze-venv-final.txt` 对比)
-- 共享关键版本(均与核心 v0.34.2 `requirements.txt` 钉定版本一致):comfyui-frontend-package **1.49.6**、comfyui-manager **4.2.2**、comfyui-workflow-templates **0.11.50**、comfyui-embedded-docs **0.5.10**、comfy-aimdo **0.4.15**、comfy-kitchen **0.2.31**、sageattention **2.2.0**(cu130,本地 wheel `backups\sageattention\`)、triton **3.7.1**、transformers 4.57.3、diffusers 0.39.0、numpy 2.2.6(受 opencv 4.12 依赖约束 `numpy<2.3`,勿升回 2.5.x)、opencv-python/opencv-contrib-python/opencv-python-headless 4.12.0.88(ComfyUI-LNL 声明 `opencv-python~=4.12.0`)、onnxruntime-gpu 1.29.0、safetensors 0.8.0
+- 共享关键版本(均与核心 v0.37.0 `requirements.txt` 钉定版本一致):comfyui-frontend-package **1.52.7**、comfyui-manager **4.2.2**、comfyui-workflow-templates **0.11.66**、comfyui-embedded-docs **0.5.12**、comfy-aimdo **0.5.5**、comfy-kitchen **0.2.35**、sageattention **2.2.0**(cu130,本地 wheel `backups\sageattention\`)、triton **3.7.1**、transformers 4.57.3、diffusers 0.39.0、numpy 2.2.6(受 opencv 4.12 依赖约束 `numpy<2.3`,勿升回 2.5.x)、opencv-python/opencv-contrib-python/opencv-python-headless 4.12.0.88(ComfyUI-LNL 声明 `opencv-python~=4.12.0`)、onnxruntime-gpu 1.29.0、safetensors 0.8.0
+- **核心升级流程**(2026-09-21 由 v0.36.0 → v0.37.0 实践):`git -C ComfyUI fetch --tags` → 查最新 tag → `git checkout <tag>`(detached;工作树里被删的上游占位文件不受影响,不会冲突) → 按 `requirements.txt` 差异补装依赖 → 重启 → `scripts\_check-workflow-node-compat.py` 验证 24 个工作流用到的节点类型全部仍注册 → 根仓库提交子模块指针。升级前先 `pip freeze` 备份到 `backups\`
+- **升级兼容性判据**:前端内置节点(`Note`/`MarkdownNote`/`Reroute`/`PrimitiveNode`)与前端注册的 UUID 型 API 节点**不出现**在后端 `/object_info` 里,比对时须白名单排除(脚本已内置),否则每次升级都会误报缺失
+- **pip 默认走清华镜像**(`pypi.tuna.tsinghua.edu.cn`,配置在 `%APPDATA%\pip\pip.ini`):上游刚发布的包镜像可能尚未同步(实测 `comfyui-workflow-templates-media-assets-02==0.1.3` 上传 19 小时后仍查不到,报 `No matching distribution found`),此时临时加 `--index-url https://pypi.org/simple` 走官方源直连即可
 - 前端打包目录 = `<venv>/Lib/site-packages/comfyui_frontend_package/static/`:主入口 `index.html`,打包产物 `assets\`;插件 `web\js` 经 `GET /extensions` 运行时加载、**不参与前端打包**(重建 `assets\` 不影响扩展;`scripts\` 保留 `app.js`/`api.js` 等扩展 import 入口)
 - 测试插件「从零安装」:清理浏览器缓存的 `assets\` 打包文件后,对 `http://127.0.0.1:8188` 强刷(`Ctrl+Shift+R`)再验证;**磁盘 `assets\` 勿删**(删了页面白屏)
 - 启动:
