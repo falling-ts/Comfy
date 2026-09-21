@@ -6,11 +6,11 @@
 
 ```json
 {
-  "md_path": "stories/七纹刻印/0032-参考场景.md",
+  "md_path": "stories/七纹刻印/0032_参考场景.md",
   "fields": [{"name": "ID", "type": "STRING"}, {"name": "<Picture 1>", "type": "IMAGE"}, ...],
   "selected": {
     "id": "0019-书房360",
-    "values": {"ID": "...", "<Picture 1>": "@{0023-场景旋镜/0014-书房}", "场景提示词": "六段式提示词全文", ...}
+    "values": {"ID": "...", "<Picture 1>": "@{0023_场景旋镜/0014-书房}", "场景提示词": "六段式提示词全文", ...}
   }
 }
 ```

@@ -1,4 +1,4 @@
-"""调参并提交 0033-OrbitSheets场景(避开 GUI 覆写: 直接改磁盘 + 经 API 提交)。
+"""调参并提交 0033_OrbitSheets场景(避开 GUI 覆写: 直接改磁盘 + 经 API 提交)。
 
 用法:
   .venv\\Scripts\\python.exe scripts\\tune-0033.py --wide off --detail off --shots 4 [--label ""] [--run]

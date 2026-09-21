@@ -1,28 +1,30 @@
 {
-  "id": "00120-万物变化2.1",
+  "id": "00220_场景推镜2.1",
   "revision": 0,
   "last_node_id": 63,
-  "last_link_id": 41,
+  "last_link_id": 39,
   "nodes": [
     {
       "id": 1,
       "type": "MarkdownNote",
       "pos": [
-        -640,
+        -720,
         0
       ],
       "size": [
-        560,
-        1180
+        640,
+        820
       ],
       "flags": {},
-      "order": 4,
+      "order": 8,
       "mode": 0,
       "inputs": [],
       "outputs": [],
       "title": "使用说明",
       "properties": {
         "Node name for S&R": "MarkdownNote",
+        "color": "#222",
+        "bgcolor": "#000",
         "ue_properties": {
           "widget_ue_connectable": {},
           "version": "7.8",
@@ -30,13 +32,13 @@
         }
       },
       "widgets_values": [
-        "## 万物变化 2.1 (图片换样式 · Qwen-Image 2.1)\n\n以「原建模」为底，**保持原构图不变**，只改样式/服装/材质等外观，一遍编辑直接出图。\n\n### 与 1.x 版的区别\n- 基座换成 **Qwen-Image 2.1**(7B 统一生成+编辑模型), 文本编码器 **Qwen3-VL 8B**, VAE 为 **64 通道 RGBA**\n- **不再加载 LoRA**: 2.1 架构与 2511/2512 不同, 旧 Lightning 4步 / 3D国漫 LoRA 均不兼容\n- 正负提示词由 **TextEncodeQwenImage21** 一个节点同时产出(带图编码), 取代原来的两个 EditPlus\n- 新增 **Qwen Image 2.1 Cache** 节点复用 KV 前缀, 编辑任务提速明显\n- 步数按 2.1 官方域设定: 标准 30 步 / 加速 15 步 (无 4 步蒸馏 LoRA, 故不再有 4 步档)\n\n### 流程\n- 图1/2/3 多图参考 + 「变化提示词」→ 编辑采样 → 结果预览\n- **前后对比**: 图1(改前) vs 结果(改后), 拖拽对比条查看\n\n### 参考图 (image1/2/3)\n- **图1** = 底图(VAEEncode 基准 + 身份锚点), **图2/图3** = 额外参考; 空图输出 None 不报错\n- 提示词用 **图1/图2/图3**(Picture 1/2/3)指代, 顺序不能错\n\n### 步数切换(开关)\n| 模式 | 步数 | denoise | cfg |\n|---|---|---|---|\n| 标准(关) | 30 | 0.95 | 1.0 |\n| 加速(开·默认) | 15 | 0.9 | 1.0 |\n\n- denoise 0.95/0.9 = 真改衣服; 太低会导致衣服不变\n- **面部保持**: 靠图1 参考锚定 + 提示词写明「保持面部/五官/发型完全不变」\n\n### 操作\n1. 「选择md文件」→ 选 `stories/七纹刻印/00120-万物变化2.1.md`\n2. 「打开数据」→ 选中一行 → 确定\n3. 点 Run → 结果预览 + 前后对比"
+        "## 场景推镜 2.1 (镜头前推/局部特写 · Qwen-Image 2.1)\n\n**用法**\n1. 「MD 数据表」选当前要处理的**那一行**(原场景引用 + 优化提示词 + 输出文件名)\n2. 「框选推镜区域」填 x/y/width/height 框选要放大的区域(或按需拖框)\n3. 「推镜放大」把框选区域放大到工作分辨率(默认长边 1024)\n4. 运行 → 一遍**优化采样** → 「结果 保存/预览」点底部「保存」\n\n**与 1.x 版的区别**\n- 基座换成 **Qwen-Image 2.1**(7B 统一生成+编辑模型), 文本编码器 **Qwen3-VL 8B**, VAE 为 **64 通道 RGBA**\n- **不再加载 LoRA**: 2.1 架构与 2511/2512 不同, 旧 Lightning 4步 / 3D国漫 LoRA 均不兼容\n- 正负提示词由 **TextEncodeQwenImage21** 一个节点同时产出(带图编码), 取代原来的两个 EditPlus\n- 新增 **Qwen Image 2.1 Cache** 节点复用 KV 前缀, 编辑任务提速明显\n- 步数按 2.1 官方域设定: 标准 30 步 / 加速 15 步 (无 4 步蒸馏 LoRA, 故不再有 4 步档)\n\n**要点**\n- 原场景图直接来自 MD 表「原场景」字段(@{ID} 引用, 运行时按 output/input 目录解析)\n- 框选无预览时可直接填数值; 预览在「放大特写 预览」节点看\n- cfg 固定 1.0"
       ],
       "widgets_values_named": {
-        "text": "## 万物变化 (图片换样式 · 单遍直出)\n\n以「原建模」为底，**保持原构图不变**，只改样式/服装/材质等外观，一遍编辑直接出图。\n\n### 流程\n- 图1/2/3 多图参考 + 「变化提示词」→ 编辑采样 → 结果预览\n- **前后对比**: 图1(改前) vs 结果(改后), 拖拽对比条查看\n\n### 参考图 (image1/2/3)\n- **图1** = 底图(VAEEncode 基准 + 身份锚点), **图2/图3** = 额外参考; 空图输出 None 不报错\n- 提示词用 **图1/图2/图3**(Picture 1/2/3)指代, 顺序不能错\n\n### 4步/20步 切换(开关)\n| 模式 | 步数 | 4步LoRA | denoise |\n|---|---|---|---|\n| 标准(关) | 20 | 关 | 0.95 |\n| 加速(开·默认) | 4 | 开 | 0.9 |\n\n- **cfg 固定 1.0**; 负面与正面同为 EditPlus(带图): 同 图1/2/3 + 表格「变化-负面」, 正负形状一致, 提示词框无预填充、完全 md 驱动\n- 精细改 → 切**标准 20 步**\n\n### denoise 说明\n- denoise 0.95/0.9 = 真改衣服; 之前 0.5/0.7 太低导致衣服不变\n- **面部保持**: 靠图1 参考锚定 + 提示词写明「保持面部/五官/发型完全不变」\n- 提示词写法: 保持原构图 → 描述新样式/装束 → 三视图各角度同步 → 保面部\n\n### 操作\n1. 「选择md文件」→ 选 `stories/七纹刻印/0012-万物变化.md`\n2. 「打开数据」→ 选中一行 → 确定\n3. 点 Run → 结果预览 + 前后对比"
+        "text": "## 场景推镜 (镜头前推/局部特写)\n\n**用法**\n1. 「MD 数据表」选当前要处理的**那一行**(原场景引用 + 优化提示词 + 输出文件名)\n2. 「框选推镜区域」填 x/y/width/height 框选要放大的区域(或按需拖框)\n3. 「推镜放大」把框选区域放大到工作分辨率(默认长边 1024)\n4. 运行 → 一遍**优化采样** → 「结果 保存/预览」点底部「保存」\n\n**要点**\n- 原场景图直接来自 MD 表「原场景」字段(@{ID} 引用, 运行时按 output/input 目录解析)\n- 「4步/20步」: true=加速(4步快看), false=标准(20步成图); cfg 固定 1, 负面已清零\n- 框选无预览时可直接填数值; 预览在「放大特写 预览」节点看"
       },
-      "color": "#222",
-      "bgcolor": "#000"
+      "color": "#432",
+      "bgcolor": "#653"
     },
     {
       "id": 10,
@@ -47,7 +49,7 @@
       ],
       "size": [
         480,
-        1500
+        1240
       ],
       "flags": {},
       "order": 0,
@@ -69,75 +71,58 @@
           "type": "STRING",
           "slot_index": 0,
           "links": [
-            39
+            37
           ]
         },
         {
-          "name": "原图",
+          "name": "原场景",
           "type": "IMAGE",
           "slot_index": 1,
           "links": [
-            20,
-            21,
-            40
-          ]
-        },
-        {
-          "name": "灰度遮罩",
-          "type": "MASK",
-          "slot_index": 2,
-          "links": [
-            23
-          ]
-        },
-        {
-          "name": "图1",
-          "type": "IMAGE",
-          "slot_index": 3,
-          "links": [
-            15
+            13,
+            14
           ]
         },
         {
           "name": "图2",
           "type": "IMAGE",
-          "slot_index": 4,
+          "slot_index": 2,
           "links": [
-            16
+            21
           ]
         },
         {
           "name": "图3",
           "type": "IMAGE",
+          "slot_index": 3,
+          "links": [
+            22
+          ]
+        },
+        {
+          "name": "主-正词",
+          "type": "STRING",
+          "slot_index": 4,
+          "links": [
+            23
+          ]
+        },
+        {
+          "name": "主-负词",
+          "type": "STRING",
           "slot_index": 5,
           "links": [
-            17
-          ]
-        },
-        {
-          "name": "变化-正词",
-          "type": "STRING",
-          "slot_index": 6,
-          "links": [
-            18
-          ]
-        },
-        {
-          "name": "变化-负词",
-          "type": "STRING",
-          "slot_index": 7,
-          "links": [
-            19
+            24
           ]
         },
         {
           "name": "整行数据",
           "type": "STRING",
-          "slot_index": 8,
+          "slot_index": 6,
           "links": null
         }
       ],
-      "title": "MD 数据表 (万物变化)",
+      "title": "MD 数据表 (场景推镜)",
       "properties": {
         "Node name for S&R": "FallingTSMarkDownTable",
         "ue_properties": {
@@ -150,22 +135,14 @@
       },
       "widgets_values": [
         {
-          "md_path": "stories/七纹刻印/00120-万物变化2.1.md",
+          "md_path": "stories/七纹刻印/00220_场景推镜2.1.md",
           "fields": [
             {
               "name": "ID",
               "type": "STRING"
             },
             {
-              "name": "原图",
-              "type": "IMAGE"
-            },
-            {
-              "name": "灰度遮罩",
-              "type": "MASK"
-            },
-            {
-              "name": "图1",
+              "name": "原场景",
               "type": "IMAGE"
             },
             {
@@ -177,47 +154,37 @@
               "type": "IMAGE"
             },
             {
-              "name": "变化-正词",
+              "name": "主-正词",
               "type": "TEXT"
             },
             {
-              "name": "变化-负词",
+              "name": "主-负词",
               "type": "TEXT"
             }
           ],
           "selected": {
-            "id": "0001-陈落出门装",
+            "id": "0001_书房玻璃窗",
             "values": {
-              "ID": "0001-陈落出门装",
-              "原图": "@{0011-万物建模/0001-陈落}",
-              "灰度遮罩": "@{0010-灰度遮罩/0001-陈落换衣}",
-              "图1": "@{0011-万物建模/0001-陈落}",
+              "ID": "0001_书房玻璃窗",
+              "原场景": "@{0020_场景首帧/0001_书房}",
               "图2": "",
               "图3": "",
-              "变化-正词": "以图1为底，保持图1的正面全身立绘构图完全不变，画面背景保持完全纯净的纯白色(#FFFFFF)，不引入任何环境、地面、阴影与场景元素，人物居中构图，从头到脚完整入画，画面只呈现这一个正面形象，头部与身体衔接完美，没有任何错位\n只把图1的衣物由居家宽松白T短裤变更为年轻出行休闲装，内搭白色T恤，外罩一件深灰色连帽卫衣，领口微敞露出内搭白T，下身浅蓝色直筒牛仔长裤，脚穿白色运动鞋，双手自然下垂\n保持图1原有的英俊面部、清爽黑发、身材比例与正面站姿完全一致，五官、发型与身高不得改变，全身的服装、鞋与发型统一一致\n整体是年轻帅气的小说作者出门时的模样，年轻休闲潇洒，符合出门的着装\n国漫CG风格，全身比例规范，正面形象完整统一",
-              "变化-负词": "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 渐变背景, 阴影, 非纯白背景, 过曝, 色彩过饱和"
+              "主-正词": "高清细腻的书房玻璃窗特写画面，镜头推近至窗玻璃表面，满画面是湿漉漉的玻璃，玻璃上糊着一层薄薄的水汽与细密雨痕，水珠、水线与流动的水膜层层叠着，质感湿润清透，窗外远处高楼的霓虹灯牌隔着湿玻璃与雨雾晕成大团红橙光斑，冷蓝夜色作底，光影朦胧\n画面是单一连续的整体画面，严禁出现宫格、网格分割线或分格面板，下方方位词仅用于描述画面内各区域的内容分布\n左上是蒙着一层薄薄水汽的雾面玻璃，雾气里凝着几颗细小水珠，玻璃外侧是墨黑的天色，边缘透出一点冷蓝\n左边是玻璃上雨水最密的区域，一道道近乎竖直的细小雨痕从上往下拖出，雨痕边缘挂着断断续续的小水珠，湿痕两侧泛着冷白反光\n左下是一层积得略厚的水膜，几颗饱满的水珠坠在玻璃下缘，每颗水珠下面拖着一小段断续的水线，透过这片水膜看夜色成了模糊的深蓝暗块\n上边是顺着玻璃往下淌的薄水膜，水膜里分出许多细窄的水路，水路边缘挂着细小水珠，画面上部压着一道深色窗框上沿的暗边\n中间是雨水最密集的地方，雨痕在玻璃上交错成细网，一颗颗水珠嵌在雨痕之间，每颗水珠里各自缩着一小点扭曲的红橙光，远处高楼的霓虹灯牌透过湿玻璃晕成大团红橙光斑，光斑里的点阵轮廓依稀可辨，四周是墨黑的夜\n下边是水膜最厚的一段，雨水汇成几股细流缓缓往下滚，细流边缘连着一串小水珠，玻璃上还浮着一小片暖黄台灯的微弱反光，玻璃下缘的窗台暗影压在画面底部\n右上是雨痕较疏的一片水膜，一颗偏大的水珠挂在那里，水珠里映着一小块橙红色的霓虹光点，玻璃外侧的夜色近乎全黑\n右边贴着窗框的竖直边线，一道近黑的深色窗框从上贯到下，框边的玻璃上挂着一排水珠，颗颗水珠被窗外的霓虹映成红橙小点\n右下是密集的水珠与细水流，水珠顺着窗框边连成串往下走，透过这片湿玻璃的霓虹光斑偏橙，亮度较高，玻璃表面被光晕照得发亮\n整体是书房玻璃窗上雨水的特写画面，满画面是玻璃上的水汽、雨痕、水珠与流动的水膜，左边雾气、中间密集雨珠、右边贴窗框的水珠串形成左中右三段层次，窗外高楼的霓虹穿过湿玻璃晕成红橙光斑，冷蓝夜色垫底\n国漫CG风格，现代都市雨夜霓虹特写，冷暖光对比，朦胧梦幻略带不安",
+              "主-负词": "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 过曝, 色彩过饱和, 九宫格, 宫格, 格子分割, 网格线, 分割线, 格子边框, 分屏, 多面板, 多画面, 分镜, 分镜格, 3x3网格, 拼接图"
             }
           }
         }
       ],
       "widgets_values_named": {
         "data": {
-          "md_path": "stories/七纹刻印/0012-万物变化.md",
+          "md_path": "stories/七纹刻印/0022_场景推镜.md",
           "fields": [
             {
               "name": "ID",
               "type": "STRING"
             },
             {
-              "name": "原图",
-              "type": "IMAGE"
-            },
-            {
-              "name": "灰度遮罩",
-              "type": "MASK"
-            },
-            {
-              "name": "图1",
+              "name": "原场景",
               "type": "IMAGE"
             },
             {
@@ -229,25 +196,23 @@
               "type": "IMAGE"
             },
             {
-              "name": "变化-正词",
+              "name": "主-正词",
               "type": "TEXT"
             },
             {
-              "name": "变化-负词",
+              "name": "主-负词",
               "type": "TEXT"
             }
           ],
           "selected": {
-            "id": "0001-陈落出门装",
+            "id": "0001_书房玻璃窗",
             "values": {
-              "ID": "0001-陈落出门装",
-              "原图": "@{0011-万物建模/0001-陈落}",
-              "灰度遮罩": "@{0010-灰度遮罩/0001-陈落换衣}",
-              "图1": "@{0011-万物建模/0001-陈落}",
+              "ID": "0001_书房玻璃窗",
+              "原场景": "@{0020_场景首帧/0001_书房}",
               "图2": "",
               "图3": "",
-              "变化-正词": "以图1为底，保持图1的正面全身立绘构图完全不变，画面背景保持完全纯净的纯白色(#FFFFFF)，不引入任何环境、地面、阴影与场景元素，人物居中构图，从头到脚完整入画，画面只呈现这一个正面形象，头部与身体衔接完美，没有任何错位\n只把图1的衣物由居家宽松白T短裤变更为年轻出行休闲装，内搭白色T恤，外罩一件深灰色连帽卫衣，领口微敞露出内搭白T，下身浅蓝色直筒牛仔长裤，脚穿白色运动鞋，双手自然下垂\n保持图1原有的英俊面部、清爽黑发、身材比例与正面站姿完全一致，五官、发型与身高不得改变，全身的服装、鞋与发型统一一致\n整体是年轻帅气的小说作者出门时的模样，年轻休闲潇洒，符合出门的着装\n国漫CG风格，全身比例规范，正面形象完整统一",
-              "变化-负词": "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 渐变背景, 阴影, 非纯白背景, 过曝, 色彩过饱和"
+              "主-正词": "高清细腻的书房玻璃窗特写画面，镜头推近至窗玻璃表面，满画面是湿漉漉的玻璃，玻璃上糊着一层薄薄的水汽与细密雨痕，水珠、水线与流动的水膜层层叠着，质感湿润清透，窗外远处高楼的霓虹灯牌隔着湿玻璃与雨雾晕成大团红橙光斑，冷蓝夜色作底，光影朦胧\n画面是单一连续的整体画面，严禁出现宫格、网格分割线或分格面板，下方方位词仅用于描述画面内各区域的内容分布\n左上是蒙着一层薄薄水汽的雾面玻璃，雾气里凝着几颗细小水珠，玻璃外侧是墨黑的天色，边缘透出一点冷蓝\n左边是玻璃上雨水最密的区域，一道道近乎竖直的细小雨痕从上往下拖出，雨痕边缘挂着断断续续的小水珠，湿痕两侧泛着冷白反光\n左下是一层积得略厚的水膜，几颗饱满的水珠坠在玻璃下缘，每颗水珠下面拖着一小段断续的水线，透过这片水膜看夜色成了模糊的深蓝暗块\n上边是顺着玻璃往下淌的薄水膜，水膜里分出许多细窄的水路，水路边缘挂着细小水珠，画面上部压着一道深色窗框上沿的暗边\n中间是雨水最密集的地方，雨痕在玻璃上交错成细网，一颗颗水珠嵌在雨痕之间，每颗水珠里各自缩着一小点扭曲的红橙光，远处高楼的霓虹灯牌透过湿玻璃晕成大团红橙光斑，光斑里的点阵轮廓依稀可辨，四周是墨黑的夜\n下边是水膜最厚的一段，雨水汇成几股细流缓缓往下滚，细流边缘连着一串小水珠，玻璃上还浮着一小片暖黄台灯的微弱反光，玻璃下缘的窗台暗影压在画面底部\n右上是雨痕较疏的一片水膜，一颗偏大的水珠挂在那里，水珠里映着一小块橙红色的霓虹光点，玻璃外侧的夜色近乎全黑\n右边贴着窗框的竖直边线，一道近黑的深色窗框从上贯到下，框边的玻璃上挂着一排水珠，颗颗水珠被窗外的霓虹映成红橙小点\n右下是密集的水珠与细水流，水珠顺着窗框边连成串往下走，透过这片湿玻璃的霓虹光斑偏橙，亮度较高，玻璃表面被光晕照得发亮\n整体是书房玻璃窗上雨水的特写画面，满画面是玻璃上的水汽、雨痕、水珠与流动的水膜，左边雾气、中间密集雨珠、右边贴窗框的水珠串形成左中右三段层次，窗外高楼的霓虹穿过湿玻璃晕成红橙光斑，冷蓝夜色垫底\n国漫CG风格，现代都市雨夜霓虹特写，冷暖光对比，朦胧梦幻略带不安",
+              "主-负词": "低质量, 模糊, 变形, 多余肢体, 多余手指, 解剖错误, 面部扭曲, 肢体残缺, 写实摄影, 实拍照片, 文字, 水印, 签名, 徽标, 过曝, 色彩过饱和, 九宫格, 宫格, 格子分割, 网格线, 分割线, 格子边框, 分屏, 多面板, 多画面, 分镜, 分镜格, 3x3网格, 拼接图"
             }
           }
         }
@@ -258,7 +223,7 @@
       "type": "UNETLoader",
       "pos": [
         560,
-        345.0
+        0
       ],
       "size": [
         280,
@@ -301,14 +266,6 @@
       "title": "Qwen-Edit 模型",
       "properties": {
         "Node name for S&R": "UNETLoader",
-        "cnr_id": "comfy-core",
-        "models": [
-          {
-            "name": "qwen_image_edit_2511_fp8mixed.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors",
-            "directory": "diffusion_models"
-          }
-        ],
         "ue_properties": {
           "widget_ue_connectable": {
             "unet_name": true,
@@ -385,7 +342,7 @@
         120
       ],
       "pos": [
-        1200,
+        1280,
         0
       ]
     },
@@ -393,15 +350,15 @@
       "id": 22,
       "type": "ModelSamplingAuraFlow",
       "pos": [
-        1660,
-        550.0
+        1860,
+        0
       ],
       "size": [
         280,
         120
       ],
       "flags": {},
-      "order": 12,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -444,7 +401,6 @@
       "title": "编辑 采样平移",
       "properties": {
         "Node name for S&R": "ModelSamplingAuraFlow",
-        "cnr_id": "comfy-core",
         "ue_properties": {
           "widget_ue_connectable": {
             "shift": true
@@ -466,7 +422,7 @@
       "id": 23,
       "type": "CFGNorm",
       "pos": [
-        2020,
+        2280,
         0
       ],
       "size": [
@@ -474,7 +430,7 @@
         120
       ],
       "flags": {},
-      "order": 17,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -518,7 +474,6 @@
       "title": "编辑 CFG 归一",
       "properties": {
         "Node name for S&R": "CFGNorm",
-        "cnr_id": "comfy-core",
         "ue_properties": {
           "widget_ue_connectable": {
             "strength": true,
@@ -541,7 +496,7 @@
       "id": 24,
       "type": "PathchSageAttentionKJ",
       "pos": [
-        2620,
+        2930,
         60.0
       ],
       "size": [
@@ -549,7 +504,7 @@
         120
       ],
       "flags": {},
-      "order": 22,
+      "order": 20,
       "mode": 0,
       "inputs": [
         {
@@ -592,7 +547,6 @@
       "title": "编辑 Sage 加速",
       "properties": {
         "Node name for S&R": "PathchSageAttentionKJ",
-        "cnr_id": "KJNodes",
         "ue_properties": {
           "widget_ue_connectable": {
             "sage_attention": true,
@@ -616,14 +570,14 @@
       "type": "CLIPLoader",
       "pos": [
         560,
-        525.0
+        180
       ],
       "size": [
         310,
         170
       ],
       "flags": {},
-      "order": 2,
+      "order": 3,
       "mode": 0,
       "inputs": [
         {
@@ -662,14 +616,13 @@
           "type": "CLIP",
           "slot_index": 0,
           "links": [
-            13
+            18
           ]
         }
       ],
       "title": "Qwen CLIP 编码器",
       "properties": {
         "Node name for S&R": "CLIPLoader",
-        "cnr_id": "comfy-core",
         "ue_properties": {
           "widget_ue_connectable": {
             "clip_name": true,
@@ -696,14 +649,14 @@
       "type": "VAELoader",
       "pos": [
         560,
-        755.0
+        410
       ],
       "size": [
         310,
         110
       ],
       "flags": {},
-      "order": 3,
+      "order": 2,
       "mode": 0,
       "inputs": [
         {
@@ -723,16 +676,15 @@
           "type": "VAE",
           "slot_index": 0,
           "links": [
-            14,
-            22,
-            37
+            19,
+            26,
+            35
           ]
         }
       ],
       "title": "Qwen VAE",
       "properties": {
         "Node name for S&R": "VAELoader",
-        "cnr_id": "comfy-core",
         "ue_properties": {
           "widget_ue_connectable": {
             "vae_name": true
@@ -750,6 +702,366 @@
     },
     {
       "id": 30,
+      "type": "ImageCropV2",
+      "pos": [
+        1280,
+        180
+      ],
+      "size": [
+        500,
+        480
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 13
+        },
+        {
+          "localized_name": "裁剪区域",
+          "name": "crop_region",
+          "type": "BOUNDING_BOX",
+          "widget": {
+            "name": "crop_region"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            15
+          ]
+        }
+      ],
+      "title": "框选推镜区域",
+      "properties": {
+        "Node name for S&R": "ImageCropV2",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "crop_region": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        {
+          "x": 866,
+          "y": 222,
+          "width": 125,
+          "height": 70
+        },
+        0,
+        0,
+        512,
+        512
+      ],
+      "widgets_values_named": {
+        "crop_region": {
+          "x": 866,
+          "y": 222,
+          "width": 125,
+          "height": 70
+        },
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "id": 31,
+      "type": "LayerUtility: ImageScaleByAspectRatio V2",
+      "pos": [
+        1860,
+        180
+      ],
+      "size": [
+        340,
+        400
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 15
+        },
+        {
+          "localized_name": "遮罩",
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "localized_name": "宽高比",
+          "name": "aspect_ratio",
+          "type": "COMBO",
+          "widget": {
+            "name": "aspect_ratio"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "比例宽度",
+          "name": "proportional_width",
+          "type": "INT",
+          "widget": {
+            "name": "proportional_width"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "比例高度",
+          "name": "proportional_height",
+          "type": "INT",
+          "widget": {
+            "name": "proportional_height"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "适应",
+          "name": "fit",
+          "type": "COMBO",
+          "widget": {
+            "name": "fit"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "方法",
+          "name": "method",
+          "type": "COMBO",
+          "widget": {
+            "name": "method"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "四舍五入到倍数",
+          "name": "round_to_multiple",
+          "type": "COMBO",
+          "widget": {
+            "name": "round_to_multiple"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "缩放至边",
+          "name": "scale_to_side",
+          "type": "COMBO",
+          "widget": {
+            "name": "scale_to_side"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "缩放至长度",
+          "name": "scale_to_length",
+          "type": "INT",
+          "widget": {
+            "name": "scale_to_length"
+          },
+          "link": 16
+        },
+        {
+          "localized_name": "背景颜色",
+          "name": "background_color",
+          "type": "STRING",
+          "widget": {
+            "name": "background_color"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            17
+          ]
+        },
+        {
+          "localized_name": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": null
+        },
+        {
+          "localized_name": "original_size",
+          "name": "original_size",
+          "type": "BOX",
+          "slot_index": 2,
+          "links": null
+        },
+        {
+          "localized_name": "width",
+          "name": "width",
+          "type": "INT",
+          "slot_index": 3,
+          "links": null
+        },
+        {
+          "localized_name": "height",
+          "name": "height",
+          "type": "INT",
+          "slot_index": 4,
+          "links": null
+        }
+      ],
+      "title": "推镜放大 (长边1024)",
+      "properties": {
+        "Node name for S&R": "LayerUtility: ImageScaleByAspectRatio V2",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "original",
+        1,
+        1,
+        "letterbox",
+        "lanczos",
+        "64",
+        "longest",
+        1024,
+        "#000000"
+      ],
+      "widgets_values_named": {
+        "aspect_ratio": "original",
+        "proportional_width": 1,
+        "proportional_height": 1,
+        "fit": "letterbox",
+        "method": "lanczos",
+        "round_to_multiple": "64",
+        "scale_to_side": "longest",
+        "scale_to_length": 1024,
+        "background_color": "#000000"
+      },
+      "color": "rgba(38, 73, 116, 0.7)"
+    },
+    {
+      "id": 32,
+      "type": "GetImageSize",
+      "pos": [
+        1280,
+        720
+      ],
+      "size": [
+        240,
+        180
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "宽度",
+          "name": "width",
+          "type": "INT",
+          "links": [
+            16
+          ]
+        },
+        {
+          "localized_name": "高度",
+          "name": "height",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "localized_name": "批处理大小",
+          "name": "batch_size",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GetImageSize",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 33,
+      "type": "PreviewImage",
+      "pos": [
+        2280,
+        180
+      ],
+      "size": [
+        570,
+        400
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            20,
+            25,
+            38
+          ]
+        }
+      ],
+      "title": "放大特写 预览",
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      }
+    },
+    {
+      "id": 40,
       "type": "TextEncodeQwenImage21",
       "flags": {},
       "order": 8,
@@ -759,21 +1071,21 @@
           "localized_name": "clip",
           "name": "clip",
           "type": "CLIP",
-          "link": 13
+          "link": 18
         },
         {
           "localized_name": "image_1",
           "name": "images.image_1",
           "shape": 7,
           "type": "IMAGE",
-          "link": 15
+          "link": 20
         },
         {
           "localized_name": "vae",
           "name": "vae",
           "shape": 7,
           "type": "VAE",
-          "link": 14
+          "link": 19
         },
         {
           "localized_name": "prompt",
@@ -782,7 +1094,7 @@
           "widget": {
             "name": "prompt"
           },
-          "link": 18
+          "link": 23
         },
         {
           "localized_name": "negative_prompt",
@@ -791,7 +1103,7 @@
           "widget": {
             "name": "negative_prompt"
           },
-          "link": 19
+          "link": 24
         },
         {
           "localized_name": "resolution",
@@ -807,14 +1119,14 @@
           "name": "images.image_2",
           "shape": 7,
           "type": "IMAGE",
-          "link": 16
+          "link": 21
         },
         {
           "localized_name": "image_3",
           "name": "images.image_3",
           "shape": 7,
           "type": "IMAGE",
-          "link": 17
+          "link": 22
         }
       ],
       "outputs": [
@@ -823,7 +1135,7 @@
           "name": "positive",
           "type": "CONDITIONING",
           "links": [
-            30
+            28
           ]
         },
         {
@@ -831,7 +1143,7 @@
           "name": "negative",
           "type": "CONDITIONING",
           "links": [
-            31
+            29
           ]
         },
         {
@@ -859,257 +1171,16 @@
         320
       ],
       "pos": [
-        1200,
-        180
+        2930,
+        240.0
       ]
-    },
-    {
-      "id": 40,
-      "type": "GetImageSizeAndCount",
-      "pos": [
-        1200,
-        560
-      ],
-      "size": [
-        240,
-        130
-      ],
-      "flags": {},
-      "order": 11,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "image",
-          "name": "image",
-          "type": "IMAGE",
-          "link": 20
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "image",
-          "name": "image",
-          "type": "IMAGE",
-          "slot_index": 0,
-          "links": null
-        },
-        {
-          "label": "768 width",
-          "localized_name": "width",
-          "name": "width",
-          "type": "INT",
-          "slot_index": 1,
-          "links": [
-            24
-          ]
-        },
-        {
-          "label": "1344 height",
-          "localized_name": "height",
-          "name": "height",
-          "type": "INT",
-          "slot_index": 2,
-          "links": [
-            25
-          ]
-        },
-        {
-          "label": "1 count",
-          "localized_name": "count",
-          "name": "count",
-          "type": "INT",
-          "slot_index": 3,
-          "links": null
-        }
-      ],
-      "title": "原图 尺寸",
-      "properties": {
-        "Node name for S&R": "GetImageSizeAndCount",
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.8",
-          "input_ue_unconnectable": {}
-        }
-      }
     },
     {
       "id": 41,
       "type": "VAEEncode",
       "pos": [
-        1200,
-        750
-      ],
-      "size": [
-        240,
-        80
-      ],
-      "flags": {},
-      "order": 13,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "像素",
-          "name": "pixels",
-          "type": "IMAGE",
-          "link": 21
-        },
-        {
-          "localized_name": "vae",
-          "name": "vae",
-          "type": "VAE",
-          "link": 22
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "Latent",
-          "name": "LATENT",
-          "type": "LATENT",
-          "slot_index": 0,
-          "links": [
-            26
-          ]
-        }
-      ],
-      "title": "原图 编码",
-      "properties": {
-        "Node name for S&R": "VAEEncode",
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.8",
-          "input_ue_unconnectable": {}
-        }
-      }
-    },
-    {
-      "id": 42,
-      "type": "ResizeMask",
-      "pos": [
-        1660,
-        730.0
-      ],
-      "size": [
-        240,
-        240
-      ],
-      "flags": {},
-      "order": 16,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "mask",
-          "name": "mask",
-          "type": "MASK",
-          "link": 23
-        },
-        {
-          "localized_name": "width",
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 24
-        },
-        {
-          "localized_name": "height",
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 25
-        },
-        {
-          "localized_name": "keep_proportions",
-          "name": "keep_proportions",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "keep_proportions"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "upscale_method",
-          "name": "upscale_method",
-          "type": "COMBO",
-          "widget": {
-            "name": "upscale_method"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "crop",
-          "name": "crop",
-          "type": "COMBO",
-          "widget": {
-            "name": "crop"
-          },
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "mask",
-          "name": "mask",
-          "type": "MASK",
-          "slot_index": 0,
-          "links": [
-            27,
-            28
-          ]
-        },
-        {
-          "localized_name": "width",
-          "name": "width",
-          "type": "INT",
-          "slot_index": 1,
-          "links": null
-        },
-        {
-          "localized_name": "height",
-          "name": "height",
-          "type": "INT",
-          "slot_index": 2,
-          "links": null
-        }
-      ],
-      "title": "遮罩 缩放",
-      "properties": {
-        "Node name for S&R": "ResizeMask",
-        "ue_properties": {
-          "widget_ue_connectable": {
-            "width": true,
-            "height": true,
-            "keep_proportions": true,
-            "upscale_method": true,
-            "crop": true
-          },
-          "version": "7.8",
-          "input_ue_unconnectable": {}
-        }
-      },
-      "widgets_values": [
-        512,
-        512,
-        false,
-        "lanczos",
-        "center"
-      ],
-      "widgets_values_named": {
-        "width": 512,
-        "height": 512,
-        "keep_proportions": false,
-        "upscale_method": "lanczos",
-        "crop": "center"
-      }
-    },
-    {
-      "id": 43,
-      "type": "SetLatentNoiseMask",
-      "pos": [
-        2020,
-        180
+        2930,
+        620.0
       ],
       "size": [
         240,
@@ -1120,16 +1191,16 @@
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "Latent",
-          "name": "samples",
-          "type": "LATENT",
-          "link": 26
+          "localized_name": "像素",
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 25
         },
         {
-          "localized_name": "遮罩",
-          "name": "mask",
-          "type": "MASK",
-          "link": 27
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 26
         }
       ],
       "outputs": [
@@ -1139,52 +1210,13 @@
           "type": "LATENT",
           "slot_index": 0,
           "links": [
-            32
+            30
           ]
         }
       ],
-      "title": "设置噪声遮罩 (灰度比例)",
+      "title": "优化采样 编码",
       "properties": {
-        "Node name for S&R": "SetLatentNoiseMask",
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.8",
-          "input_ue_unconnectable": {}
-        }
-      }
-    },
-    {
-      "id": 44,
-      "type": "MaskPreview",
-      "pos": [
-        2020,
-        320
-      ],
-      "size": [
-        520,
-        420
-      ],
-      "flags": {},
-      "order": 19,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "遮罩",
-          "name": "mask",
-          "type": "MASK",
-          "link": 28
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "mask",
-          "name": "mask",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "MaskPreview",
+        "Node name for S&R": "VAEEncode",
         "ue_properties": {
           "widget_ue_connectable": {},
           "version": "7.8",
@@ -1196,7 +1228,7 @@
       "id": 50,
       "type": "FallingTSSwitch",
       "pos": [
-        3280,
+        3710,
         0
       ],
       "size": [
@@ -1204,7 +1236,7 @@
         340
       ],
       "flags": {},
-      "order": 23,
+      "order": 22,
       "mode": 0,
       "inputs": [
         {
@@ -1271,7 +1303,7 @@
           "type": "*",
           "slot_index": 0,
           "links": [
-            29
+            27
           ]
         },
         {
@@ -1280,7 +1312,7 @@
           "type": "*",
           "slot_index": 1,
           "links": [
-            33
+            31
           ]
         },
         {
@@ -1289,7 +1321,7 @@
           "type": "*",
           "slot_index": 2,
           "links": [
-            35
+            33
           ]
         },
         {
@@ -1298,7 +1330,7 @@
           "type": "*",
           "slot_index": 3,
           "links": [
-            34
+            32
           ]
         }
       ],
@@ -1324,7 +1356,7 @@
       "id": 51,
       "type": "PrimitiveInt",
       "pos": [
-        2960,
+        3390,
         135.0
       ],
       "size": [
@@ -1332,7 +1364,7 @@
         90
       ],
       "flags": {},
-      "order": 5,
+      "order": 4,
       "mode": 0,
       "inputs": [
         {
@@ -1380,7 +1412,7 @@
       "id": 52,
       "type": "PrimitiveInt",
       "pos": [
-        2960,
+        3390,
         285.0
       ],
       "size": [
@@ -1388,7 +1420,7 @@
         90
       ],
       "flags": {},
-      "order": 6,
+      "order": 5,
       "mode": 0,
       "inputs": [
         {
@@ -1436,8 +1468,62 @@
       "id": 53,
       "type": "PrimitiveFloat",
       "pos": [
-        2960,
+        3390,
         435.0
+      ],
+      "size": [
+        240,
+        90
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "值",
+          "name": "value",
+          "type": "FLOAT",
+          "widget": {
+            "name": "value"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "浮点",
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "slot_index": 0,
+          "links": [
+            9
+          ]
+        }
+      ],
+      "title": "denoise 0.6 (标准)",
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "value": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        0.9
+      ],
+      "widgets_values_named": {
+        "value": 0.9
+      }
+    },
+    {
+      "id": 54,
+      "type": "PrimitiveFloat",
+      "pos": [
+        3390,
+        585.0
       ],
       "size": [
         240,
@@ -1464,65 +1550,11 @@
           "type": "FLOAT",
           "slot_index": 0,
           "links": [
-            9
-          ]
-        }
-      ],
-      "title": "denoise 0.7 (标准)",
-      "properties": {
-        "Node name for S&R": "PrimitiveFloat",
-        "ue_properties": {
-          "widget_ue_connectable": {
-            "value": true
-          },
-          "version": "7.8",
-          "input_ue_unconnectable": {}
-        }
-      },
-      "widgets_values": [
-        0.95
-      ],
-      "widgets_values_named": {
-        "value": 0.9
-      }
-    },
-    {
-      "id": 54,
-      "type": "PrimitiveFloat",
-      "pos": [
-        2960,
-        585.0
-      ],
-      "size": [
-        240,
-        90
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "值",
-          "name": "value",
-          "type": "FLOAT",
-          "widget": {
-            "name": "value"
-          },
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "localized_name": "浮点",
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "slot_index": 0,
-          "links": [
             10
           ]
         }
       ],
-      "title": "denoise 0.5 (加速)",
+      "title": "denoise 0.9 (加速)",
       "properties": {
         "Node name for S&R": "PrimitiveFloat",
         "ue_properties": {
@@ -1534,7 +1566,7 @@
         }
       },
       "widgets_values": [
-        0.9
+        0.85
       ],
       "widgets_values_named": {
         "value": 0.9
@@ -1544,7 +1576,7 @@
       "id": 55,
       "type": "PrimitiveFloat",
       "pos": [
-        2960,
+        3390,
         735.0
       ],
       "size": [
@@ -1598,7 +1630,7 @@
       "id": 56,
       "type": "PrimitiveFloat",
       "pos": [
-        2960,
+        3390,
         885.0
       ],
       "size": [
@@ -1652,7 +1684,7 @@
       "id": 60,
       "type": "KSampler",
       "pos": [
-        3660,
+        4090,
         0
       ],
       "size": [
@@ -1660,32 +1692,32 @@
         540
       ],
       "flags": {},
-      "order": 24,
+      "order": 23,
       "mode": 0,
       "inputs": [
         {
           "localized_name": "模型",
           "name": "model",
           "type": "MODEL",
-          "link": 29
+          "link": 27
         },
         {
           "localized_name": "正面条件",
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 30
+          "link": 28
         },
         {
           "localized_name": "负面条件",
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 31
+          "link": 29
         },
         {
           "localized_name": "Latent图像",
           "name": "latent_image",
           "type": "LATENT",
-          "link": 32
+          "link": 30
         },
         {
           "localized_name": "种子",
@@ -1703,7 +1735,7 @@
           "widget": {
             "name": "steps"
           },
-          "link": 33
+          "link": 31
         },
         {
           "localized_name": "cfg",
@@ -1712,7 +1744,7 @@
           "widget": {
             "name": "cfg"
           },
-          "link": 34
+          "link": 32
         },
         {
           "localized_name": "采样器名称",
@@ -1739,7 +1771,7 @@
           "widget": {
             "name": "denoise"
           },
-          "link": 35
+          "link": 33
         }
       ],
       "outputs": [
@@ -1749,11 +1781,11 @@
           "type": "LATENT",
           "slot_index": 0,
           "links": [
-            36
+            34
           ]
         }
       ],
-      "title": "第一遍 采样",
+      "title": "优化采样",
       "properties": {
         "Node name for S&R": "KSampler",
         "ue_properties": {
@@ -1770,29 +1802,29 @@
         }
       },
       "widgets_values": [
-        22035484649903,
+        353832058520118,
         "randomize",
         15,
         1,
         "euler",
         "simple",
-        0.9
+        0.85
       ],
       "widgets_values_named": {
-        "seed": 22035484649903,
+        "seed": 353832058520118,
         "control_after_generate": "randomize",
         "steps": 4,
         "cfg": 1,
         "sampler_name": "euler",
         "scheduler": "simple",
-        "denoise": 1
+        "denoise": 0.6
       }
     },
     {
       "id": 61,
       "type": "VAEDecode",
       "pos": [
-        4000,
+        4430,
         0
       ],
       "size": [
@@ -1800,20 +1832,20 @@
         80
       ],
       "flags": {},
-      "order": 25,
+      "order": 24,
       "mode": 0,
       "inputs": [
         {
           "localized_name": "Latent",
           "name": "samples",
           "type": "LATENT",
-          "link": 36
+          "link": 34
         },
         {
           "localized_name": "vae",
           "name": "vae",
           "type": "VAE",
-          "link": 37
+          "link": 35
         }
       ],
       "outputs": [
@@ -1823,14 +1855,13 @@
           "type": "IMAGE",
           "slot_index": 0,
           "links": [
-            38
+            36
           ]
         }
       ],
-      "title": "编辑结果 解码",
+      "title": "解码",
       "properties": {
         "Node name for S&R": "VAEDecode",
-        "cnr_id": "comfy-core",
         "ue_properties": {
           "widget_ue_connectable": {},
           "version": "7.8",
@@ -1842,22 +1873,22 @@
       "id": 62,
       "type": "PreviewImageSave",
       "pos": [
-        4320,
-        400.0
+        4750,
+        80.0
       ],
       "size": [
-        520,
-        820
+        960,
+        720
       ],
       "flags": {},
-      "order": 26,
+      "order": 25,
       "mode": 0,
       "inputs": [
         {
           "localized_name": "images",
           "name": "images",
           "type": "IMAGE",
-          "link": 38
+          "link": 36
         },
         {
           "localized_name": "filename_prefix",
@@ -1866,7 +1897,7 @@
           "widget": {
             "name": "filename_prefix"
           },
-          "link": 39
+          "link": 37
         },
         {
           "localized_name": "filename_suffix",
@@ -1912,7 +1943,7 @@
           "type": "IMAGE",
           "slot_index": 0,
           "links": [
-            41
+            39
           ]
         }
       ],
@@ -1921,10 +1952,7 @@
         "Node name for S&R": "PreviewImageSave",
         "ue_properties": {
           "widget_ue_connectable": {
-            "filename_prefix": true,
-            "format": true,
-            "bit_depth": true,
-            "input_color_space": true
+            "filename_prefix": true
           },
           "version": "7.8",
           "input_ue_unconnectable": {}
@@ -1953,7 +1981,7 @@
       "id": 63,
       "type": "ImageCompare",
       "pos": [
-        4920,
+        5790,
         0
       ],
       "size": [
@@ -1961,7 +1989,7 @@
         580
       ],
       "flags": {},
-      "order": 27,
+      "order": 26,
       "mode": 0,
       "inputs": [
         {
@@ -1969,14 +1997,14 @@
           "name": "image_a",
           "shape": 7,
           "type": "IMAGE",
-          "link": 40
+          "link": 38
         },
         {
           "localized_name": "image_b",
           "name": "image_b",
           "shape": 7,
           "type": "IMAGE",
-          "link": 41
+          "link": 39
         },
         {
           "localized_name": "compare_view",
@@ -1992,11 +2020,9 @@
       "properties": {
         "Node name for S&R": "ImageCompare",
         "ue_properties": {
-          "widget_ue_connectable": {
-            "compare_view": true
-          },
-          "version": "7.8",
-          "input_ue_unconnectable": {}
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         }
       },
       "widgets_values": [],
@@ -2102,78 +2128,110 @@
     ],
     [
       13,
-      25,
-      0,
+      10,
+      1,
       30,
       0,
-      "CLIP"
+      "IMAGE"
     ],
     [
       14,
-      26,
+      10,
+      1,
+      32,
       0,
-      30,
-      2,
-      "VAE"
+      "IMAGE"
     ],
     [
       15,
-      10,
-      3,
       30,
-      1,
+      0,
+      31,
+      0,
       "IMAGE"
     ],
     [
       16,
-      10,
-      4,
-      30,
-      6,
-      "IMAGE"
+      32,
+      0,
+      31,
+      9,
+      "INT"
     ],
     [
       17,
-      10,
-      5,
-      30,
-      7,
+      31,
+      0,
+      33,
+      0,
       "IMAGE"
     ],
     [
       18,
-      10,
-      6,
-      30,
-      3,
-      "STRING"
+      25,
+      0,
+      40,
+      0,
+      "CLIP"
     ],
     [
       19,
-      10,
-      7,
-      30,
-      4,
-      "STRING"
+      26,
+      0,
+      40,
+      2,
+      "VAE"
     ],
     [
       20,
-      10,
-      1,
-      40,
+      33,
       0,
+      40,
+      1,
       "IMAGE"
     ],
     [
       21,
       10,
-      1,
+      2,
+      40,
+      6,
+      "IMAGE"
+    ],
+    [
+      22,
+      10,
+      3,
+      40,
+      7,
+      "IMAGE"
+    ],
+    [
+      23,
+      10,
+      4,
+      40,
+      3,
+      "STRING"
+    ],
+    [
+      24,
+      10,
+      5,
+      40,
+      4,
+      "STRING"
+    ],
+    [
+      25,
+      33,
+      0,
       41,
       0,
       "IMAGE"
     ],
     [
-      22,
+      26,
       26,
       0,
       41,
@@ -2181,55 +2239,7 @@
       "VAE"
     ],
     [
-      23,
-      10,
-      2,
-      42,
-      0,
-      "MASK"
-    ],
-    [
-      24,
-      40,
-      1,
-      42,
-      1,
-      "INT"
-    ],
-    [
-      25,
-      40,
-      2,
-      42,
-      2,
-      "INT"
-    ],
-    [
-      26,
-      41,
-      0,
-      43,
-      0,
-      "LATENT"
-    ],
-    [
       27,
-      42,
-      0,
-      43,
-      1,
-      "MASK"
-    ],
-    [
-      28,
-      42,
-      0,
-      44,
-      0,
-      "MASK"
-    ],
-    [
-      29,
       50,
       0,
       60,
@@ -2237,31 +2247,31 @@
       "MODEL"
     ],
     [
-      30,
-      30,
+      28,
+      40,
       0,
       60,
       1,
       "CONDITIONING"
     ],
     [
-      31,
-      30,
+      29,
+      40,
       1,
       60,
       2,
       "CONDITIONING"
     ],
     [
-      32,
-      43,
+      30,
+      41,
       0,
       60,
       3,
       "LATENT"
     ],
     [
-      33,
+      31,
       50,
       1,
       60,
@@ -2269,7 +2279,7 @@
       "INT"
     ],
     [
-      34,
+      32,
       50,
       3,
       60,
@@ -2277,7 +2287,7 @@
       "FLOAT"
     ],
     [
-      35,
+      33,
       50,
       2,
       60,
@@ -2285,7 +2295,7 @@
       "FLOAT"
     ],
     [
-      36,
+      34,
       60,
       0,
       61,
@@ -2293,7 +2303,7 @@
       "LATENT"
     ],
     [
-      37,
+      35,
       26,
       0,
       61,
@@ -2301,7 +2311,7 @@
       "VAE"
     ],
     [
-      38,
+      36,
       61,
       0,
       62,
@@ -2309,7 +2319,7 @@
       "IMAGE"
     ],
     [
-      39,
+      37,
       10,
       0,
       62,
@@ -2317,15 +2327,15 @@
       "STRING"
     ],
     [
-      40,
-      10,
-      1,
+      38,
+      33,
+      0,
       63,
       0,
       "IMAGE"
     ],
     [
-      41,
+      39,
       62,
       0,
       63,

@@ -1,6 +1,6 @@
 """打印指定 md 资源表第 2 行(首条数据)的指定列, 便于逐句检查提示词。
 
-用法: python scripts/show-md-cell.py "0031-首帧场景.md" 3
+用法: python scripts/show-md-cell.py "0031_首帧场景.md" 3
 """
 
 import pathlib
