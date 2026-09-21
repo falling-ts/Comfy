@@ -41,7 +41,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ `RunningHub` | RunningHub 调研:`RunningHub-API读取指南.md` + `workflows-list.md` + `workflows\`(2522 个收集工作流,按 21 个分类子目录:图像/视频/音频/数字人/室内外设计/风格化/插件 等) |
 | └ `Bilibili` | B 站教程调研:`B站教程调研.md` + `工作流大全\`(474 个配套工作流) |
 | └ `AutoDL` | 云端 GPU 调研:`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4887 条模型清单) |
-| `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置 + 插件安装位相对软链,见「软链接映射 §D」):**`plugins\`**(插件聚合目录,与 ComfyUI 侧 `custom_nodes` 同构:含 `obsidian-comfy` 与 `custom-sort` 两个插件子模块)+ `template\`(新建故事模板)+ `sortspec.md`(文件浏览器排序配置)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
+| `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置 + 插件安装位相对软链,见「软链接映射 §D」):**`plugins\`**(插件聚合目录,与 ComfyUI 侧 `custom_nodes` 同构:含 `Obsidian-Comfy` 与 `custom-sort` 两个插件子模块,目录名即各自线上仓库名)+ `template\`(新建故事模板)+ `sortspec.md`(文件浏览器排序配置)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
 | `scripts` | 临时/可复用工具脚本(被 `scripts\.gitignore` 忽略,仅存本地不入库):工作流连线校验/修复/对比(`check-workflow-*`/`fix-*`/`diff-*`/`dump-*`)、布局校验、模型使用分析、模板/模型清单更新、H3/SeedVR2 调试等 |
 | `logs` | ComfyUI 运行日志(`comfyui*.log`/`comfyui-console*.log`,已 gitignore) |
 | `backups` | **工作流/重要文件的修改前备份**(2026-08-04 起):`backup-<文件名>-<YYYYMMDD>-<说明>.*` 命名;含 `backup-20260805_路径清理\`(官方/分类文档归档)、`sageattention\`(本地 wheel)、环境迁移快照(pip-freeze/conda export)等 |
@@ -82,23 +82,23 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 
 ### D. stories Obsidian 插件安装位(1 个软链 + 2 个插件子模块,**入库跟踪**;2026-09-22 改为「聚合目录 + 单层软链」)
 
-与 ComfyUI 侧 `custom_nodes` 同构:vault 内 `.obsidian\plugins` 只是一个**指向聚合目录的链接**,插件本体是 `stories\plugins\` 下的**两个真实 git 子模块**(目录名即各自 `manifest.json` 的 `id`)。
+与 ComfyUI 侧 `custom_nodes` 同构:vault 内 `.obsidian\plugins` 只是一个**指向聚合目录的链接**,插件本体是 `stories\plugins\` 下的**两个真实 git 子模块**(目录名与各自 GitHub 仓库名一致;⚠️ Obsidian 认的是插件 `manifest.json` 里的 `id`,**与目录名无关**,故 `Obsidian-Comfy\` 内 `manifest.json` 的 `id` 仍是小写 `obsidian-comfy`,`community-plugins.json` 里也照旧写小写 id)。
 
 | 根内路径 | 类型 | 相对目标 | 实际指向 |
 |------|------|------|------|
 | `stories\.obsidian\plugins` | SymbolicLink(目录级) | `..\plugins` | `stories\plugins`(插件聚合目录) |
 
-- **聚合目录内容**(`stories\plugins\`,**两个真实子模块,内无软链**):`obsidian-comfy`(远程 `falling-ts/Obsidian-Comfy`,2026-09-22 由 `stories\Obsidian-Comfy` 直接移入)+ `custom-sort`(远程 `SebastianMC/obsidian-custom-sort`,提供文件浏览器自定义排序)
-- **为什么只要一层软链**:Obsidian 只从 vault 的 `.obsidian\plugins\<id>\` 加载插件,而插件源码本就放在同级的 `stories\plugins\` —— 把 `.obsidian\plugins` 指向它即可,插件目录**直接就是子模块本体**(与 `custom_nodes\` 里各插件完全同构);再给 `obsidian-comfy` 套一层安装位软链是多余的(源码与聚合目录同层,不存在跨目录引用)
-- **入库方式**(与 A、B 组不同,本组**入库跟踪**):`stories\.gitignore` 首行 `*` 通配后逐条放行 —— `!.obsidian/plugins`(整目录软链)、`!plugins/`、`!plugins/obsidian-comfy`、`!plugins/custom-sort`(子模块)、`!sortspec.md`。⚠️ 放行**目录本身**即可:子模块内部文件由各自仓库管理,不递归放行。根仓库入库的相对软链共 **3** 个:`.claude`、`custom_nodes\H3ReferenceSuite`、本组一条(mode `120000`)
+- **聚合目录内容**(`stories\plugins\`,**两个真实子模块,内无软链**):`Obsidian-Comfy`(远程 `falling-ts/Obsidian-Comfy`,2026-09-22 由 `stories\Obsidian-Comfy` 直接移入,同日目录名首字母改为大写以与线上仓库名对齐)+ `custom-sort`(远程 `SebastianMC/obsidian-custom-sort`,提供文件浏览器自定义排序)
+- **为什么只要一层软链**:Obsidian 只从 vault 的 `.obsidian\plugins\<id>\` 加载插件,而插件源码本就放在同级的 `stories\plugins\` —— 把 `.obsidian\plugins` 指向它即可,插件目录**直接就是子模块本体**(与 `custom_nodes\` 里各插件完全同构);再给 `Obsidian-Comfy` 套一层安装位软链是多余的(源码与聚合目录同层,不存在跨目录引用)
+- **入库方式**(与 A、B 组不同,本组**入库跟踪**):`stories\.gitignore` 首行 `*` 通配后逐条放行 —— `!.obsidian/plugins`(整目录软链)、`!plugins/`、`!plugins/Obsidian-Comfy`、`!plugins/custom-sort`(子模块)、`!sortspec.md`。⚠️ 放行**目录本身**即可:子模块内部文件由各自仓库管理,不递归放行。根仓库入库的相对软链共 **3** 个:`.claude`、`custom_nodes\H3ReferenceSuite`、本组一条(mode `120000`)
 - **custom-sort 的 `main.js` 是构建产物**(仓库只含 `src/` 源码,其自带 `.gitignore` 已忽略 `main.js` / `node_modules` / `data.json`)。子模块 clone 后须在 `stories\plugins\custom-sort\` 内构建:该仓库 `esbuild.config.mjs` 把产物输出到 **`dist/main.js`**,而 Obsidian 只认插件根目录的 `main.js`,故命令为 `npm install && npm run build && cp dist/main.js main.js`。⚠️ npm 会改写**已被跟踪的** `yarn.lock`(其 `.gitignore` 里的 `/yarn.lock` 对已跟踪文件无效),构建后需 `git checkout -- yarn.lock` 恢复;`package-lock.json` 已写入该子模块的 `.git/info/exclude`(本地配置,不入库),故子模块工作树保持干净
 - **排序配置**:`stories\sortspec.md`(vault 根,入库)写 `< true a-z`,把文件浏览器从 Obsidian 原生的自然排序(其内部写死 `new Intl.Collator(void 0,{usage:"sort",sensitivity:"base",numeric:!0})`)改为逐字节字典序;改完点左侧 ribbon 图标重新解析生效
 - ⚠️ **clone 端约束 —— `core.symlinks` 是本地配置、不入库,新机器必须自己配**:
   - Windows:`git config core.symlinks true`,**且该机要有建链权限**(开发者模式或管理员);否则 git 会把链接检出成写着 `..\plugins` 的**普通文本文件**,Obsidian 认不出插件。本机 local 已设 `true`(原 local 为 `false`,会覆盖 global 的 `true`;system 亦为 `false`)
   - Linux/macOS:默认 `core.symlinks=true`,无需配置
-  - 子模块需初始化:`git submodule update --init stories/plugins/obsidian-comfy stories/plugins/custom-sort`,否则插件目录为空(git 层面仍正确,只是插件无源码)
+  - 子模块需初始化:`git submodule update --init stories/plugins/Obsidian-Comfy stories/plugins/custom-sort`,否则插件目录为空(git 层面仍正确,只是插件无源码)
 - 相对目标以**链接自身所在目录**为基准解析,故仓库 clone 到任意绝对路径都直接生效;git 存储时统一规范为正斜杠(`../plugins`),checkout 时转回平台分隔符
-- **建链只能用 Python `os.symlink`**:PowerShell `New-Item` 会把相对 target 按 cwd 解析(建出 `D:\media\...` 之类错误目标),同 `scripts\link-media-dirs.py` 注释所述。本组软链由 `scripts\link-obsidian-plugins.py` 建立(**幂等**,可重复执行;已改为只建 `.obsidian\plugins` 这**一条**,不再生成 obsidian-comfy 安装位软链)。验证口径:`(Get-Item <路径>).LinkType` 为 `SymbolicLink`、`Target` 为相对串、且经链接能读到 `main.js`
+- **建链只能用 Python `os.symlink`**:PowerShell `New-Item` 会把相对 target 按 cwd 解析(建出 `D:\media\...` 之类错误目标),同 `scripts\link-media-dirs.py` 注释所述。本组软链由 `scripts\link-obsidian-plugins.py` 建立(**幂等**,可重复执行;已改为只建 `.obsidian\plugins` 这**一条**,不再生成 Obsidian-Comfy 安装位软链)。验证口径:`(Get-Item <路径>).LinkType` 为 `SymbolicLink`、`Target` 为相对串、且经链接能读到 `main.js`
 - ⚠️ **移动 git 子模块时慎用 `git mv`,且搬运前先关掉会占用它的程序**(实测 2026-09-22:Obsidian 开着时移 `stories\Obsidian-Comfy` 报 `Permission denied`,随后 `Move-Item` 只完成一半 —— 工作树连 `.git` 目录一起被搬走,旧位置只留一个**空** `.git` 目录,而 `.git/modules/stories/<name>` 已不存在,子模块暂时"内联"成独立仓库,`git status` 因该空壳报 `not recognized as a git repository`)。完整修复三步:① `Move-Item <新位置>\.git` → `.git/modules/stories/plugins/<name>`(其 config 通常**没有** `core.worktree`,不必改;默认按 gitdir 反推 worktree 恰好正确);② 写回 `.git` **文件**(内容 `gitdir: ../../../.git/modules/stories/plugins/<name>`,无 BOM);③ 同步 `.gitmodules` 与根 `.git/config` 里该子模块的 **name 与 path**。完成后 `git submodule status` 显示 ` <hash> <path> (heads/<分支>)`(前导空格 = 已初始化且与 index 一致)
 
 ## 版本与运行
