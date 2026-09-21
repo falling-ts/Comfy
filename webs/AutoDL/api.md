@@ -126,6 +126,24 @@
   `models.md` 的「本地目录」列优先沿用旧 md 的 `instance_path` 映射(归类含人工判断,无法纯规则复现),
   再依次按 `model_name` 传播 → 仓库传播 → 文件名规则判定,判不出的标「未识别(需人工核对)」。
 
+#### 5.2.2 2026-09-21 复核(4956 条)与脚本三处修复
+
+- 本次抓取:`result_total = 4956`(较 09-17 的 4887 增加 69),新增实例路径 44、消失 0。
+- ⚠️ **`max_page` 随请求的 `page_size` 变化**:`page_size=2` 时 `max_page=2478`、`page_size=100` 时 `max_page=50`,
+  都等于 `ceil(result_total / page_size)`。用脚本默认的 100 即可,别拿小 page_size 试探时的 `max_page` 当固定值。
+- 修复的三个归类缺陷(此前会让扩充的规则**永远不生效**,表现为新条目大量落进「未识别」):
+  1. **「未识别」不再沿用**:旧值是「未识别」时清空 `_oldcat`,交给规则按新版本重判。
+     否则按文件名(`@name:` 键)命中的旧结论会把新规则挡在外面 —— 同文件多次上传时尤其明显。
+  2. **传播不传「未识别」**:`model_name` / 仓库传播只以**已识别**的归类作传播源,
+     否则同组条目会被一起钉死在「未识别」上,同样进不了规则判定。
+  3. **删掉 `guess()` 里「仓库名含 `/` 即 `return None`」的提前返回**:该判断位于文件名规则**之前**,
+     使 `ace_step_1.5_turbo_aio`、`Realistic_Vision_V5.1` 之类被误判;目录型(二级槽位)本就由调用方按
+     `g and "/" in r and g in SLOTS` 处理,无需提前返回。
+- 归类规则同步扩充:Qwen3-VL 文本编码器、MoGe/VGGT 几何估计、MatAnyone/BiRefNet 抠像、
+  ACE-Step/Stable Audio 音频 checkpoint、H3 系 Bridge/LoRA、Krea 系 LoRA、AnimeSharp/RCAN 放大等。
+- 重跑方式(**不重新抓取,用缓存**):`AUTODL_USE_CACHE=1` + `AUTODL_OLD_MD=<旧备份 md>`,秒级完成;
+  以旧备份为基准可保证已归好的条目照旧沿用,只有新条目走新规则,零回归风险(实测「已识别→未识别」退化 0 条)。
+
 ### 5.3 前端反推过程(接口变更后自查)
 
 1. 抓 `https://www.autodl.art/app/common/model` HTML → 入口 JS `/assets/index.27e3033b.js`(772KB,主 bundle)
