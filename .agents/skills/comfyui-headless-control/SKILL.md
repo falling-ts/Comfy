@@ -181,7 +181,7 @@ POST(f"/proceed/continue/{continue_id}")        # 未跑到该节点 => 400 "没
 |---|---|
 | `GET /fallingts_mdtable/read`(`0010_灰度遮罩.md`) | `ok=True`,1 行,字段 `['ID','原图']` |
 | `GET /fallingts_mdtable/browse`(`stories/七纹刻印`) | `ok=True`,33 条目 |
-| `GET /fallingts_mdtable/resolve`(`@{00110_万物建模_QI2.1/00001_陈落}`) | `ok=True` → `output\00110_万物建模_QI2.1\00001_陈落.png` |
+| `GET /fallingts_mdtable/resolve`(`@{0011_万物建模/00001_陈落}`) | `ok=True` → `output\0011_万物建模\00001_陈落.png`(2026-09-23 实测时写的是 `_QI2.1` 目录;2026-09-24 该目录已改名并入表名目录) |
 | `POST /fallingts_mdtable/select_file` | **读取超时**(阻塞) |
 | 提交 `0010_灰度遮罩` → `POST /preview-image/save/2` | **200** `已保存 1 张: <dir>/probe.png`,盘上确认 |
 | 构造 48 帧图 → `POST /preview-video/frame/952` | **200**,返回体 PNG 头合法 |
