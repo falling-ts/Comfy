@@ -23,9 +23,9 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | `h3` | **MiniMax H3 生态聚合目录**(2026-08-10 建):`MiniMax-H3`(官方模型仓库,自带 9 个官方 Skills)+ `minimax-h3-guide`(参考加载套件,其 `H3ReferenceSuite` 由根 `custom_nodes` 子链接指向) |
 | **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 28 个,按编号-用途分组: |
 | └ `001x` 万物 | `0011_万物建模`(主线主流程)/ `0010_灰度遮罩` / `0012_万物变化` |
-| └ `001x` 万物 2.1 | `00110_万物建模2.1` / `00120_万物变化2.1`(Qwen-Image 2.1 版,见「Qwen-Image 2.1 工作流」) |
+| └ `001x` 万物 QI2.1 | `00110_万物建模_QI2.1` / `00120_万物变化_QI2.1`(Qwen-Image 2.1 版,**共用 `001x` 的表**;见「Qwen-Image 2.1 工作流」) |
 | └ `002x` 场景镜头 | `0020_场景首帧` / `0021_场景拉镜` / `0022_场景推镜` / `0023_场景旋镜` |
-| └ `002x` 场景镜头 2.1 | `00200_场景首帧2.1` / `00220_场景推镜2.1`(Qwen-Image 2.1 版) |
+| └ `002x` 场景镜头 QI2.1 | `00200_场景首帧_QI2.1` / `00220_场景推镜_QI2.1`(Qwen-Image 2.1 版,**共用 `002x` 的表**) |
 | └ `003x` 场景生成 | `0030_文生场景`(H3 T2VA,仅画面)/ `0031_首帧场景`(I2V)/ `0032_参考场景`(R2V 多图多视频参考)/ `0033_OrbitSheets场景`(Location Sheet 参考板:锚点图+H3 多视角选帧拼板) |
 | └ `004x` 视频生成 | `0040_文生视频` / `0041_首帧视频` / `0042_首尾视频` / `0043_关键帧视频`(AddGuide 锚定任意帧)/ `0044_参考视频` |
 | └ `005x` 拆解 | `0050_视频拆帧` / `0051_视频拆音` |
@@ -92,7 +92,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 - ⚠️ **2026-09-22 卸载了第三方排序插件 custom-sort**:`SebastianMC/obsidian-custom-sort` 3.2.0(最新版)在 Obsidian 1.13.7 上解析 `sortspec.md` 的 YAML frontmatter 失败并自动挂起(ribbon 显示红图标 `ICON_SORT_SUSPENDED_SYNTAX_ERROR`),根因是 Obsidian 把块标量内容**连同缩进**交给插件,而它对 `target-folder:` 行要求前导零空格;`|` 块标量写法与官方文档示例的 1 空格缩进写法**均失败**。子模块已 deinit + rm,`.gitmodules` / 根 `.git/config` / `.git/modules` 均无残留,`community-plugins.json` 只剩 `obsidian-comfy`;vault 根的 `sortspec.md` 亦一并删除(其内容要点已并入本节)
 - **为什么只要一层软链**:Obsidian 只从 vault 的 `.obsidian\plugins\<id>\` 加载插件,而插件源码本就放在同级的 `stories\plugins\` —— 把 `.obsidian\plugins` 指向它即可,插件目录**直接就是子模块本体**(与 `custom_nodes\` 里各插件完全同构);再给 `Obsidian-Comfy` 套一层安装位软链是多余的(源码与聚合目录同层,不存在跨目录引用)
 - **入库方式**(与 A、B 组不同,本组**入库跟踪**):`stories\.gitignore` 首行 `*` 通配后逐条放行 —— `!.obsidian/plugins`(整目录软链)、`!plugins/`、`!plugins/Obsidian-Comfy`(子模块);另按「Obsidian 维护的用户数据不入库」忽略 `.obsidian/workspace.json` 与 `.obsidian/bookmarks.json`。⚠️ 放行**目录本身**即可:子模块内部文件由各自仓库管理,不递归放行。根仓库入库的相对软链共 **3** 个:`.claude`、`custom_nodes\H3ReferenceSuite`、本组一条(mode `120000`)
-- **文件浏览器排序**(2026-09-22 起由自有插件 `Obsidian-Comfy` 接管):`main.js` 的 `setupExplorerSort()` 替换 FileExplorer 原型上的 `getSortedFolderItems`,保留 Obsidian 原实现的「文件夹优先 + 从 `this.fileItems` 取回渲染项」骨架,只换比较器 —— 故不依赖 items 内部结构,视图重建也不会掉。规则是**编号分层**(`compareNumberedName`):开头数字串按**字符串**比较(短的优先),于是 `0011_万物建模` → `00110_万物建模2.1` → `0012_万物变化`,5 位编号恰好插在它所属的 4 位编号之后。⚠️ **纯逐字节做不到这个顺序**:字符串比较里 `_`(0x5F) 大于 `1`(0x31),会把 `00110` 排到 `0011` **前面**。开关在插件设置页「文件浏览器排序」(编号分层 / 纯逐字节 / 关闭),改完即时生效,无需重启(排序规则的完整说明见本节)
+- **文件浏览器排序**(2026-09-22 起由自有插件 `Obsidian-Comfy` 接管):`main.js` 的 `setupExplorerSort()` 替换 FileExplorer 原型上的 `getSortedFolderItems`,保留 Obsidian 原实现的「文件夹优先 + 从 `this.fileItems` 取回渲染项」骨架,只换比较器 —— 故不依赖 items 内部结构,视图重建也不会掉。规则是**编号分层**(`compareNumberedName`):开头数字串按**字符串**比较(短的优先),于是 `0011_万物建模` → `00110_万物建模_QI2.1` → `0012_万物变化`,5 位编号恰好插在它所属的 4 位编号之后。⚠️ **纯逐字节做不到这个顺序**:字符串比较里 `_`(0x5F) 大于 `1`(0x31),会把 `00110` 排到 `0011` **前面**。开关在插件设置页「文件浏览器排序」(编号分层 / 纯逐字节 / 关闭),改完即时生效,无需重启(排序规则的完整说明见本节)
 - ⚠️ **clone 端约束 —— `core.symlinks` 是本地配置、不入库,新机器必须自己配**:
   - Windows:`git config core.symlinks true`,**且该机要有建链权限**(开发者模式或管理员);否则 git 会把链接检出成写着 `..\plugins` 的**普通文本文件**,Obsidian 认不出插件。本机 local 已设 `true`(原 local 为 `false`,会覆盖 global 的 `true`;system 亦为 `false`)
   - Linux/macOS:默认 `core.symlinks=true`,无需配置
@@ -160,17 +160,19 @@ python main.py --enable-manager
 
 | 工作流 | 对应原版 | 链路 |
 |--------|----------|------|
-| `00110_万物建模2.1` | `0011_万物建模` | 两阶段: 文生图 → 带图编辑优化 |
-| `00120_万物变化2.1` | `0012_万物变化` | 单阶段: 图1/2/3 多图参考编辑 + 灰度遮罩局部重绘 |
-| `00200_场景首帧2.1` | `0020_场景首帧` | 两阶段: 文生场景 → 编辑优化 |
-| `00220_场景推镜2.1` | `0022_场景推镜` | 单阶段: 框选放大 → 编辑精修 |
+| `00110_万物建模_QI2.1` | `0011_万物建模` | 两阶段: 文生图 → 带图编辑优化 |
+| `00120_万物变化_QI2.1` | `0012_万物变化` | 单阶段: 图1/2/3 多图参考编辑 + 灰度遮罩局部重绘 |
+| `00200_场景首帧_QI2.1` | `0020_场景首帧` | 两阶段: 文生场景 → 编辑优化 |
+| `00220_场景推镜_QI2.1` | `0022_场景推镜` | 单阶段: 框选放大 → 编辑精修 |
+
+⚠️ **2026-09-24 起这 4 个工作流与 1.x 版共用同一批数据表**:原 `00110/00120/00200/00220_*.md` 4 张表已删除,工作流内 `md_path` 一律指向 `0011_万物建模.md` / `0012_万物变化.md` / `0020_场景首帧.md` / `0022_场景推镜.md`。同名工作区分只靠文件名后缀 `_QI2.1`。**产物目录取表文件名**(2026-09-24 起保存类节点优先用工作流的 md 表文件名作子目录),故 4 个 QI2.1 工作流与各自 1.x 版**落同一个目录**(如 `media\七纹刻印\0011_万物建模\`)—— 同一行 ID 的产物互相覆盖,只保留一份;旧目录 `media\七纹刻印\0011{0,2}0_*_QI2.1\` 与 `002{0,2}0_*_QI2.1\` 是改动前的遗留,不再有新产物写入。`0011_万物建模.md` 已用 2.1 的「写实三维CG + 单一视角」内容覆盖(原 1.x 的「国漫CG + 三视图」违反现行规范,备份在 `backups\backup-0011_万物建模.md-20260924-重构前.md`)。
 
 **关键差异(改这些工作流时注意)**:
 - **不加载任何 LoRA**。2.1 无 4 步蒸馏 LoRA(LightX2V 的 Day-0 支持是框架级 fp8 优化, 不是 LoRA), 故步数按官方域设 **标准 30 步 / 加速 15 步**, cfg 固定 1.0; 原版"4 步 Lightning 档"已不存在
 - 文本编码统一用 **`TextEncodeQwenImage21`** 一个节点同时产出 positive/negative(带参考图编码), 取代原版两个 `TextEncodeQwenImageEditPlus`; 其 `resolution` 默认 1024 控制参考图缩放
 - 新增 **`QwenImage21Cache`**(接在 UNETLoader 之后)复用 KV 前缀, 编辑任务提速明显; 参数 `device=auto` / `dtype=default`
 - latent 是 **64 通道**(旧版 16), 用 `EmptyLatentImage` 即可: `comfy/sample.py` 的 `fix_empty_latent_channels` 会把空 latent 自动扩展到模型通道数并按 `spacial_downscale_ratio`(16)修正分辨率
-- 数据表在 `stories\七纹刻印\` 下: `00110_万物建模2.1.md` / `00120_万物变化2.1.md` / `00200_场景首帧2.1.md` / `00220_场景推镜2.1.md`; 跨表引用走 `@{00110_万物建模2.1/ID}`、`@{00200_场景首帧2.1/ID}`
+- 数据表与 1.x 版**共用**(不另建表):`stories\七纹刻印\0011_万物建模.md` 等 4 张;跨表引用写 `@{0011_万物建模/ID}`、`@{0020_场景首帧/ID}`(前缀是**表文件名**,也就是产物目录名 —— 保存类节点优先用工作流的 md 表文件名建子目录,引用因此走**严格命中**而非递归兜底)
 - 布局由 `scripts\make_qwen21_common.py` 的布局引擎生成(拓扑分层 + 双向重心法 + 差分约束求列偏移), 生成脚本为 `scripts\make-00{110,120,200,220}.py`; 改完重跑即可(**幂等**), 自检函数会校验六条布局规范
 
 ## 官方文档与分类文档
@@ -211,7 +213,7 @@ python main.py --enable-manager
 
 全链四步(全部离线, 实测样本 = 0043 关键帧视频):
 
-1. **定位产物**: `GET /history?max_items=N` → `outputs.<node>.{images,videos,audio,gifs}[].{filename,type}`; `type: temp` → `ComfyUI\temp\`, `type: output` → `media\<项目>\`(真实数据勿删; 保存类节点还会再按工作流名建一层子目录, `filename` 不带该层级, 需从插件返回消息确认); `history.prompt[<n>]` 是当时的 API 图(可查节点数/mdtable `selected.id`)。同名前缀的 temp 文件会累积, 只用 mtime 最新那个。
+1. **定位产物**: `GET /history?max_items=N` → `outputs.<node>.{images,videos,audio,gifs}[].{filename,type}`; `type: temp` → `ComfyUI\temp\`, `type: output` → `media\<项目>\`(真实数据勿删; 保存类节点还会再建一层子目录 —— 优先用工作流的 md 表文件名, 没有 md 表节点才用工作流名, `filename` 不带该层级, 需从插件返回消息确认); `history.prompt[<n>]` 是当时的 API 图(可查节点数/mdtable `selected.id`)。同名前缀的 temp 文件会累积, 只用 mtime 最新那个。
 2. **探针**: `ffprobe -v error -print_format json -show_format -show_streams <文件>`; 核对视频 宽高/fps/总帧数、音频 采样率/声道/**有没有音轨**(H3 无音轨多为 `overall_soundscape` 段没写对)。`总帧数 ÷ fps = 时长`(H3 固定 24 fps: 362 帧 = 15.083s)。
 3. **画面**: `ffmpeg -y -i in.mp4 -ss 11.000 -frames:v 1 f011.png`(精确; `-ss` 放 `-i` 之前 = 快但可能偏几帧) + 联络表 `-vf "fps=1/2,scale=640:-1,tile=4x3" -frames:v 1 grid.png` → `read_image` 判读: 锚点主体在不在、数量/位置对不对、有没有被文字描述替换掉(实测: 提示词写"摊开的手稿", 中段笔记本就变成了摊开的书)。
 4. **音频**: `ffmpeg -y -i in.mp4 -ac 1 -ar 16000 mono16k.wav` → **SenseVoiceSmall**(`models\TTS\SenseVoiceSmall`, funasr 加载, 传本地路径 + `disable_update=True` ⇒ 不发网络请求) 出 `<|语种|><|情绪|><|事件|>文本`, 即 转写(中/英/日/韩/粤)/情感(HAPPY·SAD·ANGRY·NEUTRAL)/事件(Speech·BGM·Applause·Laughter 等); 声学特征用 librosa + pyloudnorm(响度 LUFS/节奏 BPM/频谱质心/谱平坦度/F0); 频谱图与波形图用 `ffmpeg -lavfi "showspectrumpic=s=1024x512"` / `"showwavespic=s=1024x256"` 落 PNG 后再 `read_image` 看。
