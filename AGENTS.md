@@ -7,11 +7,12 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | 路径 | 说明 |
 |------|------|
 | `ComfyUI` | ComfyUI 主程序(git submodule,detached HEAD 跟随上游 release tag,当前 `v0.37.0`):源码/入口在本目录;`models`/`input`/`output`/`user\default\workflows`/`custom_nodes` 均为相对软链接(见「软链接映射」);`blueprints\` 内置 90 个蓝图;其余结构遵循上游官方布局,不再逐一展开 |
-| **`custom_nodes`** | **插件聚合目录**:43 个插件子模块 + `H3ReferenceSuite` 链接集中于此,`ComfyUI\custom_nodes` 为目录级相对软链接指向它(§B)。按功能归类: |
-| └ 自有插件 | `ComfyUI-FallingTS`:通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强,已开源) |
+| **`custom_nodes`** | **插件聚合目录**:45 个插件子模块 + `H3ReferenceSuite` 链接集中于此,`ComfyUI\custom_nodes` 为目录级相对软链接指向它(§B)。按功能归类: |
+| └ 自有插件 | `ComfyUI-FallingTS`:通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强,已开源);另含**世界模型三节点**:`world-panorama` 的 `WorldSurroundPanorama`(**360° 环绕视频 → 横向展开长图**(等距圆柱条带, 上行=天、无黑边、无重影): 自动定抽帧步长 + 一圈闭环吸附 + ORB/RANSAC 纯偏航单应与「重叠区稠密光度一致性」联立定焦距 + 逐像素 winner-take-all(从不帧间平均), 真 equirect 视频可直接抽帧; 2026-09-28 v2 重做同时修掉 v1 的「长图倒立 + 上下各 30% 黑边 + 帧间平均糊掉细节(拉普拉斯锐度差 4.3 倍)」)、`WorldPanoramaViews`(长图 → 视角批 + **每视角精确 w2c 外参/内参**, 外参口径与 HYWM2 `SamplePanorama` 一致; 等距圆柱竖直朝向按世界地图口径修正, 多 `v_range`/`v_center` 竖向范围), 以及 `world-refine` 的 `WorldRefinePLY`(视角批(可接相机先验) → 504 前馈 + 3DGS **全参数**精修(mode=all + 几何信任域) → 一个 PLY; 接上 `extrinsics/intrinsics` 时把位姿作为先验注入前馈 `cond_flags=[cam,0,intr]`, 从源头消掉上游推理不做跨视图融合留下的多视图双重曝光/重影。2026-09-28 并入并扩到「360 视频进、PLY 出」) |
 | └ H3 生态(6 插件 + 链接) | `ComfyUI-Spectrum-MiniMax-H3`(加速)、`ComfyUI-SolAttn_triton`(注意力加速)、`ComfyUI-ReservedVRAM`(显存预留)、`ComfyUI-Qwen3-TTS`(H3 语音)、`h3-latent-upscaler`(latent 放大)、`ComfyUI-OrbitSheets`(场景/角色参考板:锚点图 + H3 多视角运镜 + 视觉选帧拼网格图,2026-08-17 装)、`H3ReferenceSuite`(软链接,见 `h3`) |
 | └ 放大/修复/局部重绘 | `ComfyUI-SeedVR2_VideoUpscaler`(视频高清修复)、`ComfyUI-SUPIR`(超分放大)、`ComfyUI_UltimateSDUpscale`(分块重绘)、`ComfyUI-Impact-Pack`(Detailer 局部精修)、`ComfyUI_LayerStyle`(图层/遮罩)、`ComfyUI-Inpaint-CropAndStitch`(裁剪贴回) |
 | └ 视频 | `ComfyUI-VideoHelperSuite`、`ComfyUI-WanVideoWrapper`、`ComfyUI-Frame-Interpolation`(补帧)、`ComfyUI-qwenmultiangle`(Qwen 多镜头) |
+| └ 3D/世界模型 | `ComfyUI-HYWM2`(HY-World 2.0 世界重建: 8 视图 → 统一世界坐标三维场景 → 3DGS/点云/网格 + PLY 视口; 权重在 `models\hywm2`(3.05GB, 已按槽位约定 gitignore); 隔离环境 `hywm2-nodes`, gsplat 在那 ⇒ 0034 的 `WorldRefinePLY` 借它跑精修。2026-09-27 装, **2026-09-28 登记为 git 子模块**(`[submodule "ComfyUI-HYWM2"]`, branch main, 指针 `93d060e`); ⚠️ `nodes/comfy-env.toml` 有**故意不提交**的本地补丁(`requests` + `comfy-kitchen==0.2.35`, 备份在 `backups\backup-世界模型颜色修复-20260928\`), 更新/`submodule update` 前先留副本) |
 | └ 图像/编辑/生成 | `ComfyUI-Easy-Use`、`ComfyUI_IPAdapter_plus`、`ComfyUI-ReActor`(换脸)、`ComfyUI-RMBG`、`ComfyUI-segment-anything-2`、`comfyui_controlnet_aux`、`ComfyUI-IC-Light`、`ComfyUI-DepthAnythingV2`、`Comfyui-QwenEditUtils`、`comfyui-mixlab-nodes`、`ComfyUI-Florence2`、`ComfyUI-post-processing-nodes`(后期处理) |
 | └ 工具/其它 | `ComfyUI-GGUF`(GGUF 量化加载)、`ComfyUI-KJNodes`(KJ 工具包)、`rgthree-comfy`、`ComfyUI-Custom-Scripts`、`ComfyUI-Detail-Daemon`、`ComfyUI-Crystools`、`ComfyUI-MultiGPU`、`ComfyUI-LogicUtils`、`ComfyUI-Inspire-Pack`、`cg-use-everywhere`、`audio-separation-nodes-comfyui`、`ComfyUI_essentials`、`ComfyUI_LinkFX`(连线动画)、`ComfyUI-AnimatedLinks`(连线动画) |
 | `docs` | 本地参考文档:24 个分类 md + 4 个子目录(3 个 git submodule + `Qwen-Image-Edit-Skills` 本地目录) | 
@@ -27,6 +28,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ `002x` 场景镜头 | `0020_场景首帧` / `0021_场景拉镜` / `0022_场景推镜` / `0023_场景旋镜` |
 | └ `002x` 场景镜头 QI2.1 | `00200_场景首帧_QI2.1` / `00220_场景推镜_QI2.1`(Qwen-Image 2.1 版,**共用 `002x` 的表**) |
 | └ `003x` 场景生成 | `0030_文生场景`(H3 T2VA,仅画面)/ `0031_首帧场景`(I2V)/ `0032_参考场景`(R2V 多图多视频参考)/ `0033_OrbitSheets场景`(Location Sheet 参考板:锚点图+H3 多视角选帧拼板) |
+| └ `003x` 世界模型 | `0034_世界模型`(**360° 环绕视频 → 一个最高质量 3DGS PLY**;2026-09-28 由「md 表 8 图」改版为「md 表 360 视频」):`FallingTSMarkDownTable`(360环绕视频列)→ `WorldSurroundPanorama`(视频→**横向展开长图**(上行=天/无黑边/无重影) + valid_band + v_center; 2026-09-28 v2: 按画面位移自适应抽帧 + **自适应补密(治不均匀转速: 静止段/甩镜段)**、一圈闭环吸附(需首末帧几何重合)、逐像素 winner-take-all、近静止直接报错; 转速谱系 17 用例实测与四个已修静默缺陷见 `docs\360视频横向展开长图-v2实现-2026-09-28.md` §8)→ `PreviewImageSave`(长图预览支路)**与** `WorldPanoramaViews`(长图→视角批 + 精确 w2c 外参/内参, `v_range`/`v_center` 接长图元信息)→ `WorldRefinePLY`(视角批 + 相机先验 → 504 前馈 + 3DGS 全参数精修 mode=all reg=3.0, `gt=952`)→ `HYWM2PLYAdvancedGaussianViewer`;产物 `media\<项目>\0034_世界模型\0034_世界模型_世界3DGS.ply`。数据表 `stories\七纹刻印\0034_世界模型.md`;生成/改版脚本 `scripts\_build-0034-world360.py`(幂等, 带六条布局规范自检), 验收脚本 `scripts\_verify-0034-360.py` |
 | └ `004x` 视频生成 | `0040_文生视频` / `0041_首帧视频` / `0042_首尾视频` / `0043_关键帧视频`(AddGuide 锚定任意帧)/ `0044_参考视频` |
 | └ `005x` 拆解 | `0050_视频拆帧` / `0051_视频拆音` |
 | └ `006x` 音频生成 | `0060_背景音乐` / `0061_环境音效` / `0062_效果音效` / `0063_文生人声` / `0064_参考人声` |
@@ -67,10 +69,10 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 
 | ComfyUI 内路径 | 类型 | 相对目标 | 实际指向 |
 |------|------|------|------|
-| `ComfyUI\custom_nodes` | SymbolicLink(目录级) | `..\custom_nodes` | 根 `custom_nodes`(插件聚合目录,43 插件 + H3ReferenceSuite 链接) |
+| `ComfyUI\custom_nodes` | SymbolicLink(目录级) | `..\custom_nodes` | 根 `custom_nodes`(插件聚合目录,45 插件 + H3ReferenceSuite 链接) |
 | `custom_nodes\H3ReferenceSuite` | SymbolicLink(子链接) | `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` | `h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite` |
 
-- 根 `custom_nodes` 由**根仓库**跟踪:43 个插件以 gitlink 形式登记(全仓共 51 个子模块:`ComfyUI` 1 + `custom_nodes\` 44 + `docs\` 3 + `h3\` 2 + `stories\plugins\Obsidian-Comfy` 1),`H3ReferenceSuite` 为符号链接;本地文件 `example_node.py.example`、`websocket_image_save.py` 被根 `.gitignore` 排除(保留磁盘副本供加载)。`ComfyUI\custom_nodes` 是目录级符号链接,其目标内容不受 ComfyUI 子模块 git 影响
+- 根 `custom_nodes` 由**根仓库**跟踪:45 个插件以 gitlink 形式登记(全仓共 54 个子模块:`ComfyUI` 1 + `custom_nodes\` 45 + `docs\` 5 + `h3\` 2 + `stories\plugins\Obsidian-Comfy` 1;`.gitmodules` 条目数同为 54,2026-09-28 核对一致 —— 其中 `ComfyUI-HYWM2` 是 2026-09-28 新登记的),`H3ReferenceSuite` 为符号链接;本地文件 `example_node.py.example`、`websocket_image_save.py` 被根 `.gitignore` 排除(保留磁盘副本供加载)。`ComfyUI\custom_nodes` 是目录级符号链接,其目标内容不受 ComfyUI 子模块 git 影响
 - `ComfyUI\temp\`(真实目录,非链接):运行中生成的临时文件/预览图(如 `ComfyUI_temp_*.png`),可随时清理
 - ⚠️ **`ComfyUI\input\`(用户上传)与 `output\`(生成结果)是真实数据所在(经软链落入 `media\<项目>\`):严禁整体删除、移动或批量清理**;只有 `temp\` 可清理
 

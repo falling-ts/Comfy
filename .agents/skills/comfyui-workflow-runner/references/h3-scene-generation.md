@@ -32,7 +32,7 @@ ffmpeg -hide_banner -i v.mp4 -vf "fps=2,scale=160:90,tblend=all_mode=difference,
 
 一致性是硬前提、优先于视角精确度：给互相矛盾的图，模型没有裁决能力，只能在矛盾间摇摆（实测表现为家具漂移、凭空多出显示器与书堆）。
 
-## 三、提示词的四条硬经验
+## 三、提示词的五条硬经验
 
 **1. 正面陈述，不要否定式惩罚**
 
@@ -59,6 +59,22 @@ H3 不可靠遵守否定式指令——把"不要倾斜/不要翻滚"这类词�
 写了"2×2 拼合的图片""每格左上角印有白色粗体中文方位标注"之后，模型**把分格线与方位文字直接画进了画面**。只说"参考图提供哪几个方向的视图"，并补正面保护句：
 
 > 参考图只是布局依据，它本身不会出现在画面中，其中的任何分格、边框、拼贴痕迹或注记文字也都不会出现在画面里。
+
+**5. 物件名词不能有歧义 —— `notebook` 会被画成第二台笔记本电脑**
+
+英文 `notebook` 兼指「笔记本电脑」与「记事本」。桌上同时写 `a laptop` 与 `a closed black notebook` 时，
+模型会把 `notebook` 渲染成**第二台（闭合的）笔记本**（实测 `0044_参考视频` 第三段：桌面出现两台笔记本状设备，
+用户直接指出"出现两个笔记本"）。把两个物件**并列在一句里**也会被拆开：
+
+- ✗ `a closed black notebook, a pen and a row of upright books`
+  → ✓ `a closed black paper journal, a pen and a row of upright books`
+- ✗ `the laptop and keyboard stay untouched in front of him`
+  → ✓ `his one single lit laptop stays untouched in front of him`
+  （键盘是笔记本的一部分，不要另列为桌面物件）
+- 顺手补一句正面限定：`that laptop is the only computer anywhere in the room`
+
+排查手法：把桌上每个小物件的说法换成**唯一无歧义**的名字，改完抽帧数一遍物件。这类错误**不报错**，
+只能在成片里看出来。
 
 ## 四、速率上限
 

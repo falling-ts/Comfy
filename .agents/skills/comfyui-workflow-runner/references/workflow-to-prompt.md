@@ -22,19 +22,21 @@
 
 ## 控件值映射（最容易出错的一步）
 
-从 `/object_info/<type>` 取 `input.required` + `input.optional`，按定义顺序收集**非连线类型**
-（`INT`/`FLOAT`/`STRING`/`BOOLEAN` 以及 combo = 列表类型）的输入名，得到 **完整控件名列表**。
-
-然后：
+**首选按名字取**。前端保存的工作流里通常带 `widgets_values_named`（以控件名为键的镜像），
+用它映射就不受位置错位影响：
 
 ```python
-for name, val in zip(全部控件名, widgets_values):
-    if name in 已连线控件名:      # 被转成了输入
+for idx, name in enumerate(控件名列表):
+    if name in 已连线控件名:
         continue
-    inputs[name] = val
+    if name in widgets_values_named:      # 首选
+        inputs[name] = widgets_values_named[name]
+    elif idx < len(widgets_values):       # 兜底
+        inputs[name] = widgets_values[idx]
 ```
 
-**必须用完整列表 zip，再过滤**。原因：前端序列化 `widgets_values` 时，被转成输入的控件**仍然占位**。
+**没有名字表时才按位置 zip，且必须用完整列表 zip、再过滤**。原因：前端序列化 `widgets_values` 时，
+被转成输入的控件**仍然占位**。
 
 反例（错误做法）：先过滤出"未连线控件名"再 zip → 整体前移，例如
 
@@ -52,6 +54,27 @@ filename_prefix 有连线（应跳过）
 预览节点的 UI 状态）。按定义长度 zip 会自然忽略尾部多余项；**但**若某个前端控件插在中间，映射仍会错位 ——
 此时应对照 `/object_info` 的定义顺序逐项核对。
 
+## 动态子控件（`<父>.<子>`）
+
+`COMFY_DYNAMICCOMBO_V3` 会按父控件的取值**动态展开子控件**。子控件在 `/object_info` 里**完全不出现**，
+但在 API 载荷里是**独立输入**，键名是 `<父>.<子>`：
+
+| 节点 | 父控件取值 | 子控件（API 键） |
+|---|---|---|
+| `BlockSparseAttention` | `selection = "sol-attn"` | `selection.tau` |
+| `SaveVideo` | `format = "mp4"` | `format.codec` |
+
+两个方向都会翻车（实测各踩一次）：
+
+1. **按位置 zip** → 子控件在 `widgets_values` 里多占一格，其后所有控件前移一位：
+   `start_percent` 拿到 `1.3`、`min_tokens` 拿到 `""`、`extra_tokens` 拿到 `12288`、
+   `sink_conditioning` 拿到 `256`。提交被 `/prompt` 的 max/枚举校验拦下。
+2. **只注入对齐表里的名字** → 子控件被整条丢掉，提交报
+   `Required input is missing: tau`（`input_name: selection.tau`）。
+
+正确做法：名字表里**父名已在控件表内**、且带 `.` 的额外键，一律原样注入；
+父名不在表内的（纯前端状态）不碰。
+
 ## 验证方法
 
 转换后不要直接提交，先 `--dump` 出 JSON 并抽查：
@@ -61,4 +84,6 @@ filename_prefix 有连线（应跳过）
 - 数据表节点：`data.selected.values` 里的提示词长度是否为新值
 - 有连线的输入：源节点 id 是否指向预期节点（尤其经 Reroute 的）
 
-**判断依据**：非法输入会被 ComfyUI 拒绝并报错，但**错位的合法值不会** —— 后者只能靠抽查发现。
+**判断依据**：越界或枚举外的错位会被 `POST /prompt` 校验拦下（`node_errors` 里直接指明节点、
+输入名与实际收到的值）；**落在合法区间内的错位不会报错** —— 后者只能靠抽查发现。
+所以「提交成功」不等于「参数对」，抽查这一步不能省。

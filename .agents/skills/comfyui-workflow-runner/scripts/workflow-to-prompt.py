@@ -26,7 +26,12 @@ SKIP_TYPES = {"MarkdownNote", "Note", "Reroute"}
 # COMFY_DYNAMICCOMBO_V3 = io.DynamicCombo(如 SaveVideo 的 format/format.codec): 值来自
 # widgets_values, 不是连线输入; 漏掉它会让 format 不进 prompt, 执行时报
 # `SaveVideo.execute() missing 1 required positional argument: 'format'`(采样已白跑)。
-WIDGET_TYPES = ("INT", "FLOAT", "STRING", "BOOLEAN", "COMBO", "COMFY_DYNAMICCOMBO_V3")
+# LOAD_3D = 节点内的 3D 视口控件(Load3D.image / PreviewGaussianSplat.viewport_state /
+# SaveGaussianSplat.viewport_state): 它同样住在 widgets_values 里, 后端只要一个状态字典;
+# 不当控件处理会报 `Required input is missing: viewport_state`。
+WIDGET_TYPES = ("INT", "FLOAT", "STRING", "BOOLEAN", "COMBO", "COMFY_DYNAMICCOMBO_V3", "LOAD_3D")
+# 3D 视口控件在无头运行时没有前端状态, 给空字典即可(节点内部按 {} 取默认相机)。
+VIEWPORT_TYPES = ("LOAD_3D",)
 # 前端在 seed/noise_seed(以及 PrimitiveInt 的 value)后插入的控件, 后端定义里没有;
 # 它占 widgets_values 的一个位置, 补进名字表以便对齐, 但不注入 prompt。
 FRONTEND_CTRL = "\0control_after_generate"
@@ -66,7 +71,27 @@ def widget_default(name: str, spec: dict) -> object:
     return {}
 
 
-def widget_names(spec: dict, class_type: str = "") -> list:
+def dynamic_children(spec: dict, combo_name: str, key) -> list:
+    """动态下拉(COMFY_DYNAMICCOMBO_V3)选中项的子控件名。
+
+    `CreateCameraInfo.mode='orbit'` 会多出 yaw/pitch/distance 三个控件; 它们不在
+    /object_info 的 input 里, 只挂在 options[<key>].inputs 下 —— 按位置对齐时漏掉它们,
+    其后的 target_x/target_y/... 会整体前移 (实测 fov 拿到 0、zoom 拿到 3.0)。
+    """
+    d = (spec["input"].get("required") or {}).get(combo_name) or (spec["input"].get("optional") or {}).get(combo_name)
+    if not isinstance(d, list) or len(d) < 2 or not isinstance(d[1], dict):
+        return []
+    out = []
+    for opt in d[1].get("options") or []:
+        if opt.get("key") != key:
+            continue
+        for sec in ("required", "optional"):
+            for ck in (opt.get("inputs", {}).get(sec) or {}):
+                out.append(f"{combo_name}.{ck}")
+    return out
+
+
+def widget_names(spec: dict, class_type: str = "", values: list | None = None) -> list:
     """节点全部控件(非连线类型)输入名, 按前端序列化顺序。
 
     注意: 前端序列化的 widgets_values 与**全部** widget 一一对应 —— 即使某个 widget
@@ -90,6 +115,10 @@ def widget_names(spec: dict, class_type: str = "") -> list:
             is_widget = isinstance(t, list) or t in WIDGET_TYPES or opt.get("socketless")
             if is_widget:
                 names.append(name)
+                # 动态下拉的子控件跟着选中项出现, 必须按位置补进对齐表(见 dynamic_children)。
+                if t == "COMFY_DYNAMICCOMBO_V3" and values is not None:
+                    key = values[len(names) - 1] if len(names) - 1 < len(values) else None
+                    names.extend(dynamic_children(spec, name, key))
                 # 前端只在种子类控件与 PrimitiveInt 的 value 后追加该控件。
                 if name in ("seed", "noise_seed") or (class_type == "PrimitiveInt" and name == "value"):
                     names.append(FRONTEND_CTRL)
@@ -189,25 +218,68 @@ def build(wf_path: str, refresh_md: bool):
             inputs["data"] = state
         else:
             wv = n.get("widgets_values") or []
-            all_names = widget_names(spec, t)
+            all_names = widget_names(spec, t, wv)
+            # widgets_values_named 以控件**名字**为键, 比位置可靠: 前端会把动态子控件
+            # (如 BlockSparseAttention 的 selection.tau)一并写进 widgets_values, 而它根本
+            # 不在 /object_info 里 —— 一旦按位置 zip, 它之后的控件全体前移一格
+            # (实测 start_percent 拿到 1.3、min_tokens 拿到 "", 提交被 max/枚举校验拦下)。
+            named = n.get("widgets_values_named")
+            named = named if isinstance(named, dict) else {}
             linked_names = {i["name"] for i in (n.get("inputs") or []) if i.get("link") is not None}
-            used = 0
-            filled = 0
+            types_by_name = {}
+            for sec in ("required", "optional"):
+                for wn, wd in (spec["input"].get(sec) or {}).items():
+                    types_by_name[wn] = wd[0] if isinstance(wd, list) else wd
+            used = filled = by_pos = 0
             for idx, name in enumerate(all_names):
                 if name == FRONTEND_CTRL:
                     continue
-                if any(lk == name or lk.startswith(name + ".") for lk in linked_names):
+                # 动态下拉(COMFY_DYNAMICCOMBO_V3)的子控件被连线时, 父控件本身仍要注入选中项:
+                # V3 执行期靠 `_expand_schema_for_dynamic` 把 "mode" + "mode.yaw" 收成
+                # {"mode": {...}}; 漏掉父项会让子项原样进 kwarg, 报
+                # `CreateCameraInfo.execute() got an unexpected keyword argument 'mode.yaw'`。
+                is_dyn_parent = types_by_name.get(name) == "COMFY_DYNAMICCOMBO_V3"
+                if any(lk == name or (not is_dyn_parent and lk.startswith(name + ".")) for lk in linked_names):
                     continue
-                if idx < len(wv):
+                if name in named:
+                    inputs[name] = named[name]
+                elif idx < len(wv):
                     inputs[name] = wv[idx]
+                    by_pos += 1
                 else:
                     # 前端图形控件(如 compare_view)不进 widgets_values, 用兜底值补上。
                     inputs[name] = widget_default(name, spec)
                     filled += 1
                 used += 1
-            if len(wv) != len(all_names) or filled:
+            # 3D 视口控件(LOAD_3D): 前端状态是字典, 无头运行只有空串 —— 归一到 {} ,
+            # 节点内部会据此取默认相机 (传给它的下游 RenderSplat.camera_info 因此为空)。
+            for name in list(inputs):
+                if types_by_name.get(name) not in VIEWPORT_TYPES:
+                    continue
+                val = inputs[name]
+                if isinstance(val, str) and val.strip().startswith("{"):
+                    try:
+                        val = json.loads(val)
+                    except ValueError:
+                        val = {}
+                inputs[name] = val if isinstance(val, dict) else {}
+            # 动态子控件(BlockSparseAttention 的 selection.tau、SaveVideo 的 format.codec):
+            # 后端按 "<父>.<子>" 作为**独立输入**收值, 但 /object_info 里根本不列它 ——
+            # 只按对齐表注入会报 `Required input is missing: tau`(input_name=selection.tau)。
+            # 名字表里有的、父名在对齐表内的一律补上; 父名不在表内的(纯前端控件)不碰。
+            dyn = 0
+            for name, val in named.items():
+                if name in inputs or "." not in name or name in linked_names:
+                    continue
+                parent = name.split(".", 1)[0]
+                if parent in all_names and parent not in linked_names:
+                    inputs[name] = val
+                    dyn += 1
+            if len(wv) != len(all_names) or filled or dyn:
+                fix = f"; 按名字取 {used - by_pos - filled} 个, 按位置取 {by_pos} 个" if named else ""
+                fix += f", 动态子控件 {dyn} 个" if dyn else ""
                 notes.append(f"节点 {nid} {t}: widgets_values {len(wv)} 个 vs 对齐表 {len(all_names)} 个 "
-                             f"(差值含前端附加控件; 注入 {used} 个控件值, 其中 {filled} 个用默认值补齐)")
+                             f"(差值含前端附加控件; 注入 {used} 个控件值, 其中 {filled} 个用默认值补齐{fix})")
 
         prompt[str(nid)] = {"class_type": t, "inputs": inputs}
     return prompt, notes
@@ -247,7 +319,21 @@ def main() -> int:
     try:
         resp = api_post("/prompt", {"prompt": prompt, "client_id": "dsh-auto"})
     except urllib.error.HTTPError as e:
-        print("提交失败:", e.read().decode()[:2000])
+        body = e.read().decode()
+        print("提交失败:", body[:2000])
+        # 校验错误按节点翻成人话: 否则只看到一整串 JSON, 定位不到是哪个控件错位。
+        try:
+            info = json.loads(body)
+            types = {str(x["id"]): x.get("type") for x in
+                     json.loads(pathlib.Path(wf).read_text(encoding="utf-8"))["nodes"]}
+        except Exception:
+            return 1
+        for nid, err in (info.get("node_errors") or {}).items():
+            print(f"  节点 {nid} ({types.get(str(nid), '?')}):")
+            for item in err.get("errors", []):
+                got = (item.get("extra_info") or {}).get("received_value")
+                print(f"    - {item.get('details') or item.get('input_name')}: {item.get('message')}"
+                      f"  (收到 {got!r})")
         return 1
     pid = resp.get("prompt_id")
     print(f"prompt_id = {pid}")

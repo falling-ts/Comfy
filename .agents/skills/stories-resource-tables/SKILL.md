@@ -1,6 +1,6 @@
 ---
 name: stories-resource-tables
-description: Story-library resource-table and prompt conventions — frame terminology (face/side/edge/view/word), image prompt ordering and segmentation rules, image and MiniMax H3 video size buckets (entity modeling picks portrait/landscape/square by the object's own shape), the H3 prompt language rules (English body, verbatim skeleton), the measured cost of Chinese bodies, entity/scene-still resource types (single-view modeling, grayscale mask, variation, Qwen-Image-Edit wording, nine-grid, scene first-frame/pull-in/push-in/orbit), table md field types, and the overhead view. Use when writing or editing any image-type resource table, or when a task needs the shared size, segmentation, or H3 language rules.
+description: Story-library resource-table and prompt conventions — frame terminology (face/side/edge/view/word), image prompt ordering and segmentation rules, image and MiniMax H3 video size buckets (entity modeling picks portrait/landscape/square by the object's own shape), the H3 prompt language rules (Chinese body as of 2026-09-25, verbatim English skeleton, camera-language terms in English, on-screen text and dialogue kept in their original language) with the measured known costs of a Chinese body, entity/scene-still resource types (single-view modeling, grayscale mask, variation, Qwen-Image-Edit wording, nine-grid, scene first-frame/pull-in/push-in/orbit), table md field types, and the overhead view. Use when writing or editing any image-type resource table, or when a task needs the shared size, segmentation, or H3 language rules.
 ---
 
 # 故事库资源表与提示词通用规范（总纲）
@@ -34,7 +34,7 @@ description: Story-library resource-table and prompt conventions — frame termi
 #### 提示词内容分段规则（通用，两类生图提示词共同遵守）
 
 - **段分隔符统一**：提示词的所有分段点一律用 `<br>` 分隔（每个分段点一个 `<br>`，置于段末），段内属性用全角逗号 `，` 分隔，全文不使用句号；严禁使用换行符（真实回车 / 换行字符）或 `
-`（反斜杠 n 两字符）作为分段符——md 表格单元格内的换行会被解析为新行从而断开表格，只有 `<br>` 能在单元格内安全分段；冒号仅用于点名词句（如万物类的 `主体：`），同一条目内要么全用要么全不用，保持一致
+`（反斜杠 n 两字符）作为分段符——md 表格单元格内的换行会被解析为新行从而断开表格，只有 `<br>` 能在单元格内安全分段；冒号仅用于点名词句（如万物类的 `主体：`），同一条目内要么全用要么全不用，保持一致。⚠️ **注意与 Qwen-Image 2.1 官方规范的冲突**：官方要求送进模型的提示词是**单段连续文本、禁任何换行**（[system_prompt_edit.txt](file:///D:/Comfy/docs/Qwen-Image-2.1/prompt_rewrite/prompts/system_prompt_edit.txt) L186）。两者不矛盾但需两步走——**表内保留 `<br>` 以保表格结构，`<br>` 在送模型前合成单段**；现状是带着 `<br>` 直接送模型，属已知偏差。详见技能 `qwen-image-2-1-prompting`
 - **一段一职责**：每段只写一类信息（整图品质 / 一个显示区域 / 一个方位格 / 风格），不跨段混写
 - **段头点名词**：每段以点名词开头（如 `主体：`、`左上…`、`右面是`、`整体是…`、`写实三维CG风格`），点名词即段边界
 - **一个元素只归一段**：不得在不同段重复堆叠同一元素
@@ -102,18 +102,21 @@ description: Story-library resource-table and prompt conventions — frame termi
 
 ### H3 提示词语言规范（视频类资源通用）
 
-**写进资源表的提示词正文一律英文**，只有对白/歌词与画面内实际可见的文字保留原语言。
+> **2026-09-25 用户决定：提示词正文改中文，H3 关键标识保持英文。** 下表是唯一语言口径。正文（画面、运镜、光影、动作、声音、剧情的描述句）写中文，便于作者读写与维护；凡是**模型要照抄的骨架**——字段名、`<Picture N>`/`<Subject N>` 一类标签、retention 枚举、方括号任务前缀、`[Shot N]` 与紧邻时间戳、官方对齐指令整句——一律保持英文。`stories\七纹刻印\` 下 9 个含提示词的资源表已按此口径改写完毕，对应 9 个工作流的 mdtable 快照同步刷新。
 
-依据：H3 官方提示词技能（`h3-prompt-writing`）与官方模板（`templates\视频\api_minimax_h3_max_r2v.json` 等）的示例 prompt 全为英文；官方 HF 仓库讨论 #32 中经官方人员编辑的答复为「除需要生成的文字和对白内容，其他都要用英文描述」；官方模型卡载明 H3-Encoder 取 **Qwen3-VL-32B 第 50 层隐状态**送进 H3-Omni-Transformer，生成主干是在英文条件上训练的，故中文条件落在分布外。本机 `qwen3vl_32b_minimax_h3_nvfp4_awq` 是 **4-bit** 量化编码器，多语言基准实测长提示词的词义错乱率为**英文 1.8 / 100 词、中文 3.1 / 100 词**（中文额外损失约 1.7 倍）——长提示词用英文可同时规避「条件分布外」与「量化损失」两笔代价。
+**写进资源表的提示词正文一律中文**，只有对白/歌词与画面内实际可见的文字保留原语言；**骨架与镜头语言术语保持英文**。
+
+为什么上一版写的是英文（现降级为**已知代价**，不推翻）：H3 官方提示词技能（`h3-prompt-writing`）与官方模板（`templates\视频\api_minimax_h3_max_r2v.json` 等）的示例 prompt 全为英文；官方 HF 仓库讨论 #32 中经官方人员编辑的答复为「除需要生成的文字和对白内容，其他都要用英文描述」；官方模型卡载明 H3-Encoder 取 **Qwen3-VL-32B 第 50 层隐状态**送进 H3-Omni-Transformer，生成主干是在英文条件上训练的，故中文条件落在分布外。本机 `qwen3vl_32b_minimax_h3_nvfp4_awq` 是 **4-bit** 量化编码器，多语言基准实测长提示词的词义错乱率为**英文 1.8 / 100 词、中文 3.1 / 100 词**（中文额外损失约 1.7 倍）——长提示词用英文可同时规避「条件分布外」与「量化损失」两笔代价。这些代价**不因改用中文而消失**，只转为可接受成本；实测数字与唯一的有效回退杠杆见本节末「已知代价」。
 
 | 内容 | 填写语言 |
 | :--- | :--- |
-| 六部分 / 三部分核心字段的正文（画面、运镜、光影、动作、声音描述） | **英文** |
+| 六部分 / 三部分核心字段的正文（画面、运镜、光影、动作、声音描述） | **中文** |
 | 固定字段名与标签 | **英文**：`subject_definitions`、`integrated_multimodal_description`、`<Subject N>`、`<Picture N>`、`<Video N>`、`<Audio N>`、`[Shot N]`、`At MM:SS.mmm`、`fully_preserved` 等；**严禁写成 `<图片 1>`、`[镜头 1]`、`[中文]`** |
 | 对白语言标签 | **英文语言名**：`<d>[Chinese] 我们现在出发。</d>`；说话人 ID 写 `(S1)`、`(S2)` 并置于 `<d>` 之外 |
 | `<d>` 内的对白 / 歌词 | **保留原语言**（中文对白直接写中文，不翻译、不改写） |
 | 画面内实际可见的文字（招牌 / 字幕 / 标签） | **保留原语言**，用英文双引号逐字包住，如 `a sign reading "营业中"` |
 | 镜头语言术语（见下文词汇表） | 写入提示词时取**英文术语**（push in / medium close-up / cross-dissolve），词汇表中的中文词仅供对照 |
+| 专名（人名 / 地名 / 器物名） | **用故事里的中文原名**（`0000_正文.md`/`0001_大纲.md` 里 grep 确认，如 Chen Luo→陈落、Su Fang→**宿方**、Chenxing Rift→沉星裂谷）；原文本就没点名的（只写 `the protagonist`）译作「主角」，**不得擅自补名** |
 
 **骨架必须逐字照抄（译错即失效）**：`<d>` 与 `</d>` 不是普通文字，而是 tokenizer 里的**扩展 special token**（本机 `ComfyUI\comfy\text_encoders\minimax.py` 中 id 为 **151669 / 151670**；同批还有 `<|cutoff|>`=151671、`<|lyrics_start|>`=151672、`<|lyrics_end|>`=151673、`<|caption_start|>`=151674、`<|caption_end|>`=151675，全部在基础词表 0..151668 之外）。译成 `<对话>` 只会被切成两个普通 token，指令直接失效；整枚标签**连同数字与空格一并照抄**（`<Picture 1>`，不是 `<Picture1>`、不是 `<图片 1>`）。字段名（`subject_definitions:` 等）、retention 枚举（`fully_preserved` 等）、任务前缀（`[reference generation]`）、`[Shot N]`、时间戳、`(S1)` 同理，全部属于骨架。
 
@@ -121,17 +124,17 @@ description: Story-library resource-table and prompt conventions — frame termi
 - **`<d>` 内标点**：只用普通的 `,` `.` `?` `!`，且在 `</d>` 之前收尾；不写全角标点、不写省略号。
 - **引用参考音频的原词**：保留原语言逐字；听不清的片段写 `[unclear]`，不得猜写。
 
-**本文档各节的规范说明与示例用中文书写是为便于阅读；填进资源表的提示词正文一律英文。** 各类对齐指令的官方英文原句如下（下列中文句仅作对照，实际填写用英文）：
+**本文档各节的规范说明与示例用中文书写是为便于阅读；填进资源表的提示词正文一律中文，骨架与镜头语言术语仍英文。** 各类对齐指令是**官方固定句、属骨架**，一律逐字照抄英文（不翻译）：
 
 - I2VA 首行：`For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.`
 - FL2VA 首行：`Reference image alignment with the target video - Picture 1 (from [Shot 1]) aligns with the 0.00-second position of the target video; Picture 2 (from [Shot N]) aligns with the S.SS-second position of the target video.`
 - 关键帧锚定：`[Shot N] At S.SS, anchored to the frame established by <Picture N>.`
 
-**唯一的例外是短提示词**：官方多语言基准显示短提示词在 13 种语言下均无量化损失，日常氛围描述用中文不掉质量；但本库的视频 / 场景提示词普遍为数百至上千词的长结构化提示词，正落在损失区，故一律按英文写。
+**改写后的自检口径（2026-09-25 用 9 个表实测）**：中文正文字符数 ≈ 原英文字母数的 **0.23 ~ 0.33**（汉字本身约 0.21~0.27）。逐段（按 `<br>` 切）比长度比，**任一段低于 0.18 就要人工看**——那是漏译或压缩的信号；同时必须回验骨架 token 计数**逐项相等**（字段名 / `<Picture N>` / `<Subject N>` / `[Shot N]` / retention 枚举 / 任务前缀 / `At S.SS` / `<d>` / `(S1)`）与 `<br>` 数不变。这两条一起卡，才能既中文化又不破坏 H3 骨架。
 
-#### 中文正文的实测代价（2026-09-18 本机受控实验）
+#### 已知代价：中文正文的实测数据（2026-09-18 本机受控实验）
 
-上条"一律英文"不是照搬教条，本机用 **11 组同 seed 生成**把它量过一遍（0044 参考视频三镜 8/11/14s、1344×768、24fps、345 帧；指标用 `scripts\face-sim.py` 的 ArcFace 余弦 + genderage 年龄估计，取尾镜 4~5 帧均值）。结论：**中文正文能正常出片、六大字段与时间轴结构无损，但有稳定且可复现的代价**。
+上一版规范"正文一律英文"不是照搬教条，本机用 **11 组同 seed 生成**把它量过一遍（0044 参考视频三镜 8/11/14s、1344×768、24fps、345 帧；指标用 `scripts\face-sim.py` 的 ArcFace 余弦 + genderage 年龄估计，取尾镜 4~5 帧均值）。结论：**中文正文能正常出片、六大字段与时间轴结构无损，但有稳定且可复现的代价**——这组数字在正文已改中文后依然成立，作为**已知代价**保留：出现"人脸显熟"时，回退杠杆见下面第 3 条（把身份段改回英文），不是继续堆中文措辞。
 
 | 指标 | 英文（4 次） | 中文（7 次） | 判定 |
 | :--- | :--- | :--- | :--- |
@@ -152,7 +155,7 @@ description: Story-library resource-table and prompt conventions — frame termi
 | C7 | 中文 + **纯正面**量化景别（去掉全部否定句与"特写"字样） | 27.1 | ⚠️ 景别 0.544，明显优于 C4 ⇒ **否定式反噬** |
 | C6 | **混合**：中文正文，但 `<Subject N>` 段 + `retention_analysis` 该条 + `[Shot 3]` 段整段用英文 | 27.4 | ✅ 景别回到 0.415（英文层），年龄仍在中文层 |
 
-由此得三条硬纪律（本库视频提示词仍**一律英文**，以下仅在确有必要写中文时适用）：
+由此得三条硬纪律（正文已统一改中文，这三条现在就是**中文正文下的应对手段**）：
 
 1. **措辞层面加不出身份**：加"身份第一原则""五官比例锚点""逐镜钉脸"无效，把催老描述删干净也无效。中文正文的年龄代价只能靠**语言层之外**的手段解决（加一张脸部大特写参考图、或后期人脸对齐），继续堆字没有意义。
 2. **唯一有效杠杆是量化景别，且必须正面表述**：写"头部约占画面高度三分之一"这类数字约束有效；写"不要推近、不要变大特写"**会反噬**（C4 脸高 0.747 → 去掉否定句的 C7 降到 0.544）——与「否定式指令在 H3 上不可靠」是同一条规律，中文英文都成立。
@@ -220,7 +223,7 @@ description: Story-library resource-table and prompt conventions — frame termi
 
 万物变化走 Qwen-Image-Edit 多图参考编辑，提示词写作要点：
 
-1. **图号引用**：提示词里用 `图1` / `图2` / `图3`（中文工作流通行）或 `Picture 1/2/3`（正规标签）指代各张输入图，三图顺序对应 图1/图2/图3，接错顺序等于指错图
+1. **图号引用**：提示词里用 `图1` / `图2` / `图3`（中文工作流通行）或 `Picture 1/2/3`（正规标签）指代各张输入图，三图顺序对应 图1/图2/图3，接错顺序等于指错图。⚠️ **Qwen-Image 2.1 官方规范强制要求多图用 `<image1>`/`<image2>`**，明文禁止 `图1` 这类自然语言引用（[官方 system_prompt_edit.txt](file:///D:/Comfy/docs/Qwen-Image-2.1/prompt_rewrite/prompts/system_prompt_edit.txt) L59：*mandatory and non-negotiable*）。实测 `00120_万物变化_QI2.1` 的 mdtable 槽位严格一一对应（`图1`=槽3→`images.image_1`），**改成 `<imageN>` 是纯文本改动、无需重接工作流**。写法与诊断见技能 `qwen-image-2-1-prompting`
 2. **surgical 指令**：指令只描述"改什么"（surgical instruction），别说长篇大论；文字编辑把目标文字用引号括起
 3. **底图与参考**：以某张图为底、其余做参考时，目标图接在 图1（image1），参考图接 图2/图3（image2/image3）
 4. **负提示词**：原生 Qwen-Image-Edit 负提示词支持有限，留空或单空格即可
