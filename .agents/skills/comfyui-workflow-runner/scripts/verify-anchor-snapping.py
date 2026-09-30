@@ -7,7 +7,7 @@
 import subprocess
 
 FFMPEG = r"D:\Program Files\ffmpeg\bin\ffmpeg.exe"
-VIDEO = r"D:\Comfy\ComfyUI\temp\ComfyUI_temp_cfwwk_00001_.mp4"  # 12 秒去泄漏版
+VIDEO = r"D:\AI\Comfy\ComfyUI\temp\ComfyUI_temp_cfwwk_00001_.mp4"  # 12 秒去泄漏版
 SECONDS = 12.25
 FPS_SAMPLE = 2  # 每 0.5 秒一个采样
 

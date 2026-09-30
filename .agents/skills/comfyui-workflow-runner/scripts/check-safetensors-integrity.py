@@ -9,7 +9,7 @@ import pathlib
 import struct
 import sys
 
-ROOT = pathlib.Path(r"D:\Comfy\models")
+ROOT = pathlib.Path(r"D:\AI\Comfy\models")
 
 
 def check(path: pathlib.Path):

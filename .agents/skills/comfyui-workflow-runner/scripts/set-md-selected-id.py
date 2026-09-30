@@ -10,7 +10,7 @@ import sys
 
 pat = sys.argv[1]
 new_id = sys.argv[2]
-p = pathlib.Path(glob.glob(str(pathlib.Path(r"D:\Comfy\workflows") / pat))[0])
+p = pathlib.Path(glob.glob(str(pathlib.Path(r"D:\AI\Comfy\workflows") / pat))[0])
 d = json.loads(p.read_text(encoding="utf-8"))
 
 for n in d["nodes"]:

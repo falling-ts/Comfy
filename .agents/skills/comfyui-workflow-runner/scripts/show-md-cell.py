@@ -6,7 +6,7 @@
 import pathlib
 import sys
 
-md = pathlib.Path(r"D:\Comfy\stories\七纹刻印") / sys.argv[1]
+md = pathlib.Path(r"D:\AI\Comfy\stories\七纹刻印") / sys.argv[1]
 col = int(sys.argv[2]) if len(sys.argv) > 2 else 3
 lines = md.read_text(encoding="utf-8").splitlines()
 if len(lines) < 3:

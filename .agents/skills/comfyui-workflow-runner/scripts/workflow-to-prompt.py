@@ -294,7 +294,7 @@ def main() -> int:
     if "--dump" in sys.argv:
         dump = sys.argv[sys.argv.index("--dump") + 1]
 
-    files = sorted(glob.glob(str(pathlib.Path(r"D:\Comfy\workflows") / pat)))
+    files = sorted(glob.glob(str(pathlib.Path(r"D:\AI\Comfy\workflows") / pat)))
     if not files:
         print("未匹配到工作流")
         return 1

@@ -12,7 +12,7 @@ import pathlib
 import subprocess
 import sys
 
-ROOT = pathlib.Path(r"D:\Comfy")
+ROOT = pathlib.Path(r"D:\AI\Comfy")
 WF = ROOT / "workflows"
 
 

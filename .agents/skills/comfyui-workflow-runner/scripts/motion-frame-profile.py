@@ -22,7 +22,7 @@ import sys
 import numpy as np
 from PIL import Image
 
-TMP = pathlib.Path(r"D:\Comfy\temp-frames")
+TMP = pathlib.Path(r"D:\AI\Comfy\temp-frames")
 
 
 def parse_box(spec: str) -> tuple[str, tuple[int, int, int, int]]:
