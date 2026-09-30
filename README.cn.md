@@ -27,14 +27,14 @@
 ## 这是什么
 
 - **ComfyUI 主程序**(`ComfyUI\` 子模块,master 分支,v0.33.1)—— 本地节点式 AI 图像/视频/音频生成引擎
-- **自定义节点**(43 个,集中于根 `custom_nodes\`,经 `ComfyUI\custom_nodes\` **目录级**软链接加载;完整清单见 `AGENTS.md`):
+- **自定义节点**(45 个,集中于根 `custom_nodes\`,经 `ComfyUI\custom_nodes\` **目录级**软链接加载;完整清单见 `AGENTS.md`):
   - `ComfyUI-FallingTS` —— 自研通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强)
   - `ComfyUI-GGUF` / `ComfyUI-KJNodes` —— GGUF 量化加载 / 大型工具节点包
   - `ComfyUI-SeedVR2_VideoUpscaler` / `ComfyUI-SUPIR` / `ComfyUI_UltimateSDUpscale` —— 超分放大/修复
-  - H3 生态 6 插件(Spectrum / SolAttn / ReservedVRAM / Qwen3-TTS / latent-upscaler / OrbitSheets 场景参考板)+ 其余 31 个
+  - H3 生态 6 插件(Spectrum / SolAttn / ReservedVRAM / Qwen3-TTS / latent-upscaler / OrbitSheets 场景参考板)+ 其余 33 个
 - **工作流方案**:24 个,按编号分组(001x 万物 / 002x 场景镜头 / 003x-004x 视频生成 / 005x 拆解 / 006x-007x 音频;见[附录 B](#附录-b工作流方案总览))
 - **模型目录**(`models\`,软链接到项目根)—— 见[附录 C](#附录-c模型下载清单)
-- **文档**:官方文档本地克隆 `docs\ComfyUI-Docs\`;工作区说明 `AGENTS.md`
+- **文档**:官方文档本地克隆 `refs\ComfyUI-Docs\`;工作区说明 `AGENTS.md`
 
 ---
 
@@ -88,9 +88,9 @@ OpenCode 是你和这套工作区之间的 AI 主力,负责装软件、配环境
 
 > 请按以下「软连接方案」检查并修复本项目的软链接(全部用**相对路径**符号链接,共 7 个,完整清单见 `AGENTS.md`「软链接映射」):
 >
-> 1. **目录级插件链接**:确认 `ComfyUI\custom_nodes` 是符号链接,指向 `..\custom_nodes`(根目录插件聚合目录,43 个插件全部经这一个链接加载;**不是**旧方案的一插件一链接);
+> 1. **目录级插件链接**:确认 `ComfyUI\custom_nodes` 是符号链接,指向 `..\custom_nodes`(根目录插件聚合目录,45 个插件全部经这一个链接加载;**不是**旧方案的一插件一链接);
 > 2. **基础链接**:`ComfyUI\input` → `..\media`、`ComfyUI\output` → `..\media`、`ComfyUI\models` → `..\models`、`ComfyUI\user\default\workflows` → `..\..\..\workflows`;
-> 3. **子链接**:`custom_nodes\H3ReferenceSuite` → `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite`;`.claude` → `.agents`;
+> 3. **子链接**:`custom_nodes\H3ReferenceSuite` → `..\refs\minimax-h3-guide\custom_nodes\H3ReferenceSuite`;`.claude` → `.agents`;
 > 4. 全部完成后,确认这些路径显示为「符号链接」,并验证 `ComfyUI\models\diffusion_models` 等子目录可正常进入。
 >
 > 注意:只能替换真实目录;`ComfyUI\temp\` 等真实目录保留;所有链接一律用相对路径,保证整个项目文件夹移动后不失效。
@@ -181,13 +181,13 @@ Comfy/
 │   ├── input/  output/       # 输入/输出(软链接 → ../media)
 │   ├── user/default/workflows  # 用户工作流(软链接 → ../../../../workflows)
 │   └── models/               # 模型(软链接 → ../models)
-├── custom_nodes/             # 插件聚合目录:43 个插件子模块 + H3ReferenceSuite 链接
+├── custom_nodes/             # 插件聚合目录:45 个插件子模块 + H3ReferenceSuite 链接
 │   ├── ComfyUI-FallingTS/    # 自研通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo)
 │   ├── ComfyUI-GGUF/  ComfyUI-KJNodes/   # 量化加载 / 工具节点包
 │   ├── ComfyUI-OrbitSheets/  # H3 场景/角色参考板(多视角运镜 + 视觉选帧拼网格图)
-│   └── ...(其余 39 个,见 AGENTS.md 目录结构)
-├── docs/                     # 20 个分类文档 + 3 个子模块(ComfyUI-Docs/Obsidian-Dev-Docs/Obsidian-API)
-├── h3/                       # MiniMax H3 生态(MiniMax-H3 + minimax-h3-guide)
+│   └── ...(其余 41 个,见 AGENTS.md 目录结构)
+├── docs/                     # 39 个分类文档 + Qwen-Image-Edit-Skills(本地目录,非子模块)
+├── refs/                     # 7 个参考类子模块(ComfyUI-Docs / Obsidian-Dev-Docs / Obsidian-API / Qwen-Image-2.1 / qwen-image-2.1-skill / MiniMax-H3 / minimax-h3-guide)
 ├── workflows/                # 用户工作流 24 个(001x~007x,见附录 B)
 ├── models/                   # 模型实际存放处(约 189GB,38 个槽位目录,见附录 C)
 ├── media/                    # 输入图片/音频 + 生成结果(3d/qwen3tts/clipspace)
@@ -200,7 +200,7 @@ Comfy/
 
 ### 软连接(共 7 个,全部相对路径)
 
-`ComfyUI\input`/`output` → `media`、`ComfyUI\models` → `models`、`ComfyUI\user\default\workflows` → `workflows`、`ComfyUI\custom_nodes` → `custom_nodes`(**目录级,聚合 43 插件**)、`custom_nodes\H3ReferenceSuite` → `h3\minimax-h3-guide\...`、`.claude` → `.agents`。全部为**相对路径**符号链接,项目整体移动后不失效;创建/修复需管理员权限,完整清单见 `AGENTS.md`「软链接映射」;`ComfyUI\temp\` 为真实目录(非链接),可随时清理。
+`ComfyUI\input`/`output` → `media`、`ComfyUI\models` → `models`、`ComfyUI\user\default\workflows` → `workflows`、`ComfyUI\custom_nodes` → `custom_nodes`(**目录级,聚合 45 插件**)、`custom_nodes\H3ReferenceSuite` → `refs\minimax-h3-guide\...`、`.claude` → `.agents`。全部为**相对路径**符号链接,项目整体移动后不失效;创建/修复需管理员权限,完整清单见 `AGENTS.md`「软链接映射」;`ComfyUI\temp\` 为真实目录(非链接),可随时清理。
 
 ## 附录 B · 工作流方案总览
 
@@ -416,11 +416,11 @@ python main.py --enable-manager
 
 ### H.4 文件搬运与软链接
 
-- 超项目:`git clone --recurse-submodules <remote>`(**50 个子模块**)
+- 超项目:`git clone --recurse-submodules <remote>`(**54 个子模块**)
 - **models 约 189GB 单独 rsync**(`rsync -avP`);服务器需预留 ≥300GB NVMe
 - 软链接重建(`ln -s` 相对路径,共 7 个,见附录 A 清单):
   - `ComfyUI/input → ../media`、`ComfyUI/output → ../media`、`ComfyUI/models → ../models`、`ComfyUI/user/default/workflows → ../../../workflows`
-  - `ComfyUI/custom_nodes → ../custom_nodes`(**目录级,聚合 43 插件**)、`custom_nodes/H3ReferenceSuite → ../h3/minimax-h3-guide/custom_nodes/H3ReferenceSuite`、`.claude → .agents`
+  - `ComfyUI/custom_nodes → ../custom_nodes`(**目录级,聚合 45 插件**)、`custom_nodes/H3ReferenceSuite → ../refs/minimax-h3-guide/custom_nodes/H3ReferenceSuite`、`.claude → .agents`
 - `ComfyUI-FallingTS/.env`(API Key)不进 git,服务器上单独放置并 `chmod 600`
 - 中文文件名 / 路径在 Linux UTF-8 下无问题
 

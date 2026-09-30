@@ -6,7 +6,7 @@ description: Qwen-Image 2.1 (and Qwen-Image-Edit) image prompt engineering per A
 # Qwen-Image 2.1 提示词工程（官方规范落地）
 
 > 来源：**阿里官方** `prompt_rewrite/prompts/system_prompt_edit.txt` 与 `system_prompt_t2i.txt`,本地在
-> `docs\Qwen-Image-2.1`(子模块);2.1 版 Skill 本地在 `docs\qwen-image-2.1-skill`(子模块)。
+> `refs\Qwen-Image-2.1`(子模块);2.1 版 Skill 本地在 `refs\qwen-image-2.1-skill`(子模块)。
 > 本技能是**官方规范的操作化**,不是教程转述。写/改 Qwen 2.1 提示词前必读。
 
 ## 与其他技能的关系(先看这一节,避免撞规范)
@@ -124,7 +124,7 @@ description: Qwen-Image 2.1 (and Qwen-Image-Edit) image prompt engineering per A
 ```python
 import importlib.util
 spec = importlib.util.spec_from_file_location(
-    "vp", "docs/qwen-image-2.1-skill/skills/qwen-image-2-1-prompter/scripts/validate_prompt.py")
+    "vp", "refs/qwen-image-2.1-skill/skills/qwen-image-2-1-prompter/scripts/validate_prompt.py")
 vp = importlib.util.module_from_spec(spec); spec.loader.exec_module(vp)
 ok, errors = vp.validate_qwen_prompt(
     {"rewritten_prompt": p, "wh_ratio": "", "ratio_follow": "<image1>"})

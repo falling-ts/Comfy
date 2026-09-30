@@ -1,7 +1,7 @@
 # MiniMax H3 Skills 说明
 
 > 整理日期:2026-08-11
-> 来源:`h3/MiniMax-H3/skills/`(MiniMax H3 官方模型仓库自带)
+> 来源:`refs/MiniMax-H3/skills/`(MiniMax H3 官方模型仓库自带)
 > 安装位置:已复制到 `.claude/skills/`(9 个,已提交 git,clone 即用)
 > 用途:MiniMax H3 视频生成相关的 Claude Code skills
 
@@ -29,7 +29,7 @@ MiniMax H3 官方仓库自带 **9 个 skills**:1 个 **提示词写作**(`h3-pro
 
 ## 二、安装与使用
 
-- **源位置**:`h3/MiniMax-H3/skills/`(git 子模块,上游更新可重新复制同步)
+- **源位置**:`refs/MiniMax-H3/skills/`(git 子模块,上游更新可重新复制同步)
 - **已安装**:`.claude/skills/`(9 个 skill 完整复制,已提交 git,clone 后无需重装)
 - **生效方式**:Claude Code **重启会话**(或新开会话)后,skills 出现在可用列表
 - **触发方式**:在会话中通过 `/` 或按 skill 描述自然触发(如"做一个纸拼贴科普视频")
@@ -132,4 +132,4 @@ MiniMax H3 官方仓库自带 **9 个 skills**:1 个 **提示词写作**(`h3-pro
 
 - 8 个风格 skill 均**默认走 MiniMax H3** 生成视频;`h3-prompt-writing` 是它们改写提示词的底层能力
 - 各 skill 均含 `references/`(提示词模板)与 `meta.yaml`(触发词),触发词见各 `SKILL.cn.md` 的 `trigger-words`
-- 需要与 RunningHub / ComfyUI 本地 H3 工作流联动时,可配合 `webs/RunningHub`、`h3/minimax-h3-guide` 资料使用
+- 需要与 RunningHub / ComfyUI 本地 H3 工作流联动时,可配合 `webs/RunningHub`、`refs/minimax-h3-guide` 资料使用

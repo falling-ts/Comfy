@@ -502,7 +502,7 @@ AW.registerPostProcessor(function(e,t){
 
 ### 3.6 表格 CSS 变量
 
-**[官方文档]** 官方列出了 36 个表格变量（`--table-background`、`--table-border-width`、`--table-header-font`、`--table-column-max-width`、`--table-selection*`、`--table-drag-handle-*`、`--table-add-button-*` 等），与本机主题文档一致：<https://docs.obsidian.md/Reference/CSS+variables/Editor/Table>（本地 `docs\Obsidian-Dev-Docs\en\Reference\CSS variables\Editor\Table.md`）。
+**[官方文档]** 官方列出了 36 个表格变量（`--table-background`、`--table-border-width`、`--table-header-font`、`--table-column-max-width`、`--table-selection*`、`--table-drag-handle-*`、`--table-add-button-*` 等），与本机主题文档一致：<https://docs.obsidian.md/Reference/CSS+variables/Editor/Table>（本地 `refs\Obsidian-Dev-Docs\en\Reference\CSS variables\Editor\Table.md`）。
 **[反编译]** `app.css` 中另有文档未列出的：`--table-drag-handle-size`（LP，默认 `--size-4-4`）、`--table-selection-blend-mode`、`--table-row-last-border-width`、`--table-column-first/last-border-width`。
 **[反编译]** 变量定义集中在 `app.css` 87,379–89,241。
 
@@ -705,7 +705,7 @@ markdown → remark-parse(+gfm) → mdast → mdast-util-to-hast → hast → ha
 - `editorLivePreviewField`：<https://docs.obsidian.md/Reference/TypeScript+API/editorLivePreviewField>
 - `registerMarkdownPostProcessor`：<https://docs.obsidian.md/Reference/TypeScript+API/Plugin/registerMarkdownPostProcessor>
 - `sanitizeHTMLToDom`：<https://docs.obsidian.md/Reference/TypeScript+API/sanitizeHTMLToDom>
-- Obsidian API 类型定义（本地：`docs\Obsidian-API\obsidian.d.ts`）：<https://github.com/obsidianmd/obsidian-api>
+- Obsidian API 类型定义（本地：`refs\Obsidian-API\obsidian.d.ts`）：<https://github.com/obsidianmd/obsidian-api>
 
 **上游源码**
 - `@lezer/markdown` GFM Table 扩展（节点名、`delimiterLine`、`parseRow` 转义）：<https://github.com/lezer-parser/markdown/blob/main/src/extension.ts>

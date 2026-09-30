@@ -27,14 +27,14 @@
 ## What is this
 
 - **ComfyUI main program** (`ComfyUI\` submodule, master branch, v0.33.1) — a local node-based AI image/video/audio generation engine
-- **Custom nodes** (43, centralized in the root `custom_nodes\`, loaded via a **directory-level** symlink at `ComfyUI\custom_nodes\`; the full list is in `AGENTS.md`):
+- **Custom nodes** (45, centralized in the root `custom_nodes\`, loaded via a **directory-level** symlink at `ComfyUI\custom_nodes\`; the full list is in `AGENTS.md`):
   - `ComfyUI-FallingTS` — our own general-purpose utility node pack (5 nodes: Continue/Selector/Table/Switch/PreviewVideo + frontend enhancements)
   - `ComfyUI-GGUF` / `ComfyUI-KJNodes` — GGUF quantized loading / large utility node pack
   - `ComfyUI-SeedVR2_VideoUpscaler` / `ComfyUI-SUPIR` / `ComfyUI_UltimateSDUpscale` — super-resolution upscaling/restoration
-  - The 6 H3-ecosystem plugins (Spectrum / SolAttn / ReservedVRAM / Qwen3-TTS / latent-upscaler / OrbitSheets scene reference boards) + the other 31
+  - The 6 H3-ecosystem plugins (Spectrum / SolAttn / ReservedVRAM / Qwen3-TTS / latent-upscaler / OrbitSheets scene reference boards) + the other 33
 - **Workflow suite**: 24, grouped by number (001x Everything / 002x Scene camera / 003x-004x Video generation / 005x Decomposition / 006x-007x Audio; see [Appendix B](#appendix-b--workflow-catalog))
 - **Model directory** (`models\`, symlinked to the project root) — see [Appendix C](#appendix-c--model-download-list)
-- **Docs**: a local clone of the official docs at `docs\ComfyUI-Docs\`; the workspace description in `AGENTS.md`
+- **Docs**: a local clone of the official docs at `refs\ComfyUI-Docs\`; the workspace description in `AGENTS.md`
 
 ---
 
@@ -88,9 +88,9 @@ OpenCode is the AI workhorse between you and this workspace — it installs soft
 
 > Please check and repair this project's symlinks per the "symlink plan" below (all **relative-path** symlinks, 7 total; the full list is in `AGENTS.md` "Symlink map"):
 >
-> 1. **Directory-level plugin link**: make sure `ComfyUI\custom_nodes` is a symlink pointing to `..\custom_nodes` (the root plugin aggregation directory; all 43 plugins are loaded through this single link; **not** the old one-link-per-plugin scheme);
+> 1. **Directory-level plugin link**: make sure `ComfyUI\custom_nodes` is a symlink pointing to `..\custom_nodes` (the root plugin aggregation directory; all 45 plugins are loaded through this single link; **not** the old one-link-per-plugin scheme);
 > 2. **Base links**: `ComfyUI\input` → `..\media`, `ComfyUI\output` → `..\media`, `ComfyUI\models` → `..\models`, `ComfyUI\user\default\workflows` → `..\..\..\workflows`;
-> 3. **Sub-links**: `custom_nodes\H3ReferenceSuite` → `..\h3\minimax-h3-guide\custom_nodes\H3ReferenceSuite`; `.claude` → `.agents`;
+> 3. **Sub-links**: `custom_nodes\H3ReferenceSuite` → `..\refs\minimax-h3-guide\custom_nodes\H3ReferenceSuite`; `.claude` → `.agents`;
 > 4. Once everything is done, confirm these paths show as "symbolic links" and verify subdirectories like `ComfyUI\models\diffusion_models` can be entered normally.
 >
 > Note: only replace real directories; keep real directories like `ComfyUI\temp\`; all links use relative paths so they survive moving the whole project folder.
@@ -181,13 +181,13 @@ Comfy/
 │   ├── input/  output/       # input/output (symlink → ../media)
 │   ├── user/default/workflows  # user workflows (symlink → ../../../../workflows)
 │   └── models/               # models (symlink → ../models)
-├── custom_nodes/             # plugin aggregation directory: 43 plugin submodules + H3ReferenceSuite link
+├── custom_nodes/             # plugin aggregation directory: 45 plugin submodules + H3ReferenceSuite link
 │   ├── ComfyUI-FallingTS/    # our own general-purpose utility node pack (Continue/Selector/Table/Switch/PreviewVideo)
 │   ├── ComfyUI-GGUF/  ComfyUI-KJNodes/   # quantized loading / utility node pack
 │   ├── ComfyUI-OrbitSheets/  # H3 scene/character reference boards (multi-angle camera + visual frame picking into grid images)
-│   └── ...(the other 39, see the directory layout in AGENTS.md)
-├── docs/                     # 20 categorized docs + 3 submodules (ComfyUI-Docs/Obsidian-Dev-Docs/Obsidian-API)
-├── h3/                       # MiniMax H3 ecosystem (MiniMax-H3 + minimax-h3-guide)
+│   └── ...(the other 41, see the directory layout in AGENTS.md)
+├── docs/                     # 39 categorized docs + Qwen-Image-Edit-Skills (local dir, not a submodule)
+├── refs/                     # 7 reference submodules (ComfyUI-Docs / Obsidian-Dev-Docs / Obsidian-API / Qwen-Image-2.1 / qwen-image-2.1-skill / MiniMax-H3 / minimax-h3-guide)
 ├── workflows/                # 24 user workflows (001x~007x, see Appendix B)
 ├── models/                   # where models actually live (~189 GB, 38 slot directories, see Appendix C)
 ├── media/                    # input images/audio + generated results (3d/qwen3tts/clipspace)
@@ -200,7 +200,7 @@ Comfy/
 
 ### Symlinks (7 total, all relative paths)
 
-`ComfyUI\input`/`output` → `media`, `ComfyUI\models` → `models`, `ComfyUI\user\default\workflows` → `workflows`, `ComfyUI\custom_nodes` → `custom_nodes` (**directory-level, aggregates 43 plugins**), `custom_nodes\H3ReferenceSuite` → `h3\minimax-h3-guide\...`, `.claude` → `.agents`. All are **relative-path** symlinks — they survive moving the whole project; creating/repairing them needs administrator privileges; the full list is in `AGENTS.md` "Symlink map"; `ComfyUI\temp\` is a real directory (not a link) and can be cleaned up anytime.
+`ComfyUI\input`/`output` → `media`, `ComfyUI\models` → `models`, `ComfyUI\user\default\workflows` → `workflows`, `ComfyUI\custom_nodes` → `custom_nodes` (**directory-level, aggregates 45 plugins**), `custom_nodes\H3ReferenceSuite` → `refs\minimax-h3-guide\...`, `.claude` → `.agents`. All are **relative-path** symlinks — they survive moving the whole project; creating/repairing them needs administrator privileges; the full list is in `AGENTS.md` "Symlink map"; `ComfyUI\temp\` is a real directory (not a link) and can be cleaned up anytime.
 
 ## Appendix B · Workflow catalog
 
@@ -416,11 +416,11 @@ python main.py --enable-manager
 
 ### H.4 File transfer and symlinks
 
-- The super-project: `git clone --recurse-submodules <remote>` (**50 submodules**)
+- The super-project: `git clone --recurse-submodules <remote>` (**54 submodules**)
 - **models ~189 GB are rsynced separately** (`rsync -avP`); the server needs ≥300 GB NVMe reserved
 - Rebuild the symlinks (`ln -s` relative paths, 7 total, see the Appendix A list):
   - `ComfyUI/input → ../media`, `ComfyUI/output → ../media`, `ComfyUI/models → ../models`, `ComfyUI/user/default/workflows → ../../../workflows`
-  - `ComfyUI/custom_nodes → ../custom_nodes` (**directory-level, aggregates 43 plugins**), `custom_nodes/H3ReferenceSuite → ../h3/minimax-h3-guide/custom_nodes/H3ReferenceSuite`, `.claude → .agents`
+  - `ComfyUI/custom_nodes → ../custom_nodes` (**directory-level, aggregates 45 plugins**), `custom_nodes/H3ReferenceSuite → ../refs/minimax-h3-guide/custom_nodes/H3ReferenceSuite`, `.claude → .agents`
 - `ComfyUI-FallingTS/.env` (API keys) does not go into git; place it separately on the server and `chmod 600`
 - Chinese file names/paths are fine under Linux UTF-8
 

@@ -34,7 +34,7 @@ description: Story-library resource-table and prompt conventions — frame termi
 #### 提示词内容分段规则（通用，两类生图提示词共同遵守）
 
 - **段分隔符统一**：提示词的所有分段点一律用 `<br>` 分隔（每个分段点一个 `<br>`，置于段末），段内属性用全角逗号 `，` 分隔，全文不使用句号；严禁使用换行符（真实回车 / 换行字符）或 `
-`（反斜杠 n 两字符）作为分段符——md 表格单元格内的换行会被解析为新行从而断开表格，只有 `<br>` 能在单元格内安全分段；冒号仅用于点名词句（如万物类的 `主体：`），同一条目内要么全用要么全不用，保持一致。⚠️ **注意与 Qwen-Image 2.1 官方规范的冲突**：官方要求送进模型的提示词是**单段连续文本、禁任何换行**（[system_prompt_edit.txt](docs/Qwen-Image-2.1/prompt_rewrite/prompts/system_prompt_edit.txt) L186）。两者不矛盾但需两步走——**表内保留 `<br>` 以保表格结构，`<br>` 在送模型前合成单段**；现状是带着 `<br>` 直接送模型，属已知偏差。详见技能 `qwen-image-2-1-prompting`
+`（反斜杠 n 两字符）作为分段符——md 表格单元格内的换行会被解析为新行从而断开表格，只有 `<br>` 能在单元格内安全分段；冒号仅用于点名词句（如万物类的 `主体：`），同一条目内要么全用要么全不用，保持一致。⚠️ **注意与 Qwen-Image 2.1 官方规范的冲突**：官方要求送进模型的提示词是**单段连续文本、禁任何换行**（[system_prompt_edit.txt](refs/Qwen-Image-2.1/prompt_rewrite/prompts/system_prompt_edit.txt) L186）。两者不矛盾但需两步走——**表内保留 `<br>` 以保表格结构，`<br>` 在送模型前合成单段**；现状是带着 `<br>` 直接送模型，属已知偏差。详见技能 `qwen-image-2-1-prompting`
 - **一段一职责**：每段只写一类信息（整图品质 / 一个显示区域 / 一个方位格 / 风格），不跨段混写
 - **段头点名词**：每段以点名词开头（如 `主体：`、`左上…`、`右面是`、`整体是…`、`写实三维CG风格`），点名词即段边界
 - **一个元素只归一段**：不得在不同段重复堆叠同一元素
@@ -223,7 +223,7 @@ description: Story-library resource-table and prompt conventions — frame termi
 
 万物变化走 Qwen-Image-Edit 多图参考编辑，提示词写作要点：
 
-1. **图号引用**：提示词里用 `图1` / `图2` / `图3`（中文工作流通行）或 `Picture 1/2/3`（正规标签）指代各张输入图，三图顺序对应 图1/图2/图3，接错顺序等于指错图。⚠️ **Qwen-Image 2.1 官方规范强制要求多图用 `<image1>`/`<image2>`**，明文禁止 `图1` 这类自然语言引用（[官方 system_prompt_edit.txt](docs/Qwen-Image-2.1/prompt_rewrite/prompts/system_prompt_edit.txt) L59：*mandatory and non-negotiable*）。实测 `00120_万物变化_QI2.1` 的 mdtable 槽位严格一一对应（`图1`=槽3→`images.image_1`），**改成 `<imageN>` 是纯文本改动、无需重接工作流**。写法与诊断见技能 `qwen-image-2-1-prompting`
+1. **图号引用**：提示词里用 `图1` / `图2` / `图3`（中文工作流通行）或 `Picture 1/2/3`（正规标签）指代各张输入图，三图顺序对应 图1/图2/图3，接错顺序等于指错图。⚠️ **Qwen-Image 2.1 官方规范强制要求多图用 `<image1>`/`<image2>`**，明文禁止 `图1` 这类自然语言引用（[官方 system_prompt_edit.txt](refs/Qwen-Image-2.1/prompt_rewrite/prompts/system_prompt_edit.txt) L59：*mandatory and non-negotiable*）。实测 `00120_万物变化_QI2.1` 的 mdtable 槽位严格一一对应（`图1`=槽3→`images.image_1`），**改成 `<imageN>` 是纯文本改动、无需重接工作流**。写法与诊断见技能 `qwen-image-2-1-prompting`
 2. **surgical 指令**：指令只描述"改什么"（surgical instruction），别说长篇大论；文字编辑把目标文字用引号括起
 3. **底图与参考**：以某张图为底、其余做参考时，目标图接在 图1（image1），参考图接 图2/图3（image2/image3）
 4. **负提示词**：原生 Qwen-Image-Edit 负提示词支持有限，留空或单空格即可

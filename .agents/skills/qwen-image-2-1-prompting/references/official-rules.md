@@ -1,6 +1,6 @@
 # 官方规范原文摘录(带行号)
 
-> 出处:`docs\Qwen-Image-2.1\prompt_rewrite\prompts\system_prompt_edit.txt`(205 行,18344 B)
+> 出处:`refs\Qwen-Image-2.1\prompt_rewrite\prompts\system_prompt_edit.txt`(205 行,18344 B)
 > 与 `system_prompt_t2i.txt`(10045 B)。行号对应当前 checkout(`fb7ae1d`)。
 > 引用官方原文时一律以本文件为准;**不要凭记忆转述**。
 
@@ -91,7 +91,7 @@ L190 State requirements affirmatively ("保持背景与输入图完全一致") r
 
 ## 7. 校验器实际规则(源码级)
 
-`docs\qwen-image-2.1-skill\skills\qwen-image-2-1-prompter\scripts\validate_prompt.py`
+`refs\qwen-image-2.1-skill\skills\qwen-image-2-1-prompter\scripts\validate_prompt.py`
 
 ```python
 FORBIDDEN_BOOSTERS = ['8k', '4k', 'masterpiece', 'award-winning',
@@ -114,7 +114,7 @@ IMAGE_TAG_REGEX = ^<image\d+>$
 
 ## 8. 官方示例原文(校准长度)
 
-`docs\Qwen-Image-2.1\prompt_rewrite\data\edit_example.jsonl` 全文 4 条:
+`refs\Qwen-Image-2.1\prompt_rewrite\data\edit_example.jsonl` 全文 4 条:
 
 ```json
 {"id":"1412128","prompt":"Depict this symbol as a flag waving in the sky","task_type":"single_scene_complex"}
@@ -129,7 +129,7 @@ IMAGE_TAG_REGEX = ^<image\d+>$
 ## 9. 官方仓库结构(便于自查)
 
 ```
-docs\Qwen-Image-2.1\
+refs\Qwen-Image-2.1\
   prompt_rewrite\
     prompts\system_prompt_edit.txt   ← 编辑规范全文(本文件主要来源)
     prompts\system_prompt_t2i.txt    ← 文生图规范全文

@@ -21,7 +21,7 @@
 | [iamyoki/qwen-image-2.1-skill](https://github.com/iamyoki/qwen-image-2.1-skill) | 专为 2.1 写的 **Agent Skill**:`SKILL.md` + `references/{edit_rules,t2i_rules,cheat_sheet}.md` + `scripts/validate_prompt.py` | ★★ 与上者同源但**已工程化**,可直接当校验器 |
 | [QwenLM/Qwen-Image issue #137](https://github.com/QwenLM/Qwen-Image/issues/137) | 「**inpaint cannot be conditioned to fit inside a masked area**」 | ★★★ 官方仓库里**至今 open、0 回复**的 inpainting 缺陷报告 |
 
-已注册为 git 子模块:`docs/Qwen-Image-2.1`、`docs/qwen-image-2.1-skill`(见根 `.gitmodules`)。
+已注册为 git 子模块:`refs/Qwen-Image-2.1`、`refs/qwen-image-2.1-skill`(见根 `.gitmodules`)。
 
 ### 1.1 官方编辑示例有多短(关键对照)
 
@@ -179,14 +179,14 @@
 
 | 路径 | 远程 | 用途 |
 |---|---|---|
-| `docs/Qwen-Image-2.1` | https://github.com/QwenLM/Qwen-Image-2.1.git | 官方仓库 + 规范原文 |
-| `docs/qwen-image-2.1-skill` | https://github.com/iamyoki/qwen-image-2.1-skill.git | 2.1 提示词 Skill(含校验器) |
+| `refs/Qwen-Image-2.1` | https://github.com/QwenLM/Qwen-Image-2.1.git | 官方仓库 + 规范原文 |
+| `refs/qwen-image-2.1-skill` | https://github.com/iamyoki/qwen-image-2.1-skill.git | 2.1 提示词 Skill(含校验器) |
 
 **校验器用法**(实测可用,注意签名是**单个 payload dict**):
 
 ```python
 spec = importlib.util.spec_from_file_location(
-    "vp", r"D:\AI\Comfy\docs\qwen-image-2.1-skill\skills\qwen-image-2-1-prompter\scripts\validate_prompt.py")
+    "vp", r"D:\AI\Comfy\refs\qwen-image-2.1-skill\skills\qwen-image-2-1-prompter\scripts\validate_prompt.py")
 vp = importlib.util.module_from_spec(spec); spec.loader.exec_module(vp)
 ok, errors = vp.validate_qwen_prompt(
     {"rewritten_prompt": p, "wh_ratio": "", "ratio_follow": "<image1>"})

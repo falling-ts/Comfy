@@ -65,7 +65,7 @@ TypeScript 编译器在把 `async/await`、`for...of`、装饰器等向下编译
 - ⚠️ 这证明的是**源码语言**，不是"Obsidian 用了某个 TS 版本"——无法从产物反推 TS 版本。
 
 **旁证**：
-- `docs\Obsidian-API\obsidian.d.ts` 是官方发布的插件 API 类型定义（8,498 行），说明插件生态以 TS 为一等公民；
+- `refs\Obsidian-API\obsidian.d.ts` 是官方发布的插件 API 类型定义（8,498 行），说明插件生态以 TS 为一等公民；
 - `lib/readability.d.ts` 随第三方库一起打包；
 - `electron-main.js`（Electron 主进程，13,407 字符）是**未压缩、可读的 CommonJS**，tab 缩进、`let` + `require` 风格——与渲染进程一次成型的手写风格一致。
 
