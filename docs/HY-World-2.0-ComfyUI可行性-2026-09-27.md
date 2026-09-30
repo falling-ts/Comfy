@@ -238,7 +238,7 @@ Load3D(.ply) → File3DToSplat → SplatToFile3D(spz) → SaveGaussianSplat  →
 | `ComfyUI\input\3d\`（= `output\3d\`，同一目录） | 测试用 3D 文件副本 + `_ref*.png` 占位图 + 原生节点导出的 .spz/.glb | 测试残留，可删 |
 | `D:\AI\Comfy\input\` | 插件 prestartup 复制到错误层级的 assets（eth_courtyard/kitchen/workspace/pano.png/icon.png） | **残留，可删** |
 | `media\七纹刻印\0034_世界模型\`（= `ComfyUI\output\0034_世界模型\`） | 0034 世界模型产物：**只有一个 `0034_世界模型_世界3DGS.ply`（79.2MB / 1,164,128 高斯）**（`.splat`、点云 `.ply`、以及脚本重复产的那份均已归档到 `backups\backup-0034-{去非PLY产物,脚本重复产物}-20260927\`） | **真实产物，勿删**（参见 §7） |
-| `scripts\make-0034-scene.py` / `_run-0034.py` / `_verify-0034-gs.py` | 0034 生成器（幂等）+ 无头运行器 + 3DGS 渲染判读器 | 保留 |
+| `custom_nodes\ComfyUI-FallingTS\dev\make-0034-scene.py` / `_run-0034.py` / `_verify-0034-gs.py` | 0034 生成器（幂等）+ 无头运行器 + 3DGS 渲染判读器 | 保留 |
 | `backups\backup-0034_*接入HYWM2世界模型前.*` ×3 | 改造前的 0034 / API prompt / 生成器快照 | 保留 |
 | `scripts\_hywm2-*.py` | 本次 5 个测试/探测脚本 | 临时 |
 
@@ -273,13 +273,13 @@ Load3D(.ply) → File3DToSplat → SplatToFile3D(spz) → SaveGaussianSplat  →
 - `宽度/高度` 与 `偏航角/俯仰角/距离/目标深度/视场角` 六列都是**预留元数据**，不接任何节点。
 - **零图片/视频/网格输出**：全图无 `Save*` / `RenderSplat` / `RenderMesh` / `PreviewImage*` /
   `PreviewVideo` / `CreateVideo`；中间图只进 `ComfyUI\temp\worldrefine\<输入内容哈希>\`。
-- 生成器 `scripts\make-0034-scene.py`（幂等，自身跑六条布局规范 + 链路完整性 + 零输出 + 无网格
+- 生成器 `custom_nodes\ComfyUI-FallingTS\dev\make-0034-scene.py`（幂等，自身跑六条布局规范 + 链路完整性 + 零输出 + 无网格
   + **唯一 PLY 产物**校验）。三改前的快照在 `backups\backup-0034_世界模型.json-20260927-去非PLY导出前.json`、
   `backups\backup-make-0034-scene.py-20260927-去非PLY导出前.py`。
 
 ### 7.3 实测（RTX 4060 8GB，无头 API 提交）
 
-**三改后重跑**（2026-09-27，生成器重出图 + 无头 API 提交 `scripts\0034_api_prompt.json`，`status=success`）：
+**三改后重跑**（2026-09-27，生成器重出图 + 无头 API 提交 `custom_nodes\ComfyUI-FallingTS\dev\0034_api_prompt.json`，`status=success`）：
 
 ```
 4 节点 API 图:  FallingTSMarkDownTable → ImageBatchMulti → WorldRefinePLY → PLY 视口
@@ -291,7 +291,7 @@ Load3D(.ply) → File3DToSplat → SplatToFile3D(spz) → SaveGaussianSplat  →
 ```
 
 - **输入保真已校验**：`WorldRefinePLY` 落给脚本的 8 张临时 PNG 与 md 表原本那 8 张
-  **逐像素相同、批序一致**（`scripts\_check-worldrefine-inputs.py`）。
+  **逐像素相同、批序一致**（`custom_nodes\ComfyUI-FallingTS\dev\_check-worldrefine-inputs.py`）。
   图内产物与早先脚本产物**同尺寸但 SHA256 不同** —— 那是前馈/精修的浮点级非确定性，
   不是输入差异；所以这条链路**不做"逐字节可复现"的承诺**。
 - ⚠️ **缓存陷阱（仍然适用）**：ComfyUI 按"节点输入哈希"缓存。图改了但节点参数没变时，整个 Run 会在
@@ -300,7 +300,7 @@ Load3D(.ply) → File3DToSplat → SplatToFile3D(spz) → SaveGaussianSplat  →
 - **历史值（图内节点时代）**：`[Inference] shape=[1, 8, 3, 238, 406]`。三次对照（关掉未用的
   `predict_depth/normals/points` 三个 head / `POST /free` 把空闲显存从 2.4GB 抬到 6.8GB / 三种变体产出）
   结果**完全一致** ⇒ 406 不是显存不够，而是"测得太晚"（见 §7.7）。探针脚本
-  `scripts\_probe-0034-heads.py`、`scripts\_probe-0034-vram.py` 留档。
+  `custom_nodes\ComfyUI-FallingTS\dev\_probe-0034-heads.py`、`custom_nodes\ComfyUI-FallingTS\dev\_probe-0034-vram.py` 留档。
 
 **产物真读**：把这份 3DGS 用核心 `RenderSplat` 渲成 768×768（8 秒 4 帧）后判读，得到一间**结构自洽的书房** —— 门洞与门扇、门左侧**圆形白色挂钟**、窗洞亮度区、四面墙与天花、右侧家具轮廓；环绕到另一机位后盒体结构不崩。门与挂钟的相对位置与 md 表场景描述「后墙中部偏右一扇关着的深色木门……门右侧墙面一只圆形白色挂钟」**吻合**，说明 8 个面的世界坐标确实被解到同一坐标系里。颜色偏灰是预期的架构限制：3DGS 头只输出 **SH degree 0（视图无关颜色）**，而这 8 张来自 H3 旋转视频的帧彼此不一致，模型只能把颜色平均掉。
 
@@ -320,9 +320,9 @@ Load3D(.ply) → File3DToSplat → SplatToFile3D(spz) → SaveGaussianSplat  →
 
 ### 7.5 遗留
 
-- **浏览器必须 F5 强刷**才能看到新 0034；⚠️ 如果 0034 的标签页还开着，前端内存里是**旧副本**，此时按保存会把旧内容整份写回磁盘覆盖本次改动。若被覆盖，重跑 `python scripts\make-0034-scene.py` 即可原样恢复（生成器幂等）。
+- **浏览器必须 F5 强刷**才能看到新 0034；⚠️ 如果 0034 的标签页还开着，前端内存里是**旧副本**，此时按保存会把旧内容整份写回磁盘覆盖本次改动。若被覆盖，重跑 `python custom_nodes\ComfyUI-FallingTS\dev\make-0034-scene.py` 即可原样恢复（生成器幂等）。
 - 表内当前这八张素材**不闭合**（从 0031 的 H3 旋转视频抽帧，每面墙各是一张正面视角，相邻面重叠不足）→ 会拼出开口的墙皮扇面。换真机环绕实拍（或 Qwen 多视角 LoRA，相邻面共享墙角）即可闭合，链路与参数都不用改。
-- 8 视图在 8GB 上被模型内部按 token 预算压到长边 **406**（实测 238×406；腾空显存与关掉未用 head 都不改变它，见 §7.3），是架构内的固定预算、不是可调参数。精修脚本已重建并落定：`scripts\refine_0034_gs.py`（见 §8）。
+- 8 视图在 8GB 上被模型内部按 token 预算压到长边 **406**（实测 238×406；腾空显存与关掉未用 head 都不改变它，见 §7.3），是架构内的固定预算、不是可调参数。精修脚本已重建并落定：`custom_nodes\ComfyUI-FallingTS\world-refine\refine_0034_gs.py`（见 §8）。
 - 0034 的 `偏航角/俯仰角/距离/目标深度/视场角` 五列仍是**预留元数据**（按"先不输出图片视频"保留）。
 
 ### 7.6 导出的格式有哪些、差在哪（2026-09-27 实测 header 核对）
@@ -394,7 +394,7 @@ torch 2.13+cu130，装不了 cu128 的 gsplat）。所以"精修节点"必须跑
   注册走 `plugin.py` 的 `NODE_CLASS_MAPPINGS`（目录名含连字符，经 `importlib` 按名加载）。
 - 节点 `WorldRefinePLY(images, steps, mode, reg_opac, refresh) -> STRING`：
   ① 把上游 8 张图按批序落成 `ComfyUI\temp\worldrefine\<内容哈希>\00..07.png`；
-  ② 用隔离解释器跑 `scripts\refine_0034_gs.py`（504 前馈 + 外观精修 + 尺度过滤）；
+  ② 用隔离解释器跑 `custom_nodes\ComfyUI-FallingTS\world-refine\refine_0034_gs.py`（504 前馈 + 外观精修 + 尺度过滤）；
   ③ 从脚本 stdout 的 `[OUT] <path>` 取回 PLY 路径，交给下游视口。
 - 图里因此**只有一次前馈**，不会出现"图内 worker 与新进程各装一份 WorldMirror 抢 8GB 显存"。
 - 缓存按**8 张图的内容哈希**分层，换图必然重算；`refresh=True` 强制忽略缓存。
@@ -425,7 +425,7 @@ torch 2.13+cu130，装不了 cu128 的 gsplat）。所以"精修节点"必须跑
 
 ### 8.2 精修：光栅化渲染不吃 token 预算
 
-ViT 阶段受 token 预算限制，但**渲染不受** —— 所以可以按 **826×476 全分辨率**监督，这是唯一能把被丢掉的分辨率找回来的通道。脚本 `scripts\refine_0034_gs.py`（在隔离 env `hywm2-nodes` 里跑，cwd = 插件目录）：前馈 → 用预测相机算基线 PSNR → Adam 精修 → 落 PLY + 对拍图。
+ViT 阶段受 token 预算限制，但**渲染不受** —— 所以可以按 **826×476 全分辨率**监督，这是唯一能把被丢掉的分辨率找回来的通道。脚本 `custom_nodes\ComfyUI-FallingTS\world-refine\refine_0034_gs.py`（在隔离 env `hywm2-nodes` 里跑，cwd = 插件目录）：前馈 → 用预测相机算基线 PSNR → Adam 精修 → 落 PLY + 对拍图。
 
 | 配置 | PSNR | 新视角体检 |
 |---|---|---|
@@ -442,7 +442,7 @@ ViT 阶段受 token 预算限制，但**渲染不受** —— 所以可以按 **
 
 ```powershell
 cd D:\AI\Comfy\custom_nodes\ComfyUI-HYWM2
-& 'C:\Users\zghyu\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\python.exe' D:\AI\Comfy\scripts\refine_0034_gs.py
+& 'C:\Users\zghyu\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\python.exe' D:\AI\Comfy\custom_nodes\ComfyUI-FallingTS\world-refine\refine_0034_gs.py
 ```
 
 产物：`media\七纹刻印\0034_世界模型\0034_世界模型_世界3DGS.ply`（**1,164,128 高斯 / 79.2 MB**，标准 3DGS 布局：x,y,z + nx,ny,nz + f_dc_0..2 + opacity + scale_0..2 + rot_0..3；`scale_0..2` 是自然对数、`opacity` 是 logit）—— **三改后这个文件由图内的 `WorldRefinePLY` 直接产出**。对拍与体检图留在 `scripts\_out-0034-refine\`（`cmp_refined.png` 三行＝原图/前馈/精修；`novel_views.png` 两行＝前馈/精修 的新视角；`four_way.png`＝§8.5 的远机位四方对照），**不写进产物目录**（保持本条链路零图片输出）。
@@ -455,7 +455,7 @@ cd D:\AI\Comfy\custom_nodes\ComfyUI-HYWM2
 （≈2.5–3GB），要么让图内 worker 与新进程各装一份 WorldMirror 抢 8GB 显存 —— 两个都不划算。
 
 最终做成了 **自有插件 `ComfyUI-FallingTS\world-refine` 里的 `WorldRefinePLY`**：主进程节点只负责
-"落临时 PNG → 调隔离解释器跑 `scripts\refine_0034_gs.py` → 转发 PLY 路径"，
+"落临时 PNG → 调隔离解释器跑 `custom_nodes\ComfyUI-FallingTS\world-refine\refine_0034_gs.py` → 转发 PLY 路径"，
 **不新建环境、不跨进程传高斯、图里只有一次前馈**，并且顺带吃到了 504（图内节点只能 406）。
 0034 的三改结构见 §7.2，代价见 §7.7。
 （该节点最初写成独立插件 `ComfyUI-WorldRefine`，同日按用户要求**并入 FallingTS**；
@@ -487,7 +487,7 @@ cd D:\AI\Comfy\custom_nodes\ComfyUI-HYWM2
   我的精修脚本原先把 `scales.unsqueeze(0)` 传进去（`scale_max` 保持 0.3008）—— 那 2% 的
   **0.3 尺度巨型雾团**就这样留在 PLY 里。⇒ **"远看一圈雾"= 缺尺度过滤**。
 
-**四变体对照**（`scripts\_compare-0034-ply.py`，隔离 env 内用 gsplat 直接读 PLY 渲染，
+**四变体对照**（`custom_nodes\ComfyUI-FallingTS\dev\_compare-0034-ply.py`，隔离 env 内用 gsplat 直接读 PLY 渲染，
 三个变体共用**同一相机/同一分辨率**，避免 ComfyUI 的 Load3D 文件下拉缓存与节点缓存干扰）：
 
 | 变体 | 高斯 | `scale_max` | 训练机位 | 房间外远机位 |
@@ -506,7 +506,7 @@ cd D:\AI\Comfy\custom_nodes\ComfyUI-HYWM2
 **教训**：`save_gs_ply` 的入参必须是**非批次**的 `[N,3]`/`[N,4]`/`[N]`；批次调用不会报错，
 只会安静地少砍那 2%，而肉眼要到**房间外**才看得出来。
 
-渲染脚本：`scripts\_render-0034-ply.py`（`Load3D → File3DToSplat → RenderSplat`，中性参数；
+渲染脚本：`custom_nodes\ComfyUI-FallingTS\dev\_render-0034-ply.py`（`Load3D → File3DToSplat → RenderSplat`，中性参数；
 ⚠️ `Load3D.image` 是 `LOAD_3D` 控件，API 里必须传 **dict** 而不是路径字符串；
 ⚠️ `Load3D` 只认启动时扫描到的文件，且**节点缓存只看路径字符串** —— 换掉文件内容仍会命中缓存拿到旧图，
 所以 PLY 之间的严格对比要走 `_compare-0034-ply.py`，别用 ComfyUI 那条路），
@@ -518,7 +518,7 @@ cd D:\AI\Comfy\custom_nodes\ComfyUI-HYWM2
 打开产出的世界模型，整间书房是**一片中灰发白**：深蓝灰的墙是白的、暖木地板是灰的、深棕木门也是浅的。
 几何/布局是对的（门、窗、挂钟、书架、柜子都在对的位置），只有颜色不对。
 
-**量化**（`scripts\_diag-0034-ply-color.py`，直接读 PLY 的 `f_dc`）：
+**量化**（`custom_nodes\ComfyUI-FallingTS\dev\_diag-0034-ply-color.py`，直接读 PLY 的 `f_dc`）：
 
 | | R | G | B | 饱和度中位 | 亮度中位 |
 |---|---|---|---|---|---|
@@ -544,7 +544,7 @@ cd D:\AI\Comfy\custom_nodes\ComfyUI-HYWM2
 ⚠️ 上游 `decode_export.py` 的 `HYWM2ExportGaussiansPLY` 也是把 `(sh_dc*C0+0.5)` 当 `rgbs` 传的
 （同源不一致），**那是第三方代码，不修改** —— 只是不要用它出的 PLY 做颜色判据。
 
-**同时新增/暴露的参数**（节点 `WorldRefinePLY`，`scripts\refine_0034_gs.py` 对应新增 `--target/--gt/--prune-opac/--reg-color`）：
+**同时新增/暴露的参数**（节点 `WorldRefinePLY`，`custom_nodes\ComfyUI-FallingTS\world-refine\refine_0034_gs.py` 对应新增 `--target/--gt/--prune-opac/--reg-color`）：
 
 | 控件 | 默认 | 作用 |
 |---|---|---|
@@ -565,7 +565,7 @@ DC-only 渲染（视口/核心渲染都只看 DC）里就是**墙角上的粉/�
 即：训练视角 PSNR 掉了 0.38 dB，但**按读者口径（DC 单色）反而涨了 1.66 dB**、噪点少了一半 ——
 与 §8.2 里 `reg_opac` 的取舍同一逻辑（8 个训练视角的 PSNR 高 ≠ 3D 资产好）。
 
-**验收口径（可复跑）**：`scripts\_verify-0034-color.py <ply> <preds.pt> <out.png>`（隔离环境解释器、
+**验收口径（可复跑）**：`custom_nodes\ComfyUI-FallingTS\dev\_verify-0034-color.py <ply> <preds.pt> <out.png>`（隔离环境解释器、
 `cwd=ComfyUI-HYWM2`）—— 从 PLY 字段还原高斯、按读取端口径解码 `f_dc`，用前馈预测的 8 个机位渲一遍，
 与 8 张参考图并排落成一张对拍图。修复后的对拍图：8 个面**颜色与布局都对上**参考图
 （`scripts\_out-0034-refine\dc_verify_rc05.png`；修复前同口径图带粉/绿彩噪）。
@@ -579,7 +579,7 @@ DC-only 渲染（视口/核心渲染都只看 DC）里就是**墙角上的粉/�
 **第一步先把变量拆开（不透明度三档对照）**：同一份 PLY、同一批机位，把 α 改成
 0.20 / 0.56（视口原样）/ 0.99 三档渲染 —— 重影**一模一样**，连全不透明都不消失
 ⇒ 与透明度无关，是几何上真有两层表面。（对照图 `scripts\_out-0034-refine\ghost_zoom.png`，
-脚本 `scripts\_diag-0034-ghost.py`）
+脚本 `custom_nodes\ComfyUI-FallingTS\dev\_diag-0034-ghost.py`）
 
 **根因（读上游源码 + 计数核对）**：
 
@@ -608,9 +608,9 @@ DC-only 渲染（视口/核心渲染都只看 DC）里就是**墙角上的粉/�
 
 - **连 `reg=10` 都能把壳收掉** ⇒ 两层壳间距本来就不大，不需要大幅移动几何。
 - 训练视角 PSNR 高 ≠ 3D 资产好：`reg=0` 最高，那是把高斯掰成对准这 8 个机位换来的；
-  判定必须用**插值新机位**（`scripts\_diag-0034-novel.py`），实测 reg=1~10 的新机位都没有退化。
+  判定必须用**插值新机位**（`custom_nodes\ComfyUI-FallingTS\dev\_diag-0034-novel.py`），实测 reg=1~10 的新机位都没有退化。
 - 反面尝试：naive 体素合并（合并后不放大 scale）会产生规则点阵 / 摩尔纹，PSNR 掉到 15~17 dB
-  （`scripts\_diag-0034-fuse.py`）—— 要做合并必须同时膨胀尺度，本轮未采用。
+  （`custom_nodes\ComfyUI-FallingTS\dev\_diag-0034-fuse.py`）—— 要做合并必须同时膨胀尺度，本轮未采用。
 
 **顺带查实、尚未修**：`opacity` 约定。模型输出的 `opacities` 已经 sigmoid 过
 （`act_gs.py:19` → `rasterization.py:497`），却被**原样**写进 `opacity` 字段（`save_utils.py:170`），

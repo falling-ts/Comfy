@@ -28,7 +28,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ `002x` 场景镜头 | `0020_场景首帧` / `0021_场景拉镜` / `0022_场景推镜` / `0023_场景旋镜` |
 | └ `002x` 场景镜头 QI2.1 | `00200_场景首帧_QI2.1` / `00220_场景推镜_QI2.1`(Qwen-Image 2.1 版,**共用 `002x` 的表**) |
 | └ `003x` 场景生成 | `0030_文生场景`(H3 T2VA,仅画面)/ `0031_首帧场景`(I2V)/ `0032_参考场景`(R2V 多图多视频参考)/ `0033_OrbitSheets场景`(Location Sheet 参考板:锚点图+H3 多视角选帧拼板) |
-| └ `003x` 世界模型 | `0034_世界模型`(**360° 环绕视频 → 一个最高质量 3DGS PLY**;2026-09-28 由「md 表 8 图」改版为「md 表 360 视频」):`FallingTSMarkDownTable`(360环绕视频列)→ `WorldSurroundPanorama`(视频→**横向展开长图**(上行=天/无黑边/无重影) + valid_band + v_center; 2026-09-28 v2: 按画面位移自适应抽帧 + **自适应补密(治不均匀转速: 静止段/甩镜段)**、一圈闭环吸附(需首末帧几何重合)、逐像素 winner-take-all、近静止直接报错; 转速谱系 17 用例实测与四个已修静默缺陷见 `docs\360视频横向展开长图-v2实现-2026-09-28.md` §8)→ `PreviewImageSave`(长图预览支路)**与** `WorldPanoramaViews`(长图→视角批 + 精确 w2c 外参/内参, `v_range`/`v_center` 接长图元信息)→ `WorldRefinePLY`(视角批 + 相机先验 → 504 前馈 + 3DGS 全参数精修 mode=all reg=3.0, `gt=952`)→ `HYWM2PLYAdvancedGaussianViewer`;产物 `media\<项目>\0034_世界模型\0034_世界模型_世界3DGS.ply`。数据表 `stories\七纹刻印\0034_世界模型.md`;生成/改版脚本 `scripts\_build-0034-world360.py`(幂等, 带六条布局规范自检), 验收脚本 `scripts\_verify-0034-360.py` |
+| └ `003x` 世界模型 | `0034_世界模型`(**360° 环绕视频 → 一个最高质量 3DGS PLY**;2026-09-28 由「md 表 8 图」改版为「md 表 360 视频」):`FallingTSMarkDownTable`(360环绕视频列)→ `WorldSurroundPanorama`(视频→**横向展开长图**(上行=天/无黑边/无重影) + valid_band + v_center; 2026-09-28 v2: 按画面位移自适应抽帧 + **自适应补密(治不均匀转速: 静止段/甩镜段)**、一圈闭环吸附(需首末帧几何重合)、逐像素 winner-take-all、近静止直接报错; 转速谱系 17 用例实测与四个已修静默缺陷见 `docs\360视频横向展开长图-v2实现-2026-09-28.md` §8)→ `PreviewImageSave`(长图预览支路)**与** `WorldPanoramaViews`(长图→视角批 + 精确 w2c 外参/内参, `v_range`/`v_center` 接长图元信息)→ `WorldRefinePLY`(视角批 + 相机先验 → 504 前馈 + 3DGS 全参数精修 mode=all reg=3.0, `gt=952`)→ `HYWM2PLYAdvancedGaussianViewer`;产物 `media\<项目>\0034_世界模型\0034_世界模型_世界3DGS.ply`。数据表 `stories\七纹刻印\0034_世界模型.md`;生成/改版脚本 `custom_nodes\ComfyUI-FallingTS\dev\_build-0034-world360.py`(幂等, 带六条布局规范自检), 验收脚本 `custom_nodes\ComfyUI-FallingTS\dev\_verify-0034-360.py` |
 | └ `004x` 视频生成 | `0040_文生视频` / `0041_首帧视频` / `0042_首尾视频` / `0043_关键帧视频`(AddGuide 锚定任意帧)/ `0044_参考视频` |
 | └ `005x` 拆解 | `0050_视频拆帧` / `0051_视频拆音` |
 | └ `006x` 音频生成 | `0060_背景音乐` / `0061_环境音效` / `0062_效果音效` / `0063_文生人声` / `0064_参考人声` |
@@ -44,7 +44,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ `Bilibili` | B 站教程调研:`B站教程调研.md` + `工作流大全\`(474 个配套工作流) |
 | └ `AutoDL` | 云端 GPU 调研:`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4887 条模型清单) |
 | `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置 + 插件安装位相对软链,见「软链接映射 §D」):**`plugins\`**(插件聚合目录,与 ComfyUI 侧 `custom_nodes` 同构:含 `Obsidian-Comfy` 一个插件子模块,目录名即线上仓库名;该插件自带文件浏览器「编号分层」排序)+ `template\`(新建故事模板)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
-| `scripts` | 临时/可复用工具脚本(被 `scripts\.gitignore` 忽略,仅存本地不入库):工作流连线校验/修复/对比(`check-workflow-*`/`fix-*`/`diff-*`/`dump-*`)、布局校验、模型使用分析、模板/模型清单更新、H3/SeedVR2 调试等 |
+| `scripts` | **纯临时目录**(被 `scripts\.gitignore` 忽略:`*` + `!.gitignore`,仅存本地不入库):一次性调研/探针/校验脚本、实验产物、缓存、prompt 转储等,**随时可整体清空**(2026-09-30 已清空一次:71 项 / 983.5 MB 进回收站)。⚠️ **要能复跑的工具链不放这里** —— 2026-09-30 起这类脚本已迁入 `custom_nodes\ComfyUI-FallingTS\dev\`(30 个:0034 世界模型生成/验收、world-panorama 展开的合成真值/转速谱系/方位对拍、运行前命令自检);插件的**运行期硬依赖**则放在使用它的节点旁边(`custom_nodes\ComfyUI-FallingTS\world-refine\refine_0034_gs.py`) |
 | `logs` | ComfyUI 运行日志(`comfyui*.log`/`comfyui-console*.log`,已 gitignore) |
 | `backups` | **工作流/重要文件的修改前备份**(2026-08-04 起):`backup-<文件名>-<YYYYMMDD>-<说明>.*` 命名;含 `backup-20260805_路径清理\`(官方/分类文档归档)、`sageattention\`(本地 wheel)、环境迁移快照(pip-freeze/conda export)等 |
 | `.claude` | SymbolicLink → `.agents`(Claude Code 兼容垫片,技能聚合目录,见「软链接映射 §C」) |
