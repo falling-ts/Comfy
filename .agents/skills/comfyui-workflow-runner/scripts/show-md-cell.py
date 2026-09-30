@@ -3,10 +3,13 @@
 用法: python scripts/show-md-cell.py "0031_首帧场景.md" 3
 """
 
+import pathlib as _pathlib
+_COMFY = _pathlib.Path(__file__).resolve().parents[4]   # 项目根
+
 import pathlib
 import sys
 
-md = pathlib.Path(r"D:\AI\Comfy\stories\七纹刻印") / sys.argv[1]
+md = pathlib.Path(_COMFY / "stories" / "七纹刻印") / sys.argv[1]
 col = int(sys.argv[2]) if len(sys.argv) > 2 else 3
 lines = md.read_text(encoding="utf-8").splitlines()
 if len(lines) < 3:

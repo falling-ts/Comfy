@@ -3,6 +3,9 @@
 用法: python scripts/set-md-selected-id.py "0033-*.json" "场景参考板-书房"
 """
 
+import pathlib as _pathlib
+_COMFY = _pathlib.Path(__file__).resolve().parents[4]   # 项目根
+
 import glob
 import json
 import pathlib
@@ -10,7 +13,7 @@ import sys
 
 pat = sys.argv[1]
 new_id = sys.argv[2]
-p = pathlib.Path(glob.glob(str(pathlib.Path(r"D:\AI\Comfy\workflows") / pat))[0])
+p = pathlib.Path(glob.glob(str(pathlib.Path(_COMFY / "workflows") / pat))[0])
 d = json.loads(p.read_text(encoding="utf-8"))
 
 for n in d["nodes"]:

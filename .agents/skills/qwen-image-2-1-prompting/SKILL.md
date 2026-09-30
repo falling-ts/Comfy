@@ -124,7 +124,7 @@ description: Qwen-Image 2.1 (and Qwen-Image-Edit) image prompt engineering per A
 ```python
 import importlib.util
 spec = importlib.util.spec_from_file_location(
-    "vp", r"D:\Comfy\docs\qwen-image-2.1-skill\skills\qwen-image-2-1-prompter\scripts\validate_prompt.py")
+    "vp", "docs/qwen-image-2.1-skill/skills/qwen-image-2-1-prompter/scripts/validate_prompt.py")
 vp = importlib.util.module_from_spec(spec); spec.loader.exec_module(vp)
 ok, errors = vp.validate_qwen_prompt(
     {"rewritten_prompt": p, "wh_ratio": "", "ratio_follow": "<image1>"})

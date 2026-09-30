@@ -4,12 +4,15 @@
 但不加载权重、不吃内存, 可批量扫描。
 """
 
+import pathlib as _pathlib
+_COMFY = _pathlib.Path(__file__).resolve().parents[4]   # 项目根
+
 import json
 import pathlib
 import struct
 import sys
 
-ROOT = pathlib.Path(r"D:\AI\Comfy\models")
+ROOT = pathlib.Path(_COMFY / "models")
 
 
 def check(path: pathlib.Path):

@@ -15,6 +15,9 @@
 """
 from __future__ import annotations
 
+import pathlib as _pathlib
+_COMFY = _pathlib.Path(__file__).resolve().parents[4]   # 项目根
+
 import pathlib
 import subprocess
 import sys
@@ -22,7 +25,7 @@ import sys
 import numpy as np
 from PIL import Image
 
-TMP = pathlib.Path(r"D:\AI\Comfy\temp-frames")
+TMP = pathlib.Path(_COMFY / "temp-frames")
 
 
 def parse_box(spec: str) -> tuple[str, tuple[int, int, int, int]]:

@@ -6,13 +6,16 @@
 参数留空表示不改动该项。--run 时调用 workflow-to-prompt.py 提交并等待。
 """
 
+import pathlib as _pathlib
+_COMFY = _pathlib.Path(__file__).resolve().parents[4]   # 项目根
+
 import glob
 import json
 import pathlib
 import subprocess
 import sys
 
-ROOT = pathlib.Path(r"D:\AI\Comfy")
+ROOT = pathlib.Path(_COMFY)
 WF = ROOT / "workflows"
 
 

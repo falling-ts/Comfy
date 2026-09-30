@@ -4,10 +4,13 @@
 按偏差分组统计。若 0 度组显著更慢, 说明模型在参考视角上停住 —— 即"离散参考视角与连续旋转不切合"。
 """
 
+import pathlib as _pathlib
+_COMFY = _pathlib.Path(__file__).resolve().parents[4]   # 项目根
+
 import subprocess
 
 FFMPEG = r"D:\Program Files\ffmpeg\bin\ffmpeg.exe"
-VIDEO = r"D:\AI\Comfy\ComfyUI\temp\ComfyUI_temp_cfwwk_00001_.mp4"  # 12 秒去泄漏版
+VIDEO = str(_COMFY / "ComfyUI" / "temp" / "ComfyUI_temp_cfwwk_00001_.mp4")  # 12 秒去泄漏版
 SECONDS = 12.25
 FPS_SAMPLE = 2  # 每 0.5 秒一个采样
 

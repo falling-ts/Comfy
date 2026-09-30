@@ -187,9 +187,9 @@
 
 1. **软链接布局导致 comfy-env 找不到 ComfyUI 本体**
    `python install.py` 报 `Could not locate ComfyUI base; skipping workspace install`。
-   根因：`find_comfyui_dir_from_node()` 先试 `import folder_paths`，独立运行时导入失败 → 退化为向上找 `main.py`；而插件真实位于 `D:\Comfy\custom_nodes\`（`ComfyUI\custom_nodes` 只是软链），向上找不到。
-   修法：`$env:PYTHONPATH='D:\Comfy\ComfyUI'` 后运行 `install.py`，`folder_paths` 可导入即返回 `base_path`。
-   同一根因还导致插件 `prestartup_script.py` 把 assets 复制到了 **`D:\Comfy\input`**（错误层级）而非 `ComfyUI\input` —— 该目录现为残留，可删。
+   根因：`find_comfyui_dir_from_node()` 先试 `import folder_paths`，独立运行时导入失败 → 退化为向上找 `main.py`；而插件真实位于 `D:\AI\Comfy\custom_nodes\`（`ComfyUI\custom_nodes` 只是软链），向上找不到。
+   修法：`$env:PYTHONPATH='D:\AI\Comfy\ComfyUI'` 后运行 `install.py`，`folder_paths` 可导入即返回 `base_path`。
+   同一根因还导致插件 `prestartup_script.py` 把 assets 复制到了 **`D:\AI\Comfy\input`**（错误层级）而非 `ComfyUI\input` —— 该目录现为残留，可删。
 2. **CUDA wheel 无 cu13.0 版本 → 自动降级**
    `gsplat` / `flash-attn` 在 cu13.0+torch2.13 无预编译轮子，comfy-env 自动探测到 **cu12.8/torch2.8** 组合并装上预编译 wheel：`gsplat-1.5.3+cu128torch2.8`、`flash_attn-2.8.3+cu128torch2.8`（来自 `PozzettiAndrea/cuda-wheels` releases）。**无需本地编译**；隔离 env 内 torch 降为 2.8.0+cu128，ComfyUI 主环境仍 2.13.0+cu130。
 3. **插件依赖表漏 `requests` 与 `comfy-kitchen`**（本地补丁，**未提交**，写在 `nodes\comfy-env.toml`）
@@ -236,7 +236,7 @@ Load3D(.ply) → File3DToSplat → SplatToFile3D(spz) → SaveGaussianSplat  →
 | `C:\Users\zghyu\AppData\Local\Programs\comfy-env\` | pixi 隔离环境（含 torch 2.8/cu128、gsplat、flash-attn） | 保留 |
 | `ComfyUI\temp\hywm2_test\` | 重建产物（3DGS/点云） | 临时，可删 |
 | `ComfyUI\input\3d\`（= `output\3d\`，同一目录） | 测试用 3D 文件副本 + `_ref*.png` 占位图 + 原生节点导出的 .spz/.glb | 测试残留，可删 |
-| `D:\Comfy\input\` | 插件 prestartup 复制到错误层级的 assets（eth_courtyard/kitchen/workspace/pano.png/icon.png） | **残留，可删** |
+| `D:\AI\Comfy\input\` | 插件 prestartup 复制到错误层级的 assets（eth_courtyard/kitchen/workspace/pano.png/icon.png） | **残留，可删** |
 | `media\七纹刻印\0034_世界模型\`（= `ComfyUI\output\0034_世界模型\`） | 0034 世界模型产物：**只有一个 `0034_世界模型_世界3DGS.ply`（79.2MB / 1,164,128 高斯）**（`.splat`、点云 `.ply`、以及脚本重复产的那份均已归档到 `backups\backup-0034-{去非PLY产物,脚本重复产物}-20260927\`） | **真实产物，勿删**（参见 §7） |
 | `scripts\make-0034-scene.py` / `_run-0034.py` / `_verify-0034-gs.py` | 0034 生成器（幂等）+ 无头运行器 + 3DGS 渲染判读器 | 保留 |
 | `backups\backup-0034_*接入HYWM2世界模型前.*` ×3 | 改造前的 0034 / API prompt / 生成器快照 | 保留 |
@@ -311,8 +311,8 @@ Load3D(.ply) → File3DToSplat → SplatToFile3D(spz) → SaveGaussianSplat  →
 ### 7.4 这一轮踩到的两个坑（都会静默失败）
 
 1. **软链侧的相对路径算错 → viewer 的 URL 变成 404。**
-   插件 `_build_view_url` 用**真实路径**（`D:\Comfy\media\七纹刻印\…`）对 `folder_paths.get_output_directory()`（**软链路径** `D:\Comfy\ComfyUI\output`）求 `relpath`，得到 `..\..\media\…` 开头 → 被判"不在 output 内" → 回落成 `subfolder=` 为空的 URL，视口里永远加载不出模型。
-   **修法**：`output_dir` 用**软链侧**绝对路径 `D:\Comfy\ComfyUI\output\0034_世界模型`（同一物理文件）。顺带这个写法**跟随当前项目**，比硬编码 `media\七纹刻印` 更稳。校验结果：`/view?filename=0034_世界模型_世界3DGS.splat&type=output&subfolder=0034_世界模型` → **HTTP 200 / 24,736,768 B**。
+   插件 `_build_view_url` 用**真实路径**（`D:\AI\Comfy\media\七纹刻印\…`）对 `folder_paths.get_output_directory()`（**软链路径** `D:\AI\Comfy\ComfyUI\output`）求 `relpath`，得到 `..\..\media\…` 开头 → 被判"不在 output 内" → 回落成 `subfolder=` 为空的 URL，视口里永远加载不出模型。
+   **修法**：`output_dir` 用**软链侧**绝对路径 `D:\AI\Comfy\ComfyUI\output\0034_世界模型`（同一物理文件）。顺带这个写法**跟随当前项目**，比硬编码 `media\七纹刻印` 更稳。校验结果：`/view?filename=0034_世界模型_世界3DGS.splat&type=output&subfolder=0034_世界模型` → **HTTP 200 / 24,736,768 B**。
 2. **`Load3D` 只扫 `input\3d\**`，不是整个 input。**
    `nodes_load_3d.py:18` 写死 `os.path.join(folder_paths.get_input_directory(), "3d")`。所以落在 `input\0034_世界模型\` 的 3DGS **不会**进它的下拉列表；要拿原生节点加工（`SplatToMesh`/`SaveGLB`/`FillHoles`）必须先把文件放到 `input\3d\`。
    附带确认了会话开头那个悬案：**V3 节点的 `define_schema()` 结果在进程内被缓存**，启动后新建的文件不会出现在下拉里 —— 重启后 `Load3DAdvanced` 立刻从 `['none']` 变成能列出 `3d\…glb`，与缓存假设一致。
@@ -441,8 +441,8 @@ ViT 阶段受 token 预算限制，但**渲染不受** —— 所以可以按 **
 用法（幂等，可重复跑；预测结果缓存 85MB 到 `scripts\_cache-0034-preds.pt` 以免重复前馈）：
 
 ```powershell
-cd D:\Comfy\custom_nodes\ComfyUI-HYWM2
-& 'C:\Users\zghyu\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\python.exe' D:\Comfy\scripts\refine_0034_gs.py
+cd D:\AI\Comfy\custom_nodes\ComfyUI-HYWM2
+& 'C:\Users\zghyu\AppData\Local\Programs\comfy-env\.pixi\envs\hywm2-nodes\python.exe' D:\AI\Comfy\scripts\refine_0034_gs.py
 ```
 
 产物：`media\七纹刻印\0034_世界模型\0034_世界模型_世界3DGS.ply`（**1,164,128 高斯 / 79.2 MB**，标准 3DGS 布局：x,y,z + nx,ny,nz + f_dc_0..2 + opacity + scale_0..2 + rot_0..3；`scale_0..2` 是自然对数、`opacity` 是 logit）—— **三改后这个文件由图内的 `WorldRefinePLY` 直接产出**。对拍与体检图留在 `scripts\_out-0034-refine\`（`cmp_refined.png` 三行＝原图/前馈/精修；`novel_views.png` 两行＝前馈/精修 的新视角；`four_way.png`＝§8.5 的远机位四方对照），**不写进产物目录**（保持本条链路零图片输出）。

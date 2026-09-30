@@ -13,6 +13,9 @@
   .venv\\Scripts\\python.exe scripts\\workflow-to-prompt.py "0032-*.json" [--refresh-md] [--submit] [--dump out.json]
 """
 
+import pathlib as _pathlib
+_COMFY = _pathlib.Path(__file__).resolve().parents[4]   # 项目根
+
 import glob
 import json
 import pathlib
@@ -294,7 +297,7 @@ def main() -> int:
     if "--dump" in sys.argv:
         dump = sys.argv[sys.argv.index("--dump") + 1]
 
-    files = sorted(glob.glob(str(pathlib.Path(r"D:\AI\Comfy\workflows") / pat)))
+    files = sorted(glob.glob(str(pathlib.Path(_COMFY / "workflows") / pat)))
     if not files:
         print("未匹配到工作流")
         return 1

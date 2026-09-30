@@ -1,6 +1,6 @@
 # 双机同步:Syncthing 实时文件同步 + Git 代码同步(2026-08-19)
 
-本地 Windows(`D:\Comfy`)与 AutoDL GPU 服务器(`/root/Comfy`)之间的整套同步方案:
+本地 Windows(`D:\AI\Comfy`)与 AutoDL GPU 服务器(`/root/Comfy`)之间的整套同步方案:
 **Syncthing** 负责 `media / workflows / stories\七纹刻印` 三个目录的实时双向文件同步,
 **Git** 负责 Comfy 代码(根仓库文件 + 子模块指针)的提交级同步。冲突策略统一为
 "谁最后修改谁赢"。
@@ -89,9 +89,9 @@ AutoDL 容器无 systemd(PID 1 是平台 boot 脚本),服务规范见旧实例 `
 
 | 文件夹 ID | 本地路径 | 服务器路径 |
 |-----------|----------|------------|
-| `media` | `D:\Comfy\media` | `/root/Comfy/media` |
-| `workflows` | `D:\Comfy\workflows` | `/root/Comfy/workflows` |
-| `stories-qwx` | `D:\Comfy\stories\七纹刻印` | `/root/Comfy/stories/七纹刻印` |
+| `media` | `D:\AI\Comfy\media` | `/root/Comfy/media` |
+| `workflows` | `D:\AI\Comfy\workflows` | `/root/Comfy/workflows` |
+| `stories-qwx` | `D:\AI\Comfy\stories\七纹刻印` | `/root/Comfy/stories/七纹刻印` |
 
 首跑即完成全量同步,并自动创建了服务器上原本不存在的 `stories/七纹刻印`
 (顺带解决了服务器端 `/root/Shares` 悬空软链接的问题)。
