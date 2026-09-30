@@ -186,8 +186,8 @@ Comfy/
 │   ├── ComfyUI-GGUF/  ComfyUI-KJNodes/   # 量化加载 / 工具节点包
 │   ├── ComfyUI-OrbitSheets/  # H3 场景/角色参考板(多视角运镜 + 视觉选帧拼网格图)
 │   └── ...(其余 41 个,见 AGENTS.md 目录结构)
-├── docs/                     # 39 个分类文档 + Qwen-Image-Edit-Skills(本地目录,非子模块)
-├── refs/                     # 7 个参考类子模块(ComfyUI-Docs / Obsidian-Dev-Docs / Obsidian-API / Qwen-Image-2.1 / qwen-image-2.1-skill / MiniMax-H3 / minimax-h3-guide)
+├── docs/                     # 39 个分类文档
+├── refs/                     # 7 个参考类子模块(ComfyUI-Docs / Obsidian-Dev-Docs / Obsidian-API / Qwen-Image-2.1 / qwen-image-2.1-skill / MiniMax-H3 / minimax-h3-guide)+ Qwen-Image-Edit-Skills(本地目录,非子模块)
 ├── workflows/                # 用户工作流 24 个(001x~007x,见附录 B)
 ├── models/                   # 模型实际存放处(约 189GB,38 个槽位目录,见附录 C)
 ├── media/                    # 输入图片/音频 + 生成结果(3d/qwen3tts/clipspace)

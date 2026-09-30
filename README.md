@@ -186,8 +186,8 @@ Comfy/
 │   ├── ComfyUI-GGUF/  ComfyUI-KJNodes/   # quantized loading / utility node pack
 │   ├── ComfyUI-OrbitSheets/  # H3 scene/character reference boards (multi-angle camera + visual frame picking into grid images)
 │   └── ...(the other 41, see the directory layout in AGENTS.md)
-├── docs/                     # 39 categorized docs + Qwen-Image-Edit-Skills (local dir, not a submodule)
-├── refs/                     # 7 reference submodules (ComfyUI-Docs / Obsidian-Dev-Docs / Obsidian-API / Qwen-Image-2.1 / qwen-image-2.1-skill / MiniMax-H3 / minimax-h3-guide)
+├── docs/                     # 39 categorized docs
+├── refs/                     # 7 reference submodules (ComfyUI-Docs / Obsidian-Dev-Docs / Obsidian-API / Qwen-Image-2.1 / qwen-image-2.1-skill / MiniMax-H3 / minimax-h3-guide) + Qwen-Image-Edit-Skills (local dir, not a submodule)
 ├── workflows/                # 24 user workflows (001x~007x, see Appendix B)
 ├── models/                   # where models actually live (~189 GB, 38 slot directories, see Appendix C)
 ├── media/                    # input images/audio + generated results (3d/qwen3tts/clipspace)

@@ -15,10 +15,9 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ 3D/世界模型 | `ComfyUI-HYWM2`(HY-World 2.0 世界重建: 8 视图 → 统一世界坐标三维场景 → 3DGS/点云/网格 + PLY 视口; 权重在 `models\hywm2`(3.05GB, 已按槽位约定 gitignore); 隔离环境 `hywm2-nodes`, gsplat 在那 ⇒ 0034 的 `WorldRefinePLY` 借它跑精修。2026-09-27 装, **2026-09-28 登记为 git 子模块**(`[submodule "ComfyUI-HYWM2"]`, branch main, 指针 `93d060e`); ⚠️ `nodes/comfy-env.toml` 有**故意不提交**的本地补丁(`requests` + `comfy-kitchen==0.2.35`), **没留档** —— `backups\` 已于 2026-09-30 清空, 而 `submodule update` 会覆盖它 ⇒ 更新前先自己复制一份该文件) |
 | └ 图像/编辑/生成 | `ComfyUI-Easy-Use`、`ComfyUI_IPAdapter_plus`、`ComfyUI-ReActor`(换脸)、`ComfyUI-RMBG`、`ComfyUI-segment-anything-2`、`comfyui_controlnet_aux`、`ComfyUI-IC-Light`、`ComfyUI-DepthAnythingV2`、`Comfyui-QwenEditUtils`、`comfyui-mixlab-nodes`、`ComfyUI-Florence2`、`ComfyUI-post-processing-nodes`(后期处理) |
 | └ 工具/其它 | `ComfyUI-GGUF`(GGUF 量化加载)、`ComfyUI-KJNodes`(KJ 工具包)、`rgthree-comfy`、`ComfyUI-Custom-Scripts`、`ComfyUI-Detail-Daemon`、`ComfyUI-Crystools`、`ComfyUI-MultiGPU`、`ComfyUI-LogicUtils`、`ComfyUI-Inspire-Pack`、`cg-use-everywhere`、`audio-separation-nodes-comfyui`、`ComfyUI_essentials`、`ComfyUI_LinkFX`(连线动画)、`ComfyUI-AnimatedLinks`(连线动画) |
-| `docs` | 本地参考文档:39 个分类 md + 1 个本地目录(`Qwen-Image-Edit-Skills`,非子模块)。⚠️ **原在此的 5 个 git 子模块已于 2026-09-30 全部迁往根 `refs\`** |
-| └ `Qwen-Image-Edit-Skills` | Qwen-Image-Edit 官方 Skills 参考(本地目录,非子模块,留在原地) |
+| `docs` | 本地参考文档:纯 39 个分类 md。⚠️ **原在此的 5 个 git 子模块 + 1 个本地目录(`Qwen-Image-Edit-Skills`)已于 2026-09-30 全部迁往根 `refs\`** |
 | └ 分类 md | 启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、节点输入类型总表、插件注册表、模型调研报告、H3 提示词格式调研、FallingTS 分段执行机制、视频音频分析工具链(读产物全链 + 工具源码)等 |
-| **`refs`** | **参考类 git 子模块聚合目录**(2026-09-30 建:由 `docs\` 的 5 个 + 已删除的 `h3\` 的 2 个并入),目录名即线上仓库名。gitdir 形态两种并存:3 个**内联**(`.git` 是目录:`ComfyUI-Docs`/`MiniMax-H3`/`minimax-h3-guide`)、4 个**分离**(`.git` 文件 + `.git\modules\refs\<name>`,其 config 里 `worktree = ../../../../refs/<name>`) |
+| **`refs`** | **参考类资料聚合目录**(2026-09-30 建:7 个 git 子模块 + 1 个本地目录,由 `docs\` 的 5 个子模块与 1 个本地目录 + 已删除的 `h3\` 的 2 个并入),子模块目录名即线上仓库名。gitdir 形态两种并存:3 个**内联**(`.git` 是目录:`ComfyUI-Docs`/`MiniMax-H3`/`minimax-h3-guide`)、4 个**分离**(`.git` 文件 + `.git\modules\refs\<name>`,其 config 里 `worktree = ../../../../refs/<name>`) |
 | └ `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,子模块;原 `docs\`) |
 | └ `Obsidian-Dev-Docs` | Obsidian 官方开发者文档(插件开发参考,子模块;原 `docs\`) |
 | └ `Obsidian-API` | Obsidian API 类型定义(`obsidian.d.ts`/`publish.d.ts`,子模块;原 `docs\`) |
@@ -26,6 +25,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ `qwen-image-2.1-skill` | Qwen-Image 2.1 提示词 Skill(含校验器 `validate_prompt.py`,子模块;原 `docs\`) |
 | └ `MiniMax-H3` | MiniMax H3 官方模型仓库(自带 9 个官方 Skills,子模块;原 `h3\`) |
 | └ `minimax-h3-guide` | H3 参考加载套件(其 `H3ReferenceSuite` 由根 `custom_nodes` 子链接指向,子模块;原 `h3\`) |
+| └ `Qwen-Image-Edit-Skills` | Qwen-Image-Edit 官方 Skills 源码参考(`aliyun-image-skill\` 阿里云百炼 API 版 + `comfyui-agent-kit\` 的 comfyui skill 知识文件,共 67 文件)。⚠️ **本地目录、非子模块** —— 由**根仓库以普通文件(非 gitlink)跟踪**,故搬移只需 `git add .` 记重命名,不涉及 gitdir/`.gitmodules`;原 `docs\` |
 | **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 28 个,按编号-用途分组: |
 | └ `001x` 万物 | `0011_万物建模`(主线主流程)/ `0010_灰度遮罩` / `0012_万物变化` |
 | └ `001x` 万物 QI2.1 | `00110_万物建模_QI2.1` / `00120_万物变化_QI2.1`(Qwen-Image 2.1 版,**共用 `001x` 的表**;见「Qwen-Image 2.1 工作流」) |

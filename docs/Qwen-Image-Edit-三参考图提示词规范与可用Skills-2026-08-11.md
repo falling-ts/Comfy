@@ -132,11 +132,11 @@ Picture 1: <|vision_start|><|image_pad|><|vision_end|>Picture 2: <|vision_start|
 
 ### 已拉取到本项目的 skill 源码与安装状态
 
-见本文档同目录子文件夹(`docs\Qwen-Image-Edit-Skills\`):
+见 `refs\Qwen-Image-Edit-Skills\`(2026-09-30 由 `docs\` 迁入 `refs\`):
 - `aliyun-image-skill\` — 阿里云 API 版 Qwen-Image-Edit skill 全量源码(纯存档,未安装)
 - `comfyui-agent-kit\` — ComfyUI-Agent-Kit 的 comfyui skill 知识文件(56 文件:SKILL.md、MODELS 提示词规范、NODE_LIBRARY、comfy_client.py 等)
 
-**安装状态(2026-08-11)**:**`comfyui` skill 已安装到项目 `.claude\skills\comfyui\`**(知识独立安装,未装 npm MCP 驱动层;`machine.md` 已按本机真实环境填好,见其"Known local quirks")。后续更新可从 `docs\Qwen-Image-Edit-Skills\comfyui-agent-kit\` 重新复制。
+**安装状态(2026-08-11)**:**`comfyui` skill 已安装到项目 `.claude\skills\comfyui\`**(知识独立安装,未装 npm MCP 驱动层;`machine.md` 已按本机真实环境填好,见其"Known local quirks")。后续更新可从 `refs\Qwen-Image-Edit-Skills\comfyui-agent-kit\` 重新复制。
 
 ## 六、建议
 
