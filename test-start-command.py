@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-# scripts/test-start-command.py
+# test-start-command.py (工作区根)
 """「运行前命令」测试脚本: 在系统右下角弹一条 Windows 通知。
 
 用法 —— 把下面这行填进 ComfyUI 的 系统设置 → 其它 → 开始前命令:
 
-    .venv\\Scripts\\python.exe scripts\\test-start-command.py
+    .venv\\Scripts\\python.exe test-start-command.py
 
 之后每次点「运行」/按 Ctrl+Enter, 提交之前都会先跑本脚本: 右下角弹出
 「Comfy 开始前命令」通知 = 前置命令确实执行了, 而且退出码为 0, 本次运行没有被拦下。
@@ -45,7 +45,7 @@ TITLE = "Comfy 开始前命令"
 # 等后台 PowerShell 的秒数(WinRT Toast 是异步投递, 通常 1s 内就返回)
 _WAIT_S = 8
 
-_LOG = pathlib.Path(__file__).resolve().parent.parent / "logs" / "test-start-command.log"
+_LOG = pathlib.Path(__file__).resolve().parent / "logs" / "test-start-command.log"
 
 # PowerShell 通知脚本(__TITLE__ / __MESSAGE__ 由 Python 以单引号字面量替换)。
 # 保持纯 ASCII 源码, 中文只从参数进 —— 这样用户级/机器级执行策略、代码页都不会干扰。
