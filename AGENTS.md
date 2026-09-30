@@ -12,7 +12,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ H3 生态(6 插件 + 链接) | `ComfyUI-Spectrum-MiniMax-H3`(加速)、`ComfyUI-SolAttn_triton`(注意力加速)、`ComfyUI-ReservedVRAM`(显存预留)、`ComfyUI-Qwen3-TTS`(H3 语音)、`h3-latent-upscaler`(latent 放大)、`ComfyUI-OrbitSheets`(场景/角色参考板:锚点图 + H3 多视角运镜 + 视觉选帧拼网格图,2026-08-17 装)、`H3ReferenceSuite`(软链接,见 `h3`) |
 | └ 放大/修复/局部重绘 | `ComfyUI-SeedVR2_VideoUpscaler`(视频高清修复)、`ComfyUI-SUPIR`(超分放大)、`ComfyUI_UltimateSDUpscale`(分块重绘)、`ComfyUI-Impact-Pack`(Detailer 局部精修)、`ComfyUI_LayerStyle`(图层/遮罩)、`ComfyUI-Inpaint-CropAndStitch`(裁剪贴回) |
 | └ 视频 | `ComfyUI-VideoHelperSuite`、`ComfyUI-WanVideoWrapper`、`ComfyUI-Frame-Interpolation`(补帧)、`ComfyUI-qwenmultiangle`(Qwen 多镜头) |
-| └ 3D/世界模型 | `ComfyUI-HYWM2`(HY-World 2.0 世界重建: 8 视图 → 统一世界坐标三维场景 → 3DGS/点云/网格 + PLY 视口; 权重在 `models\hywm2`(3.05GB, 已按槽位约定 gitignore); 隔离环境 `hywm2-nodes`, gsplat 在那 ⇒ 0034 的 `WorldRefinePLY` 借它跑精修。2026-09-27 装, **2026-09-28 登记为 git 子模块**(`[submodule "ComfyUI-HYWM2"]`, branch main, 指针 `93d060e`); ⚠️ `nodes/comfy-env.toml` 有**故意不提交**的本地补丁(`requests` + `comfy-kitchen==0.2.35`, 备份在 `backups\backup-世界模型颜色修复-20260928\`), 更新/`submodule update` 前先留副本) |
+| └ 3D/世界模型 | `ComfyUI-HYWM2`(HY-World 2.0 世界重建: 8 视图 → 统一世界坐标三维场景 → 3DGS/点云/网格 + PLY 视口; 权重在 `models\hywm2`(3.05GB, 已按槽位约定 gitignore); 隔离环境 `hywm2-nodes`, gsplat 在那 ⇒ 0034 的 `WorldRefinePLY` 借它跑精修。2026-09-27 装, **2026-09-28 登记为 git 子模块**(`[submodule "ComfyUI-HYWM2"]`, branch main, 指针 `93d060e`); ⚠️ `nodes/comfy-env.toml` 有**故意不提交**的本地补丁(`requests` + `comfy-kitchen==0.2.35`), **没留档** —— `backups\` 已于 2026-09-30 清空, 而 `submodule update` 会覆盖它 ⇒ 更新前先自己复制一份该文件) |
 | └ 图像/编辑/生成 | `ComfyUI-Easy-Use`、`ComfyUI_IPAdapter_plus`、`ComfyUI-ReActor`(换脸)、`ComfyUI-RMBG`、`ComfyUI-segment-anything-2`、`comfyui_controlnet_aux`、`ComfyUI-IC-Light`、`ComfyUI-DepthAnythingV2`、`Comfyui-QwenEditUtils`、`comfyui-mixlab-nodes`、`ComfyUI-Florence2`、`ComfyUI-post-processing-nodes`(后期处理) |
 | └ 工具/其它 | `ComfyUI-GGUF`(GGUF 量化加载)、`ComfyUI-KJNodes`(KJ 工具包)、`rgthree-comfy`、`ComfyUI-Custom-Scripts`、`ComfyUI-Detail-Daemon`、`ComfyUI-Crystools`、`ComfyUI-MultiGPU`、`ComfyUI-LogicUtils`、`ComfyUI-Inspire-Pack`、`cg-use-everywhere`、`audio-separation-nodes-comfyui`、`ComfyUI_essentials`、`ComfyUI_LinkFX`(连线动画)、`ComfyUI-AnimatedLinks`(连线动画) |
 | `docs` | 本地参考文档:24 个分类 md + 4 个子目录(3 个 git submodule + `Qwen-Image-Edit-Skills` 本地目录) | 
@@ -46,7 +46,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置 + 插件安装位相对软链,见「软链接映射 §D」):**`plugins\`**(插件聚合目录,与 ComfyUI 侧 `custom_nodes` 同构:含 `Obsidian-Comfy` 一个插件子模块,目录名即线上仓库名;该插件自带文件浏览器「编号分层」排序)+ `template\`(新建故事模板)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
 | `scripts` | **纯临时目录**(被 `scripts\.gitignore` 忽略:`*` + `!.gitignore`,仅存本地不入库):一次性调研/探针/校验脚本、实验产物、缓存、prompt 转储等,**随时可整体清空**(2026-09-30 已清空一次:71 项 / 983.5 MB 进回收站)。⚠️ **要能复跑的工具链不放这里** —— 2026-09-30 起这类脚本已迁入 `custom_nodes\ComfyUI-FallingTS\dev\`(30 个:0034 世界模型生成/验收、world-panorama 展开的合成真值/转速谱系/方位对拍、运行前命令自检);插件的**运行期硬依赖**则放在使用它的节点旁边(`custom_nodes\ComfyUI-FallingTS\world-refine\refine_0034_gs.py`) |
 | `logs` | ComfyUI 运行日志(`comfyui*.log`/`comfyui-console*.log`,已 gitignore) |
-| `backups` | **工作流/重要文件的修改前备份**(2026-08-04 起):`backup-<文件名>-<YYYYMMDD>-<说明>.*` 命名;含 `backup-20260805_路径清理\`(官方/分类文档归档)、`sageattention\`(本地 wheel)、环境迁移快照(pip-freeze/conda export)等 |
+| `backups` | **工作流/重要文件的修改前备份**(2026-08-04 起):`backup-<文件名>-<YYYYMMDD>-<说明>.*` 命名;**纯本地暂存目录** —— `.gitignore` 忽略全部内容(只有 `.gitignore` 本身入库), **可随时整体清空、不承担归档职责**:环境快照(pip-freeze/conda export)、本地 wheel、文档归档一律不留档, 需要时现场重建(`pip freeze`/重新下载);2026-09-30 已全清一次(1646 文件 / 372.8 MB 直接删除) |
 | `.claude` | SymbolicLink → `.agents`(Claude Code 兼容垫片,技能聚合目录,见「软链接映射 §C」) |
 | `README.md` / `LICENSE` | 项目说明与许可 |
 | `.gitmodules` | 子模块登记(git submodule) |
@@ -106,8 +106,8 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 ## 版本与运行
 
 - **Python 虚拟环境:项目内 `.venv`**(2026-08-16 由 conda 环境迁移而来,官方 `python -m venv` 基于系统 Python 3.13.13 创建;原 conda 专用环境已删除)。启动一律用 `.venv\Scripts\python.exe`(类 Unix 为 `.venv\bin/python`),不要用系统级 Python 或任何 conda 环境运行主程序
-- **运行环境 `.venv`:Python 3.13.13 / torch 2.13.0+cu130(CUDA 13.0,RTX 4060 8GB VRAM)**,启动脚本与本文档均用它(`.venv\Scripts\python.exe`,类 Unix 为 `.venv\bin/python`);依赖安装顺序:torch(cu130 index)→ `ComfyUI\requirements.txt` → 插件 requirements → 加速依赖,迁移后与旧 conda 环境包版本对齐(见 `backups\pip-freeze-ComfyUI-20260816-020146.txt` 与 `pip-freeze-venv-final.txt` 对比)
-- 共享关键版本(均与核心 v0.37.0 `requirements.txt` 钉定版本一致):comfyui-frontend-package **1.52.7**、comfyui-manager **4.2.2**、comfyui-workflow-templates **0.11.66**、comfyui-embedded-docs **0.5.12**、comfy-aimdo **0.5.5**、comfy-kitchen **0.2.35**、sageattention **2.2.0**(cu130,本地 wheel `backups\sageattention\`)、triton **3.7.1**、transformers 4.57.3、diffusers 0.39.0、numpy 2.2.6(受 opencv 4.12 依赖约束 `numpy<2.3`,勿升回 2.5.x)、opencv-python/opencv-contrib-python/opencv-python-headless 4.12.0.88(ComfyUI-LNL 声明 `opencv-python~=4.12.0`)、onnxruntime-gpu 1.29.0、safetensors 0.8.0
+- **运行环境 `.venv`:Python 3.13.13 / torch 2.13.0+cu130(CUDA 13.0,RTX 4060 8GB VRAM)**,启动脚本与本文档均用它(`.venv\Scripts\python.exe`,类 Unix 为 `.venv\bin/python`);依赖安装顺序:torch(cu130 index)→ `ComfyUI\requirements.txt` → 插件 requirements → 加速依赖,迁移后与旧 conda 环境包版本对齐(当时的 conda/venv `pip freeze` 快照已随 `backups\` 清空, 要比对就现场 `pip freeze` 生成)
+- 共享关键版本(均与核心 v0.37.0 `requirements.txt` 钉定版本一致):comfyui-frontend-package **1.52.7**、comfyui-manager **4.2.2**、comfyui-workflow-templates **0.11.66**、comfyui-embedded-docs **0.5.12**、comfy-aimdo **0.5.5**、comfy-kitchen **0.2.35**、sageattention **2.2.0**(cu130;本地 wheel 已不留档)、triton **3.7.1**、transformers 4.57.3、diffusers 0.39.0、numpy 2.2.6(受 opencv 4.12 依赖约束 `numpy<2.3`,勿升回 2.5.x)、opencv-python/opencv-contrib-python/opencv-python-headless 4.12.0.88(ComfyUI-LNL 声明 `opencv-python~=4.12.0`)、onnxruntime-gpu 1.29.0、safetensors 0.8.0
 - **核心升级流程**(2026-09-21 由 v0.36.0 → v0.37.0 实践):`git -C ComfyUI fetch --tags` → 查最新 tag → `git checkout <tag>`(detached;工作树里被删的上游占位文件不受影响,不会冲突) → 按 `requirements.txt` 差异补装依赖 → 重启 → `scripts\_check-workflow-node-compat.py` 验证 24 个工作流用到的节点类型全部仍注册 → 根仓库提交子模块指针。升级前先 `pip freeze` 备份到 `backups\`
 - **升级兼容性判据**:前端内置节点(`Note`/`MarkdownNote`/`Reroute`/`PrimitiveNode`)与前端注册的 UUID 型 API 节点**不出现**在后端 `/object_info` 里,比对时须白名单排除(脚本已内置),否则每次升级都会误报缺失
 - **插件更新流程**(2026-09-21 实践,44 个插件仓库):逐个 `git -C custom_nodes/<插件> fetch --tags --prune` → `git rev-list --count HEAD..origin/<默认分支>` 看落后数 → 在分支上的 `git merge --ff-only origin/<分支>`,**detached HEAD 的** `git checkout <默认分支>`(自动建跟踪分支并到位) → `git diff <旧> <新> -- requirements.txt` 判断是否补装依赖 → 含 `.gitmodules` 的插件(`ComfyUI-Easy-Use`/`ComfyUI-Impact-Pack`/`ComfyUI_UltimateSDUpscale`)再 `git submodule update --init --recursive` → 重启 → 跑 `_check-workflow-node-compat.py`。⚠️ **只更新本地,不推送**(上游子项目禁止提交/推送);更新前先确认各插件 `Ahead=0`,否则会覆盖本地提交
@@ -169,7 +169,7 @@ python main.py --enable-manager
 | `00200_场景首帧_QI2.1` | `0020_场景首帧` | 两阶段: 文生场景 → 编辑优化 |
 | `00220_场景推镜_QI2.1` | `0022_场景推镜` | 单阶段: 框选放大 → 编辑精修 |
 
-⚠️ **2026-09-24 起这 4 个工作流与 1.x 版共用同一批数据表**:原 `00110/00120/00200/00220_*.md` 4 张表已删除,工作流内 `md_path` 一律指向 `0011_万物建模.md` / `0012_万物变化.md` / `0020_场景首帧.md` / `0022_场景推镜.md`。同名工作区分只靠文件名后缀 `_QI2.1`。**产物目录取表文件名**(2026-09-24 起保存类节点优先用工作流的 md 表文件名作子目录),故 4 个 QI2.1 工作流与各自 1.x 版**落同一个目录**(如 `media\七纹刻印\0011_万物建模\`)—— 同一行 ID 的产物互相覆盖,只保留一份;原 4 个 QI2.1 旧目录已于 2026-09-24 **改名并入**对应基础目录(`media\七纹刻印\0011_万物建模\` / `0012_万物变化\` / `0020_场景首帧\` / `0022_场景推镜\`),工作区内不再有任何带 QI2.1 的目录(各旧目录只含 1 个 PNG,且并入时基础目录尚不存在,故为纯改名、零冲突);`0044_参考视频.md` 里 3 处 `@{*_QI2.1/…}` 引用同步改为表名前缀。`0011_万物建模.md` 已用 2.1 的「写实三维CG + 单一视角」内容覆盖(原 1.x 的「国漫CG + 三视图」违反现行规范,备份在 `backups\backup-0011_万物建模.md-20260924-重构前.md`)。
+⚠️ **2026-09-24 起这 4 个工作流与 1.x 版共用同一批数据表**:原 `00110/00120/00200/00220_*.md` 4 张表已删除,工作流内 `md_path` 一律指向 `0011_万物建模.md` / `0012_万物变化.md` / `0020_场景首帧.md` / `0022_场景推镜.md`。同名工作区分只靠文件名后缀 `_QI2.1`。**产物目录取表文件名**(2026-09-24 起保存类节点优先用工作流的 md 表文件名作子目录),故 4 个 QI2.1 工作流与各自 1.x 版**落同一个目录**(如 `media\七纹刻印\0011_万物建模\`)—— 同一行 ID 的产物互相覆盖,只保留一份;原 4 个 QI2.1 旧目录已于 2026-09-24 **改名并入**对应基础目录(`media\七纹刻印\0011_万物建模\` / `0012_万物变化\` / `0020_场景首帧\` / `0022_场景推镜\`),工作区内不再有任何带 QI2.1 的目录(各旧目录只含 1 个 PNG,且并入时基础目录尚不存在,故为纯改名、零冲突);`0044_参考视频.md` 里 3 处 `@{*_QI2.1/…}` 引用同步改为表名前缀。`0011_万物建模.md` 已用 2.1 的「写实三维CG + 单一视角」内容覆盖(原 1.x 的「国漫CG + 三视图」违反现行规范)。
 
 **关键差异(改这些工作流时注意)**:
 - **不加载任何 LoRA**。2.1 无 4 步蒸馏 LoRA(LightX2V 的 Day-0 支持是框架级 fp8 优化, 不是 LoRA), 故步数按官方域设 **标准 30 步 / 加速 15 步**, cfg 固定 1.0; 原版"4 步 Lightning 档"已不存在
@@ -181,7 +181,7 @@ python main.py --enable-manager
 
 ## 官方文档与分类文档
 
-- `docs\ComfyUI-Docs` 为官方文档本地克隆(在线源码 GitHub `Comfy-Org/docs`);历史归档在 `backups\backup-20260805_路径清理\`;专题资料见 `webs\Bilibili\B站教程调研.md`(含 H3 专题)与 `webs\RunningHub\`(API 读取指南 / workflows-list.md)
+- `docs\ComfyUI-Docs` 为官方文档本地克隆(在线源码 GitHub `Comfy-Org/docs`);专题资料见 `webs\Bilibili\B站教程调研.md`(含 H3 专题)与 `webs\RunningHub\`(API 读取指南 / workflows-list.md)
 
 ## 开发规范
 
