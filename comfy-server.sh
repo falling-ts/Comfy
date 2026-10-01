@@ -13,7 +13,7 @@
 #
 # 平台自适应:
 #   - Windows (Git Bash): 解释器默认 .venv/Scripts/python.exe,
-#     参数 --enable-manager --disable-pinned-memory --fast-disk(本地 RTX 4060 8GB)
+#     参数 --enable-manager --disable-pinned-memory(本地 RTX 4060 8GB)
 #   - Linux: 解释器默认 .venv/bin/python, 缺失时回退 conda 环境 comfy
 #     (/root/miniconda3/envs/comfy/bin/python, ai-server 实例),
 #     参数 --enable-manager --reserve-vram $RESERVE_VRAM(默认 22,
@@ -39,7 +39,7 @@ esac
 
 if [ "$IS_WINDOWS" -eq 1 ]; then
   PY_BIN="${PY_BIN:-$ROOT/.venv/Scripts/python.exe}"
-  ARGS=(--enable-manager --disable-pinned-memory --fast-disk --port "$PORT")
+  ARGS=(--enable-manager --disable-pinned-memory --port "$PORT")
 else
   PY_BIN="${PY_BIN:-$ROOT/.venv/bin/python}"
   [ -x "$PY_BIN" ] || PY_BIN="/root/miniconda3/envs/comfy/bin/python"
