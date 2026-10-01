@@ -83,6 +83,8 @@
 
 - 请求头:`Authorization: <token>`(**裸 token,不带 Bearer**,与 autodl.com 市场一致)
 - autodl.art 签发的 JWT:`aud = cg_website`(社区站);autodl.com 的是 `aud = website`,两者不通用
+- ⚠️ **2026-10-01 补充:`cw_website` 是第三种、且无效** —— 在 `www.codewithgpu.com` 登录拿到的是
+  `aud = cw_website`,该后端一律拒绝;详见 §5.2.3。取 token 必须用 `www.autodl.art` 的登录态
 - ⚠️ **token 属于敏感凭据:不写入本文件、不提交 git**(与 §0 同约定)
 - 失败特征:裸 token 有效时返回 `{"code":"Success","data":{...}}`;无效/过期返回 `{"code":"AuthorizeFailed","msg":"认证失败; 登录超时"}`;带 `Bearer ` 前缀也会失败
 
@@ -143,6 +145,34 @@
   ACE-Step/Stable Audio 音频 checkpoint、H3 系 Bridge/LoRA、Krea 系 LoRA、AnimeSharp/RCAN 放大等。
 - 重跑方式(**不重新抓取,用缓存**):`AUTODL_USE_CACHE=1` + `AUTODL_OLD_MD=<旧备份 md>`,秒级完成;
   以旧备份为基准可保证已归好的条目照旧沿用,只有新条目走新规则,零回归风险(实测「已识别→未识别」退化 0 条)。
+
+#### 5.2.3 2026-10-01 复核(5063 条)与 token 的 `aud` 陷阱
+
+- 本次抓取:`result_total = 5063`(较 09-21 的 4956 增加 107 条记录 / **79 个新实例路径**),消失 0。
+  `max_page = 51`(page_size=100);按 `max_page` 循环 + 按 `id` 去重后恰好 5063 条,与 `result_total` 吻合。
+- ⚠️ **`aud` 是唯一有效的鉴权判据,`cw_website` 与 `cg_website` 只差 1 个 base64 字符**:
+  同账号、同 `iat`/`exp`、**签名完全相同**的两个 JWT,载荷 `"aud":"cw_website"` 被拒,
+  改成 `"aud":"cg_website"` 立刻 `code: Success` —— 差异只在第 245 位 base64
+  (`...LCJhdWQiOiJjd193ZWJzaXRl...` vs `...LCJhdWQiOiJjZ193ZWJzaXRl...`)。
+  ⇒ **必须从 `https://www.autodl.art` 的登录态取 token**;`www.codewithgpu.com` 登录得到
+  `cw_website`,两个域名解析到同一台后端(`101.126.37.23`)却互不通用。
+- 与受众无关的失败特征:裸 token / `Bearer <t>` / 任意字符串 `abc` **都**进「登录失败，请重试」分支;
+  完全不带 `Authorization` 才是「登录超时，请重新登录」。⇒ 见「登录失败」即 token 被读到但不被接受,
+  不要去调传参方式(本次已排除:8 种前缀、8 种 header/cookie/query 传法、4 种 Origin、HTTP/1.1 vs 2、
+  完整 Chrome 指纹、cookie 会话绑定、IP 绑定 —— 浏览器能通、本机也能通,只有 `aud` 是关键)。
+- 更新脚本:**`scripts/autodl-update-models.py`**(09-30 清理 `scripts/` 时丢失,本次重建)。
+  - `AUTODL_TOKEN=<裸token> python scripts/autodl-update-models.py` 抓取并重建;
+    `AUTODL_USE_CACHE=1` 复用 `/tmp/autodl_models_full.json` 不抓取;`AUTODL_DRY=1` 只报告不写;
+    `AUTODL_OLD_MD=<md>` 指定旧表基准。
+  - **零回归**:旧表已识别的 `instance_path` 一律沿用旧结论(含「一级/仓库名」二级形态),
+    只有新路径走 `classify-models-dir.py` 的规则表(该文件是规则唯一来源,更新脚本用 importlib 复用)。
+    本次实测 3819 条共同路径中「旧值已识别却被改动」= **0**;82 条变化全部来自旧值为「未识别」的行,
+    其中 27 条被新规则识别成功(未识别总数 928 → 872)。
+  - 为 79 个新条目补了 26 条 `MANUAL_EXACT` 人工核对(依据上传备注与体积:`h3_upscaler_*` 备注写明
+    「潜空间放大模型」→ `latent_upscale_models`;MuseTalk 依赖件 → `未识别(口型)`;
+    百 MB 级 slider/tweaker/角色风格化 → `loras`;`REDQW21-*builtwithqwen` → `diffusion_models`),
+    并加两条通用规则:`firered[-_. ]?image` → `diffusion_models`(须排在 ASR 的 `firered` 之前)、
+    `ming.image` → `diffusion_models`。
 
 ### 5.3 前端反推过程(接口变更后自查)
 
