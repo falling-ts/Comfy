@@ -119,6 +119,7 @@ therefore equivalent — and needs no browser at all.
   the OrbitSheets parameter recipe and its limits, plus the parameter-editing and frame-extraction traps.
 - `references/h3-shot-order-anchoring.md` — **measured findings for H3 shot order and timing**: four
   prose-only rounds that all moved the shot to the wrong place, why Ref2VA reference images carry no time
-  position, the `FallingTSH3AddGuide` wiring recipe (frame indices, equal-image double anchors), and the
+  position, the `FallingTSH3AddGuide` wiring recipe (frame indices, equal-image double anchors) **kept as an
+  opt-in — results look better without the anchors**, and the
   pitfalls (`vae` required, negation still unreliable, one unavoidably unsatisfiable layout rule, hardcoded
   frame indices, snapshot not written back by `--refresh-md`).
