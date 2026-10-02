@@ -15,8 +15,8 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ 3D/世界模型 | `ComfyUI-HYWM2`(HY-World 2.0 世界重建: 8 视图 → 统一世界坐标三维场景 → 3DGS/点云/网格 + PLY 视口; 权重在 `models\hywm2`(3.05GB, 已按槽位约定 gitignore); 隔离环境 `hywm2-nodes`, gsplat 在那 ⇒ 0034 的 `WorldRefinePLY` 借它跑精修。2026-09-27 装, **2026-09-28 登记为 git 子模块**(`[submodule "ComfyUI-HYWM2"]`, branch main, 指针 `93d060e`); ⚠️ `nodes/comfy-env.toml` 有**故意不提交**的本地补丁(`requests` + `comfy-kitchen==0.2.35`), **没留档** —— `backups\` 已于 2026-09-30 清空, 而 `submodule update` 会覆盖它 ⇒ 更新前先自己复制一份该文件) |
 | └ 图像/编辑/生成 | `ComfyUI-Easy-Use`、`ComfyUI_IPAdapter_plus`、`ComfyUI-ReActor`(换脸)、`ComfyUI-RMBG`、`ComfyUI-segment-anything-2`、`comfyui_controlnet_aux`、`ComfyUI-IC-Light`、`ComfyUI-DepthAnythingV2`、`Comfyui-QwenEditUtils`、`comfyui-mixlab-nodes`、`ComfyUI-Florence2`、`ComfyUI-post-processing-nodes`(后期处理) |
 | └ 工具/其它 | `ComfyUI-GGUF`(GGUF 量化加载)、`ComfyUI-KJNodes`(KJ 工具包)、`rgthree-comfy`、`ComfyUI-Custom-Scripts`、`ComfyUI-Detail-Daemon`、`ComfyUI-Crystools`、`ComfyUI-MultiGPU`、`ComfyUI-LogicUtils`、`ComfyUI-Inspire-Pack`、`cg-use-everywhere`、`audio-separation-nodes-comfyui`、`ComfyUI_essentials`、`ComfyUI_LinkFX`(连线动画)、`ComfyUI-AnimatedLinks`(连线动画) |
-| `docs` | 本地参考文档:纯 39 个分类 md。⚠️ **原在此的 5 个 git 子模块 + 1 个本地目录(`Qwen-Image-Edit-Skills`)已于 2026-09-30 全部迁往根 `refs\`** |
-| └ 分类 md | 启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、节点输入类型总表、插件注册表、模型调研报告、H3 提示词格式调研、FallingTS 分段执行机制、视频音频分析工具链(读产物全链 + 工具源码)等 |
+| `docs` | 本地参考文档:纯 41 个分类 md。⚠️ **原在此的 5 个 git 子模块 + 1 个本地目录(`Qwen-Image-Edit-Skills`)已于 2026-09-30 全部迁往根 `refs\`** |
+| └ 分类 md | 启动参数参考、KSampler 采样器指南、SageAttention 参数配置、Qwen 国漫 LoRA 清单、节点输入类型总表、插件注册表、模型调研报告、H3 提示词格式调研、FallingTS 分段执行机制、视频音频分析工具链(读产物全链 + 工具源码)、H3 参考图尺寸与 match/max 口径(源码级复算)、2752×1536 参考图的 max/match 成本收益(源码级复算)等 |
 | **`refs`** | **参考类资料聚合目录**(2026-09-30 建:7 个 git 子模块 + 1 个本地目录,由 `docs\` 的 5 个子模块与 1 个本地目录 + 已删除的 `h3\` 的 2 个并入),子模块目录名即线上仓库名。gitdir 形态两种并存:3 个**内联**(`.git` 是目录:`ComfyUI-Docs`/`MiniMax-H3`/`minimax-h3-guide`)、4 个**分离**(`.git` 文件 + `.git\modules\refs\<name>`,其 config 里 `worktree = ../../../../refs/<name>`) |
 | └ `ComfyUI-Docs` | ComfyUI 官方文档仓库本地克隆(Comfy-Org/docs,子模块;原 `docs\`) |
 | └ `Obsidian-Dev-Docs` | Obsidian 官方开发者文档(插件开发参考,子模块;原 `docs\`) |
@@ -26,17 +26,17 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ `MiniMax-H3` | MiniMax H3 官方模型仓库(自带 9 个官方 Skills,子模块;原 `h3\`) |
 | └ `minimax-h3-guide` | H3 参考加载套件(其 `H3ReferenceSuite` 由根 `custom_nodes` 子链接指向,子模块;原 `h3\`) |
 | └ `Qwen-Image-Edit-Skills` | Qwen-Image-Edit 官方 Skills 源码参考(`aliyun-image-skill\` 阿里云百炼 API 版 + `comfyui-agent-kit\` 的 comfyui skill 知识文件,共 67 文件)。⚠️ **本地目录、非子模块** —— 由**根仓库以普通文件(非 gitlink)跟踪**,故搬移只需 `git add .` 记重命名,不涉及 gitdir/`.gitmodules`;原 `docs\` |
-| **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 28 个,按编号-用途分组: |
+| **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 29 个,按编号-用途分组: |
 | └ `001x` 万物 | `0011_万物建模`(主线主流程)/ `0010_灰度遮罩` / `0012_万物变化` |
 | └ `001x` 万物 QI2.1 | `00110_万物建模_QI2.1` / `00120_万物变化_QI2.1`(Qwen-Image 2.1 版,**共用 `001x` 的表**;见「Qwen-Image 2.1 工作流」) |
 | └ `002x` 场景镜头 | `0020_场景首帧` / `0021_场景拉镜` / `0022_场景推镜` / `0023_场景旋镜` |
 | └ `002x` 场景镜头 QI2.1 | `00200_场景首帧_QI2.1` / `00220_场景推镜_QI2.1`(Qwen-Image 2.1 版,**共用 `002x` 的表**) |
-| └ `003x` 场景生成 | `0030_文生场景`(H3 T2VA,仅画面)/ `0031_首帧场景`(I2V)/ `0032_参考场景`(R2V 多图多视频参考)/ `0033_OrbitSheets场景`(Location Sheet 参考板:锚点图+H3 多视角选帧拼板) |
+| └ `003x` 场景生成 | `0030_文生场景`(H3 T2VA,仅画面)/ `0031_首帧场景`(I2V)/ `0032_参考场景`(R2V 多图多视频参考)/ `0033_OrbitSheets场景`(Location Sheet 参考板:锚点图+H3 多视角选帧拼板)/ `0035_场景截帧`(**加载视频 → 截帧 → 8 单图 + 四图/八向合成保存**; 用自有插件新节点 `FallingTSLoadVideo`(加载视频: 来自输出 + 截帧 + 序列号/名称 + 保存帧 + 文件名前缀输出), 布局照 `0030_文生场景` 的「预览视频往后的所有节点」; 端口(视频/音轨/前缀)与十个保存节点的前缀分发由 `custom_nodes\ComfyUI-FallingTS\dev\build-decompose-workflows.py` 的 `fix_0035()` 归一, 幂等 —— 原「从 0030 尾部搬运」的 `make-0035-scene.py` 已随 0030 清理尾部而退休) |
 | └ `003x` 世界模型 | `0034_世界模型`(**360° 环绕视频 → 一个最高质量 3DGS PLY**;2026-09-28 由「md 表 8 图」改版为「md 表 360 视频」):`FallingTSMarkDownTable`(360环绕视频列)→ `WorldSurroundPanorama`(视频→**横向展开长图**(上行=天/无黑边/无重影) + valid_band + v_center; 2026-09-28 v2: 按画面位移自适应抽帧 + **自适应补密(治不均匀转速: 静止段/甩镜段)**、一圈闭环吸附(需首末帧几何重合)、逐像素 winner-take-all、近静止直接报错; 转速谱系 17 用例实测与四个已修静默缺陷见 `docs\360视频横向展开长图-v2实现-2026-09-28.md` §8)→ `PreviewImageSave`(长图预览支路)**与** `WorldPanoramaViews`(长图→视角批 + 精确 w2c 外参/内参, `v_range`/`v_center` 接长图元信息)→ `WorldRefinePLY`(视角批 + 相机先验 → 504 前馈 + 3DGS 全参数精修 mode=all reg=3.0, `gt=952`)→ `HYWM2PLYAdvancedGaussianViewer`;产物 `media\<项目>\0034_世界模型\0034_世界模型_世界3DGS.ply`。数据表 `stories\七纹刻印\0034_世界模型.md`;生成/改版脚本 `custom_nodes\ComfyUI-FallingTS\dev\_build-0034-world360.py`(幂等, 带六条布局规范自检), 验收脚本 `custom_nodes\ComfyUI-FallingTS\dev\_verify-0034-360.py` |
-| └ `004x` 视频生成 | `0040_文生视频` / `0041_首帧视频` / `0042_首尾视频` / `0043_关键帧视频`(AddGuide 锚定任意帧)/ `0044_参考视频` |
-| └ `005x` 拆解 | `0050_视频拆帧` / `0051_视频拆音` |
+| └ `004x` 视频生成 | `0040_文生视频` / `0041_首帧视频` / `0042_首尾视频` / `0043_关键帧视频`(AddGuide 锚定任意帧)/ `0044_参考视频`。**2026-10-02 起这 5 个工作流的 PreviewVideo 之后的处理尾部全部清空** —— 截帧链(首帧/关键帧/尾帧 `PreviewImageSave`)、截音链(`FallingTSAudioTrim` + 三个 `PreviewAudioSave`)与分发文件名前缀的 `Reroute` 都已删除, 预览视频只留 `video` 输出、文件名前缀改由 MD 表 `ID` 直连(与 `0030`~`0032` 同口径); 拆帧/拆音各自归口到 `0050`/`0051` |
+| └ `005x` 拆解 | `0050_视频拆帧` / `0051_视频拆音`。**2026-10-02 起这两个工作流不要 md 数据表节点**(自带的加载节点下拉就是"起始的加载"): `0050` = `FallingTSLoadVideo`(下拉手选原视频, 也可用 `video_in`) → 截帧 → 三个 `PreviewImageSave`(首帧/关键帧/尾帧); `0051` = 同一个加载视频节点的 `audio` 输出(**拆音不需要截帧**, 不受「完成」门控) → `FallingTSAudioTrim` 波形截段 → 三个 `PreviewAudioSave`。文件名前缀一律取加载节点的 `prefix` 输出(「序列号_名称」, 一条线分发给本图所有预览/保存节点), 保存节点再用后缀区分(如 `00007_书房_首帧.png`); 因无 md 表, 产物目录退回工作流名。两个工作流都由 `custom_nodes\ComfyUI-FallingTS\dev\build-decompose-workflows.py` 生成(幂等, 连 0070 一起重建), 验收脚本 `_verify-005x-decompose.py` |
 | └ `006x` 音频生成 | `0060_背景音乐` / `0061_环境音效` / `0062_效果音效` / `0063_文生人声` / `0064_参考人声` |
-| └ `007x` 截取 | `0070_截取声音` |
+| └ `007x` 截取 | `0070_截取声音`(`FallingTSLoadAudio` 下拉手选音频(也可用 `audio_in`) → `FallingTSAudioTrim`「截取音频」波形截段 → 三个「截取音频预览」)。**2026-10-02 起去掉 md 数据表节点**: 文件名前缀 = 加载音频的 `prefix` 输出(「序列号_名称」), 一条线分发给截取音频与三个预览, 保存节点再用后缀区分; 产物目录退回工作流名。旧版的 `时长=结束-开始` + `TrimAudioDuration` + `PreviewAudio` + `SaveAudioAdvanced` 已由这条链取代(2026-10-02) |
 | `models` | 模型实际存放处(`ComfyUI\models` 软链接指向);38 个标准槽位子目录,每个目录带 `.gitignore`(内容 `*`+`!.gitignore`)忽略模型文件、仅占位入库。已就绪模型见「模型与蓝图」 |
 | └ 核心生成 | `diffusion_models` / `text_encoders` / `vae` / `loras` / `checkpoints` / `upscale_models` / `background_removal`(已就绪) |
 | └ 语音 | `TTS`(Qwen3-TTS 五变体 + SenseVoice)/ `ASR` / `speaker_models` / `audio_encoders` |
@@ -48,7 +48,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ `Bilibili` | B 站教程调研:`B站教程调研.md` + `工作流大全\`(474 个配套工作流) |
 | └ `AutoDL` | 云端 GPU 调研:`AutoDL-GPU选型-2026-08-06.md` + `api.md`(云模型库接口)+ `models.md`(4887 条模型清单) |
 | `stories` | Obsidian 故事写作工作区(自带 `.obsidian\` 配置 + 插件安装位相对软链,见「软链接映射 §D」):**`plugins\`**(插件聚合目录,与 ComfyUI 侧 `custom_nodes` 同构:含 `Obsidian-Comfy` 一个插件子模块,目录名即线上仓库名;该插件自带文件浏览器「编号分层」排序)+ `template\`(新建故事模板)+ 用户自定义故事库目录(库名随写作项目而定,以盘上实际为准) |
-| `scripts` | **纯临时目录**(被 `scripts\.gitignore` 忽略:`*` + `!.gitignore`,仅存本地不入库):一次性调研/探针/校验脚本、实验产物、缓存、prompt 转储等,**随时可整体清空**(2026-09-30 已清空一次:71 项 / 983.5 MB 进回收站)。⚠️ **要能复跑的工具链不放这里** —— 2026-09-30 起这类脚本已迁入 `custom_nodes\ComfyUI-FallingTS\dev\`(30 个:0034 世界模型生成/验收、world-panorama 展开的合成真值/转速谱系/方位对拍、运行前命令自检);插件的**运行期硬依赖**则放在使用它的节点旁边(`custom_nodes\ComfyUI-FallingTS\world-refine\refine_0034_gs.py`) |
+| `scripts` | **纯临时目录**(被 `scripts\.gitignore` 忽略:`*` + `!.gitignore`,仅存本地不入库):一次性调研/探针/校验脚本、实验产物、缓存、prompt 转储等,**随时可整体清空**(2026-09-30 已清空一次:71 项 / 983.5 MB 进回收站)。⚠️ **要能复跑的工具链不放这里** —— 2026-09-30 起这类脚本已迁入 `custom_nodes\ComfyUI-FallingTS\dev\`(41 个:0034 世界模型生成/验收、world-panorama 展开的合成真值/转速谱系/方位对拍、运行前命令自检、0050/0051/0070/0035 的生成与验收);插件的**运行期硬依赖**则放在使用它的节点旁边(`custom_nodes\ComfyUI-FallingTS\world-refine\refine_0034_gs.py`) |
 | `logs` | ComfyUI 运行日志(`comfyui*.log`/`comfyui-console*.log`,已 gitignore) |
 | `backups` | **工作流/重要文件的修改前备份**(2026-08-04 起):`backup-<文件名>-<YYYYMMDD>-<说明>.*` 命名;**纯本地暂存目录** —— `.gitignore` 忽略全部内容(只有 `.gitignore` 本身入库), **可随时整体清空、不承担归档职责**:环境快照(pip-freeze/conda export)、本地 wheel、文档归档一律不留档, 需要时现场重建(`pip freeze`/重新下载);2026-09-30 已全清一次(1646 文件 / 372.8 MB 直接删除) |
 | `.claude` | SymbolicLink → `.agents`(Claude Code 兼容垫片,技能聚合目录,见「软链接映射 §C」) |

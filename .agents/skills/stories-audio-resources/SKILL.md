@@ -1,27 +1,23 @@
 ---
 name: stories-audio-resources
-description: Audio and extraction resource types for the story library — video frame extraction, video audio extraction, background music, ambient sound, effect sound, text-to-speech voice, reference voice, and audio clipping. Use when writing or editing an audio resource table or performing frame/audio extraction.
+description: Audio resource types for the story library — background music, ambient sound, effect sound, text-to-speech voice, and reference voice. Video frame extraction, video audio extraction, and audio clipping have no resource tables since 2026-10-02 (their workflows take the source file from their own loader node). Use when writing or editing an audio resource table.
 ---
 
 # 故事库音频与拆解类资源规范
 
 > 所有类型共用 `stories/AGENTS.md` 的「资源 ID 规则」与「表格 md 文件规范说明」（后者见技能 `stories-resource-tables`）。
 
-### 视频拆帧
+### 视频拆帧（无数据表）
 
-即通过节点获取视频所有帧数的图片，包含ID，原视频(VIDEO)
+**2026-10-02 起 `0050_视频拆帧.md` 已删除**，这个流程不再有资源表：工作流 `0050_视频拆帧` 自带「加载视频」节点（`FallingTSLoadVideo`），在节点下拉里手选 output 里的原视频 → 点「截帧」取帧（可多张）→ 点「完成」把选中帧输出到 首帧/关键帧/尾帧 三个预览保存。
 
-#### 写入时机
+产物文件名 = 加载节点上的 **「序列号」+「名称」**（合成 `<序列号>_<名称>` 作前缀，序列号自动取产物目录里最大编号 + 1）+ 该保存节点自己的后缀，落在 `output/0050_视频拆帧/`（如 `00007_书房_首帧.png`）。**不要为它建表，也不要用 `@{...}` 引用它。**
 
-**需要我明确说明写入哪些内容时，才可以写入**；分析正文内容时，**不允许自动写入**。
+### 视频拆音（无数据表）
 
-### 视频拆音
+**2026-10-02 起 `0051_视频拆音.md` 已删除**：工作流 `0051_视频拆音` 用同一个「加载视频」节点的 `audio` 输出（拆音不需要截帧，不受「完成」门控）→「音频截段」在波形上拖两侧把手选区 → 点「截段」累积（可多段）→ 点「完成」输出 截段 1/2/3 → 三个预览音频。
 
-即通过节点获取视频的音频，并支持截取指定秒数的音频，包含ID，原视频(VIDEO)，开始秒数(INT)，结束秒数(INT)
-
-#### 写入时机
-
-**需要我明确说明写入哪些内容时，才可以写入**；分析正文内容时，**不允许自动写入**。
+文件名口径同「视频拆帧」：`<序列号>_<名称>` 前缀 + 各自后缀，落 `output/0051_视频拆音/`。**不要为它建表。**
 
 ### 背景音乐
 
@@ -63,10 +59,8 @@ description: Audio and extraction resource types for the story library — video
 
 **需要我明确说明写入哪些内容时，才可以写入**；分析正文内容时，**不允许自动写入**。
 
-### 截取声音
+### 截取声音（无数据表）
 
-即通过节点获取指定时间段的声音，包含ID，原声音(AUDIO)，开始秒数(INT)，结束秒数(INT)
+**2026-10-02 起 `0070_截取声音.md` 已删除**：工作流 `0070_截取声音` 用「加载音频」节点（`FallingTSLoadAudio`，下拉手选 output 里的音频，节点内可直接试听）→「截取音频」波形截段（可多段）→ 每个截段各接一个「截取音频预览」，可试听并点「保存」落盘。
 
-#### 写入时机
-
-**需要我明确说明写入哪些内容时，才可以写入**；分析正文内容时，**不允许自动写入**。
+文件名 = 加载节点上的 `<序列号>_<名称>`（如 `00007_夜雨.mp3`），落 `output/0070_截取声音/`。**不要为它建表，也不要用 `@{...}` 引用它。**

@@ -1,6 +1,6 @@
 ---
 name: stories-resource-tables
-description: Story-library resource-table and prompt conventions — frame terminology (face/side/edge/view/word), image prompt ordering and segmentation rules, image and MiniMax H3 video size buckets (entity modeling picks portrait/landscape/square by the object's own shape), the H3 prompt language rules (Chinese body as of 2026-09-25, verbatim English skeleton, camera-language terms in English, on-screen text and dialogue kept in their original language) with the measured known costs of a Chinese body, entity/scene-still resource types (single-view modeling, grayscale mask, variation, Qwen-Image-Edit wording, nine-grid, scene first-frame/pull-in/push-in/orbit), table md field types, and the overhead view. Use when writing or editing any image-type resource table, or when a task needs the shared size, segmentation, or H3 language rules.
+description: Story-library resource-table and prompt conventions — frame terminology (face/side/edge/view/word), image prompt ordering and segmentation rules, image and MiniMax H3 video size buckets (entity modeling picks portrait/landscape/square by the object's own shape), the H3 prompt language rules (Chinese body as of 2026-09-25, verbatim English skeleton, camera-language terms in English, on-screen text and dialogue kept in their original language) with the measured known costs of a Chinese body, entity/scene-still resource types (single-view modeling, variation, Qwen-Image-Edit wording, nine-grid, scene first-frame/pull-in/push-in/orbit), table md field types, and the overhead view. Use when writing or editing any image-type resource table, or when a task needs the shared size, segmentation, or H3 language rules.
 ---
 
 # 故事库资源表与提示词通用规范（总纲）
@@ -73,20 +73,20 @@ description: Story-library resource-table and prompt conventions — frame termi
 
 ### 生图类尺寸规范
 
-**万物建模、万物变化按对象形态选横竖屏**——画面只画单一完整画面，比例必须贴合对象固有形态，否则主体四周会留大片空白：
+**万物建模、万物变化按对象形态选横竖屏**——画面只画单一完整画面，比例必须贴合对象固有形态，否则主体四周会留大片空白。默认取**短边 1088 档**（三档均 ≈2.09MP，每轴 32 的倍数）：
 
 | 对象形态 | 比例 | 宽度×高度 |
 | :--- | :--- | :--- |
-| 站立/竖高的对象（人物、生物、立式器物、高塔等） | 9:16 竖屏 | **768×1344** |
-| 横向铺展的对象（桌面器物、横放的书籍、车辆等） | 16:9 横屏 | **1344×768** |
-| 无明显横竖倾向的对象（正方、圆形、球状等） | 1:1 正方 | **768×768** |
+| 站立/竖高的对象（人物、生物、立式器物、高塔等） | 9:16 竖屏 | **1088×1920** |
+| 横向铺展的对象（桌面器物、横放的书籍、车辆等） | 16:9 横屏 | **1920×1088** |
+| 无明显横竖倾向的对象（正方、圆形、球状等） | 1:1 正方 | **1088×1088** |
 
 - 判定看**对象本体的固有形态**，不看画面里想放多少元素；拿不准时归入最接近的一档
 - 宽度/高度两列必须成对填写上表中的整组数值，不得自行拼凑比例
-- 显存紧张时：竖屏降 480×832、横屏降 832×480（0.4MP）；高清统一走 4x 外部放大 + 分块重绘
-- 像素保持 16 的倍数（VAE 8×8 下采样对齐）；三档比例与 H3 视频合法桶一致，下游首帧视频可直接等比缩放不裁切
+- **档位选择**（2026-10-02 定）：默认短边 1088 ≈2.09MP；要更高细节可升 Qwen-Image 2.1 官方 2K 档——竖屏 1536×2752 / 横屏 2752×1536 / 正方 2048×2048（≈4.2MP，**实测生成明显更慢**，8G 显卡另有 OOM 风险）；显存/速度再紧则降旧 768 档——竖屏 768×1344 / 横屏 1344×768 / 正方 768×768（≈1MP），或再降 480×832 / 832×480（0.4MP）；高清统一走 4x 外部放大 + 分块重绘
+- 像素保持 32 的倍数（VAE 8×8 下采样对齐）；三档比例与 H3 视频桶（9:16 = 768×1344）相差不到 1%，进首帧视频/首帧场景时由模型自动重采样，无需人为改小
 
-**场景首帧**（场景类，不属于万物）的宽度/高度统一填写 **16:9 = 1344×768**（高清源图，8G 显卡可跑 Qwen 4 步 Lightning 档）。进首帧视频/首帧场景时，模型会把首帧自动重采样到视频目标 canvas（如 832×480），无需人为改小；同 16:9 比例下直接等比缩放不裁切。需要其他比例时，从 H3 合法桶选取（见「视频类尺寸规范」）。
+**场景首帧**（场景类，不属于万物）的宽度/高度统一填写 **16:9 = 1920×1088**（短边 1088 档，≈2.09MP；2026-10-02 由 1344×768 上调，同日因 2K 档生成太慢而由 2752×1536 下调）。进首帧视频/首帧场景时，模型会把首帧自动重采样到视频目标 canvas（如 832×480），无需人为改小。需要其他比例时，从本节 1088 档改比例、或从 Qwen-Image 2.1 官方 2K 档、H3 合法桶选取（见「视频类尺寸规范」）；追求细节可升 2K 档 2752×1536，显存不足降回 1344×768。
 
 ### 视频类尺寸规范（MiniMax H3）
 
@@ -179,29 +179,23 @@ description: Story-library resource-table and prompt conventions — frame termi
 
 **宽度/高度按对象固有形态选**（见「生图类尺寸规范」）：
 
-- **人物、生物、立式器物等站立/竖高对象** → 竖屏 9:16 = **768×1344**
-- **横向铺展的物品** → 横屏 16:9 = **1344×768**
-- **正方/圆形等无明显横竖倾向的对象** → 1:1 = **768×768**
+- **人物、生物、立式器物等站立/竖高对象** → 竖屏 9:16 = **1088×1920**
+- **横向铺展的物品** → 横屏 16:9 = **1920×1088**
+- **正方/圆形等无明显横竖倾向的对象** → 1:1 = **1088×1088**
 
 提示词中必须逐条写出该画面要表现的外观特征（外形轮廓、结构组成、材质质感、颜色配色、纹样装饰、配件部件）；**严禁出现"三视图""全身三视图""物品三视图""正视/侧视/背视""左边特写"等字样**。
 
 **按对象类型区分取景**：
 
-- **人物**：**正面全身立绘**，人物居中构图，从头到脚完整入画，画面只呈现这一个正面形象（不画侧面与背面）；竖屏 768×1344
-- **生物/怪物**：同人物，正面全身、完整入画，只呈现一个形象；竖屏 768×1344
-- **物品**：**单一视角的完整外观**，不并排多个视角、不写"物品三视图"字样；横屏或竖屏按本体固有形态选，正方/圆形等用 768×768
-
-### 灰度遮罩
-
-即将原图转为灰度遮罩图，包含ID，原图(IMAGE)
-
-#### 写入时机
-
-**需要我明确说明写入哪些内容时，才可以写入**；分析正文内容时，**不允许自动写入**。
+- **人物**：**正面全身立绘**，人物居中构图，从头到脚完整入画，画面只呈现这一个正面形象（不画侧面与背面）；竖屏 1088×1920
+- **生物/怪物**：同人物，正面全身、完整入画，只呈现一个形象；竖屏 1088×1920
+- **物品**：**单一视角的完整外观**，不并排多个视角、不写"物品三视图"字样；横屏或竖屏按本体固有形态选，正方/圆形等用 1088×1088
 
 ### 万物变化
 
 即图片换样式并优化图片，包含ID，原图(IMAGE)，灰度遮罩(MASK)，图1(IMAGE)，图2(IMAGE)，图3(IMAGE)，变化-正词(TEXT)，变化-负词(TEXT)
+
+`灰度遮罩(MASK)` 列写 `@{0010_灰度遮罩/<编号>_<名称>}` 引用遮罩产物。**遮罩没有数据表**（原 `0010_灰度遮罩.md` 已于 2026-10-02 删除）：在 ComfyUI 里用「加载图像」节点（工作流 `0010_灰度遮罩`）加载原图，用遮罩编辑器画好后保存到 `output/0010_灰度遮罩/`（编号自动自增，名称为节点上填的「名称」）。⚠️ 遮罩必须涂在**该条的底图**上，底图换了遮罩就得重画。
 
 #### 写入时机
 

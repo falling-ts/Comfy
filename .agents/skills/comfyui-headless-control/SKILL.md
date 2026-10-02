@@ -73,8 +73,11 @@ description: |
 | FallingTSMarkDownTable | 🔄 刷新 | `GET /fallingts_mdtable/read?path=` | 仅改前端内存,见 §4-④ | ✅ |
 | FallingTSMarkDownTable | 选文件 | `POST /fallingts_mdtable/select_file` | ❌ **阻塞** | ✅(超时) |
 | (通用) | 浏览/解析/预览 | `GET /fallingts_mdtable/{browse,resolve,preview}` | query:`path`,`kind` | ✅(前二) |
-| 遮罩编辑器 | 保存 | `POST /fallingts_mask/rename` | `node_id`,`image_ref`,`base`,`force` | ○ |
+| 遮罩编辑器 | 保存 | `POST /fallingts_mask/rename` | `node_id`,`image_ref`,`base`,`force`,`name`,`workflow_id` | ○ |
 | 灯箱/中键/通知/布局类 | — | 无服务端状态,与自动化无关 | — | — |
+
+> 遮罩编辑器保存时, 若带 `name`(来自「加载图像」节点 `FallingTSLoadImage` 的「名称」输入框), 成品按
+> `output/0010_灰度遮罩/` 里已有 5 位编号的最大值 +1 命名, 即 `<5位编号>_<name>.png`(撞号顺延); 不带 `name` 仍走 `base`/预览缓存/`mask-{ts}` 旧口径。
 
 ## 3. 必须由调用方自己复刻的三段前端逻辑
 
@@ -151,7 +154,7 @@ POST(f"/proceed/continue/{continue_id}")        # 未跑到该节点 => 400 "没
 |---|---|
 | 每个 `@{...}` 必须能解析 | 去重后 10 条引用里 **2 条静默失败**:`@{0031_首帧场景/00002_书房旋镜四图}`(文件其实叫 `00001_书房旋镜四图`)、`@{0044_参考视频/00001_书房开场四镜尾帧}`(从未存在) |
 | 兜底趟是否「串版」 | 2026-09-24 起保存类节点**优先用工作流的 md 表文件名**作产物子目录(`custom_nodes/ComfyUI-FallingTS/output_subdir.py`),`@{表名/ID}` 因此走**严格命中**、不再靠同族兜底。代价:`0011_万物建模` 与 `00110_万物建模_QI2.1` 现在**落同一个目录**,同一行 ID 的产物互相覆盖 |
-| 工作流里的快照 id 是否还在 md 里 | **8 张空壳表**(0050/0051/0060~0064/0070)的工作流存的是**绝对路径 + 已不存在的 id**(死快照);`0061_环境音效.md` 因分隔行写成 `:--`(需 `-{3,}`)**整表解析失败** |
+| 工作流里的快照 id 是否还在 md 里 | **5 张空壳表**(0060~0064)的工作流存的是**绝对路径 + 已不存在的 id**(死快照);`0061_环境音效.md` 因分隔行写成 `:--`(需 `-{3,}`)**整表解析失败**。⚠️ 0050/0051/0070 已于 2026-10-02 **去掉 md 表节点**(三张表也一并删除): 它们不再刷新任何表, 源文件直接由加载节点的下拉(或 `video_in`/`audio_in`)给出 |
 | 是否有保存节点同名覆盖 | `00110_万物建模_QI2.1` 的 ID 同时接两个 `PreviewImageSave`(42/62),两者 `filename_suffix` 皆空 ⇒ 都算成 `<ID>.png`,**互相覆盖** |
 | 重复 id | `parse_md_file` 用 `seen` 集合**静默丢弃**重复行,不告警 |
 | 只解析第一张表 | 找到表头+分隔行后 `break`,文件里第二张表及其后内容**一律忽略** |
@@ -179,11 +182,11 @@ POST(f"/proceed/continue/{continue_id}")        # 未跑到该节点 => 400 "没
 
 | 动作 | 结果 |
 |---|---|
-| `GET /fallingts_mdtable/read`(`0010_灰度遮罩.md`) | `ok=True`,1 行,字段 `['ID','原图']` |
+| `GET /fallingts_mdtable/read`(`0011_万物建模.md`) | `ok=True`,返回该表全部行与字段 |
 | `GET /fallingts_mdtable/browse`(`stories/七纹刻印`) | `ok=True`,33 条目 |
 | `GET /fallingts_mdtable/resolve`(`@{0011_万物建模/00001_陈落}`) | `ok=True` → `output\0011_万物建模\00001_陈落.png`(2026-09-23 实测时写的是 `_QI2.1` 目录;2026-09-24 该目录已改名并入表名目录) |
 | `POST /fallingts_mdtable/select_file` | **读取超时**(阻塞) |
-| 提交 `0010_灰度遮罩` → `POST /preview-image/save/2` | **200** `已保存 1 张: <dir>/probe.png`,盘上确认 |
+| 提交一个便宜工作流 → `POST /preview-image/save/<预览节点 id>` | **200** `已保存 N 张: <dir>/...`,盘上确认 |
 | 构造 48 帧图 → `POST /preview-video/frame/952` | **200**,返回体 PNG 头合法 |
 | `GET /preview-video/state/952` | `{selected_frames:[25], done:false, total_frames:48, has_video:true}` |
 | `POST /preview-video/frame-remove/952` | **200**(但传错字段名会静默 no-op) |
