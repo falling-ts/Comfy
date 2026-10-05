@@ -1,6 +1,6 @@
 ---
 name: stories-scene-video
-description: Scene-video resource types for the story library — shared scene rules (eye-level 360-degree clockwise rotation, per-face frame-edge continuity, reference-view ordering), text-to-scene, first-frame scene, reference scene (Ref2VA six sections), the world-model table (0034: one 360° rotation video → a 3DGS PLY), the OrbitSheets scene reference board, and the measured scene-reference plus H3 camera-movement lessons (reference leakage, anchor snapping, negation unreliability, rotation-rate ceiling). Use when writing or editing any scene-video resource table.
+description: Scene-video resource types for the story library — shared scene rules (eye-level 360-degree clockwise rotation, per-face frame-edge continuity, reference-view ordering), text-to-scene, first-frame scene, reference scene (Ref2VA six sections), the world-model table (0034 — one 360° rotation video → a 3DGS PLY), the OrbitSheets scene reference board, and the measured scene-reference plus H3 camera-movement lessons (reference leakage, anchor snapping, negation unreliability, rotation-rate ceiling), and the fixed 12-second eight-shot (Shot 1-8) 360-degree rotation formula that every scene-video prompt defaults to. Use when writing or editing any scene-video resource table.
 ---
 
 # 故事库场景视频资源规范
@@ -31,9 +31,61 @@ description: Scene-video resource types for the story library — shared scene r
 
 **参考视角顺序（八方位八视图）硬性要求**：给 H3 提供八方位视角参考图时，必须按**旋转顺序**提供并逐张点名方位，顺序固定为俯视视角下的**顺时针「前→前右→右→右后→后→后左→左→左前」**（与 0033 OrbitSheets 参考板视角顺序一致），其中 **90°、180°、270° 三张主格对应正右、正后、正左三个方位视角**，其余斜向视角为旋转过渡帧。参考段须逐张点明相邻视角为绕主体旋转 45° 的机位（如「图1=正前方视角；图2=顺时针转 45° 的前右视角；图3=再转 45° 的右侧视角；图4=再转 45° 的右后视角；图5=再转 45° 的后方视角；图6=再转 45° 的后左视角；图7=再转 45° 的左侧视角；图8=再转 45° 的左前视角」），并声明「目标镜头沿同一方向顺时针旋转，过渡角度取相邻两图之间的中间视角」。图序是给模型的旋转轨道暗示，必须与目标镜头旋转方向一致，方向相悖会干扰空间连贯（尤其 360° 环绕）；静止/无旋转镜头固定沿用默认顺时针顺序，故事内全局保持一致。
 
+
+### 12 秒八镜 360° 旋镜定式（Shot 1–8，场景类默认写法）
+
+**适用**：`0030_文生场景` / `0031_首帧场景` / `0032_参考场景` 三条场景类提示词的**默认写法**，一律套用；用户明确要求别的时长或镜数时才偏离。它把「场景类公共要求」里 360 旋转、角速度恒定、方位衔接一致、不停顿、不否定式等硬性要求落成一套**固定模板**（已在 `0031_首帧场景` 的 12 秒八镜行实测落地）。
+
+> 注：存量 `0030_文生场景` 第 1 行、`0031_首帧场景` 第 1 行仍是旧的「10 秒 / 四段散文」版，**改写时统一到本定式**。
+
+**固定参数（不与每次商定）**
+
+| 项 | 值 |
+|---|---|
+| 视频秒数 | **12**（表内 `视频秒数(INT)` 填 `12`；按 H3 的 17k+5 帧网格向上吸附为 **294 帧 ≈ 12.25 秒**，提示词里的 12.00 秒闭环落点按实际时长取整） |
+| 尺寸 | 按技能 `stories-resource-tables` 的 H3 canvas 规则（默认 832×480） |
+| 总转角 | **360 顺时针**一周，起点 = 终点，闭环 |
+| 角速度 | 恒定 **30 度/秒**（1.5 秒 / 45 度、约 1.25 度/帧 @24fps），低于 H3 的 **40 度/秒 翻滚上限** |
+| 机位 | 固定在场景中央的**空中一处静止点**，视线保持水平（eye level）不俯仰；只绕自身竖轴旋转，不升降、不横移、不变焦、不后退、不穿家具 |
+| 镜头数 | **8**，每镜 1.5 秒转过 45 度 |
+
+**Shot 与八方位、秒数对照（固定）**
+
+八方位顺序与「参考视角顺序（八方位八视图）」完全一致（前→前右→右→右后→后→后左→左→左前），所以参考图、参考板、提示词的方位口径天然对齐；三个主方位（右 90 度 / 后 180 度 / 左 270 度）恰好落在 `[Shot 3]` / `[Shot 5]` / `[Shot 7]` 的起点。
+
+| 镜 | 写进提示词的秒数标记 | 起始方位 | 该镜转过 |
+|---|---|---|---|
+| `[Shot 1]` | **不写秒数**（固定 0） | 正面 0 度 | 0 度→45 度（正面→前右） |
+| `[Shot 2]` | `At 00:01.500` | 前右 45 度 | 45 度→90 度 |
+| `[Shot 3]` | `At 00:03.000` | 右 90 度 | 90 度→135 度 |
+| `[Shot 4]` | `At 00:04.500` | 右后 135 度 | 135 度→180 度 |
+| `[Shot 5]` | `At 00:06.000` | 后 180 度 | 180 度→225 度 |
+| `[Shot 6]` | `At 00:07.500` | 后左 225 度 | 225 度→270 度 |
+| `[Shot 7]` | `At 00:09.000` | 左 270 度 | 270 度→315 度 |
+| `[Shot 8]` | `At 00:10.500` | 左前 315 度 | 315 度→360 度，**12.00 秒处回到 `[Shot 1]` 的起点构图，闭环** |
+
+**`[Shot 1]` 的画面来源（三条场景表唯一差别）**
+- **文生场景**：首帧由提示词首句承载（风格 + 正面构图），不引图
+- **首帧场景**：`<Picture 1>`，且首行照抄 I2VA 英文对齐指令 `For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.`
+- **参考场景**：按 Ref2VA 六段结构，`[Shot 1]` 的首帧来自 reference subject 的锚定描述
+
+**提示词结构（三段）**
+1. **前置段（场景总览）**：先写风格、空间尺度（面积/长宽）、四面墙在四角直角相接、踢脚线绕墙一周、整体明暗；再**按八方位逐一清单每件物件与大概方位**（前/前右/右/右后/后/后左/左/左前），拍不到的墙面每块留 1 件简单家具作锚点；必要时写「只有四面实心墙、无第五面墙无门洞」之类正面约束。该段不写镜头运动。
+2. **机位段**：写明机位静止、eye level、地平线水平、纯顺时针匀速、**角速度一词**（每秒 30 度，整圈在 12 秒内完成）、全程不升降横移变焦后退；并声明**整条是同一个连续镜头，`[Shot 1]`–`[Shot 8]` 只是这段连续旋转在时间轴上的八个等分时段标注，不剪切**；补一句平移规则「左侧内容朝画幅左缘移出，下一面墙从画幅右缘连续进入、滑向中央，每件物件只经左缘或右缘进出视野、不凭空出现消失；前一面墙右缘与后一面墙左缘是同一墙角/墙地交线的连续延续」。
+3. **八镜段**：`[Shot 1]`（无秒数）→ `[Shot 2] At 00:01.500` → … → `[Shot 8] At 00:10.500`，每段写「当前正对哪一方位、画面左/中/右各是什么、本段向左缘移出什么、从右缘移入什么、段末正对下一方位」，末段收束到 12.00 秒回到首帧构图、首尾衔接成闭合环绕。
+
+**每段固定句式（画面左缘移出 / 右缘移入，正是用户给定的衔接口径）**
+> 本段画面**左侧的内容正渐渐移出画幅左缘**，同时**下一面墙（下一镜头要看到的内容）从画幅右缘连续进入、一点点滑向画幅中央**；前一面墙的右缘与后一面墙的左缘是同一处墙角与同一道墙地交线的连续延续，每件物件只经画幅左缘或右缘进出视野、不凭空出现或消失。
+
+**不可破的硬要求（与「场景类公共要求」一致）**
+- 角速度恒定、一次连续转完，不用否定式停顿/吸附（见「场景参考图与 H3 运镜实测经验」四/五）；用正面陈述表达不停顿（如「角速度自始至终保持不变」「整圈一次连续转完」）
+- 每面墙/每块空白墙有实体锚点，件数克制（见「场景参考图与 H3 运镜实测经验」八/九），用正面清点句压数量
+- 闭环：12.00 秒处回到 `[Shot 1]` 起始构图与同一组锚点
+- 12 秒满足 `0034_世界模型` 的「≥9 秒」合格线，可直接被其复用
+
 ### 文生场景
 
-即利用文生视频获取具体描述的场景360度视频，包含ID，场景提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
+即利用文生视频（提示词按上文「12 秒八镜 360° 旋镜定式」写）获取具体描述的场景360度视频，包含ID，场景提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
 
 #### 写入时机
 
@@ -51,7 +103,7 @@ description: Scene-video resource types for the story library — shared scene r
 
 ### 首帧场景
 
-即利用首帧生视频获取具体秒数的场景360度视频，包含ID，<Picture 1>(IMAGE)，场景提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
+即利用首帧生视频（提示词按上文「12 秒八镜 360° 旋镜定式」写）获取具体秒数的场景360度视频，包含ID，<Picture 1>(IMAGE)，场景提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
 
 #### 写入时机
 
@@ -92,7 +144,7 @@ integrated_multimodal_description 先在图像中确立场景风格、主体、�
 
 ### 参考场景
 
-即通过最高9张图片，3个视频，3个音频参考生场景360度视频，包含ID，<Picture 1>(IMAGE)，<Picture 2>(IMAGE)，<Picture 3>(IMAGE)，<Picture 4>(IMAGE)，<Picture 5>(IMAGE)，<Picture 6>(IMAGE)，<Picture 7>(IMAGE)，<Picture 8>(IMAGE)，<Picture 9>(IMAGE)，<Video 1>(VIDEO)，<Video 2>(VIDEO)，<Video 3>(VIDEO)，<Audio 1>(AUDIO)，<Audio 2>(AUDIO)，<Audio 3>(AUDIO)，场景提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
+即通过最高9张图片（提示词按上文「12 秒八镜 360° 旋镜定式」写），3个视频，3个音频参考生场景360度视频，包含ID，<Picture 1>(IMAGE)，<Picture 2>(IMAGE)，<Picture 3>(IMAGE)，<Picture 4>(IMAGE)，<Picture 5>(IMAGE)，<Picture 6>(IMAGE)，<Picture 7>(IMAGE)，<Picture 8>(IMAGE)，<Picture 9>(IMAGE)，<Video 1>(VIDEO)，<Video 2>(VIDEO)，<Video 3>(VIDEO)，<Audio 1>(AUDIO)，<Audio 2>(AUDIO)，<Audio 3>(AUDIO)，场景提示词(TEXT)，宽度(INT)，高度(INT)，视频秒数(INT)
 
 #### 写入时机
 

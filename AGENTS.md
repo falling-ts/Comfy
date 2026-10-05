@@ -6,7 +6,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 
 | 路径 | 说明 |
 |------|------|
-| `ComfyUI` | ComfyUI 主程序(git submodule,detached HEAD 跟随上游 release tag,当前 `v0.37.0`):源码/入口在本目录;`models`/`input`/`output`/`user\default\workflows`/`custom_nodes` 均为相对软链接(见「软链接映射」);`blueprints\` 内置 90 个蓝图;其余结构遵循上游官方布局,不再逐一展开 |
+| `ComfyUI` | ComfyUI 主程序(git submodule,detached HEAD 跟随上游 release tag,当前 `v0.37.0`):源码/入口在本目录;`models`/`input`/`output`/`user\default\workflows`/`custom_nodes` 均为相对软链接(见「软链接映射」);`blueprints\` 内置 116 个蓝图;其余结构遵循上游官方布局,不再逐一展开 |
 | **`custom_nodes`** | **插件聚合目录**:45 个插件子模块 + `H3ReferenceSuite` 链接集中于此,`ComfyUI\custom_nodes` 为目录级相对软链接指向它(§B)。按功能归类: |
 | └ 自有插件 | `ComfyUI-FallingTS`:通用工具节点集(Continue/Selector/Table/Switch/PreviewVideo 5 节点 + 前端增强,已开源);另含**世界模型三节点**:`world-panorama` 的 `WorldSurroundPanorama`(**360° 环绕视频 → 横向展开长图**(等距圆柱条带, 上行=天、无黑边、无重影): 自动定抽帧步长 + 一圈闭环吸附 + ORB/RANSAC 纯偏航单应与「重叠区稠密光度一致性」联立定焦距 + 逐像素 winner-take-all(从不帧间平均), 真 equirect 视频可直接抽帧; 2026-09-28 v2 重做同时修掉 v1 的「长图倒立 + 上下各 30% 黑边 + 帧间平均糊掉细节(拉普拉斯锐度差 4.3 倍)」)、`WorldPanoramaViews`(长图 → 视角批 + **每视角精确 w2c 外参/内参**, 外参口径与 HYWM2 `SamplePanorama` 一致; 等距圆柱竖直朝向按世界地图口径修正, 多 `v_range`/`v_center` 竖向范围), 以及 `world-refine` 的 `WorldRefinePLY`(视角批(可接相机先验) → 504 前馈 + 3DGS **全参数**精修(mode=all + 几何信任域) → 一个 PLY; 接上 `extrinsics/intrinsics` 时把位姿作为先验注入前馈 `cond_flags=[cam,0,intr]`, 从源头消掉上游推理不做跨视图融合留下的多视图双重曝光/重影。2026-09-28 并入并扩到「360 视频进、PLY 出」) |
 | └ H3 生态(6 插件 + 链接) | `ComfyUI-Spectrum-MiniMax-H3`(加速)、`ComfyUI-SolAttn_triton`(注意力加速)、`ComfyUI-ReservedVRAM`(显存预留)、`ComfyUI-Qwen3-TTS`(H3 语音)、`h3-latent-upscaler`(latent 放大)、`ComfyUI-OrbitSheets`(场景/角色参考板:锚点图 + H3 多视角运镜 + 视觉选帧拼网格图,2026-08-17 装)、`H3ReferenceSuite`(软链接,见 `refs`) |
@@ -26,7 +26,7 @@ ComfyUI 及自定义节点的本地开发工作区。下文路径均相对项目
 | └ `MiniMax-H3` | MiniMax H3 官方模型仓库(自带 9 个官方 Skills,子模块;原 `h3\`) |
 | └ `minimax-h3-guide` | H3 参考加载套件(其 `H3ReferenceSuite` 由根 `custom_nodes` 子链接指向,子模块;原 `h3\`) |
 | └ `Qwen-Image-Edit-Skills` | Qwen-Image-Edit 官方 Skills 源码参考(`aliyun-image-skill\` 阿里云百炼 API 版 + `comfyui-agent-kit\` 的 comfyui skill 知识文件,共 67 文件)。⚠️ **本地目录、非子模块** —— 由**根仓库以普通文件(非 gitlink)跟踪**,故搬移只需 `git add .` 记重命名,不涉及 gitdir/`.gitmodules`;原 `docs\` |
-| **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 29 个,按编号-用途分组: |
+| **`workflows`** | **用户工作流实际存储处**(前端保存即在此,可经 `GET /userdata?dir=workflows` 读取),共 30 个,按编号-用途分组: |
 | └ `001x` 万物 | `0011_万物建模`(主线主流程)/ `0010_灰度遮罩` / `0012_万物变化` |
 | └ `001x` 万物 QI2.1 | `00110_万物建模_QI2.1` / `00120_万物变化_QI2.1`(Qwen-Image 2.1 版,**共用 `001x` 的表**;见「Qwen-Image 2.1 工作流」) |
 | └ `002x` 场景镜头 | `0020_场景首帧` / `0021_场景拉镜` / `0022_场景推镜` / `0023_场景旋镜` |
@@ -160,7 +160,7 @@ python main.py --enable-manager
 | facerestore_models | `GFPGANv1.4`、`GFPGANv1.3`、`codeformer-v0.1.0`、`GPEN-BFR-512`(人脸修复,Impact-Pack/ReActor 自动下载) |
 | TTS | `TTS\Qwen\` 下 Qwen3-TTS-12Hz 五变体(0.6B-Base / 0.6B-CustomVoice / 1.7B-Base / 1.7B-CustomVoice / 1.7B-VoiceDesign,各含主模型 + speech_tokenizer);`TTS\SenseVoiceSmall`(ASR,`model.pt`) |
 
-路线:Qwen-Image(国漫/中文更优)+ MiniMax H3(视频)+ FLUX.2-Klein(图像);曾清理 FLUX.2 全套、旧版 qwen_image、LTX-2.3/Wan 2.2、TripoSplat 等,后续按需重新引入(以表格为准)。`ComfyUI\blueprints\` 内置 90 个蓝图(位于 ComfyUI 目录内;除 Qwen 2511 外均缺模型)。
+路线:Qwen-Image(国漫/中文更优)+ MiniMax H3(视频)+ FLUX.2-Klein(图像);曾清理 FLUX.2 全套、旧版 qwen_image、LTX-2.3/Wan 2.2、TripoSplat 等,后续按需重新引入(以表格为准)。`ComfyUI\blueprints\` 内置 116 个蓝图(位于 ComfyUI 目录内;除 Qwen 2511 外均缺模型)。
 
 ## Qwen-Image 2.1 工作流(2026-09-21 建)
 

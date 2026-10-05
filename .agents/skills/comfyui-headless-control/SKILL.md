@@ -53,6 +53,7 @@ description: |
 |---|---|---|---|---|
 | PreviewImageSave | 保存 | `POST /preview-image/save/{id}` | `filename_prefix`,`filename_prefix_linked`,`filename_suffix`,`format`,`bit_depth`,`input_color_space`,`workflow_name` | ✅ |
 | PreviewImageSave | (回读) | `GET /preview-image/image-url/{id}` | — | ✅ |
+| **AutoSaveImage** | **无按钮(执行到即保存)** | 无自己的端点;预览回读复用 `GET /preview-image/image-url/{id}` | 落盘在 execute 内完成:`{前缀}{后缀}.{格式}` 直接写 output(同名覆盖、无序号);**无头提交要自带工作流名**(`extra_pnginfo` 顶层 `workflow_name`,或 `workflow.extra.fallingts_workflow_name`),否则子目录退回 output 根;widget 列表与 `PreviewImageSave` 完全相同 | ✅ |
 | PreviewVideo | 保存 | `POST /preview-video/save/{id}` | `filename_prefix`,`filename_prefix_linked`,`filename_suffix`,`workflow_name` | ✅ |
 | PreviewVideo | **截帧** | `POST /preview-video/frame/{id}` | `mode`(`time`/`frame`)、`append`、`frame_index` 或 `position_seconds` | ✅ |
 | PreviewVideo | 帧列表 ✕ | `POST /preview-video/frame-remove/{id}` | **`frame_index`** 或 `{"clear":true}` | ✅ |
@@ -75,6 +76,7 @@ description: |
 | (通用) | 浏览/解析/预览 | `GET /fallingts_mdtable/{browse,resolve,preview}` | query:`path`,`kind` | ✅(前二) |
 | 遮罩编辑器 | 保存 | `POST /fallingts_mask/rename` | `node_id`,`image_ref`,`base`,`force`,`name`,`workflow_id` | ○ |
 | 灯箱/中键/通知/布局类 | — | 无服务端状态,与自动化无关 | — | — |
+> **`AutoSaveImage`(执行即保存)**:`0035_场景截帧` 的十个图片保存节点与 `0050_视频拆帧` 的三个(首帧/关键帧/尾帧)都是它 —— **没有「保存」按钮、也没有自己的端点**, 执行到该节点就把产物写进 output(同名覆盖、无序号)。无头路径**不要把 `/preview-image/save/{id}` 用在这些节点上**(那是 `PreviewImageSave` 的), 并记得在提交时带工作流名, 否则产物落回 output 根而不是 `<工作流名>/` 子目录。
 
 > 遮罩编辑器保存时, 若带 `name`(来自「加载图像」节点 `FallingTSLoadImage` 的「名称」输入框), 成品按
 > `output/0010_灰度遮罩/` 里已有 5 位编号的最大值 +1 命名, 即 `<5位编号>_<name>.png`(撞号顺延); 不带 `name` 仍走 `base`/预览缓存/`mask-{ts}` 旧口径。
@@ -154,7 +156,7 @@ POST(f"/proceed/continue/{continue_id}")        # 未跑到该节点 => 400 "没
 |---|---|
 | 每个 `@{...}` 必须能解析 | 去重后 10 条引用里 **2 条静默失败**:`@{0031_首帧场景/00002_书房旋镜四图}`(文件其实叫 `00001_书房旋镜四图`)、`@{0044_参考视频/00001_书房开场四镜尾帧}`(从未存在) |
 | 兜底趟是否「串版」 | 2026-09-24 起保存类节点**优先用工作流的 md 表文件名**作产物子目录(`custom_nodes/ComfyUI-FallingTS/output_subdir.py`),`@{表名/ID}` 因此走**严格命中**、不再靠同族兜底。代价:`0011_万物建模` 与 `00110_万物建模_QI2.1` 现在**落同一个目录**,同一行 ID 的产物互相覆盖 |
-| 工作流里的快照 id 是否还在 md 里 | **5 张空壳表**(0060~0064)的工作流存的是**绝对路径 + 已不存在的 id**(死快照);`0061_环境音效.md` 因分隔行写成 `:--`(需 `-{3,}`)**整表解析失败**。⚠️ 0050/0051/0070 已于 2026-10-02 **去掉 md 表节点**(三张表也一并删除): 它们不再刷新任何表, 源文件直接由加载节点的下拉(或 `video_in`/`audio_in`)给出 |
+| 工作流里的快照 id 是否还在 md 里 | **5 张空壳表**(0060~0064)的工作流存的是**绝对路径 + 已不存在的 id**(死快照);`0061_环境音效.md` 因分隔行写成 `:--`(需 `-{3,}`)**整表解析失败**(2026-10-05 复核: 分隔行已修为 `| :--- | :---------- | :------ |`, `-{3,}` 条件满足, 解析正常)。⚠️ 0050/0051/0070 已于 2026-10-02 **去掉 md 表节点**(三张表也一并删除): 它们不再刷新任何表, 源文件直接由加载节点的下拉(或 `video_in`/`audio_in`)给出 |
 | 是否有保存节点同名覆盖 | `00110_万物建模_QI2.1` 的 ID 同时接两个 `PreviewImageSave`(42/62),两者 `filename_suffix` 皆空 ⇒ 都算成 `<ID>.png`,**互相覆盖** |
 | 重复 id | `parse_md_file` 用 `seen` 集合**静默丢弃**重复行,不告警 |
 | 只解析第一张表 | 找到表头+分隔行后 `break`,文件里第二张表及其后内容**一律忽略** |

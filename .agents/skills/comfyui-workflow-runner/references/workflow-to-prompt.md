@@ -41,7 +41,7 @@ for idx, name in enumerate(控件名列表):
 反例（错误做法）：先过滤出"未连线控件名"再 zip → 整体前移，例如
 
 ```
-PreviewImageSave 定义: filename_prefix, filename_suffix, format, bit_depth, input_color_space
+PreviewImageSave / AutoSaveImage 定义（两者 widget 完全相同）: filename_prefix, filename_suffix, format, bit_depth, input_color_space
 widgets_values      : ['preview', '前面', 'png', '8-bit', 'sRGB', None]
 filename_prefix 有连线（应跳过）
 先过滤再 zip  → filename_suffix='preview', format='前面', bit_depth='png', ...   ← 全错且不报错
