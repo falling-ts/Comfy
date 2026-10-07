@@ -174,6 +174,26 @@
     并加两条通用规则:`firered[-_. ]?image` → `diffusion_models`(须排在 ASR 的 `firered` 之前)、
     `ming.image` → `diffusion_models`。
 
+#### 5.2.4 2026-10-07 复核(5239 条)与两脚本重建
+
+- 本次抓取:`result_total = 5239`(较 10-01 的 5063 增加 176 条记录 / **111 个新实例路径**),消失 0。
+  `max_page = 53`(page_size=100);按 `max_page` 循环 + 按 `id` 去重后恰好 5239 条。
+  另实测第 54、55 页返回的 39 条与第 53 页完全相同 —— **超出 `max_page` 重复末页**的老坑依旧成立。
+- ⚠️ **脚本 09-30 清理 `scripts/` 时又丢了,本次第三次重建**(前两次为 09-21、10-01)。两个文件仍放 `scripts/`:
+  - `scripts/classify-models-dir.py` —— 归类规则唯一来源(`MANUAL_EXACT` 人工精确表 + `RULES` 正则表,按序命中);
+    旧表 40 个一级槽位、171 个二级形态(`TTS/IndexTTS-2.5-Comfy` 等)全部沿用。
+  - `scripts/autodl-update-models.py` —— 抓取 + 零回归重建 `models.md`;用法见文件头
+    (`AUTODL_TOKEN` / `AUTODL_USE_CACHE` / `AUTODL_DRY` / `AUTODL_OLD_MD`)。
+  - **本次新增两处实现约束**(都踩过坑):
+    1. **同一 `instance_path` 会有多行且结论冲突**(`unet.pth` = MuseTalk 同文件,一行 `ASR`、一行 `未识别(口型)`)。
+       旧表共 11 个路径存在「已识别 vs 未识别」并存。解析旧表时必须 **优先保留已识别的那条**,
+       否则会被「未识别」覆盖、再被"清空未识别交给规则重判"清掉 ⇒ 已识别结论退化(实测 `unet.pth` 掉回未识别)。
+    2. **大小一律 `%.2f` 两位小数**(`147.92 MB` / `3.90 GB`)。早先按 `v<10 ? 2位 : 1位` 自适应,
+       导致 2353 行的体积列与旧表不一致(纯格式回归,无语义变化),已改回两位小数。
+  - **零回归实测**:对 10-01 原表逐路径比对,**已识别结论被改动/丢失 = 0**;
+    未识别(唯一路径口径)816 → 630(**净减 186**)。111 个新路径里 97 个自动识别,14 个 3D 文件(slat/ss 一族)沿用旧表
+    `未识别(3D)` 口径(旧表 `triposplat_fp16` / `pixal3d_*` / `trellis_2_*` 主干同此)。
+
 ### 5.3 前端反推过程(接口变更后自查)
 
 1. 抓 `https://www.autodl.art/app/common/model` HTML → 入口 JS `/assets/index.27e3033b.js`(772KB,主 bundle)
