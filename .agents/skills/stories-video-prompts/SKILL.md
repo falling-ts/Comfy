@@ -163,7 +163,7 @@ integrated_multimodal_description 采用「首帧状态 → 可观察的中间�
 
 | 工作流 | 数据表 | 模式 | 作用 |
 | --- | --- | --- | --- |
-| `0013_首图建模` | `0013_首图建模.md` | I2VA（仿 `0031_首帧场景`） | 把 `0011` 的人物资产图当首帧，串走 特写→近景→中景→全景→回特写 |
+| `0013_首图建模` | `0013_首图建模.md` | I2VA（仿 `0031_首帧场景`） | 把 `0011` 的人物资产图当首帧，**原地逆时针转满一整圈**锁身份；两行两口径：首图特写=15 秒（Shot1 3 秒拉镜 + Shot2–9 旋转）／首图即全身=12 秒（Shot1–8 旋转） |
 | `0014_参考建模` | `0014_参考建模.md` | REF2VA（仿 `0032_参考场景`） | **通常只给一张参考图**（0011 资产图），产出与资产一致的正面人物视频 |
 | `0015_建模截帧` | 无表（自带加载节点下拉） | 截帧（仿 `0035_场景截帧`） | 视频 → 8 单帧 + 四图/八图合成，产物即下一轮的 `<Picture N>` |
 
@@ -175,7 +175,7 @@ integrated_multimodal_description 采用「首帧状态 → 可观察的中间�
 
 #### 提示词规范
 
-- `0013` 按 **I2VA**：首行对齐指令 + `integrated_multimodal_description`（内含 `[Shot 1]`–`[Shot 5]` 景别链）
+- `0013` 按 **I2VA**：首行对齐指令 + `integrated_multimodal_description`（内含 `[Shot 1]`–`[Shot 9]`，Shot 1 拉镜、Shot 2 起原地逆时针 45°×8=360°；首图即全身时改为 `[Shot 1]`–`[Shot 8]` 纯旋转、无拉镜段）
   + `overall_soundscape` + `non_diegetic_music`，**无真实换行**，段间 `<br>`。
 - `0014` 按 **REF2VA 六段**：`subject_definitions` → `summary` → `retention_analysis` → `detailed_description`
   → `overall_soundscape` → `non_diegetic_music`。人物写成 `<Subject 1>`、衣服写成 `<Subject 2>`，
