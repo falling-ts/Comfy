@@ -1857,7 +1857,7 @@
         }
       },
       "widgets_values": [
-        "## 0014_参考建模 (REF2VA 8秒/24fps, 4步/20步 可切)\n\n- 模型: minimax_h3_ref2va_pruned_int8_convrot.safetensors\n- 用途: 把 0011 资产图 + 0015 截帧一起作参考, 让 H3 在多参考下\n  给出与资产一致的正面人物视频, 用作 0015 的新输入。\n- ref_image_size: max (参考图短边不超 2048, never upscaled;\n  脸必须来自高分辨率独立生成)\n- 参考图最多 9 张 (前缀 ref_image_0..8), 视频 3 条 (内部走 FallingTSVideoComponents 拆帧)。\n- 提示词必须否定参考图的分栏与黑色实线（reference leakage）。\n- 切换: FallingTSSwitch — True=4步 (稀疏注意力 + turbo LoRA)\n                          False=20步 (无 LoRA + res_multistep + simple + EasyCache)\n- 帧数 = 秒数x24 对齐 17k+5 网格; 输出 24fps\n"
+        "## 0014_参考建模 (REF2VA 15秒/24fps, 4步/20步 可切)\n\n- 模型: minimax_h3_ref2va_pruned_int8_convrot.safetensors\n- 用途: 把 0011 资产图 + 0015 截帧一起作参考, 让 H3 在多参考下\n  给出与资产一致的正面人物视频, 用作 0015 的新输入。\n- ref_image_size: max (参考图短边不超 2048, never upscaled;\n  脸必须来自高分辨率独立生成)\n- 参考图最多 9 张 (前缀 ref_image_0..8), 视频 3 条 (内部走 FallingTSVideoComponents 拆帧)。\n- 提示词必须否定参考图的分栏与黑色实线（reference leakage）。\n- 切换: FallingTSSwitch — True=4步 (稀疏注意力 + turbo LoRA)\n                          False=20步 (无 LoRA + res_multistep + simple + EasyCache)\n- 帧数 = 秒数x24 对齐 17k+5 网格; 输出 24fps\n"
       ],
       "widgets_values_named": {
         "text": "## 0032_参考场景 (REF2VA 8秒/24fps/4步/20步 可切)\n\n- 模型: minimax_h3_ref2va_pruned_int8_convrot.safetensors\n- 采样: euler + simple, 4 步; shift 12.0/3.0; Sage 加速(H3 专用)\n- 帧数 = 秒数x24 对齐 17k+5 网格\n- 输出: 24fps\n- 切换: FallingTSSwitch — True=4步: 经内部「稀疏注意力(4步内) 切换」—— 默认开 sol-attn 稀疏注意力, 关则走全稠密(不经 Sparse/Sage)\n                          False=20步 (无 LoRA + res_multistep + simple + 模型默认 shift, 不经 SigmaShift)\n- 缓存: EasyCache (0.2/0.15/0.7) 仅挂 20步分支; 4步分支只用 LoRA, 不经过缓存\n"
