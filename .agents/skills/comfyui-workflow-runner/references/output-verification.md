@@ -19,7 +19,7 @@ python scripts/list-recent-outputs.py   # /history?max_items=N 的输出文件�
 
 **注意**：`PreviewVideo` / `PreviewImageSave` 默认只写 `ComfyUI/temp/`（点「保存」才写 output），
 所以 media 目录里找不到不代表没生成。
-但 `AutoSaveImage`（`0035_场景截帧` 的十个图片保存节点、`0050_视频拆帧` 的三个）**执行到即写 output**，
+但 `AutoSaveImage`（`0035_场景截帧` 的十个图片保存节点、`0050_视频截帧` 的三个）**执行到即写 output**，
 无头提交时要自己在 `extra_pnginfo` 里带工作流名（顶层 `workflow_name`），否则产物退回 output 根目录。
 
 ## 2. 抽帧拼板

@@ -76,7 +76,7 @@ description: |
 | (通用) | 浏览/解析/预览 | `GET /fallingts_mdtable/{browse,resolve,preview}` | query:`path`,`kind` | ✅(前二) |
 | 遮罩编辑器 | 保存 | `POST /fallingts_mask/rename` | `node_id`,`image_ref`,`base`,`force`,`name`,`workflow_id` | ○ |
 | 灯箱/中键/通知/布局类 | — | 无服务端状态,与自动化无关 | — | — |
-> **`AutoSaveImage`(执行即保存)**:`0035_场景截帧` 的十个图片保存节点与 `0050_视频拆帧` 的三个(首帧/关键帧/尾帧)都是它 —— **没有「保存」按钮、也没有自己的端点**, 执行到该节点就把产物写进 output(同名覆盖、无序号)。无头路径**不要把 `/preview-image/save/{id}` 用在这些节点上**(那是 `PreviewImageSave` 的), 并记得在提交时带工作流名, 否则产物落回 output 根而不是 `<工作流名>/` 子目录。
+> **`AutoSaveImage`(执行即保存)**:`0035_场景截帧` 的十个图片保存节点与 `0050_视频截帧` 的三个(首帧/关键帧/尾帧)都是它 —— **没有「保存」按钮、也没有自己的端点**, 执行到该节点就把产物写进 output(同名覆盖、无序号)。无头路径**不要把 `/preview-image/save/{id}` 用在这些节点上**(那是 `PreviewImageSave` 的), 并记得在提交时带工作流名, 否则产物落回 output 根而不是 `<工作流名>/` 子目录。
 
 > 遮罩编辑器保存时, 若带 `name`(来自「加载图像」节点 `FallingTSLoadImage` 的「名称」输入框), 成品按
 > `output/0010_灰度遮罩/` 里已有 5 位编号的最大值 +1 命名, 即 `<5位编号>_<name>.png`(撞号顺延); 不带 `name` 仍走 `base`/预览缓存/`mask-{ts}` 旧口径。

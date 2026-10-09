@@ -242,7 +242,7 @@ Comfy/
 
 | Workflow | Purpose |
 |--------|------|
-| `0050-视频拆帧` | video → per-frame images |
+| `0050-视频截帧` | video → per-frame images |
 | `0051-视频拆音` | video → separated audio |
 
 ### Audio generation class (006x-007x, 6)
