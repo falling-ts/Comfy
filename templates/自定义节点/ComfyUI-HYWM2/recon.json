@@ -1,0 +1,404 @@
+{
+  "id": "2218331d-9226-4855-87ee-016c11117027",
+  "revision": 0,
+  "last_node_id": 22,
+  "last_link_id": 18,
+  "nodes": [
+    {
+      "id": 9,
+      "type": "PreviewImage",
+      "pos": [
+        1943.1328286486043,
+        259.4898844360391
+      ],
+      "size": [
+        486.4967158831041,
+        258
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 15
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.1",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 11,
+      "type": "PreviewImage",
+      "pos": [
+        1934.4695841791247,
+        570.1970187191164
+      ],
+      "size": [
+        486.4967158831041,
+        258
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 16
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.1",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 2,
+      "type": "HYWM2Reconstruct",
+      "pos": [
+        1580.2521759951305,
+        336.7500347314394
+      ],
+      "size": [
+        270,
+        326
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "HYWM2_MODEL",
+          "link": 1
+        },
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 2
+        },
+        {
+          "name": "prior_extrinsics",
+          "shape": 7,
+          "type": "EXTRINSICS",
+          "link": null
+        },
+        {
+          "name": "prior_intrinsics",
+          "shape": 7,
+          "type": "INTRINSICS",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            15
+          ]
+        },
+        {
+          "name": "normals",
+          "type": "IMAGE",
+          "links": [
+            16
+          ]
+        },
+        {
+          "name": "points",
+          "type": "HYWM2_POINTS",
+          "links": null
+        },
+        {
+          "name": "gaussians",
+          "type": "HYWM2_GAUSSIANS",
+          "links": [
+            17
+          ]
+        },
+        {
+          "name": "predicted_extrinsics",
+          "type": "EXTRINSICS",
+          "links": null
+        },
+        {
+          "name": "predicted_intrinsics",
+          "type": "INTRINSICS",
+          "links": null
+        }
+      ],
+      "properties": {
+        "aux_id": "PozzettiAndrea/ComfyUI-HYWM2",
+        "ver": "39d72b026677343feae8c2c14c675368712f2dcb",
+        "Node name for S&R": "HYWM2Reconstruct"
+      },
+      "widgets_values": [
+        "",
+        "viridis",
+        true,
+        -1,
+        0,
+        2000000,
+        0.3,
+        1
+      ]
+    },
+    {
+      "id": 20,
+      "type": "HYWM2ExportGaussiansSplat",
+      "pos": [
+        1631.007265806401,
+        1031.1961430317592
+      ],
+      "size": [
+        313.796484375,
+        82
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "gaussians",
+          "type": "HYWM2_GAUSSIANS",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "filepath",
+          "type": "STRING",
+          "links": [
+            18
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "PozzettiAndrea/ComfyUI-HYWM2",
+        "ver": "7e2b433f5cec0653a2de4970aea41d72d416e17f",
+        "Node name for S&R": "HYWM2ExportGaussiansSplat"
+      },
+      "widgets_values": [
+        "hywm2_gaussians",
+        ""
+      ]
+    },
+    {
+      "id": 22,
+      "type": "HYWM2SplatAdvancedViewer",
+      "pos": [
+        1958.4565243635354,
+        895.8360819818568
+      ],
+      "size": [
+        1123.304678766895,
+        629.0530832489738
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "splat_path",
+          "type": "STRING",
+          "link": 18
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "aux_id": "PozzettiAndrea/ComfyUI-HYWM2",
+        "ver": "7e2b433f5cec0653a2de4970aea41d72d416e17f",
+        "Node name for S&R": "HYWM2SplatAdvancedViewer",
+        "hywm2_viewer_state": "{\"cam\":{\"position\":[0.23081034308045273,-0.21078221111679807,0.1013032490518797],\"quaternion\":[0.9773302160508872,-0.03254493805535019,0.16381036541110308,0.1301254778465013]},\"target\":[-0.08091344532496902,0.054231308028419245,1.0137702974503147],\"opacity\":1,\"size\":1,\"fov\":50,\"bg\":\"#0a0a0a\",\"up\":\"-y\"}"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 1,
+      "type": "LoadHYWM2Model",
+      "pos": [
+        1247.2470053749478,
+        433.9508770434638
+      ],
+      "size": [
+        284.894140625,
+        202
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "HYWM2_MODEL",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "PozzettiAndrea/ComfyUI-HYWM2",
+        "ver": "39d72b026677343feae8c2c14c675368712f2dcb",
+        "Node name for S&R": "LoadHYWM2Model"
+      },
+      "widgets_values": [
+        "auto",
+        2002,
+        "",
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": 4,
+      "type": "PreviewImage",
+      "pos": [
+        1117.4875458774395,
+        786.5550595615077
+      ],
+      "size": [
+        486.4967158831041,
+        258
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 4
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.1",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 3,
+      "type": "LoadImageDataSetFromFolder",
+      "pos": [
+        1240.986056079306,
+        677.905862675166
+      ],
+      "size": [
+        312.1490234375,
+        58
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "images",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": [
+            2,
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.20.1",
+        "Node name for S&R": "LoadImageDataSetFromFolder"
+      },
+      "widgets_values": [
+        "kitchen"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "HYWM2_MODEL"
+    ],
+    [
+      2,
+      3,
+      0,
+      2,
+      1,
+      "IMAGE"
+    ],
+    [
+      4,
+      3,
+      0,
+      4,
+      0,
+      "IMAGE"
+    ],
+    [
+      15,
+      2,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      16,
+      2,
+      1,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      17,
+      2,
+      3,
+      20,
+      0,
+      "HYWM2_GAUSSIANS"
+    ],
+    [
+      18,
+      20,
+      0,
+      22,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.5999930492763622,
+      "offset": [
+        -770.8214862148982,
+        8.503970298056084
+      ]
+    },
+    "frontendVersion": "1.42.15"
+  },
+  "version": 0.4
+}
