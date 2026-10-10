@@ -1,0 +1,3893 @@
+{
+  "last_link_id": 147,
+  "nodes": [
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            83
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#ffffff",
+      "widgets_values": [
+        "z_image_turbo_bf16.safetensors",
+        "default"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "unet_name"
+          },
+          "name": "unet_name",
+          "label": "unet_name",
+          "type": "COMBO",
+          "localized_name": "UNET名称"
+        },
+        {
+          "widget": {
+            "name": "weight_dtype"
+          },
+          "name": "weight_dtype",
+          "label": "weight_dtype",
+          "type": "COMBO",
+          "localized_name": "剪枝类型"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "UNETLoader",
+      "mode": 4,
+      "bgcolor": "#ffffff",
+      "size": [
+        337.44915771484375,
+        96.17069244384766
+      ],
+      "pos": [
+        10458.744140625,
+        2548.995849609375
+      ],
+      "id": 78,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "UNETLoader"
+      },
+      "order": 0
+    },
+    {
+      "outputs": [
+        {
+          "name": "CLIP",
+          "links": [
+            77
+          ],
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIP"
+        }
+      ],
+      "color": "#ffffff",
+      "widgets_values": [
+        "qwen_3_4b.safetensors",
+        "qwen_image",
+        "default"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "clip_name"
+          },
+          "name": "clip_name",
+          "label": "clip_name",
+          "type": "COMBO",
+          "localized_name": "CLIP名称"
+        },
+        {
+          "widget": {
+            "name": "type"
+          },
+          "name": "type",
+          "label": "type",
+          "type": "COMBO",
+          "localized_name": "类型"
+        },
+        {
+          "widget": {
+            "name": "device"
+          },
+          "shape": 7,
+          "name": "device",
+          "label": "device",
+          "type": "COMBO",
+          "localized_name": "设备"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "CLIPLoader",
+      "mode": 4,
+      "bgcolor": "#ffffff",
+      "size": [
+        342.3068542480469,
+        111.81361389160156
+      ],
+      "pos": [
+        10456.771484375,
+        2708.9765625
+      ],
+      "id": 79,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPLoader"
+      },
+      "order": 1
+    },
+    {
+      "outputs": [
+        {
+          "name": "VAE",
+          "links": [
+            81
+          ],
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "VAE"
+        }
+      ],
+      "color": "#ffffff",
+      "widgets_values": [
+        "ae.safetensors"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "vae_name"
+          },
+          "name": "vae_name",
+          "label": "vae_name",
+          "type": "COMBO",
+          "localized_name": "vae名称"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "VAELoader",
+      "mode": 4,
+      "bgcolor": "#ffffff",
+      "size": [
+        338.6733703613281,
+        58
+      ],
+      "pos": [
+        10460.1708984375,
+        2892.11572265625
+      ],
+      "id": 80,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAELoader"
+      },
+      "order": 2
+    },
+    {
+      "outputs": [
+        {
+          "name": "LATENT",
+          "links": [
+            86
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        1080,
+        1920,
+        1
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "width"
+          },
+          "name": "width",
+          "label": "width",
+          "type": "INT",
+          "localized_name": "宽度"
+        },
+        {
+          "widget": {
+            "name": "height"
+          },
+          "name": "height",
+          "label": "height",
+          "type": "INT",
+          "localized_name": "高度"
+        },
+        {
+          "widget": {
+            "name": "batch_size"
+          },
+          "name": "batch_size",
+          "label": "batch_size",
+          "type": "INT",
+          "localized_name": "批次大小"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "EmptyLatentImage",
+      "mode": 4,
+      "bgcolor": "#353",
+      "size": [
+        547.8816528320312,
+        122.43132781982422
+      ],
+      "pos": [
+        8142.9423828125,
+        3540.276611328125
+      ],
+      "id": 82,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "order": 3
+    },
+    {
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "links": [
+            79,
+            84
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "color": "#ffffff",
+      "widgets_values": [
+        "A young woman with deep brown long curly hair swaying backwards in the wind, and the strands are clearly visible. She was wearing a light blue off shoulder long sleeved dress with lightweight and translucent fabric, a tight waist design that accentuated her curves, and small pearl earrings on her earlobes. The body stands sideways, the head slightly turns towards the camera direction, the facial expression is calm and gentle, and the eyes are clear.\nThe scene is a beach environment, with a delicate light yellow sandy beach underfoot and a blue sea with undulating waves in the distance, with layers of white waves rising on the surface of the sea. The background sky is filled with fluffy white clouds, presenting an overall seaside atmosphere under clear weather.\nThe image adopts a realistic photography style, focusing on the texture of the characters' skin and clothing details. Natural light shines from the side, forming a soft transition of light and shadow, enhancing the sense of three dimensionality.\nThe composition adopts a medium shot, with characters occupying the main position in the picture, and the background sea and sky are clearly layered and moderately blurred, highlighting the subject. The colors are mainly fresh blue and white tones, paired with warm yellow beaches, creating a bright and transparent overall picture. 8K ultra high definition resolution, rich details, and delicate picture quality."
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "link": 77,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "clip"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 110,
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "CLIPTextEncode",
+      "mode": 4,
+      "bgcolor": "#ffffff",
+      "size": [
+        400,
+        200
+      ],
+      "pos": [
+        10836.2607421875,
+        2543.6103515625
+      ],
+      "id": 83,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "order": 48
+    },
+    {
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "links": [
+            85
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "color": "#ffffff",
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "link": 79,
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "ConditioningZeroOut",
+      "mode": 4,
+      "bgcolor": "#ffffff",
+      "size": [
+        197.712890625,
+        26
+      ],
+      "pos": [
+        10845.375,
+        2834.320068359375
+      ],
+      "id": 84,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ConditioningZeroOut"
+      },
+      "order": 53
+    },
+    {
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "links": [
+            82
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "color": "#ffffff",
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "samples",
+          "link": 80,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        },
+        {
+          "name": "vae",
+          "link": 81,
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "vae"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "VAEDecode",
+      "mode": 4,
+      "bgcolor": "#ffffff",
+      "size": [
+        140,
+        46
+      ],
+      "pos": [
+        10866.548828125,
+        2943.732177734375
+      ],
+      "id": 85,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAEDecode"
+      },
+      "order": 59
+    },
+    {
+      "outputs": [
+        {
+          "name": "image_urls",
+          "type": "STRING",
+          "localized_name": "image_urls"
+        }
+      ],
+      "color": "#ffffff",
+      "widgets_values": [
+        "ComfyUI"
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 82,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图片"
+        },
+        {
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "name": "filename_prefix",
+          "label": "filename_prefix",
+          "type": "STRING",
+          "localized_name": "文件名前缀"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "SaveImage",
+      "mode": 4,
+      "bgcolor": "#ffffff",
+      "size": [
+        824.0511474609375,
+        1120.00537109375
+      ],
+      "pos": [
+        11265.359375,
+        2546.529541015625
+      ],
+      "id": 86,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveImage"
+      },
+      "order": 61
+    },
+    {
+      "outputs": [
+        {
+          "name": "LATENT",
+          "links": [
+            80
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "color": "#ffffff",
+      "widgets_values": [
+        296697317652470,
+        "randomize",
+        9,
+        1,
+        "dpmpp_2m_sde",
+        "sgm_uniform",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 83,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "positive",
+          "link": 84,
+          "label": "正面条件",
+          "type": "CONDITIONING",
+          "localized_name": "正面条件"
+        },
+        {
+          "name": "negative",
+          "link": 85,
+          "label": "负面条件",
+          "type": "CONDITIONING",
+          "localized_name": "负面条件"
+        },
+        {
+          "name": "latent_image",
+          "link": 86,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent图像"
+        },
+        {
+          "widget": {
+            "name": "seed"
+          },
+          "name": "seed",
+          "label": "seed",
+          "type": "INT",
+          "localized_name": "随机种"
+        },
+        {
+          "widget": {
+            "name": "steps"
+          },
+          "name": "steps",
+          "label": "steps",
+          "type": "INT",
+          "localized_name": "步数"
+        },
+        {
+          "widget": {
+            "name": "cfg"
+          },
+          "name": "cfg",
+          "label": "cfg",
+          "type": "FLOAT",
+          "localized_name": "CFG"
+        },
+        {
+          "widget": {
+            "name": "sampler_name"
+          },
+          "name": "sampler_name",
+          "label": "sampler_name",
+          "type": "COMBO",
+          "localized_name": "采样器"
+        },
+        {
+          "widget": {
+            "name": "scheduler"
+          },
+          "name": "scheduler",
+          "label": "scheduler",
+          "type": "COMBO",
+          "localized_name": "调度器"
+        },
+        {
+          "widget": {
+            "name": "denoise"
+          },
+          "name": "denoise",
+          "label": "denoise",
+          "type": "FLOAT",
+          "localized_name": "降噪"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "KSampler",
+      "mode": 4,
+      "bgcolor": "#ffffff",
+      "size": [
+        334.4444274902344,
+        629.3333740234375
+      ],
+      "pos": [
+        10464.8125,
+        3053.21484375
+      ],
+      "id": 87,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "KSampler"
+      },
+      "order": 56
+    },
+    {
+      "outputs": [
+        {
+          "name": "CLIP",
+          "links": [
+            90
+          ],
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIP"
+        }
+      ],
+      "color": "#ac338c",
+      "widgets_values": [
+        "qwen_3_4b.safetensors",
+        "qwen_image",
+        "default"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "clip_name"
+          },
+          "name": "clip_name",
+          "label": "clip_name",
+          "type": "COMBO",
+          "localized_name": "CLIP名称"
+        },
+        {
+          "widget": {
+            "name": "type"
+          },
+          "name": "type",
+          "label": "type",
+          "type": "COMBO",
+          "localized_name": "类型"
+        },
+        {
+          "widget": {
+            "name": "device"
+          },
+          "shape": 7,
+          "name": "device",
+          "label": "device",
+          "type": "COMBO",
+          "localized_name": "设备"
+        }
+      ],
+      "flags": {},
+      "type": "CLIPLoader",
+      "mode": 4,
+      "bgcolor": "#981f78",
+      "size": [
+        342.3068542480469,
+        111.81361389160156
+      ],
+      "pos": [
+        5686.45263671875,
+        4016.150146484375
+      ],
+      "id": 90,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPLoader"
+      },
+      "order": 4
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            93
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#ac338c",
+      "widgets_values": [
+        "z_image_turbo_bf16.safetensors",
+        "default"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "unet_name"
+          },
+          "name": "unet_name",
+          "label": "unet_name",
+          "type": "COMBO",
+          "localized_name": "UNET名称"
+        },
+        {
+          "widget": {
+            "name": "weight_dtype"
+          },
+          "name": "weight_dtype",
+          "label": "weight_dtype",
+          "type": "COMBO",
+          "localized_name": "剪枝类型"
+        }
+      ],
+      "flags": {},
+      "type": "UNETLoader",
+      "mode": 4,
+      "bgcolor": "#981f78",
+      "size": [
+        337.44915771484375,
+        96.17069244384766
+      ],
+      "pos": [
+        5688.42529296875,
+        3856.168701171875
+      ],
+      "id": 91,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "UNETLoader"
+      },
+      "order": 5
+    },
+    {
+      "outputs": [
+        {
+          "name": "VAE",
+          "links": [
+            98
+          ],
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "VAE"
+        }
+      ],
+      "color": "#ac338c",
+      "widgets_values": [
+        "ae.safetensors"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "vae_name"
+          },
+          "name": "vae_name",
+          "label": "vae_name",
+          "type": "COMBO",
+          "localized_name": "vae名称"
+        }
+      ],
+      "flags": {},
+      "type": "VAELoader",
+      "mode": 4,
+      "bgcolor": "#981f78",
+      "size": [
+        338.6733703613281,
+        58
+      ],
+      "pos": [
+        5689.8515625,
+        4199.2890625
+      ],
+      "id": 92,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAELoader"
+      },
+      "order": 6
+    },
+    {
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "links": [
+            92,
+            94
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "color": "#ac338c",
+      "widgets_values": [
+        "A young woman with deep brown long curly hair swaying backwards in the wind, and the strands are clearly visible. She was wearing a light blue off shoulder long sleeved dress with lightweight and translucent fabric, a tight waist design that accentuated her curves, and small pearl earrings on her earlobes. The body stands sideways, the head slightly turns towards the camera direction, the facial expression is calm and gentle, and the eyes are clear.\nThe scene is a beach environment, with a delicate light yellow sandy beach underfoot and a blue sea with undulating waves in the distance, with layers of white waves rising on the surface of the sea. The background sky is filled with fluffy white clouds, presenting an overall seaside atmosphere under clear weather.\nThe image adopts a realistic photography style, focusing on the texture of the characters' skin and clothing details. Natural light shines from the side, forming a soft transition of light and shadow, enhancing the sense of three dimensionality.\nThe composition adopts a medium shot, with characters occupying the main position in the picture, and the background sea and sky are clearly layered and moderately blurred, highlighting the subject. The colors are mainly fresh blue and white tones, paired with warm yellow beaches, creating a bright and transparent overall picture. 8K ultra high definition resolution, rich details, and delicate picture quality."
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "link": 90,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "clip"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 91,
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {},
+      "type": "CLIPTextEncode",
+      "mode": 4,
+      "bgcolor": "#981f78",
+      "size": [
+        400,
+        200
+      ],
+      "pos": [
+        6119.93017578125,
+        3851.377197265625
+      ],
+      "id": 93,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "order": 44
+    },
+    {
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "links": [
+            95
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "color": "#ac338c",
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "link": 92,
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "flags": {},
+      "type": "ConditioningZeroOut",
+      "mode": 4,
+      "bgcolor": "#981f78",
+      "size": [
+        197.712890625,
+        26
+      ],
+      "pos": [
+        6338.1943359375,
+        4198.06640625
+      ],
+      "id": 94,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ConditioningZeroOut"
+      },
+      "order": 47
+    },
+    {
+      "outputs": [
+        {
+          "name": "LATENT",
+          "links": [
+            97
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "color": "#ac338c",
+      "widgets_values": [
+        548159068578038,
+        "randomize",
+        9,
+        1,
+        "dpmpp_2m_sde",
+        "sgm_uniform",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 93,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "positive",
+          "link": 94,
+          "label": "正面条件",
+          "type": "CONDITIONING",
+          "localized_name": "正面条件"
+        },
+        {
+          "name": "negative",
+          "link": 95,
+          "label": "负面条件",
+          "type": "CONDITIONING",
+          "localized_name": "负面条件"
+        },
+        {
+          "name": "latent_image",
+          "link": 96,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent图像"
+        },
+        {
+          "widget": {
+            "name": "seed"
+          },
+          "name": "seed",
+          "label": "seed",
+          "type": "INT",
+          "localized_name": "随机种"
+        },
+        {
+          "widget": {
+            "name": "steps"
+          },
+          "name": "steps",
+          "label": "steps",
+          "type": "INT",
+          "localized_name": "步数"
+        },
+        {
+          "widget": {
+            "name": "cfg"
+          },
+          "name": "cfg",
+          "label": "cfg",
+          "type": "FLOAT",
+          "localized_name": "CFG"
+        },
+        {
+          "widget": {
+            "name": "sampler_name"
+          },
+          "name": "sampler_name",
+          "label": "sampler_name",
+          "type": "COMBO",
+          "localized_name": "采样器"
+        },
+        {
+          "widget": {
+            "name": "scheduler"
+          },
+          "name": "scheduler",
+          "label": "scheduler",
+          "type": "COMBO",
+          "localized_name": "调度器"
+        },
+        {
+          "widget": {
+            "name": "denoise"
+          },
+          "name": "denoise",
+          "label": "denoise",
+          "type": "FLOAT",
+          "localized_name": "降噪"
+        }
+      ],
+      "flags": {},
+      "type": "KSampler",
+      "mode": 4,
+      "bgcolor": "#981f78",
+      "size": [
+        270,
+        720.4444580078125
+      ],
+      "pos": [
+        6584.67041015625,
+        3859.242919921875
+      ],
+      "id": 95,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "KSampler"
+      },
+      "order": 52
+    },
+    {
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "links": [
+            99
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "color": "#ac338c",
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "samples",
+          "link": 97,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        },
+        {
+          "name": "vae",
+          "link": 98,
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "vae"
+        }
+      ],
+      "flags": {},
+      "type": "VAEDecode",
+      "mode": 4,
+      "bgcolor": "#981f78",
+      "size": [
+        140,
+        46
+      ],
+      "pos": [
+        6909.73046875,
+        3855.349365234375
+      ],
+      "id": 96,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAEDecode"
+      },
+      "order": 55
+    },
+    {
+      "outputs": [
+        {
+          "name": "image_urls",
+          "type": "STRING",
+          "localized_name": "image_urls"
+        }
+      ],
+      "color": "#ac338c",
+      "widgets_values": [
+        "ComfyUI"
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 99,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图片"
+        },
+        {
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "name": "filename_prefix",
+          "label": "filename_prefix",
+          "type": "STRING",
+          "localized_name": "文件名前缀"
+        }
+      ],
+      "flags": {},
+      "type": "SaveImage",
+      "mode": 4,
+      "bgcolor": "#981f78",
+      "size": [
+        824.0511474609375,
+        1120.00537109375
+      ],
+      "pos": [
+        7118.1005859375,
+        3844.813720703125
+      ],
+      "id": 97,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveImage"
+      },
+      "order": 58
+    },
+    {
+      "outputs": [
+        {
+          "name": "prompt_list",
+          "links": [],
+          "label": "列表",
+          "type": "LIST",
+          "localized_name": "prompt_list"
+        },
+        {
+          "shape": 6,
+          "name": "prompt_strings",
+          "links": [
+            91
+          ],
+          "label": "prompt_strings",
+          "type": "STRING",
+          "localized_name": "prompt_strings"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        "\n超写实电影风格，超精细纹理，真实物理效果，高帧率，完美景深，自然胶片颗粒，惊艳明暗对比光影，大气透视，细微元素运动模糊\n\n0-2s：Swooping Crane Shot 搭配 Gimbal-stabilized Orbiting 运镜，风衣男子靠墙静立，指尖轻擦左轮枪身，侧逆光将影子钉在斑驳墙面上，雨水打湿的巷弄里雾气缭绕，积水倒映霓虹碎片微动；2-3s：Handheld Whip Pan 快速转向巷尾，铁门吱呀响动，泥水被踩溅的声音伴随黑影闪过；3-4s：High-speed Follow-cam at Low Angle 追踪男子动作，他瞬间抬臂举枪，枪托抵紧肩窝，力量从腰腹传导至手腕，物理轨迹符合持枪瞄准逻辑；4-6s：Fast Dolly Zoom 聚焦男子瞳孔收缩，巷尾路灯忽明忽暗，枪膛反光扫过墙面，潮湿空气里的雨丝因快速运镜产生动态模糊，环境交互细节完整。\n",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "inputs": [
+        {
+          "shape": 7,
+          "name": "optional_prompt_list",
+          "label": "列表（可选）",
+          "type": "LIST",
+          "localized_name": "optional_prompt_list"
+        },
+        {
+          "widget": {
+            "name": "prompt_1"
+          },
+          "name": "prompt_1",
+          "label": "prompt_1",
+          "type": "STRING",
+          "localized_name": "prompt_1"
+        },
+        {
+          "widget": {
+            "name": "prompt_2"
+          },
+          "name": "prompt_2",
+          "label": "prompt_2",
+          "type": "STRING",
+          "localized_name": "prompt_2"
+        },
+        {
+          "widget": {
+            "name": "prompt_3"
+          },
+          "name": "prompt_3",
+          "label": "prompt_3",
+          "type": "STRING",
+          "localized_name": "prompt_3"
+        },
+        {
+          "widget": {
+            "name": "prompt_4"
+          },
+          "name": "prompt_4",
+          "label": "prompt_4",
+          "type": "STRING",
+          "localized_name": "prompt_4"
+        },
+        {
+          "widget": {
+            "name": "prompt_5"
+          },
+          "name": "prompt_5",
+          "label": "prompt_5",
+          "type": "STRING",
+          "localized_name": "prompt_5"
+        }
+      ],
+      "flags": {},
+      "type": "easy promptList",
+      "mode": 4,
+      "bgcolor": "#353",
+      "size": [
+        610.3095092773438,
+        693.45263671875
+      ],
+      "pos": [
+        5655.60595703125,
+        4329.38525390625
+      ],
+      "id": 104,
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "9947b8be70e17ceabafa4fa7f476b54626de4704",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "easy promptList"
+      },
+      "order": 7
+    },
+    {
+      "outputs": [
+        {
+          "name": "LATENT",
+          "links": [
+            96
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        1080,
+        1920,
+        1
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "width"
+          },
+          "name": "width",
+          "label": "width",
+          "type": "INT",
+          "localized_name": "宽度"
+        },
+        {
+          "widget": {
+            "name": "height"
+          },
+          "name": "height",
+          "label": "height",
+          "type": "INT",
+          "localized_name": "高度"
+        },
+        {
+          "widget": {
+            "name": "batch_size"
+          },
+          "name": "batch_size",
+          "label": "batch_size",
+          "type": "INT",
+          "localized_name": "批次大小"
+        }
+      ],
+      "flags": {},
+      "type": "EmptyLatentImage",
+      "mode": 4,
+      "bgcolor": "#353",
+      "size": [
+        429.69976806640625,
+        118.28459930419922
+      ],
+      "pos": [
+        6327.7314453125,
+        4884.37109375
+      ],
+      "id": 105,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "order": 8
+    },
+    {
+      "outputs": [],
+      "color": "#14e2e5",
+      "widgets_values": [
+        "范例：\n\n请根据以上提示词工程反推图片提示词\n\n\n根据提示词工程得到的提示词示例：\n核心主体是长发东亚女性穿浅蓝色露肩雪纺长裙漫步海滩，环境是晴朗海边（蓝天、浪花、远处建筑）；光影用柔和自然光 + 电影布光，叠加海面光斑和皮肤的次表面散射增强通透感；构图采用三分法中景，浅景深突出主体；质感用超写实 8K 纹理 + 虚幻 5 渲染 + 光线追踪（还原裙子和海水的反光）；色调以浅蓝、沙色、海青色为主，同时强化裙摆和头发被海风吹动的动态感，搭配 “杰作、最佳画质” 等提升质量的关键词。"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#00ced1",
+      "size": [
+        215.7932891845703,
+        334.32733154296875
+      ],
+      "pos": [
+        5516.63671875,
+        3299.80810546875
+      ],
+      "id": 107,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 9
+    },
+    {
+      "outputs": [],
+      "color": "#14e2e5",
+      "widgets_values": [
+        "范例：\n\n请根据以上提示词工程帮我分别创作内容为电商美妆模特广告3个分镜的中文提示词\n\n\n根据提示词工程得到的提示词示例：\nNext Scene: 1，特写，慢推，画面中长发微卷、身着浅粉色吊带裙的模特在简约白色化妆台旁做指尖轻点唇膏膏体的动作，暖调柔光从侧上方洒落，勾勒唇部细腻纹理，营造温柔精致的氛围，唇膏旋出的轻微机械声搭配轻柔的钢琴背景音乐强化节奏，背景里摆放着同系列美妆单品，模特眼神专注，嘴角带浅淡笑意，唇部肌肤饱满水润。​\n\nNext Scene: 2，中景，横移，画面中模特在洒满自然光的窗边做涂抹粉底液的动作，自然柔光均匀覆盖面部，突出底妆服帖透亮的质感，营造清透伪素颜的氛围，美妆蛋轻拍肌肤的柔和声响搭配舒缓的环境音强化节奏，背景里摆放着绿植与化妆镜，模特手法轻柔，面部表情放松，底妆与肌肤自然融合无假面感。​\n\nNext Scene: 3，全景，拉远，画面中模特在简约 ins 风拍摄棚内做转身展示全妆的动作，顶光与侧光结合打造立体光影，突出眼妆的珠光光泽与整体妆容的协调感，营造时尚高级的氛围，裙摆飘动的轻微声响搭配轻快的流行音乐强化叙事节奏，背景里布置着几何形状装饰与品牌 LOGO 展示板，模特身姿挺拔，眼神明亮自信，整体妆容精致完整，尽显美妆产品的修饰效果。"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#00ced1",
+      "size": [
+        444.9656677246094,
+        340.14862060546875
+      ],
+      "pos": [
+        5990.740234375,
+        3297.6787109375
+      ],
+      "id": 108,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 10
+    },
+    {
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "color": "#16bdde",
+      "widgets_values": [
+        "c7cd2a358c774278d374f954ea30b80f3960c3a515780ff244e18373251d7ad1.png",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "label": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "label": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "LoadImage",
+      "mode": 0,
+      "bgcolor": "#02a9ca",
+      "size": [
+        233.52182006835938,
+        343.3153381347656
+      ],
+      "pos": [
+        6710.166015625,
+        3293.65625
+      ],
+      "id": 109,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 11
+    },
+    {
+      "outputs": [],
+      "color": "#14e2e5",
+      "widgets_values": [
+        "范例：\n\n请根据以上提示词工程，把我上传的静态图片转化为兼具故事张力、风格保真与物理可信的6秒电影级视频提示词。\n\n\n根据提示词工程得到的提示词示例：\n\n超写实电影风格，超精细纹理，真实物理效果，高帧率，完美景深，自然胶片颗粒，惊艳明暗对比光影，大气透视，细微元素运动模糊\n\n0-2s：Swooping Crane Shot 搭配 Gimbal-stabilized Orbiting 运镜，风衣男子靠墙静立，指尖轻擦左轮枪身，侧逆光将影子钉在斑驳墙面上，雨水打湿的巷弄里雾气缭绕，积水倒映霓虹碎片微动；2-3s：Handheld Whip Pan 快速转向巷尾，铁门吱呀响动，泥水被踩溅的声音伴随黑影闪过；3-4s：High-speed Follow-cam at Low Angle 追踪男子动作，他瞬间抬臂举枪，枪托抵紧肩窝，力量从腰腹传导至手腕，物理轨迹符合持枪瞄准逻辑；4-6s：Fast Dolly Zoom 聚焦男子瞳孔收缩，巷尾路灯忽明忽暗，枪膛反光扫过墙面，潮湿空气里的雨丝因快速运镜产生动态模糊，环境交互细节完整。\n"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#00ced1",
+      "size": [
+        243.9962921142578,
+        342.6341247558594
+      ],
+      "pos": [
+        6462.802734375,
+        3294.443359375
+      ],
+      "id": 111,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 12
+    },
+    {
+      "outputs": [],
+      "color": "#14e2e5",
+      "widgets_values": [
+        "范例：\n\n请根据以上提示词工程帮我创作内容美的空调产品电商海报提示词，海报中需要有主副标题、品牌logo、营销广告语等文字内容\n\n\n根据提示词工程得到的提示词示例：\n美的空调（美的风尊系列）立式柜机产品，机身采用冰川白哑光面板，搭配鎏金线条装饰，造型简约流畅，置于现代轻奢风格的客厅场景中央，空调出风口缓缓出风，带动周围轻薄纱帘微动，营造出清新凉爽的氛围。客厅内浅灰色布艺沙发、大理石茶几、艺术落地灯错落摆放，背景墙为浅米色，整体空间明亮通透。采用高角度俯拍构图，以客厅对角线为引导线，突出空调主体，背景适度留白。运用柔和自然光结合顶部暖光射灯，明暗层次自然，形成舒适的光影对比，整体色调为奶油白 + 浅灰 + 鎏金的暖奢色系，清新雅致。画面为 8K 超写实画质，使用佳能 5D4 相机、50mm f/1.4 镜头拍摄，背景柔和虚化，产品细节清晰锐利，商业摄影级质感，杰作级别。海报文字：主标题 “美的风尊：一键享清凉”，副标题 “全域无风感・节能更静音”，左上角 “Midea 美的” 品牌 logo，底部营销广告语 “焕新家居呼吸，美的空调智选”，右下角小字 “全国联保・送货入户”。"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#00ced1",
+      "size": [
+        449.87750244140625,
+        332.0514221191406
+      ],
+      "pos": [
+        4535.98193359375,
+        3304.661865234375
+      ],
+      "id": 112,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 13
+    },
+    {
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "links": [
+            111
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "color": "#ffffff",
+      "widgets_values": [
+        "2d707a48884e0fa1c05b9b9b63e51bc9dee989a4e5c43848eb929c5d691d9f00.png",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "label": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "label": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "LoadImage",
+      "mode": 4,
+      "bgcolor": "#ffffff",
+      "size": [
+        564.1268920898438,
+        901.1817626953125
+      ],
+      "pos": [
+        8133.490234375,
+        2536.578125
+      ],
+      "id": 113,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 14
+    },
+    {
+      "outputs": [],
+      "color": "#14e2e5",
+      "widgets_values": [
+        "范例：\n\n请根据以上提示词工程帮我分别创作日系人物写真风格首帧和尾帧的提示词，画面要求有一位年轻的东亚女孩，穿着清新，长头发并穿连衣裙，环境是户外。\n\n\n根据提示词工程得到的提示词示例：\n\n首帧 Prompt：\n日系清新胶片风人物写真，年轻东亚女孩站在户外草坪上，及腰黑色长发自然垂落，刘海轻柔贴额，身穿浅薄荷绿收腰连衣裙（带细碎白色小花刺绣），裙摆随风轻摆。她双手轻握裙摆，眉眼带笑侧望远方，皮肤白皙通透，背景是虚化的蓝天白云与浅粉色绣球花丛，暖柔自然光打在肩头，中景镜头微微上移，复古胶片颗粒质感。\n\n尾帧 Prompt：\n日系清新胶片风人物写真，同一位年轻东亚女孩坐在户外木质长椅上，及腰黑发松松挽成半扎发，碎发垂落脸颊，仍穿浅薄荷绿碎花连衣裙，双手捧着一束白色小雏菊轻贴胸口。她直视镜头眼神温柔，嘴角带浅梨涡，背景是虚化的绿树与远处的木质栅栏，光斑透过树叶洒落肩头，近景镜头缓慢下移，复古胶片柔和色调，裙摆自然垂落覆盖长椅边缘\n"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#00ced1",
+      "size": [
+        457.16693115234375,
+        343.5677490234375
+      ],
+      "pos": [
+        6990.6484375,
+        3293.7392578125
+      ],
+      "id": 116,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 15
+    },
+    {
+      "outputs": [],
+      "color": "#14e2e5",
+      "widgets_values": [
+        "范例：\n\n90 年代的安静老街杂货店，红砖墙上爬满爬山虎。门上方的木质招牌油漆斑驳，用潦草的字迹写着 “李叔杂货铺”。一位白发老奶奶坐在门口竹椅上，摇着蒲扇，笑容温和。窗台上叠放着搪瓷碗与竹编篮，一辆老式自行车斜靠在墙边。画面笼罩在暖黄色的午后阳光中\n\n\n根据提示词工程使用Runninghub LLM直出优化后的提示词示例：\n\n90年代的老街杂货店，红砖墙上爬满爬山虎，门上方木质招牌斑驳陈旧，用潦草的字迹写着“李叔杂货铺”，白发老奶奶坐在门口竹椅上，摇着蒲扇，笑容温和，窗台上叠放着搪瓷碗与竹编篮，老式自行车斜靠在墙边，暖黄色午后阳光笼罩整个画面，复古怀旧风格，柔和光影，写实细腻，高分辨率，8k画质，超精细细节，杰作，虚幻引擎5渲染，最佳画质，V-Ray渲染\n"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#00ced1",
+      "size": [
+        457.16693115234375,
+        343.5677490234375
+      ],
+      "pos": [
+        7485.822265625,
+        3292.50830078125
+      ],
+      "id": 117,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 16
+    },
+    {
+      "outputs": [],
+      "color": "#c13714",
+      "widgets_values": [
+        "你是一位精通 AI 绘画工具（如 Midjourney, Stable Diffusion）提示词语法的专家。你的任务是根据用户提供的描述，对其进行**结构优化、格式整理和质量关键词增强**，生成画面质量高、结构清晰、但**内容严格遵循原始意图**的专业级中文提示词。\n\n请严格遵守以下改写规则：\n\n1. ## 核心原则 (严格限制)\n- **意图保持**：**严格遵循**用户描述的主体、动作、核心属性和意图，**不得擅自增加或修改任何与主题内容相关的具体细节**（如颜色、服装、品种、心情、环境中的非必要物体等）。\n- **优化焦点**：只在不改变原始语义的前提下，增加**技术性修饰词**，如光影、构图、艺术风格、画面质量参数等。\n- **结构清晰**：遵循“核心主体描述 + 环境/背景修饰 + 艺术风格 + 构图运镜 + 画面质量”的逻辑顺序重组提示词。\n- **语言风格**：输出为**简体中文**，使用逗号分隔的关键词/短语组合。\n\n2. ## 任务类型处理规则\n\n### 2.1 主体与核心动作 (只优化格式)\n- **保留细节**：用户提供的所有具象化描述（如“红色的伞”、“坐在长椅上”）必须完全保留在重写后的提示词中。\n- **精炼措辞**：如果用户描述过于口语化或冗长，只对其进行**语法精炼**，使之更适合AI理解，但**不改变描述的要素**。\n\n### 2.2 环境与背景修饰\n- **尊重语境**：如果用户描述了环境，只对其进行**光影和氛围的补充**。\n- **空白补充**：如果用户未描述环境，可以适度添加**中性**或**通用**的背景和光影描述，以增强画面感，但**不得喧宾夺主**（如：使用“微弱的环境光”而非“阳光普照的沙滩”）。\n    - *中性补充示例*：“模糊的景深背景，柔和的氛围光，干净的背景”。\n\n### 2.3 风格与媒介定制 (主要优化点)\n- **风格化处理**：根据主体内容自动添加最能提升画质的艺术风格。\n    - *示例*：为人物添加“电影剧照，超写实，布光讲究”；为风景添加“油画质感，印象派风格”。\n- **质量关键词**：末尾必须包含提升质量的通用词汇。\n    - *固定追加*：“高分辨率，8k画质，超精细细节，杰作，虚幻引擎5渲染，最佳画质，V-Ray渲染”。\n\n3. ## 特殊情况处理\n- **格式修正**：将用户输入的自然语言句式转换为AI偏好的逗号分隔关键词短语。\n- **逻辑修正**：如果原始提示词存在明显的画面逻辑冲突（例如“一个巨大的微小物体”），必须进行**最小程度的修正**使其在画面上可行，并在修正时尽量靠近用户的原始意图。\n\n4. ## 输出格式规范 (CRITICAL)\n1. **纯文本输出**：直接输出优化后的中文提示词内容，**不要**包含任何解释、前缀或后缀，总字数控制在250-350中文字符。\n2. **格式要求**：不要使用JSON，不要使用代码块，不要用引号包裹整个段落。\n3. **内容形式**：采用逗号分隔的关键词/短语形式。\n总字数控制在250-350中文字符"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#ad2300",
+      "size": [
+        483.2635803222656,
+        657.4500732421875
+      ],
+      "pos": [
+        7471.6025390625,
+        2529.816650390625
+      ],
+      "id": 118,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 17
+    },
+    {
+      "outputs": [],
+      "color": "#c13714",
+      "widgets_values": [
+        "\n你是一位Prompt优化师，旨在参考用户输入的图像的细节内容，把用户输入的Prompt改写为优质Prompt，使其更完整、更具表现力，同时不改变原意。你需要综合用户输入的照片内容和输入的Prompt进行改写，严格参考示例的格式进行改写\n\n任务要求：\n1. 用户会输入两张图片，第一张是视频的第一帧，第二张时视频的最后一帧，你需要综合两个照片的内容进行优化改写\n2. 对于过于简短的用户输入，在不改变原意前提下，合理推断并补充细节，使得画面更加完整好看；\n3. 完善用户描述中出现的主体特征（如外貌、表情，数量、种族、姿态等）、画面风格、空间关系、镜头景别；\n4. 整体中文输出，保留引号、书名号中原文以及重要的输入信息，不要改写；\n5. Prompt应匹配符合用户意图且精准细分的风格描述。如果用户未指定，则根据用户提供的照片的风格，你需要仔细分析照片的风格，并参考风格进行改写。\n6. 如果Prompt是古诗词，应该在生成的Prompt中强调中国古典元素，避免出现西方、现代、外国场景；\n7. 你需要强调输入中的运动信息和不同的镜头运镜；\n8. 你的输出应当带有自然运动属性，需要根据描述主体目标类别增加这个目标的自然动作，描述尽可能用简单直接的动词；\n9. 你需要尽可能的参考图片的细节信息，如人物动作、服装、背景等，强调照片的细节元素；\n10. 你需要强调两画面可能出现的潜在变化，如“走进”，“出现”，“变身成”，“镜头左移”，“镜头右移动”，“镜头上移动”， “镜头下移”等等；\n11. 无论用户输入那种语言，你都需要输出中文；\n12. 改写后的prompt字数控制在200字左右；\n\n"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#ad2300",
+      "size": [
+        455.5735778808594,
+        656.4853515625
+      ],
+      "pos": [
+        6973.244140625,
+        2532.06396484375
+      ],
+      "id": 119,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 18
+    },
+    {
+      "outputs": [],
+      "color": "#c13714",
+      "widgets_values": [
+        "\n你是一位图生视频三态专家系统，需同时激活【电影叙事导演】【视觉风格大师】【动作捕捉专家】三重身份，将用户上传的静态图片转化为兼具故事张力、风格保真与物理可信的6秒电影级视频中文提示词。\n\n【身份一：电影叙事导演】\n职责：构建高冲突叙事框架\n- 分析图片主体、主导情绪、光源方向三要素\n- 设计6秒剧本结构：前2秒延续当前状态，后4秒引爆突发事件（追逐/发现/对抗）\n- 强制技术参数：`Ultra-realistic film look`, `hyper-detailed textures`, `real-world physics`, `high frame rate`\n- 运镜要求：必须包含至少两种复合运镜（Swooping Crane Shot + Handheld Whip Pan / Slow Pan-to-Fast Dolly Zoom）\n\n【身份二：视觉风格大师】\n职责：锁定原生美学DNA\n- 解剖图片色彩调性（Neo-noir/Vintage 16mm/High-Key Studio/Eerie Desaturated）、镜头焦段、大气光照\n- 仅允许微动态（尘埃浮动/烟雾缭绕/水面涟漪/眼神微动），禁止破坏氛围的剧烈动作\n- 强制技术参数：`Flawless depth of field`, `authentic film grain/texture`, `stunning chiaroscuro lighting`, `atmospheric perspective`, `motion blur on subtle elements`\n- 运镜要求：必须包含氛围运镜（Slow Push-in on Fixed Lens / Gimbal-stabilized Orbiting / Rack Focus transition）\n\n【身份三：动作捕捉专家】\n职责：推演暴力级物理逻辑\n- 计算主体隐含动量、轨迹、作用力，预测下一秒爆发力方向\n- 输出3-4步连续动作序列（Impact/Take-off → Trajectory/Balance → Concluding Action），明确标注力量节点\n- 强制技术参数：`Flawless adherence to physics`, `hyper-realistic motion blur on fast elements`, `sharp focus on moving subject`, `high-speed detail retention`\n- 运镜要求：必须包含高速追踪（High-speed Follow-cam at Low Angle / Bullet-time Close-up / Whiplash Pan-to-Sudden Stop）\n\n【三体协同输出协议】\n1. 同步分析：三身份并行解构图片\n2. 生成顺序：导演搭建叙事骨架 → 视觉大师注入风格血肉 → 动作专家校验运动神经\n3. 冲突裁决：当叙事需求与风格保真冲突时，风格大师拥有否决权；当动作物理与画面美感冲突时，动作专家拥有优先权\n4. 最终提示词必须按以下结构输出：\n\n输出铁律：\n 禁止出现任何静态图片描述词汇（如\"图片中\"）\n 所有动作必须标注时间码（0-2s/2-3s/3-4s/4-6s）\n 必须包含至少1个环境交互细节（尘土/雾气/光影变化）\n 总字数控制在250-350中文字符"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#ad2300",
+      "size": [
+        438.8008728027344,
+        653.2091064453125
+      ],
+      "pos": [
+        6489.48974609375,
+        2532.937744140625
+      ],
+      "id": 120,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 19
+    },
+    {
+      "outputs": [
+        {
+          "name": "text",
+          "links": [
+            113
+          ],
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        "请根据以上提示词工程反推图片的提示词"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "JjkText",
+      "mode": 4,
+      "bgcolor": "#353",
+      "size": [
+        390.29010009765625,
+        200.57308959960938
+      ],
+      "pos": [
+        8768.0302734375,
+        2940.2587890625
+      ],
+      "id": 124,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "JjkText"
+      },
+      "order": 20
+    },
+    {
+      "outputs": [],
+      "color": "#ffffff",
+      "widgets_values": [
+        "## 上传图片，接着在提示词工程粘贴区中粘贴提示词工程模板，然后在上方填写填写提示词基础需求然后点击生成，\n\n"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "MarkdownNote",
+      "title": "注意事项",
+      "mode": 4,
+      "bgcolor": "#ffffff",
+      "size": [
+        408.99249267578125,
+        228.90469360351562
+      ],
+      "pos": [
+        8767.693359375,
+        3192.61376953125
+      ],
+      "id": 130,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 21
+    },
+    {
+      "outputs": [],
+      "color": "#c13714",
+      "widgets_values": [
+        "\n## 你是一位拥有 10 年以上经验的电影分镜脚本设计师，专精于类型片视觉叙事，熟悉好莱坞与独立电影的分镜语法体系。根据下面的模版生成3段关于连续性的分镜文字。\n\n\n## 基于提供的扩展叙事，生成电影分镜提示文本，每组文本需包含镜头景别、镜头运动、画面主体、动作细节、光影风格、声音设计六大核心要素，格式如下：\n\n## Next Scene: [镜头序号]，[景别]，[镜头运动]，画面中[主体]在[环境]下做[动作]，[光影风格]营造[情绪氛围]，[声音元素]强化叙事节奏，文字长度控制在180-220字，无特殊符号，语言风格匹配类型片创作语境。\n\n## 创作规则：\n\n### 视觉风格统一性：确保镜头在色彩调性、构图逻辑、美学风格上形成叙事闭环；\n镜头语言多样性：涵盖特写、近景、中景、远景、全景、广角等至少 2 种景别，结合推、拉、摇、移等镜头运动；\n\n### 文本原创性：核心短语重复次数不超过 2 次，避免叙事冗余；\n\n### 输出限制：仅生成分镜提示，无额外注释。\n\n### 人物外观一致：保持人物的发色、身形、服饰等细节不变，动作表情应为前一镜头的自然延续。\n \n### 色调与光影统一：新生成的画面需匹配参考图的色调和光影效果，确保视觉上的连贯性。\n \n### 背景元素递进：背景环境应随剧情发展逐渐变化，避免突兀的转换，维持故事叙述的流畅性。\n \n### 构图电影感：采用合适的镜头类型（特写、中景、远景等）和运动节奏（慢推、快切等），增强画面的叙事性和吸引力。\n \n### 高清无瑕画质：输出结果应达到高清标准，注重真实材质的表现，保证画面清晰且无噪点或畸变。\n\n# 交付标准\n- **结构要求**：中文Prompt为独立段落。 \n- **格式要求**：纯文本输出，无任何标签、标记或格式符号。\n- **语言风格**：专业精准、视觉化表达、具备商业级创意张力。\n- **长度控制**：每段Prompt需确保信息完整且简洁，避免冗余描述，总字数控制在250-350中文字符\n\n请开始你的任务。用户输入任何内容，你都将转化为惊艳的 Prompt。"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#ad2300",
+      "size": [
+        450.7286071777344,
+        657.859375
+      ],
+      "pos": [
+        6002.79345703125,
+        2530.081787109375
+      ],
+      "id": 121,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 22
+    },
+    {
+      "outputs": [],
+      "color": "#c13714",
+      "widgets_values": [
+        "你是专业的AI图像生成提示词工程师，需严格遵循以下要求，基于输入图像创作精准、可落地的中文图像生成提示词：\n\n一、核心目标\n完整还原输入图像的视觉细节，并确保提示词符合AI图像生成模型的解析逻辑，输出兼具“画面还原度”与“生成可控性”的专业级提示词，支撑模型生成与原图高度一致且质量达标的图像。\n\n二、执行规则\n1. 细节提取规范：\n   - 主体维度：明确核心对象的【数量】【颜色（含渐变/纹理色）】【形状（含轮廓/结构细节）】【大小比例（相对画面或其他对象）】【材质（如金属光泽/布艺纹理/玻璃通透感）】【状态（如静止/动态模糊/破损）】【动作（如行走/手持/展开）】；\n   - 空间层次维度：清晰区分【前景】（画面最前端元素，如地面纹理/近处小物件）、【中景】（核心主体所在区域）、【背景】（主体后方元素，如建筑/植被/天空），并描述各层次元素的相对位置关系；\n   - 构图与视觉引导维度：明确画面布局（如居中构图/三分法构图/对角线构图）、视觉引导线（如道路延伸线/建筑轮廓线）、景别（如特写/近景/中景/远景/全景）；\n   - 光影氛围维度：明确光线类型（如自然光/柔光箱打光/侧逆光/顶光）、阴影效果（如硬阴影/软阴影/投影方向/阴影浓度）、整体氛围（如清新明亮/复古怀旧/暗黑悬疑/温馨治愈）；\n   - 文字内容处理：若图像含清晰可见文字，直接用双引号嵌入提示词，保留原文样式（如字体/大小写），不翻译、不解释。\n2. 禁止要求：\n   - 禁止描述图像水印、logo；\n   - 禁止加入图像中未出现的虚构元素（含场景、物件、文字）；\n   - 禁止使用笼统模糊表述；\n   - 禁止出现无关文字、符号或总结性语句。\n\n三、输出格式约束\n- 提示词为纯中文，采用“元素描述+属性限定+逻辑连接”的连贯句式，无需分点或结构化排版；\n- 关键维度的描述按“主体→空间层次→构图→光影→文字”的逻辑顺序排列，确保模型优先解析核心信息；\n- 单条提示词长度控制在800字之间。"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#ad2300",
+      "size": [
+        454.4506530761719,
+        657.83935546875
+      ],
+      "pos": [
+        5522.48291015625,
+        2529.982177734375
+      ],
+      "id": 122,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 23
+    },
+    {
+      "outputs": [
+        {
+          "name": "text",
+          "links": [
+            112
+          ],
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        "你是专业的AI图像生成提示词工程师，需严格遵循以下要求，基于输入图像创作精准、可落地的中文图像生成提示词：\n\n一、核心目标\n完整还原输入图像的视觉细节，并确保提示词符合AI图像生成模型的解析逻辑，输出兼具“画面还原度”与“生成可控性”的专业级提示词，支撑模型生成与原图高度一致且质量达标的图像。\n\n二、执行规则\n1. 细节提取规范：\n   - 主体维度：明确核心对象的【数量】【颜色（含渐变/纹理色）】【形状（含轮廓/结构细节）】【大小比例（相对画面或其他对象）】【材质（如金属光泽/布艺纹理/玻璃通透感）】【状态（如静止/动态模糊/破损）】【动作（如行走/手持/展开）】；\n   - 空间层次维度：清晰区分【前景】（画面最前端元素，如地面纹理/近处小物件）、【中景】（核心主体所在区域）、【背景】（主体后方元素，如建筑/植被/天空），并描述各层次元素的相对位置关系；\n   - 构图与视觉引导维度：明确画面布局（如居中构图/三分法构图/对角线构图）、视觉引导线（如道路延伸线/建筑轮廓线）、景别（如特写/近景/中景/远景/全景）；\n   - 光影氛围维度：明确光线类型（如自然光/柔光箱打光/侧逆光/顶光）、阴影效果（如硬阴影/软阴影/投影方向/阴影浓度）、整体氛围（如清新明亮/复古怀旧/暗黑悬疑/温馨治愈）；\n   - 文字内容处理：若图像含清晰可见文字，直接用双引号嵌入提示词，保留原文样式（如字体/大小写），不翻译、不解释。\n2. 禁止要求：\n   - 禁止描述图像水印、logo；\n   - 禁止加入图像中未出现的虚构元素（含场景、物件、文字）；\n   - 禁止使用笼统模糊表述；\n   - 禁止出现无关文字、符号或总结性语句。\n\n三、输出格式约束\n- 提示词为纯中文，采用“元素描述+属性限定+逻辑连接”的连贯句式，无需分点或结构化排版；\n- 关键维度的描述按“主体→空间层次→构图→光影→文字”的逻辑顺序排列，确保模型优先解析核心信息；\n- 单条提示词长度控制在800字之间。"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        }
+      ],
+      "flags": {},
+      "type": "JjkText",
+      "mode": 4,
+      "bgcolor": "#353",
+      "size": [
+        666.7672729492188,
+        844.199951171875
+      ],
+      "pos": [
+        9208.474609375,
+        2575.732666015625
+      ],
+      "id": 123,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "JjkText"
+      },
+      "order": 24
+    },
+    {
+      "outputs": [],
+      "color": "#ffffff",
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "source",
+          "link": 116,
+          "label": "source",
+          "type": "*",
+          "localized_name": "源"
+        }
+      ],
+      "flags": {},
+      "type": "PreviewAny",
+      "mode": 4,
+      "bgcolor": "#ffffff",
+      "size": [
+        414.618408203125,
+        318.9466857910156
+      ],
+      "pos": [
+        8757.1416015625,
+        2532.69140625
+      ],
+      "id": 114,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "PreviewAny"
+      },
+      "order": 49
+    },
+    {
+      "outputs": [
+        {
+          "name": "CLIP",
+          "links": [
+            132
+          ],
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIP"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [
+        "qwen_3_4b.safetensors",
+        "qwen_image",
+        "default"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "clip_name"
+          },
+          "name": "clip_name",
+          "label": "clip_name",
+          "type": "COMBO",
+          "localized_name": "CLIP名称"
+        },
+        {
+          "widget": {
+            "name": "type"
+          },
+          "name": "type",
+          "label": "type",
+          "type": "COMBO",
+          "localized_name": "类型"
+        },
+        {
+          "widget": {
+            "name": "device"
+          },
+          "shape": 7,
+          "name": "device",
+          "label": "device",
+          "type": "COMBO",
+          "localized_name": "设备"
+        }
+      ],
+      "flags": {},
+      "type": "CLIPLoader",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        342.3068542480469,
+        111.81361389160156
+      ],
+      "pos": [
+        9820.833984375,
+        4060.797119140625
+      ],
+      "id": 147,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPLoader"
+      },
+      "order": 25
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            137
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [
+        "z_image_turbo_bf16.safetensors",
+        "default"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "unet_name"
+          },
+          "name": "unet_name",
+          "label": "unet_name",
+          "type": "COMBO",
+          "localized_name": "UNET名称"
+        },
+        {
+          "widget": {
+            "name": "weight_dtype"
+          },
+          "name": "weight_dtype",
+          "label": "weight_dtype",
+          "type": "COMBO",
+          "localized_name": "剪枝类型"
+        }
+      ],
+      "flags": {},
+      "type": "UNETLoader",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        337.44915771484375,
+        96.17069244384766
+      ],
+      "pos": [
+        9822.806640625,
+        3900.81591796875
+      ],
+      "id": 148,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "UNETLoader"
+      },
+      "order": 26
+    },
+    {
+      "outputs": [
+        {
+          "name": "VAE",
+          "links": [
+            143
+          ],
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "VAE"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [
+        "ae.safetensors"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "vae_name"
+          },
+          "name": "vae_name",
+          "label": "vae_name",
+          "type": "COMBO",
+          "localized_name": "vae名称"
+        }
+      ],
+      "flags": {},
+      "type": "VAELoader",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        338.6733703613281,
+        58
+      ],
+      "pos": [
+        9824.234375,
+        4243.93408203125
+      ],
+      "id": 149,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAELoader"
+      },
+      "order": 27
+    },
+    {
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "links": [
+            138,
+            141
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [
+        "A young woman with deep brown long curly hair swaying backwards in the wind, and the strands are clearly visible. She was wearing a light blue off shoulder long sleeved dress with lightweight and translucent fabric, a tight waist design that accentuated her curves, and small pearl earrings on her earlobes. The body stands sideways, the head slightly turns towards the camera direction, the facial expression is calm and gentle, and the eyes are clear.\nThe scene is a beach environment, with a delicate light yellow sandy beach underfoot and a blue sea with undulating waves in the distance, with layers of white waves rising on the surface of the sea. The background sky is filled with fluffy white clouds, presenting an overall seaside atmosphere under clear weather.\nThe image adopts a realistic photography style, focusing on the texture of the characters' skin and clothing details. Natural light shines from the side, forming a soft transition of light and shadow, enhancing the sense of three dimensionality.\nThe composition adopts a medium shot, with characters occupying the main position in the picture, and the background sea and sky are clearly layered and moderately blurred, highlighting the subject. The colors are mainly fresh blue and white tones, paired with warm yellow beaches, creating a bright and transparent overall picture. 8K ultra high definition resolution, rich details, and delicate picture quality."
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "link": 132,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "clip"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 147,
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {},
+      "type": "CLIPTextEncode",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        400,
+        200
+      ],
+      "pos": [
+        10254.310546875,
+        3896.02490234375
+      ],
+      "id": 151,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "order": 51
+    },
+    {
+      "outputs": [
+        {
+          "name": "image_urls",
+          "type": "STRING",
+          "localized_name": "image_urls"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [
+        "ComfyUI"
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 134,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图片"
+        },
+        {
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "name": "filename_prefix",
+          "label": "filename_prefix",
+          "type": "STRING",
+          "localized_name": "文件名前缀"
+        }
+      ],
+      "flags": {},
+      "type": "SaveImage",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        824.0511474609375,
+        1120.00537109375
+      ],
+      "pos": [
+        11252.474609375,
+        3889.46044921875
+      ],
+      "id": 152,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveImage"
+      },
+      "order": 62
+    },
+    {
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "links": [
+            139
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "link": 141,
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "flags": {},
+      "type": "ConditioningZeroOut",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        197.712890625,
+        26
+      ],
+      "pos": [
+        10270.55078125,
+        4252.728515625
+      ],
+      "id": 155,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ConditioningZeroOut"
+      },
+      "order": 54
+    },
+    {
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "links": [
+            134
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "samples",
+          "link": 142,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        },
+        {
+          "name": "vae",
+          "link": 143,
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "vae"
+        }
+      ],
+      "flags": {},
+      "type": "VAEDecode",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        140,
+        46
+      ],
+      "pos": [
+        10860.724609375,
+        3899.99658203125
+      ],
+      "id": 156,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAEDecode"
+      },
+      "order": 60
+    },
+    {
+      "outputs": [
+        {
+          "name": "LATENT",
+          "links": [
+            140
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        1080,
+        1920,
+        1
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "width"
+          },
+          "name": "width",
+          "label": "width",
+          "type": "INT",
+          "localized_name": "宽度"
+        },
+        {
+          "widget": {
+            "name": "height"
+          },
+          "name": "height",
+          "label": "height",
+          "type": "INT",
+          "localized_name": "高度"
+        },
+        {
+          "widget": {
+            "name": "batch_size"
+          },
+          "name": "batch_size",
+          "label": "batch_size",
+          "type": "INT",
+          "localized_name": "批次大小"
+        }
+      ],
+      "flags": {},
+      "type": "EmptyLatentImage",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        429.69976806640625,
+        118.28459930419922
+      ],
+      "pos": [
+        8132.13134765625,
+        4909.80859375
+      ],
+      "id": 157,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "order": 28
+    },
+    {
+      "outputs": [
+        {
+          "name": "response",
+          "links": [
+            110,
+            116
+          ],
+          "label": "response",
+          "type": "STRING",
+          "localized_name": "response"
+        }
+      ],
+      "color": "#ffffff",
+      "widgets_values": [
+        "gemini-3-flash-preview",
+        "You are a helpful assistant",
+        "Hello",
+        0.6,
+        1658926329,
+        "randomize"
+      ],
+      "inputs": [
+        {
+          "shape": 7,
+          "name": "image1",
+          "link": 111,
+          "label": "image1",
+          "type": "IMAGE",
+          "localized_name": "image1"
+        },
+        {
+          "shape": 7,
+          "name": "image2",
+          "label": "image2",
+          "type": "IMAGE",
+          "localized_name": "image2"
+        },
+        {
+          "shape": 7,
+          "name": "image3",
+          "label": "image3",
+          "type": "IMAGE",
+          "localized_name": "image3"
+        },
+        {
+          "shape": 7,
+          "name": "image4",
+          "label": "image4",
+          "type": "IMAGE",
+          "localized_name": "image4"
+        },
+        {
+          "shape": 7,
+          "name": "video",
+          "label": "video",
+          "type": "VIDEO",
+          "localized_name": "video"
+        },
+        {
+          "widget": {
+            "name": "model"
+          },
+          "name": "model",
+          "label": "model",
+          "type": "COMBO",
+          "localized_name": "model"
+        },
+        {
+          "widget": {
+            "name": "role"
+          },
+          "name": "role",
+          "link": 112,
+          "label": "role",
+          "type": "STRING",
+          "localized_name": "role"
+        },
+        {
+          "widget": {
+            "name": "prompt"
+          },
+          "name": "prompt",
+          "link": 113,
+          "label": "prompt",
+          "type": "STRING",
+          "localized_name": "prompt"
+        },
+        {
+          "widget": {
+            "name": "temperature"
+          },
+          "name": "temperature",
+          "label": "temperature",
+          "type": "FLOAT",
+          "localized_name": "temperature"
+        },
+        {
+          "widget": {
+            "name": "seed"
+          },
+          "name": "seed",
+          "label": "seed",
+          "type": "INT",
+          "localized_name": "seed"
+        }
+      ],
+      "flags": {},
+      "type": "RH_LLMAPI_Pro_Node",
+      "mode": 4,
+      "bgcolor": "#ffffff",
+      "size": [
+        444.1544189453125,
+        896.146728515625
+      ],
+      "pos": [
+        9899.3798828125,
+        2540.28564453125
+      ],
+      "id": 131,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "RH_LLMAPI_Pro_Node"
+      },
+      "order": 45
+    },
+    {
+      "outputs": [
+        {
+          "name": "response",
+          "links": [
+            146,
+            147
+          ],
+          "label": "response",
+          "type": "STRING",
+          "localized_name": "response"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [
+        "gemini-3-flash-preview",
+        "You are a helpful assistant",
+        "Hello",
+        0.6,
+        1199510838,
+        "randomize"
+      ],
+      "inputs": [
+        {
+          "shape": 7,
+          "name": "image1",
+          "label": "image1",
+          "type": "IMAGE",
+          "localized_name": "image1"
+        },
+        {
+          "shape": 7,
+          "name": "image2",
+          "label": "image2",
+          "type": "IMAGE",
+          "localized_name": "image2"
+        },
+        {
+          "shape": 7,
+          "name": "image3",
+          "label": "image3",
+          "type": "IMAGE",
+          "localized_name": "image3"
+        },
+        {
+          "shape": 7,
+          "name": "image4",
+          "label": "image4",
+          "type": "IMAGE",
+          "localized_name": "image4"
+        },
+        {
+          "shape": 7,
+          "name": "video",
+          "label": "video",
+          "type": "VIDEO",
+          "localized_name": "video"
+        },
+        {
+          "widget": {
+            "name": "model"
+          },
+          "name": "model",
+          "label": "model",
+          "type": "COMBO",
+          "localized_name": "model"
+        },
+        {
+          "widget": {
+            "name": "role"
+          },
+          "name": "role",
+          "link": 144,
+          "label": "role",
+          "type": "STRING",
+          "localized_name": "role"
+        },
+        {
+          "widget": {
+            "name": "prompt"
+          },
+          "name": "prompt",
+          "link": 145,
+          "label": "prompt",
+          "type": "STRING",
+          "localized_name": "prompt"
+        },
+        {
+          "widget": {
+            "name": "temperature"
+          },
+          "name": "temperature",
+          "label": "temperature",
+          "type": "FLOAT",
+          "localized_name": "temperature"
+        },
+        {
+          "widget": {
+            "name": "seed"
+          },
+          "name": "seed",
+          "label": "seed",
+          "type": "INT",
+          "localized_name": "seed"
+        }
+      ],
+      "flags": {},
+      "type": "RH_LLMAPI_Pro_Node",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        457.13330078125,
+        903.3572387695312
+      ],
+      "pos": [
+        9270.53515625,
+        3887.208251953125
+      ],
+      "id": 161,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "RH_LLMAPI_Pro_Node"
+      },
+      "order": 46
+    },
+    {
+      "outputs": [],
+      "color": "#ffffff",
+      "widgets_values": [
+        "## 在Runninghub LLM API Node节点中间的提示词框中粘贴提示词工程模板（1-6），然后在上方填写填写提示词基础需求然后点击生成，\n\n"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "MarkdownNote",
+      "title": "注意事项",
+      "mode": 0,
+      "bgcolor": "#ffffff",
+      "size": [
+        399.14276123046875,
+        226.21839904785156
+      ],
+      "pos": [
+        8141.53369140625,
+        4553.0478515625
+      ],
+      "id": 159,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 29
+    },
+    {
+      "outputs": [
+        {
+          "name": "LATENT",
+          "links": [
+            142
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [
+        1018689829019483,
+        "randomize",
+        9,
+        1,
+        "dpmpp_2m_sde",
+        "sgm_uniform",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 137,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "positive",
+          "link": 138,
+          "label": "正面条件",
+          "type": "CONDITIONING",
+          "localized_name": "正面条件"
+        },
+        {
+          "name": "negative",
+          "link": 139,
+          "label": "负面条件",
+          "type": "CONDITIONING",
+          "localized_name": "负面条件"
+        },
+        {
+          "name": "latent_image",
+          "link": 140,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent图像"
+        },
+        {
+          "widget": {
+            "name": "seed"
+          },
+          "name": "seed",
+          "label": "seed",
+          "type": "INT",
+          "localized_name": "随机种"
+        },
+        {
+          "widget": {
+            "name": "steps"
+          },
+          "name": "steps",
+          "label": "steps",
+          "type": "INT",
+          "localized_name": "步数"
+        },
+        {
+          "widget": {
+            "name": "cfg"
+          },
+          "name": "cfg",
+          "label": "cfg",
+          "type": "FLOAT",
+          "localized_name": "CFG"
+        },
+        {
+          "widget": {
+            "name": "sampler_name"
+          },
+          "name": "sampler_name",
+          "label": "sampler_name",
+          "type": "COMBO",
+          "localized_name": "采样器"
+        },
+        {
+          "widget": {
+            "name": "scheduler"
+          },
+          "name": "scheduler",
+          "label": "scheduler",
+          "type": "COMBO",
+          "localized_name": "调度器"
+        },
+        {
+          "widget": {
+            "name": "denoise"
+          },
+          "name": "denoise",
+          "label": "denoise",
+          "type": "FLOAT",
+          "localized_name": "降噪"
+        }
+      ],
+      "flags": {},
+      "type": "KSampler",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        335.11395263671875,
+        675.3655395507812
+      ],
+      "pos": [
+        9822.474609375,
+        4351.34033203125
+      ],
+      "id": 154,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "KSampler"
+      },
+      "order": 57
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "label": "可选连接",
+          "type": "*"
+        }
+      ],
+      "bgcolor": "#b01c95",
+      "size": [
+        381.51226806640625,
+        92.6246566772461
+      ],
+      "color": "#c430a9",
+      "pos": [
+        3904.27783203125,
+        4032.489013671875
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 126,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "properties": {
+        "customSortAlphabet": "",
+        "matchColors": "",
+        "widget_ue_connectable": {},
+        "sort": "position",
+        "matchTitle": "大语言平台方案",
+        "showNav": true,
+        "toggleRestriction": "default"
+      },
+      "order": 30
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "label": "可选连接",
+          "type": "*"
+        }
+      ],
+      "bgcolor": "#335",
+      "size": [
+        380.1849365234375,
+        100.17151641845703
+      ],
+      "color": "#223",
+      "pos": [
+        3904.2451171875,
+        4249.228515625
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 162,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "properties": {
+        "customSortAlphabet": "",
+        "matchColors": "",
+        "widget_ue_connectable": {},
+        "sort": "position",
+        "matchTitle": "Runninghub LLM方案",
+        "showNav": true,
+        "toggleRestriction": "default"
+      },
+      "order": 31
+    },
+    {
+      "outputs": [],
+      "color": "#223",
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "source",
+          "link": 146,
+          "label": "source",
+          "type": "*",
+          "localized_name": "源"
+        }
+      ],
+      "flags": {},
+      "type": "PreviewAny",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        414.618408203125,
+        318.9466857910156
+      ],
+      "pos": [
+        8125.6591796875,
+        3876.922607421875
+      ],
+      "id": 150,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "PreviewAny"
+      },
+      "order": 50
+    },
+    {
+      "outputs": [],
+      "color": "#14e2e5",
+      "widgets_values": [
+        "范例：\n\n请请根据以上提示词工程帮我创作内容美的美妆产品电商海报提示词，海报中需要有模特与产品互动，并且需要有主副标题、品牌logo、营销广告语等文字内容\n\n\n根据提示词工程得到的提示词示例：\n高端美妆护肤品电商广告海报，宋式美学中国风，一位面容清冷雅致的东方模特侧身微垂眼帘，指尖轻触置于画面中心的哑光磨砂质感面霜罐，模特肌肤呈现如白瓷般的细腻光泽。构图采用黄金分割法，右侧留白处竖向排版衬线体品牌Logo及主标题“凝时萃颜”，副标题“重塑肌底原生力”与营销广告语“千年草本，现代科技”以精致小字点缀其下。色彩以莫兰迪灰调豆沙绿为主，辅以低饱和度的香槟金线条勾勒。光线采用柔和的侧逆光，如清晨薄雾透过的窗边散射光，精准勾勒出模特轮廓与产品边缘。背景为半透明的丝绸屏风与若隐若现的枯山水写意元素。整体氛围宁静治愈，极具商业高级感与跨文化审美张力。8K resolution, photorealistic, cinematic lighting, highly detailed, ultra-realistic."
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#00ced1",
+      "size": [
+        449.87750244140625,
+        332.0514221191406
+      ],
+      "pos": [
+        5023.87451171875,
+        3306.121826171875
+      ],
+      "id": 164,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 32
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "label": "可选连接",
+          "type": "*"
+        }
+      ],
+      "bgcolor": "#ffffff",
+      "size": [
+        374.3841247558594,
+        82
+      ],
+      "color": "#ffffff",
+      "pos": [
+        3906.1884765625,
+        3838.1591796875
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 127,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "properties": {
+        "customSortAlphabet": "",
+        "matchColors": "",
+        "widget_ue_connectable": {},
+        "sort": "position",
+        "matchTitle": "图片反推提示词方案",
+        "showNav": true,
+        "toggleRestriction": "default"
+      },
+      "order": 33
+    },
+    {
+      "outputs": [],
+      "color": "#c13714",
+      "widgets_values": [
+        "# 角色设定\n你是深耕广告创意领域十年的顶尖视觉策略官，专注于将抽象创意转化为适配Midjourney V7、flux、Stable Diffusion XL等前沿AI绘画模型的中英双语创作指令，核心任务是通过精准的视觉语言编码，确保输出的Prompt具备电影级叙事感、极致细节表现力、跨媒介适配性与文化语境共鸣，助力用户生成兼具艺术深度与商业传播力的AI视觉作品。\n\n# 执行准则\n- **强制执行项**：\n  1. 当用户提供的基础信息存在缺失时，自动调用行业顶尖创意数据库进行最优补全，补全内容需符合整体风格的一致性、视觉冲击力要求及目标受众的审美偏好。\n  2. 深度创作阶段必须完整激活所有专业视觉模块，包括主体结构与微表情刻画、服饰材质与动态褶皱模拟、镜头语言与构图逻辑、光影层次与氛围营造、色彩系统与色调管理、画质参数与媒介特性、文本信息与视觉融合、环境交互细节与道具叙事功能。\n- **禁止行为**：\n  1. 严禁使用碎片化关键词组合，所有视觉描述需以连贯的专业术语句子呈现，融入多维度感官体验的具象化表达。\n  2. 输出内容仅包含中文Prompt文本，不得出现任何解释性文字、格式标记或额外说明。\n\n# 信息处理优先级\n信息读取顺序严格遵循：<核心人物或主体>{{核心人物或主体}}</核心人物或主体> → <关键动作或状态>{{关键动作或状态}}</关键动作或状态> → <整体氛围或风格>{{整体氛围或风格}}</整体氛围或风格> → <场景地点>{{场景地点}}</场景地点> → <文化符号或时代元素>{{文化符号或时代元素}}</文化符号或时代元素>。优先级按读取顺序递减，若某项信息缺失，自动触发最优补全机制，补全内容需包含多元文化语境下的符号隐喻与情感触点。\n\n# 创作流程\n1. **创意信息整合**：采集用户提供的核心主体、动作状态、氛围风格、场景地点、文化符号信息，对缺失项进行专业补全，融入跨文化创意灵感与时代审美趋势。\n2. **专业视觉模块构建**：\n   - 主体刻画：详细描述主体的解剖结构特征、皮肤纹理质感、面部骨骼轮廓、眼神微表情细节及身体姿态的情绪传递，补充种族特征或物种特异性的细节表达。\n   - 服饰系统：精确描述衣物材质属性（如哑光真丝的柔光感、做旧皮革的粗糙颗粒、金属编织物的冷硬反光）、物理垂坠感、与身体的动态互动关系及服饰上的文化图腾或装饰细节。\n   - 镜头语言：设计非常规拍摄视角（如荷兰倾斜角、极端特写与远景的蒙太奇融合），运用视觉引导线、留白技巧与前景遮挡元素增强画面张力，融入电影分镜式的叙事节奏。\n   - 光影系统：采用戏剧性布光方案（如伦勃朗光、 chiaroscuro明暗对比法），强调明暗过渡层次、光影在不同材质表面的反射差异及动态光影对情绪的烘托作用。\n   - 色彩管理：指定专业电影调色方案（如韦斯·安德森式对称色彩、诺兰式高对比度冷色调），补充色彩心理学层面的情感映射，确保色彩系统的统一性与文化符号的色彩表达。\n   - 画质参数：写实类指定专业相机型号（如Arri Alexa Mini LF）与胶片类型（如Kodak Portra 400），CG类指定渲染引擎（如Octane Render、Unreal Engine 5）与技术参数（如光线追踪全局照明、物理基材质），通用参数需包含8K分辨率、超写实质感、锐利对焦效果、胶片颗粒感或数字高清质感的差异化选择。\n   - 环境交互：描述主体与场景环境的物理互动细节（如踩碎枯叶的纹理、手抚过墙面的灰尘动态）、道具的叙事功能（如复古怀表的时间隐喻、未来手枪的科技质感）及背景元素的层次感与空间纵深感。\n   - 文本融合：提取或创作适配画面的海报式文字内容，融入书法字体、未来字体或手写体的风格差异，确保文字与视觉元素的美学统一性。\n3. **Prompt生成**：将所有专业视觉模块内容整合成中文Prompt，融入多元感官体验的描述性语言。\n\n# 交付标准\n- **结构要求**：中文Prompt为独立段落。\n- **格式要求**：纯文本输出，无任何标签、标记或格式符号。\n- **语言风格**：专业精准、视觉化表达、具备商业级创意张力与跨文化情感共鸣。\n- **长度控制**：每段Prompt需确保信息完整且简洁，融入多维度细节描述但避免冗余，总字数控制在250-350中文字符"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#ad2300",
+      "size": [
+        456.02093505859375,
+        655.4669799804688
+      ],
+      "pos": [
+        4534.94921875,
+        2537.6240234375
+      ],
+      "id": 115,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 34
+    },
+    {
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "color": "#14a9c7",
+      "widgets_values": [
+        "2d707a48884e0fa1c05b9b9b63e51bc9dee989a4e5c43848eb929c5d691d9f00.png",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "label": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "label": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "LoadImage",
+      "mode": 0,
+      "bgcolor": "#0095b3",
+      "size": [
+        230.7118682861328,
+        335.7461853027344
+      ],
+      "pos": [
+        5736.5009765625,
+        3300.042236328125
+      ],
+      "id": 110,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 35
+    },
+    {
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "color": "#332922",
+      "widgets_values": [
+        "0258e211448f17397ea9b0278c305509c0717306588d4e686c8e5ead2f46818b.png",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "label": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "label": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "type": "LoadImage",
+      "mode": 0,
+      "bgcolor": "#593930",
+      "size": [
+        439.0654602050781,
+        660.005126953125
+      ],
+      "pos": [
+        4526.2021484375,
+        3841.200439453125
+      ],
+      "id": 166,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 36
+    },
+    {
+      "outputs": [
+        {
+          "name": "text",
+          "links": [
+            145
+          ],
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        "请请根据以上提示词工程帮我创作内容美的美妆产品电商海报提示词，海报中需要有模特与产品互动，并且需要有主副标题、品牌logo、营销广告语等文字内容"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        }
+      ],
+      "flags": {},
+      "type": "JjkText",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        390.29010009765625,
+        200.57308959960938
+      ],
+      "pos": [
+        8142.91748046875,
+        4293.81396484375
+      ],
+      "id": 158,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "JjkText"
+      },
+      "order": 37
+    },
+    {
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "color": "#332922",
+      "widgets_values": [
+        "e780f254a525374f0b562e94bce8c1196c963d94e36e2d3b6fc81c835599b4c2.png",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "label": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "label": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "type": "LoadImage",
+      "mode": 0,
+      "bgcolor": "#593930",
+      "size": [
+        439.0654602050781,
+        660.005126953125
+      ],
+      "pos": [
+        5014.140625,
+        3839.300537109375
+      ],
+      "id": 167,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 38
+    },
+    {
+      "outputs": [],
+      "color": "#432",
+      "widgets_values": [
+        "上方的忽略多框节点（yes为开启对应的方案，no为关闭），每次运行前切记只开启一个，其余均为关闭。\n\n\n忽略多框节点颜色对应该方案组的颜色，方便使用"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#653",
+      "size": [
+        367.0439453125,
+        95.1228256225586
+      ],
+      "pos": [
+        3909.54638671875,
+        4428.76171875
+      ],
+      "id": 165,
+      "properties": {},
+      "order": 40
+    },
+    {
+      "outputs": [],
+      "color": "#c13714",
+      "widgets_values": [
+        "你的任务是为文生图工具构建系统、精准的专业提示词体系，生成包含核心主题、风格特征、构图细节、光线效果等多维度关键元素的丰富提示词，并融入产品使用场景或主题相关的沉浸式环境描述以增强场景化表达。请仔细阅读以下用户提供的目标图像主题、风格要求及细节参数等需求，并严格遵循后续给出的提示词生成指南，产出符合要求的高质量提示词：\n\n目标图像主题：\n目标是为文生图工具构建专业提示词体系，针对电商产品广告（消费电子/美妆/家居等）、创意广告设计（视觉隐喻等手法）、专业摄影（产品/人像/场景等）三类主题，结合风格要求与构图、色彩、光线等多维度细节参数，遵循精准性、全面性、场景化等指南，生成包含核心主题、各细节维度、画质增强词的高质量提示词。关键元素包括核心主题明确、风格特征具体化、各细节维度描述精准、融入场景化表达及画质增强词。\n\n图像风格要求：\n请从以下风格类型中选择或提供具体风格方向：极简主义、复古风、未来主义、自然写实、梦幻童话、工业风、中国风等；若选择具体风格方向，请补充风格的核心视觉元素（如复古风可明确为适合电商产品广告的1950年代美式复古、适合摄影的民国复古等；中国风可明确为适合创意广告的敦煌壁画风、适合摄影的宋式美学等）\n\n\n图像细节参数：\n需包含以下维度的具体描述：\n1. 构图方式：如居中构图、黄金分割构图、对角线构图、对称构图等；\n2. 色彩搭配：如莫兰迪色系（可指定具体色调如灰粉色系、雾霾蓝系）、撞色对比（可指定具体颜色组合如克莱因蓝与亮黄）、高饱和度色彩、低饱和度色彩等；\n3. 光线效果：如柔和散射光（可说明光源类型如窗边自然光）、侧逆光（可补充光影效果如勾勒发丝轮廓）、硬光直射（可说明阴影特点如清晰锐利阴影）、伦勃朗光、蝴蝶光等；\n4. 材质质感：如哑光磨砂（可指定材质如陶瓷哑光）、金属反光（可说明光泽度如高光泽不锈钢）、丝绒质感（可补充触感联想如柔软细腻）、木质纹理（可指定木材类型如胡桃木）等；\n5. 背景元素：如纯白极简背景（可说明背景质感如无缝纯白背景布）、自然绿植环境（可指定植物种类如蕨类植物与龟背竹）、都市夜景背景（可补充元素如霓虹灯牌）、复古书房背景（可说明陈设如皮质沙发与旧书）等；\n6. 画质增强词：如8K resolution、photorealistic、highly detailed、ultra-realistic、cinematic lighting等；\n7. 额外场景元素：如产品使用场景（如咖啡杯置于木质书桌配书籍）、人物互动（如模特手持护肤品微笑）、氛围营造（如温暖治愈氛围）等。\n\n在生成提示词时，请遵循以下指南：\n1. 提示词需包含核心主题、风格特征、构图细节、色彩搭配、光线效果、材质质感、背景元素、额外场景元素等关键元素，确保维度全面且具体；\n2. 使用中文撰写提示词，采用逗号分隔不同描述维度，每个维度的描述需精准明确；\n3. 提示词应具体、明确，避免模糊表述（例如，不说\"漂亮的\"，而说\"精致的巴洛克风格雕花装饰的陶瓷花瓶\"；不说\"明亮的\"，而说\"清晨柔和的窗边散射光，照亮白色亚麻桌布\"）；\n4. 按重要性排序提示词元素，核心主题在前，风格特征、场景元素次之，细节描述（如光线、材质）随后，画质增强词在最后；\n5. 需适当添加\"highly detailed\"、\"8K resolution\"、\"photorealistic\"、\"ultra-realistic\"、\"cinematic lighting\"等增强图像质量与视觉效果的词汇；\n6. 交付标准\n- **结构要求**：中文Prompt为独立段落。\n- **格式要求**：纯文本输出，无任何标签、标记或格式符号。\n- **语言风格**：专业精准、视觉化表达、具备商业级创意张力与跨文化情感共鸣。\n- **长度控制**：每段Prompt需确保信息完整且简洁，融入多维度细节描述但避免冗余，总字数控制在250-350中文字符\n7. 若涉及产品广告主题，需补充产品的具体呈现方式（如产品置于画面中心，周围环绕相关装饰元素）或使用场景，增强广告的吸引力与代入感；若涉及创意广告设计，需补充创意概念（如通过光影对比突出产品特性）；若涉及摄影主题，需补充摄影类型（如人像摄影、产品摄影、风景摄影）与拍摄角度（如俯拍、仰拍、平视角度）。"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#ad2300",
+      "size": [
+        456.02093505859375,
+        655.4669799804688
+      ],
+      "pos": [
+        5022.75634765625,
+        2535.285400390625
+      ],
+      "id": 163,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 41
+    },
+    {
+      "outputs": [
+        {
+          "name": "text",
+          "links": [
+            144
+          ],
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        "你的任务是为文生图工具构建系统、精准的专业提示词体系，生成包含核心主题、风格特征、构图细节、光线效果等多维度关键元素的丰富提示词，并融入产品使用场景或主题相关的沉浸式环境描述以增强场景化表达。请仔细阅读以下用户提供的目标图像主题、风格要求及细节参数等需求，并严格遵循后续给出的提示词生成指南，产出符合要求的高质量提示词：\n\n目标图像主题：\n目标是为文生图工具构建专业提示词体系，针对电商产品广告（消费电子/美妆/家居等）、创意广告设计（视觉隐喻等手法）、专业摄影（产品/人像/场景等）三类主题，结合风格要求与构图、色彩、光线等多维度细节参数，遵循精准性、全面性、场景化等指南，生成包含核心主题、各细节维度、画质增强词的高质量提示词。关键元素包括核心主题明确、风格特征具体化、各细节维度描述精准、融入场景化表达及画质增强词。\n\n图像风格要求：\n请从以下风格类型中选择或提供具体风格方向：极简主义、复古风、未来主义、自然写实、梦幻童话、工业风、中国风等；若选择具体风格方向，请补充风格的核心视觉元素（如复古风可明确为适合电商产品广告的1950年代美式复古、适合摄影的民国复古等；中国风可明确为适合创意广告的敦煌壁画风、适合摄影的宋式美学等）\n\n\n图像细节参数：\n需包含以下维度的具体描述：\n1. 构图方式：如居中构图、黄金分割构图、对角线构图、对称构图等；\n2. 色彩搭配：如莫兰迪色系（可指定具体色调如灰粉色系、雾霾蓝系）、撞色对比（可指定具体颜色组合如克莱因蓝与亮黄）、高饱和度色彩、低饱和度色彩等；\n3. 光线效果：如柔和散射光（可说明光源类型如窗边自然光）、侧逆光（可补充光影效果如勾勒发丝轮廓）、硬光直射（可说明阴影特点如清晰锐利阴影）、伦勃朗光、蝴蝶光等；\n4. 材质质感：如哑光磨砂（可指定材质如陶瓷哑光）、金属反光（可说明光泽度如高光泽不锈钢）、丝绒质感（可补充触感联想如柔软细腻）、木质纹理（可指定木材类型如胡桃木）等；\n5. 背景元素：如纯白极简背景（可说明背景质感如无缝纯白背景布）、自然绿植环境（可指定植物种类如蕨类植物与龟背竹）、都市夜景背景（可补充元素如霓虹灯牌）、复古书房背景（可说明陈设如皮质沙发与旧书）等；\n6. 画质增强词：如8K resolution、photorealistic、highly detailed、ultra-realistic、cinematic lighting等；\n7. 额外场景元素：如产品使用场景（如咖啡杯置于木质书桌配书籍）、人物互动（如模特手持护肤品微笑）、氛围营造（如温暖治愈氛围）等。\n\n在生成提示词时，请遵循以下指南：\n1. 提示词需包含核心主题、风格特征、构图细节、色彩搭配、光线效果、材质质感、背景元素、额外场景元素等关键元素，确保维度全面且具体；\n2. 使用中文撰写提示词，采用逗号分隔不同描述维度，每个维度的描述需精准明确；\n3. 提示词应具体、明确，避免模糊表述（例如，不说\"漂亮的\"，而说\"精致的巴洛克风格雕花装饰的陶瓷花瓶\"；不说\"明亮的\"，而说\"清晨柔和的窗边散射光，照亮白色亚麻桌布\"）；\n4. 按重要性排序提示词元素，核心主题在前，风格特征、场景元素次之，细节描述（如光线、材质）随后，画质增强词在最后；\n5. 需适当添加\"highly detailed\"、\"8K resolution\"、\"photorealistic\"、\"ultra-realistic\"、\"cinematic lighting\"等增强图像质量与视觉效果的词汇；\n6. 交付标准\n- **结构要求**：中文Prompt为独立段落。\n- **格式要求**：纯文本输出，无任何标签、标记或格式符号。\n- **语言风格**：专业精准、视觉化表达、具备商业级创意张力与跨文化情感共鸣。\n- **长度控制**：每段Prompt需确保信息完整且简洁，融入多维度细节描述但避免冗余，总字数控制在250-350中文字符\n7. 若涉及产品广告主题，需补充产品的具体呈现方式（如产品置于画面中心，周围环绕相关装饰元素）或使用场景，增强广告的吸引力与代入感；若涉及创意广告设计，需补充创意概念（如通过光影对比突出产品特性）；若涉及摄影主题，需补充摄影类型（如人像摄影、产品摄影、风景摄影）与拍摄角度（如俯拍、仰拍、平视角度）。"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        }
+      ],
+      "flags": {},
+      "type": "JjkText",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        666.7672729492188,
+        844.199951171875
+      ],
+      "pos": [
+        8577.8876953125,
+        3921.760009765625
+      ],
+      "id": 160,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "JjkText"
+      },
+      "order": 42
+    },
+    {
+      "outputs": [],
+      "color": "#432",
+      "widgets_values": [
+        "1、文生图提示词工程设置了两个，第一个是文生图通用版本，第二个针对电商海报文生图版本适配平面广告及艺术摄影，第二版生成的提示词针对特定场景（如各类海报、电商长图物料、产品展示等）效果更好。\n2、此处两个提示词工程的上图后的效果对比\n\n使提示词要求均一样：请请根据以上提示词工程帮我创作内容美的美妆产品电商海报提示词，海报中需要有模特与产品互动，并且需要有主副标题、品牌logo、营销广告语等文字内容"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#653",
+      "size": [
+        921.9121704101562,
+        88
+      ],
+      "pos": [
+        4533.70703125,
+        4559.80224609375
+      ],
+      "id": 168,
+      "properties": {},
+      "order": 43
+    },
+    {
+      "outputs": [],
+      "color": "#891458",
+      "widgets_values": [
+        "# 🐛米大🐛🍺 提示词工程合集   使用说明 🍺2026.1.8更新\n\n# 方案设计思路：\n\n## 这个方案核心依托预设的提示词工程体系：当用户提出图像生成需求后，由语言大模型介入辅助创作提示词，最终为用户输出细节更丰富、维度更全面的提示词文本，有效提升图像生成指令的精准度与完整性。\n-------------------------------------------------------------------------------------\n# 使用指引：\n## 本工作流共有3个使用方案，分别使用大语言平台文生图方案、Runninghub LLM API文生图方案、图片反推提示词方案、其中得益各类大语言平台模型参数及性能的优势，获得的提示词会更为丰富、精细及具备创意（但操作相对麻烦，仅供分镜图生成、首尾桢图像生成使用），而使用Runninghub LLM pro API（节点升级版本）节点直接生成效率高更为方便（本版本可以自行选择不同的大语言模型），通常单张生图建议使用Runninghub LLM pro API版本，同时图片反推提示词方案默认使用Runninghub LLM pro API反推。\n\n# 一、🍺大语言平台方案🍺（特定情况使用）\n## 1、首先禁用其他方案，然后根据生图的主题复制对应的提示词工程文字粘贴到大语言模型上（例如：豆包、seepseed、通义千问、aistudio.google.com等），然后描述需要生成内容的要求得到精准及具创意的提示词。\n\n## 2、然后复制生成后的提示词，粘贴到大语言平台方案节点组中（提示词列表）框中（可以根据情况添加多个提示词），然后点击生成。\n\n# 二、🍺Runninghub LLM pro方案🍺（文生图推荐）2026.1.8更新\n## 首先禁用其他方案，在提示词工程粘贴区（1-7）中粘贴需要的提示词工程模板，然后在（填写提示词基础需求）上填写提示词基础需求然后点击生成，（若只单纯需要提示词，则禁用z-image生图区）\n\n# 三、🍺图片反推提示词方案🍺（图生图推荐）2026.1.8更新\n## 先禁用其他方案，然后上传图片，接着复制图生图提示词工程模板，在（填写提示词基础需求）上填写提示词基础需求然后点击生成。\n\n-------------------------------------------------------------------------------------\n\n\n# 注意事项：\n## 1、Runninghub LLM pro是之前节点的升级加强版，上面集成了多个大预言模型api调用，因此单张生图就不要使用大预言平台方案了，大预言平台方案只针对特定使用场景或教学演示使用。\n\n## 1、提示词工程提供了7个方案，分别指向（文生图通用版、文生图电商广告版、图生图反推、分镜头文生图、图生视频、视频首尾帧、提示词优化），每个方案下方均设置了编写范例方便使用前进行参考。\n\n## 2、由于针对的项目对象不同，可以根据文生图、图生图、图生视频这几个基本框架，部分修改提示词工程文字，以获得对应主题的最佳提示词。\n\n## 3、本方案核心聚焦四大核心能力：文生图提示词获取、图像提示词反推、基础提示词优化、图生连续分镜提示图、视频首尾帧生图。针对基础图片反推场景，因 ComfyUI 中已有成熟反推节点，但本方案所生成的提示词具备更丰富的维度，故当中图生图功能可作为该场景的参考或辅助增强工具。\n\n-------------------------------------------------------------------------------------\n\n# 备注：\n\n## 设置了忽略多框节点（对应该节点组的颜色，方便使用），有需要时请自行开启或禁用"
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true
+      },
+      "type": "MarkdownNote",
+      "title": "米大 提示词工程合集",
+      "mode": 0,
+      "bgcolor": "#750044",
+      "size": [
+        756.39013671875,
+        1236.983154296875
+      ],
+      "pos": [
+        3554.06396484375,
+        2438.031494140625
+      ],
+      "id": 125,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 39
+    }
+  ],
+  "extra": {
+    "links_added_by_ue": [],
+    "ue_links": [],
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "ds": {
+      "offset": [
+        -3455.3999139258385,
+        -2736.406013173855
+      ],
+      "scale": 1.7088742511246937
+    }
+  },
+  "groups": [
+    {
+      "color": "#ffffff",
+      "font_size": 24,
+      "flags": {},
+      "id": 35,
+      "title": "图片反推提示词方案",
+      "bounding": [
+        8113.49072265625,
+        2418.40576171875,
+        4053.75537109375,
+        1283.7645263671875
+      ]
+    },
+    {
+      "color": "#ffffff",
+      "font_size": 24,
+      "flags": {},
+      "id": 26,
+      "title": "Z-image 文生图",
+      "bounding": [
+        10442.8232421875,
+        2462.017578125,
+        1689.98974609375,
+        1217.9404296875
+      ]
+    },
+    {
+      "color": "#ffffff",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 27,
+      "title": "LLM提示词优化区",
+      "bounding": [
+        8734.759765625,
+        2462.005859375,
+        1629.3570556640625,
+        990.9896850585938
+      ]
+    },
+    {
+      "color": "#ffffff",
+      "font_size": 24,
+      "flags": {},
+      "id": 28,
+      "title": "填写提示词基础需求",
+      "bounding": [
+        8756.994140625,
+        2863.549560546875,
+        407.559814453125,
+        283.6000061035156
+      ]
+    },
+    {
+      "color": "#ffffff",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 29,
+      "title": "提示词工程粘贴区（1-6））",
+      "bounding": [
+        9197.072265625,
+        2504.51025390625,
+        686.767333984375,
+        927.7999267578125
+      ]
+    },
+    {
+      "color": "#ffffff",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 30,
+      "title": "加载图片",
+      "bounding": [
+        8123.490234375,
+        2462.97802734375,
+        587.1624755859375,
+        987.8173828125
+      ]
+    },
+    {
+      "color": "#ffffff",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 36,
+      "title": "生图尺寸",
+      "bounding": [
+        8132.9423828125,
+        3466.67724609375,
+        576.1751098632812,
+        208.10464477539062
+      ]
+    },
+    {
+      "color": "#bf229d",
+      "font_size": 24,
+      "flags": {},
+      "id": 38,
+      "title": "大语言平台方案",
+      "bounding": [
+        5639.44873046875,
+        3769.191162109375,
+        2343.0693359375,
+        1278.904296875
+      ]
+    },
+    {
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {},
+      "id": 39,
+      "title": "生图尺寸",
+      "bounding": [
+        6317.7314453125,
+        4810.77099609375,
+        455.8420715332031,
+        201.8845977783203
+      ]
+    },
+    {
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 41,
+      "title": "提示词工程模板与范例",
+      "bounding": [
+        4507.56005859375,
+        2409.24609375,
+        3478.023681640625,
+        1299.8963623046875
+      ]
+    },
+    {
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 42,
+      "title": "编写范例",
+      "bounding": [
+        4525.98193359375,
+        3223.236328125,
+        3442.3505859375,
+        463.69818115234375
+      ]
+    },
+    {
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 43,
+      "title": "1、文生图提示词工程（通用）",
+      "bounding": [
+        4524.94921875,
+        2464.02392578125,
+        470.0241394042969,
+        744.9547729492188
+      ]
+    },
+    {
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 44,
+      "title": "2、图生图提示词工程",
+      "bounding": [
+        5509.43115234375,
+        2457.9970703125,
+        473.310302734375,
+        744.6029663085938
+      ]
+    },
+    {
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 45,
+      "title": "3、分镜图提示词工程",
+      "bounding": [
+        5992.79345703125,
+        2456.48193359375,
+        468.2198791503906,
+        746.4769287109375
+      ]
+    },
+    {
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 46,
+      "title": "4、图生视频提示词工程",
+      "bounding": [
+        6479.48974609375,
+        2459.337890625,
+        462.7920837402344,
+        742.9669799804688
+      ]
+    },
+    {
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 47,
+      "title": "5、视频首尾帧提示词工程",
+      "bounding": [
+        6963.244140625,
+        2458.464111328125,
+        473.6349792480469,
+        744.9888916015625
+      ]
+    },
+    {
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 48,
+      "title": "6、提示词优化工程",
+      "bounding": [
+        7445.259765625,
+        2456.82958984375,
+        525.7511596679688,
+        744.5618286132812
+      ]
+    },
+    {
+      "color": "#88A",
+      "font_size": 24,
+      "flags": {},
+      "id": 53,
+      "title": "Runninghub LLM方案",
+      "bounding": [
+        8099.646484375,
+        3770.23779296875,
+        4045.366455078125,
+        1282.59716796875
+      ]
+    },
+    {
+      "color": "#88A",
+      "font_size": 24,
+      "flags": {},
+      "id": 52,
+      "title": "Z-image 文生图",
+      "bounding": [
+        9804.185546875,
+        3813.83740234375,
+        2323.513671875,
+        1227.5709228515625
+      ]
+    },
+    {
+      "color": "#88A",
+      "font_size": 24,
+      "flags": {},
+      "id": 54,
+      "title": "LLM提示词优化区",
+      "bounding": [
+        8109.646484375,
+        3815.5615234375,
+        1629.3570556640625,
+        990.9896850585938
+      ]
+    },
+    {
+      "color": "#88A",
+      "font_size": 24,
+      "flags": {},
+      "id": 55,
+      "title": "填写提示词基础需求",
+      "bounding": [
+        8131.88134765625,
+        4217.103515625,
+        407.559814453125,
+        283.6000061035156
+      ]
+    },
+    {
+      "color": "#88A",
+      "font_size": 24,
+      "flags": {},
+      "id": 56,
+      "title": "提示词工程粘贴区（1-6））",
+      "bounding": [
+        8566.935546875,
+        3858.06640625,
+        686.767333984375,
+        927.7999267578125
+      ]
+    },
+    {
+      "color": "#88A",
+      "font_size": 24,
+      "flags": {},
+      "id": 57,
+      "title": "生图尺寸",
+      "bounding": [
+        8122.1298828125,
+        4836.20849609375,
+        449.69976806640625,
+        201.88467407226562
+      ]
+    },
+    {
+      "color": "#8AA",
+      "font_size": 20,
+      "flags": {
+        "pinned": true
+      },
+      "id": 58,
+      "title": "2、文生图提示词工程（针对电商海报、平面广告）",
+      "bounding": [
+        5012.75634765625,
+        2461.685302734375,
+        481.4731140136719,
+        746.076904296875
+      ]
+    },
+    {
+      "color": "#b06634",
+      "font_size": 24,
+      "flags": {},
+      "id": 59,
+      "title": "两版本文生图提示词工程生成效果对比",
+      "bounding": [
+        4516.2021484375,
+        3765.70068359375,
+        949.4169921875,
+        892.1025390625
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {},
+      "id": 60,
+      "title": "Group",
+      "bounding": [
+        3894.2451171875,
+        3764.55908203125,
+        401.544921875,
+        769.3255615234375
+      ]
+    }
+  ],
+  "links": [
+    [
+      77,
+      79,
+      0,
+      83,
+      0,
+      "CLIP"
+    ],
+    [
+      79,
+      83,
+      0,
+      84,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      80,
+      87,
+      0,
+      85,
+      0,
+      "LATENT"
+    ],
+    [
+      81,
+      80,
+      0,
+      85,
+      1,
+      "VAE"
+    ],
+    [
+      82,
+      85,
+      0,
+      86,
+      0,
+      "IMAGE"
+    ],
+    [
+      83,
+      78,
+      0,
+      87,
+      0,
+      "MODEL"
+    ],
+    [
+      84,
+      83,
+      0,
+      87,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      85,
+      84,
+      0,
+      87,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      86,
+      82,
+      0,
+      87,
+      3,
+      "LATENT"
+    ],
+    [
+      90,
+      90,
+      0,
+      93,
+      0,
+      "CLIP"
+    ],
+    [
+      91,
+      104,
+      1,
+      93,
+      1,
+      "STRING"
+    ],
+    [
+      92,
+      93,
+      0,
+      94,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      93,
+      91,
+      0,
+      95,
+      0,
+      "MODEL"
+    ],
+    [
+      94,
+      93,
+      0,
+      95,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      95,
+      94,
+      0,
+      95,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      96,
+      105,
+      0,
+      95,
+      3,
+      "LATENT"
+    ],
+    [
+      97,
+      95,
+      0,
+      96,
+      0,
+      "LATENT"
+    ],
+    [
+      98,
+      92,
+      0,
+      96,
+      1,
+      "VAE"
+    ],
+    [
+      99,
+      96,
+      0,
+      97,
+      0,
+      "IMAGE"
+    ],
+    [
+      110,
+      131,
+      0,
+      83,
+      1,
+      "STRING"
+    ],
+    [
+      111,
+      113,
+      0,
+      131,
+      0,
+      "IMAGE"
+    ],
+    [
+      112,
+      123,
+      0,
+      131,
+      6,
+      "STRING"
+    ],
+    [
+      113,
+      124,
+      0,
+      131,
+      7,
+      "STRING"
+    ],
+    [
+      116,
+      131,
+      0,
+      114,
+      0,
+      "*"
+    ],
+    [
+      132,
+      147,
+      0,
+      151,
+      0,
+      "CLIP"
+    ],
+    [
+      134,
+      156,
+      0,
+      152,
+      0,
+      "IMAGE"
+    ],
+    [
+      137,
+      148,
+      0,
+      154,
+      0,
+      "MODEL"
+    ],
+    [
+      138,
+      151,
+      0,
+      154,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      139,
+      155,
+      0,
+      154,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      140,
+      157,
+      0,
+      154,
+      3,
+      "LATENT"
+    ],
+    [
+      141,
+      151,
+      0,
+      155,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      142,
+      154,
+      0,
+      156,
+      0,
+      "LATENT"
+    ],
+    [
+      143,
+      149,
+      0,
+      156,
+      1,
+      "VAE"
+    ],
+    [
+      144,
+      160,
+      0,
+      161,
+      6,
+      "STRING"
+    ],
+    [
+      145,
+      158,
+      0,
+      161,
+      7,
+      "STRING"
+    ],
+    [
+      146,
+      161,
+      0,
+      150,
+      0,
+      "*"
+    ],
+    [
+      147,
+      161,
+      0,
+      151,
+      1,
+      "STRING"
+    ]
+  ],
+  "id": "055cd347-d5f8-4ed9-96ac-29875241a53c",
+  "config": {},
+  "version": 0.4,
+  "last_node_id": 168,
+  "revision": 0
+}

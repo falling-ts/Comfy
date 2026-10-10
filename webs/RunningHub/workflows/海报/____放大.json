@@ -1,0 +1,521 @@
+{
+  "last_link_id": 341,
+  "nodes": [
+    {
+      "outputs": [],
+      "color": "#432",
+      "widgets_values": [
+        "sampling methods:\nccsr = normal, untiled, heavy on VRAM\n\nccsr_tiled_mixdiff = tiled, each tile decoded separately, has seams\n\nccsr_tiled_vae_gaussian_weights = seams fixed, can be less accurate and introduce extra noise"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#653",
+      "size": [
+        454.045166015625,
+        148.7386932373047
+      ],
+      "pos": [
+        -329.64056396484375,
+        61.02005386352539
+      ],
+      "id": 138,
+      "properties": {
+        "widget_ue_connectable": {},
+        "text": ""
+      },
+      "order": 0
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "image_urls",
+          "type": "STRING",
+          "localized_name": "image_urls"
+        }
+      ],
+      "size": [
+        270,
+        270
+      ],
+      "pos": [
+        -324.6733093261719,
+        266.49029541015625
+      ],
+      "widgets_values": [
+        "ComfyUI"
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 340,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图片"
+        },
+        {
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "name": "filename_prefix",
+          "label": "filename_prefix",
+          "type": "STRING",
+          "localized_name": "文件名前缀"
+        }
+      ],
+      "flags": {},
+      "id": 142,
+      "type": "SaveImage",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.59",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveImage"
+      },
+      "order": 5
+    },
+    {
+      "outputs": [
+        {
+          "name": "ccsr_model",
+          "slot_index": 0,
+          "links": [
+            338
+          ],
+          "label": "CCSR模型",
+          "type": "CCSRMODEL",
+          "localized_name": "ccsr_model"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [
+        "real-world_ccsr.ckpt"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "ckpt_name"
+          },
+          "name": "ckpt_name",
+          "label": "ckpt_name",
+          "type": "COMBO",
+          "localized_name": "模型"
+        }
+      ],
+      "flags": {},
+      "type": "CCSR_Model_Select",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        315,
+        58
+      ],
+      "pos": [
+        -704.8626708984375,
+        -175.5944366455078
+      ],
+      "id": 143,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CCSR_Model_Select"
+      },
+      "order": 1
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            335,
+            341
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        377.3704833984375,
+        722.7135620117188
+      ],
+      "pos": [
+        -1188.9989013671875,
+        -205.12237548828125
+      ],
+      "widgets_values": [
+        "8956230f1038ae732ffa5a592f3e6be7878b36a0a5a8951dae52f4bee3b0b4e1.png",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "label": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "label": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 1,
+      "type": "LoadImage",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.59",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 2
+    },
+    {
+      "outputs": [
+        {
+          "name": "upscaled_image",
+          "slot_index": 0,
+          "links": [
+            339,
+            340
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "upscaled_image"
+        }
+      ],
+      "color": "#432",
+      "widgets_values": [
+        "nearest-exact",
+        1.5000000000000002,
+        45,
+        0.6667,
+        0.3333,
+        "ccsr_tiled_mixdiff",
+        512,
+        256,
+        1024,
+        1024,
+        "wavelet",
+        false,
+        707681383551759,
+        "randomize"
+      ],
+      "inputs": [
+        {
+          "name": "ccsr_model",
+          "link": 338,
+          "label": "CCSR模型",
+          "type": "CCSRMODEL",
+          "localized_name": "ccsr_model"
+        },
+        {
+          "name": "image",
+          "link": 341,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "image"
+        },
+        {
+          "widget": {
+            "name": "resize_method"
+          },
+          "name": "resize_method",
+          "label": "resize_method",
+          "type": "COMBO",
+          "localized_name": "缩放方法"
+        },
+        {
+          "widget": {
+            "name": "scale_by"
+          },
+          "name": "scale_by",
+          "label": "scale_by",
+          "type": "FLOAT",
+          "localized_name": "缩放系数"
+        },
+        {
+          "widget": {
+            "name": "steps"
+          },
+          "name": "steps",
+          "label": "steps",
+          "type": "INT",
+          "localized_name": "步数"
+        },
+        {
+          "widget": {
+            "name": "t_max"
+          },
+          "name": "t_max",
+          "label": "t_max",
+          "type": "FLOAT",
+          "localized_name": "开始采样位置"
+        },
+        {
+          "widget": {
+            "name": "t_min"
+          },
+          "name": "t_min",
+          "label": "t_min",
+          "type": "FLOAT",
+          "localized_name": "结束采样位置"
+        },
+        {
+          "widget": {
+            "name": "sampling_method"
+          },
+          "name": "sampling_method",
+          "label": "sampling_method",
+          "type": "COMBO",
+          "localized_name": "采样方法"
+        },
+        {
+          "widget": {
+            "name": "tile_size"
+          },
+          "name": "tile_size",
+          "label": "tile_size",
+          "type": "INT",
+          "localized_name": "分块尺寸"
+        },
+        {
+          "widget": {
+            "name": "tile_stride"
+          },
+          "name": "tile_stride",
+          "label": "tile_stride",
+          "type": "INT",
+          "localized_name": "分块步长"
+        },
+        {
+          "widget": {
+            "name": "vae_tile_size_encode"
+          },
+          "name": "vae_tile_size_encode",
+          "label": "vae_tile_size_encode",
+          "type": "INT",
+          "localized_name": "VAE编码分块尺寸"
+        },
+        {
+          "widget": {
+            "name": "vae_tile_size_decode"
+          },
+          "name": "vae_tile_size_decode",
+          "label": "vae_tile_size_decode",
+          "type": "INT",
+          "localized_name": "VAE解码分块尺寸"
+        },
+        {
+          "widget": {
+            "name": "color_fix_type"
+          },
+          "name": "color_fix_type",
+          "label": "color_fix_type",
+          "type": "COMBO",
+          "localized_name": "颜色修复类型"
+        },
+        {
+          "widget": {
+            "name": "keep_model_loaded"
+          },
+          "name": "keep_model_loaded",
+          "label": "keep_model_loaded",
+          "type": "BOOLEAN",
+          "localized_name": "保持模型加载"
+        },
+        {
+          "widget": {
+            "name": "seed"
+          },
+          "name": "seed",
+          "label": "seed",
+          "type": "INT",
+          "localized_name": "随机种"
+        }
+      ],
+      "flags": {},
+      "type": "CCSR_Upscale",
+      "mode": 0,
+      "bgcolor": "#653",
+      "size": [
+        317.4000244140625,
+        390
+      ],
+      "pos": [
+        -689.8340454101562,
+        -40.63950729370117
+      ],
+      "id": 144,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CCSR_Upscale"
+      },
+      "order": 3
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "image_urls",
+          "dir": 4,
+          "type": "STRING"
+        }
+      ],
+      "size": [
+        1843.4180908203125,
+        1188.687744140625
+      ],
+      "pos": [
+        619.1234130859375,
+        -129.38172912597656
+      ],
+      "widgets_values": [
+        [
+          {
+            "name": "A",
+            "selected": true,
+            "url": "/view?filename=rgthree.compare._temp_pxrcs_00001_ddrkg_1779433632.jpg&type=temp&subfolder=&rand=0.598982695620883&Rh-Comfy-Auth=eyJ1c2VySWQiOiIwNDZjZGQ3NjEwMWJmMjM2ZWJmYTUwNDRhZTU4NjMxMyIsInNpZ25FeHBpcmUiOjE3ODAwMzc3ODIzOTksInRzIjoxNzc5NDMyOTgyMzk5LCJzaWduIjoiNTNjNzFkM2EyYWYxYzE2YTEzMTNmZjFjY2Y5ZWVhMWEifQ==&Rh-Identify=046cdd76101bf236ebfa5044ae586313"
+          },
+          {
+            "name": "B",
+            "selected": true,
+            "url": "/view?filename=rgthree.compare._temp_pxrcs_00002_xnklk_1779433634.jpg&type=temp&subfolder=&rand=0.780522755902713&Rh-Comfy-Auth=eyJ1c2VySWQiOiIwNDZjZGQ3NjEwMWJmMjM2ZWJmYTUwNDRhZTU4NjMxMyIsInNpZ25FeHBpcmUiOjE3ODAwMzc3ODIzOTksInRzIjoxNzc5NDMyOTgyMzk5LCJzaWduIjoiNTNjNzFkM2EyYWYxYzE2YTEzMTNmZjFjY2Y5ZWVhMWEifQ==&Rh-Identify=046cdd76101bf236ebfa5044ae586313"
+          }
+        ]
+      ],
+      "inputs": [
+        {
+          "name": "image_a",
+          "link": 339,
+          "label": "图像_A",
+          "dir": 3,
+          "type": "IMAGE"
+        },
+        {
+          "name": "image_b",
+          "link": 335,
+          "label": "图像_B",
+          "dir": 3,
+          "type": "IMAGE"
+        }
+      ],
+      "flags": {},
+      "id": 141,
+      "type": "Image Comparer (rgthree)",
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "944d5353a1b0a668f40844018c3dc956b95a67d7",
+        "comparer_mode": "Slide",
+        "widget_ue_connectable": {}
+      },
+      "order": 4
+    }
+  ],
+  "extra": {
+    "links_added_by_ue": [],
+    "VHS_KeepIntermediate": true,
+    "ue_links": [],
+    "VHS_MetadataImage": true,
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "VHS_latentpreviewrate": 0,
+    "frontendVersion": "1.23.0",
+    "VHS_latentpreview": false,
+    "node_versions": {
+      "rgthree-comfy": "5d771b8b56a343c24a26e8cea1f0c87c3d58102f",
+      "ComfyUI-CCSR": "5fb3cecf3a685e1b1274a4fb6b4dedce8343c74c",
+      "comfy-core": "0.3.13"
+    },
+    "ds": {
+      "offset": [
+        345.5121816693874,
+        239.74556199739663
+      ],
+      "scale": 0.598950000000002
+    }
+  },
+  "groups": [
+    {
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {},
+      "id": 1,
+      "title": "CCSR upscale",
+      "bounding": [
+        -1240,
+        -349,
+        1840,
+        1777
+      ]
+    }
+  ],
+  "links": [
+    [
+      335,
+      1,
+      0,
+      141,
+      1,
+      "IMAGE"
+    ],
+    [
+      338,
+      143,
+      0,
+      144,
+      0,
+      "CCSRMODEL"
+    ],
+    [
+      339,
+      144,
+      0,
+      141,
+      0,
+      "IMAGE"
+    ],
+    [
+      340,
+      144,
+      0,
+      142,
+      0,
+      "IMAGE"
+    ],
+    [
+      341,
+      1,
+      0,
+      144,
+      1,
+      "IMAGE"
+    ]
+  ],
+  "id": "370108d2-5271-411f-af34-db58472e622f",
+  "config": {},
+  "version": 0.4,
+  "last_node_id": 144,
+  "revision": 0
+}

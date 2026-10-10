@@ -1,0 +1,1697 @@
+{
+  "last_link_id": 47,
+  "nodes": [
+    {
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "links": [
+            11,
+            23
+          ],
+          "label": "AUDIO",
+          "type": "AUDIO",
+          "localized_name": "AUDIO"
+        }
+      ],
+      "color": "#322",
+      "widgets_values": [
+        "4761bdace6d50a6492159a76dd783bf315ad30b8505dc1a1b6d7fcc025c051ec.MP3",
+        null,
+        null
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "audio"
+          },
+          "name": "audio",
+          "label": "audio",
+          "type": "COMBO",
+          "localized_name": "audio"
+        },
+        {
+          "widget": {
+            "name": "audioUI"
+          },
+          "name": "audioUI",
+          "label": "audioUI",
+          "type": "AUDIO_UI",
+          "localized_name": "audioUI"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "label": "upload",
+          "type": "AUDIOUPLOAD",
+          "localized_name": "choose file to upload"
+        }
+      ],
+      "flags": {},
+      "type": "LoadAudio",
+      "mode": 4,
+      "bgcolor": "#533",
+      "size": [
+        270,
+        136
+      ],
+      "pos": [
+        -2543.34521484375,
+        1240.17578125
+      ],
+      "id": 14,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.4",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        },
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadAudio"
+      },
+      "order": 0
+    },
+    {
+      "outputs": [],
+      "color": "#322",
+      "widgets_values": [
+        "| 类别     | 英文标签     | 中文翻译       |\n| :------- | :----------- | :------------- |\n| 情感     | [excited]    | 兴奋的         |\n|          | [sad]        | 悲伤的         |\n|          | [angry]      | 愤怒的         |\n|          | [surprised]  | 惊讶的         |\n|          | [delight]    | 愉悦的         |\n| 音量     | [whisper]    | 耳语/轻声细语  |\n|          | [low voice]  | 低声/小声      |\n|          | [volume up]  | 音量提升       |\n|          | [loud]       | 大声的         |\n|          | [shouting]   | 呼喊/叫嚷      |\n|          | [screaming]  | 尖叫/嘶吼      |"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "MarkdownNote",
+      "mode": 0,
+      "bgcolor": "#533",
+      "size": [
+        215.26319885253906,
+        362.72528076171875
+      ],
+      "pos": [
+        -3005.854248046875,
+        -279.71673583984375
+      ],
+      "id": 32,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 1
+    },
+    {
+      "outputs": [],
+      "color": "#322",
+      "widgets_values": [
+        "| 英文标签 | 中文释义 | 效果说明 |\n| :--- | :--- | :--- |\n| `[moaning]` | 呻吟 | 用于表示痛苦或愉悦的低声吟哦。 |\n| `[panting]` | 喘息/气喘 | 用于表示急促的呼吸声，如运动后或紧张时。 |\n| `[echo]` | 带回声效果 | 为语音添加回声的后期处理效果指令。 |\n| `[pitch up]` | 音调升高 | 指示将语音的音调调高。 |\n| `[pitch down]` | 音调降低 | 指示将语音的音调调低。 |"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "MarkdownNote",
+      "mode": 0,
+      "bgcolor": "#533",
+      "size": [
+        410.11126708984375,
+        221.397705078125
+      ],
+      "pos": [
+        -2340.099365234375,
+        -263.9442138671875
+      ],
+      "id": 33,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 2
+    },
+    {
+      "outputs": [],
+      "color": "#322",
+      "widgets_values": [
+        "| 参数名 (英文) | 中文解释与配置建议 |\n| :--- | :--- |\n| **model_path** | **模型路径**：模型文件必须放置在 `ComfyUI/models/fishaudioS2/` 目录下，否则程序无法找到。 |\n| **text** | **生成文本**：输入需要转换为语音的文字。支持添加情感标签（如 `[sad]`、`[excited]`）来赋予语音情绪。 |\n| **language** | **语言选择**：可选自动识别(`auto`)、英文(`en`)、中文(`zh`)、日语(`ja`)、韩语(`ko`)。正确选择可使发音更准确。 |\n| **device** | **计算设备**：可选自动(`auto`)、显卡(`cuda`)、CPU、苹果M芯片(`mps`)。优先使用 `cuda` 以获得最快速度。 |\n| **precision** | **计算精度**：`bfloat16`/`float16` 节省显存且速度快；`float32` 精度最高但消耗大。一般使用16位即可。 |\n| **attention** | **注意力机制**：实现方式，可选 `auto`（自动选择）、`sdpa`、`sage_attention`、`flash_attention` 等算法。保持默认 `auto` 即可。 |\n| **max_new_tokens** | **生成长度**：生成语音的最大长度。设为 `0` 可让模型自动判断，无需手动计算。 |\n| **chunk_length** | **文本分块**：将长文本切块处理的长度（范围100-400）。说明指出后续版本会移除，目前可忽略。 |\n| **temperature** | **采样随机性**：控制生成多样性。值越低（如0.1）越稳定保守；值越高（如1.0）越随机多变。推荐范围 0.6-0.8。 |\n| **top_p** | **候选范围**：与 `temperature` 配合，控制候选词的概率范围。0.1最严格，1.0最宽松。推荐范围 0.7-0.9。 |\n| **repetition_penalty** | **重复惩罚**：防止语音重复。值越大（范围0.9-2.0）越不易重复，但过高会导致生硬。推荐范围 1.1-1.3。 |\n| **seed** | **随机种子**：固定此数值后，相同的输入每次都能生成完全一致的语音，便于结果复现。 |\n| **keep_model_loaded** | **模型常驻**：启用后，模型将一直加载在显存中，省去重复加载时间，但会持续占用显存。显存充足时可开启。 |\n| **compile_model** | **模型编译**：使用 PyTorch 编译以加速模型运行。**仅限 Linux 系统**，Windows 和 Mac 用户可忽略此选项。 |"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "MarkdownNote",
+      "mode": 0,
+      "bgcolor": "#533",
+      "size": [
+        783.5383911132812,
+        465.5090026855469
+      ],
+      "pos": [
+        -1846.35400390625,
+        -262.5382080078125
+      ],
+      "id": 30,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 3
+    },
+    {
+      "outputs": [],
+      "color": "#322",
+      "widgets_values": [
+        "| 类别 | 符号标签            | 中文解释与说明       |\n| :--- | :------------------ | :------------------- |\n| 节奏 | [pause]            | 停顿                 |\n|      | [short pause]      | 短暂停顿             |\n|      | [inhale]           | 吸气                 |\n|      | [exhale]           | 呼气                 |\n|      | [sigh]             | 叹气                 |\n| 发声 | [laugh]            | 笑（单次）           |\n|      | [laughing]         | 大笑/持续发笑        |\n|      | [chuckle]          | 轻笑/抿嘴笑          |\n|      | [chuckling]        | 轻笑不止             |\n|      | [tsk]              | 啧（不满/不耐烦的咂舌声） |\n|      | [clearing throat]  | 清嗓子               |\n| 语气 | [professional broadcast tone] | 专业播音腔 |\n|      | [singing]          | 歌唱/吟唱            |\n|      | [with strong accent] | 浓重口音           |"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "MarkdownNote",
+      "mode": 0,
+      "bgcolor": "#533",
+      "size": [
+        357.4270324707031,
+        449.696044921875
+      ],
+      "pos": [
+        -2744.5830078125,
+        -269.4098815917969
+      ],
+      "id": 31,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 4
+    },
+    {
+      "outputs": [
+        {
+          "name": "prompt",
+          "links": [
+            37
+          ],
+          "label": "prompt",
+          "type": "STRING",
+          "localized_name": "prompt"
+        },
+        {
+          "name": "show_help",
+          "label": "show_help",
+          "type": "STRING",
+          "localized_name": "show_help"
+        }
+      ],
+      "color": "#322",
+      "widgets_values": [
+        "  [喜悦]今天中彩票了，[sad][sigh]不可能的，国足出线了？，[轻笑]你个机灵鬼，女足也可以啊。"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "prompt"
+          },
+          "name": "prompt",
+          "label": "prompt",
+          "type": "STRING",
+          "localized_name": "prompt"
+        }
+      ],
+      "flags": {},
+      "type": "CR Prompt Text",
+      "mode": 4,
+      "bgcolor": "#533",
+      "size": [
+        400,
+        200
+      ],
+      "pos": [
+        -3009.50830078125,
+        1271.3834228515625
+      ],
+      "id": 28,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CR Prompt Text"
+      },
+      "order": 5
+    },
+    {
+      "outputs": [
+        {
+          "name": "text",
+          "links": [
+            46
+          ],
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        },
+        {
+          "name": "segments_alignment",
+          "label": "segments_alignment",
+          "type": "whisper_alignment",
+          "localized_name": "segments_alignment"
+        },
+        {
+          "name": "words_alignment",
+          "label": "words_alignment",
+          "type": "whisper_alignment",
+          "localized_name": "words_alignment"
+        }
+      ],
+      "color": "#322",
+      "widgets_values": [
+        "whisper-large-v3",
+        "auto"
+      ],
+      "inputs": [
+        {
+          "name": "audio",
+          "link": 11,
+          "label": "audio",
+          "type": "AUDIO",
+          "localized_name": "audio"
+        },
+        {
+          "widget": {
+            "name": "model"
+          },
+          "name": "model",
+          "label": "model",
+          "type": "COMBO",
+          "localized_name": "model"
+        },
+        {
+          "widget": {
+            "name": "language"
+          },
+          "shape": 7,
+          "name": "language",
+          "label": "language",
+          "type": "COMBO",
+          "localized_name": "language"
+        }
+      ],
+      "flags": {},
+      "type": "Apply Whisper",
+      "mode": 4,
+      "bgcolor": "#533",
+      "size": [
+        240.97286987304688,
+        137.70654296875
+      ],
+      "pos": [
+        -2533.587890625,
+        1430.51904296875
+      ],
+      "id": 13,
+      "properties": {
+        "cnr_id": "ComfyUI-Whisper",
+        "ver": "c67c040559c013833dedb0737df14182dc5043cc",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        },
+        "widget_ue_connectable": {},
+        "Node name for S&R": "Apply Whisper"
+      },
+      "order": 14
+    },
+    {
+      "outputs": [
+        {
+          "name": "audio",
+          "links": [
+            25
+          ],
+          "label": "audio",
+          "type": "AUDIO",
+          "localized_name": "audio"
+        }
+      ],
+      "color": "#322",
+      "widgets_values": [
+        "s2-pro-fp8",
+        "Hello! [excited] This is my cloned voice.大家好啊，这是我的克隆声音！どうも、皆さん！これが僕（私）のクローンボイスだよ！",
+        "auto",
+        "cuda",
+        "auto",
+        "auto",
+        0,
+        200,
+        0.8,
+        0.8,
+        1.1,
+        27714884,
+        "randomize",
+        true,
+        false,
+        ""
+      ],
+      "inputs": [
+        {
+          "name": "reference_audio",
+          "link": 23,
+          "label": "reference_audio",
+          "type": "AUDIO",
+          "localized_name": "reference_audio"
+        },
+        {
+          "widget": {
+            "name": "model_path"
+          },
+          "name": "model_path",
+          "label": "model_path",
+          "type": "COMBO",
+          "localized_name": "model_path"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 37,
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        },
+        {
+          "widget": {
+            "name": "language"
+          },
+          "name": "language",
+          "label": "language",
+          "type": "COMBO",
+          "localized_name": "language"
+        },
+        {
+          "widget": {
+            "name": "device"
+          },
+          "name": "device",
+          "label": "device",
+          "type": "COMBO",
+          "localized_name": "device"
+        },
+        {
+          "widget": {
+            "name": "precision"
+          },
+          "name": "precision",
+          "label": "precision",
+          "type": "COMBO",
+          "localized_name": "precision"
+        },
+        {
+          "widget": {
+            "name": "attention"
+          },
+          "name": "attention",
+          "label": "attention",
+          "type": "COMBO",
+          "localized_name": "attention"
+        },
+        {
+          "widget": {
+            "name": "max_new_tokens"
+          },
+          "name": "max_new_tokens",
+          "label": "max_new_tokens",
+          "type": "INT",
+          "localized_name": "max_new_tokens"
+        },
+        {
+          "widget": {
+            "name": "chunk_length"
+          },
+          "name": "chunk_length",
+          "label": "chunk_length",
+          "type": "INT",
+          "localized_name": "chunk_length"
+        },
+        {
+          "widget": {
+            "name": "temperature"
+          },
+          "name": "temperature",
+          "label": "temperature",
+          "type": "FLOAT",
+          "localized_name": "temperature"
+        },
+        {
+          "widget": {
+            "name": "top_p"
+          },
+          "name": "top_p",
+          "label": "top_p",
+          "type": "FLOAT",
+          "localized_name": "top_p"
+        },
+        {
+          "widget": {
+            "name": "repetition_penalty"
+          },
+          "name": "repetition_penalty",
+          "label": "repetition_penalty",
+          "type": "FLOAT",
+          "localized_name": "repetition_penalty"
+        },
+        {
+          "widget": {
+            "name": "seed"
+          },
+          "name": "seed",
+          "label": "seed",
+          "type": "INT",
+          "localized_name": "seed"
+        },
+        {
+          "widget": {
+            "name": "keep_model_loaded"
+          },
+          "name": "keep_model_loaded",
+          "label": "keep_model_loaded",
+          "type": "BOOLEAN",
+          "localized_name": "keep_model_loaded"
+        },
+        {
+          "widget": {
+            "name": "compile_model"
+          },
+          "name": "compile_model",
+          "label": "compile_model",
+          "type": "BOOLEAN",
+          "localized_name": "compile_model"
+        },
+        {
+          "widget": {
+            "name": "reference_text"
+          },
+          "shape": 7,
+          "name": "reference_text",
+          "link": 39,
+          "label": "reference_text",
+          "type": "STRING",
+          "localized_name": "reference_text"
+        }
+      ],
+      "flags": {},
+      "type": "FishS2VoiceCloneTTS",
+      "mode": 4,
+      "bgcolor": "#533",
+      "size": [
+        366.07220458984375,
+        478
+      ],
+      "pos": [
+        -2150.33984375,
+        1244.9542236328125
+      ],
+      "id": 25,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "FishS2VoiceCloneTTS"
+      },
+      "order": 20
+    },
+    {
+      "outputs": [],
+      "color": "#322",
+      "widgets_values": [
+        "audio/ComfyUI"
+      ],
+      "inputs": [
+        {
+          "name": "audio",
+          "link": 25,
+          "label": "audio",
+          "type": "AUDIO",
+          "localized_name": "audio"
+        },
+        {
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "name": "filename_prefix",
+          "label": "filename_prefix",
+          "type": "STRING",
+          "localized_name": "filename_prefix"
+        },
+        {
+          "widget": {
+            "name": "audioUI"
+          },
+          "name": "audioUI",
+          "label": "audioUI",
+          "type": "AUDIO_UI",
+          "localized_name": "audioUI"
+        }
+      ],
+      "flags": {},
+      "type": "SaveAudio",
+      "mode": 4,
+      "bgcolor": "#533",
+      "size": [
+        270,
+        112
+      ],
+      "pos": [
+        -1744.572998046875,
+        1242.053955078125
+      ],
+      "id": 23,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveAudio"
+      },
+      "order": 21
+    },
+    {
+      "outputs": [],
+      "color": "#322",
+      "widgets_values": [
+        "audio/ComfyUI"
+      ],
+      "inputs": [
+        {
+          "name": "audio",
+          "link": 17,
+          "label": "audio",
+          "type": "AUDIO",
+          "localized_name": "audio"
+        },
+        {
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "name": "filename_prefix",
+          "label": "filename_prefix",
+          "type": "STRING",
+          "localized_name": "filename_prefix"
+        },
+        {
+          "widget": {
+            "name": "audioUI"
+          },
+          "name": "audioUI",
+          "label": "audioUI",
+          "type": "AUDIO_UI",
+          "localized_name": "audioUI"
+        }
+      ],
+      "flags": {},
+      "type": "SaveAudio",
+      "mode": 4,
+      "bgcolor": "#533",
+      "size": [
+        270,
+        112
+      ],
+      "pos": [
+        -2494.431640625,
+        2015.990478515625
+      ],
+      "id": 22,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveAudio"
+      },
+      "order": 15
+    },
+    {
+      "outputs": [
+        {
+          "name": "audio",
+          "links": [
+            17
+          ],
+          "label": "audio",
+          "type": "AUDIO",
+          "localized_name": "audio"
+        }
+      ],
+      "color": "#322",
+      "widgets_values": [
+        "s2-pro-fp8",
+        "[喜悦]今天中彩票了，[sad][sigh]不可能的，国足出线了？，[轻笑]你个机灵鬼，女足也可以啊。",
+        "auto",
+        "cuda",
+        "auto",
+        "auto",
+        0,
+        200,
+        0.8,
+        0.8,
+        1.1,
+        1120720564,
+        "randomize",
+        true,
+        false
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "model_path"
+          },
+          "name": "model_path",
+          "label": "model_path",
+          "type": "COMBO",
+          "localized_name": "model_path"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        },
+        {
+          "widget": {
+            "name": "language"
+          },
+          "name": "language",
+          "label": "language",
+          "type": "COMBO",
+          "localized_name": "language"
+        },
+        {
+          "widget": {
+            "name": "device"
+          },
+          "name": "device",
+          "label": "device",
+          "type": "COMBO",
+          "localized_name": "device"
+        },
+        {
+          "widget": {
+            "name": "precision"
+          },
+          "name": "precision",
+          "label": "precision",
+          "type": "COMBO",
+          "localized_name": "precision"
+        },
+        {
+          "widget": {
+            "name": "attention"
+          },
+          "name": "attention",
+          "label": "attention",
+          "type": "COMBO",
+          "localized_name": "attention"
+        },
+        {
+          "widget": {
+            "name": "max_new_tokens"
+          },
+          "name": "max_new_tokens",
+          "label": "max_new_tokens",
+          "type": "INT",
+          "localized_name": "max_new_tokens"
+        },
+        {
+          "widget": {
+            "name": "chunk_length"
+          },
+          "name": "chunk_length",
+          "label": "chunk_length",
+          "type": "INT",
+          "localized_name": "chunk_length"
+        },
+        {
+          "widget": {
+            "name": "temperature"
+          },
+          "name": "temperature",
+          "label": "temperature",
+          "type": "FLOAT",
+          "localized_name": "temperature"
+        },
+        {
+          "widget": {
+            "name": "top_p"
+          },
+          "name": "top_p",
+          "label": "top_p",
+          "type": "FLOAT",
+          "localized_name": "top_p"
+        },
+        {
+          "widget": {
+            "name": "repetition_penalty"
+          },
+          "name": "repetition_penalty",
+          "label": "repetition_penalty",
+          "type": "FLOAT",
+          "localized_name": "repetition_penalty"
+        },
+        {
+          "widget": {
+            "name": "seed"
+          },
+          "name": "seed",
+          "label": "seed",
+          "type": "INT",
+          "localized_name": "seed"
+        },
+        {
+          "widget": {
+            "name": "keep_model_loaded"
+          },
+          "name": "keep_model_loaded",
+          "label": "keep_model_loaded",
+          "type": "BOOLEAN",
+          "localized_name": "keep_model_loaded"
+        },
+        {
+          "widget": {
+            "name": "compile_model"
+          },
+          "name": "compile_model",
+          "label": "compile_model",
+          "type": "BOOLEAN",
+          "localized_name": "compile_model"
+        }
+      ],
+      "flags": {},
+      "type": "FishS2TTS",
+      "mode": 4,
+      "bgcolor": "#533",
+      "size": [
+        400,
+        424
+      ],
+      "pos": [
+        -2927.944091796875,
+        2009.14794921875
+      ],
+      "id": 17,
+      "properties": {
+        "cnr_id": "comfyui-fish-audio-s2",
+        "ver": "0.2.2",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        },
+        "widget_ue_connectable": {},
+        "Node name for S&R": "FishS2TTS"
+      },
+      "order": 6
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "label": "OPT_CONNECTION",
+          "type": "*"
+        }
+      ],
+      "bgcolor": "#533",
+      "size": [
+        247.29550170898438,
+        178
+      ],
+      "color": "#322",
+      "pos": [
+        -3524.46533203125,
+        1992.439453125
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 35,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "properties": {
+        "customSortAlphabet": "",
+        "matchColors": "",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        },
+        "widget_ue_connectable": {},
+        "showAllGraphs": true,
+        "sort": "position",
+        "matchTitle": "语音",
+        "showNav": true,
+        "toggleRestriction": "default"
+      },
+      "order": 7
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "label": "OPT_CONNECTION",
+          "type": "*"
+        }
+      ],
+      "bgcolor": "#533",
+      "size": [
+        247.29550170898438,
+        178
+      ],
+      "color": "#322",
+      "pos": [
+        -3472.997314453125,
+        1221.1064453125
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 34,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "properties": {
+        "customSortAlphabet": "",
+        "matchColors": "",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        },
+        "widget_ue_connectable": {},
+        "showAllGraphs": true,
+        "sort": "position",
+        "matchTitle": "语音",
+        "showNav": true,
+        "toggleRestriction": "default"
+      },
+      "order": 8
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "label": "OPT_CONNECTION",
+          "type": "*"
+        }
+      ],
+      "bgcolor": "#533",
+      "size": [
+        355.5591735839844,
+        182.67324829101562
+      ],
+      "color": "#322",
+      "pos": [
+        -3464.552490234375,
+        361.0413513183594
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 16,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "properties": {
+        "customSortAlphabet": "",
+        "matchColors": "",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        },
+        "widget_ue_connectable": {},
+        "showAllGraphs": true,
+        "sort": "position",
+        "matchTitle": "语音",
+        "showNav": true,
+        "toggleRestriction": "default"
+      },
+      "order": 9
+    },
+    {
+      "outputs": [],
+      "color": "#322",
+      "widgets_values": [
+        "audio/ComfyUI"
+      ],
+      "inputs": [
+        {
+          "name": "audio",
+          "link": 19,
+          "label": "audio",
+          "type": "AUDIO",
+          "localized_name": "audio"
+        },
+        {
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "name": "filename_prefix",
+          "label": "filename_prefix",
+          "type": "STRING",
+          "localized_name": "filename_prefix"
+        },
+        {
+          "widget": {
+            "name": "audioUI"
+          },
+          "name": "audioUI",
+          "label": "audioUI",
+          "type": "AUDIO_UI",
+          "localized_name": "audioUI"
+        }
+      ],
+      "flags": {},
+      "type": "SaveAudio",
+      "mode": 0,
+      "bgcolor": "#533",
+      "size": [
+        270,
+        112
+      ],
+      "pos": [
+        -1070.15869140625,
+        406.2912902832031
+      ],
+      "id": 21,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveAudio"
+      },
+      "order": 18
+    },
+    {
+      "outputs": [
+        {
+          "name": "prompt",
+          "links": [
+            36
+          ],
+          "label": "prompt",
+          "type": "STRING",
+          "localized_name": "prompt"
+        },
+        {
+          "name": "show_help",
+          "label": "show_help",
+          "type": "STRING",
+          "localized_name": "show_help"
+        }
+      ],
+      "color": "#322",
+      "widgets_values": [
+        "[speaker_1]: [喜悦]今天中彩票了\n[speaker_2]: [sad][sigh]不可能的，国足出线了？\n\n"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "prompt"
+          },
+          "name": "prompt",
+          "label": "prompt",
+          "type": "STRING",
+          "localized_name": "prompt"
+        }
+      ],
+      "flags": {},
+      "type": "CR Prompt Text",
+      "mode": 0,
+      "bgcolor": "#533",
+      "size": [
+        400,
+        200
+      ],
+      "pos": [
+        -2994.796142578125,
+        412.03802490234375
+      ],
+      "id": 27,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CR Prompt Text"
+      },
+      "order": 10
+    },
+    {
+      "outputs": [
+        {
+          "name": "audio",
+          "links": [
+            19
+          ],
+          "label": "audio",
+          "type": "AUDIO",
+          "localized_name": "audio"
+        }
+      ],
+      "color": "#322",
+      "widgets_values": [
+        "s2-pro-fp8",
+        "[speaker_1]: [volume up]大家可以来听一下，这就是最新的Fish Audio S2 pro模型！\n[speaker_2]: [excited]这模型有什么特点啊？\n[speaker_3]: 这个模型支持最多10个角色对话，[chuckle]，还有83国语言呢！",
+        "auto",
+        "cuda",
+        "bfloat16",
+        "auto",
+        0,
+        200,
+        0.8000000000000002,
+        0.8000000000000002,
+        1.1,
+        586191767,
+        "randomize",
+        true,
+        false,
+        0.4,
+        "2",
+        "",
+        ""
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "model_path"
+          },
+          "name": "model_path",
+          "label": "model_path",
+          "type": "COMBO",
+          "localized_name": "model_path"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 36,
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        },
+        {
+          "widget": {
+            "name": "language"
+          },
+          "name": "language",
+          "label": "language",
+          "type": "COMBO",
+          "localized_name": "language"
+        },
+        {
+          "widget": {
+            "name": "device"
+          },
+          "name": "device",
+          "label": "device",
+          "type": "COMBO",
+          "localized_name": "device"
+        },
+        {
+          "widget": {
+            "name": "precision"
+          },
+          "name": "precision",
+          "label": "precision",
+          "type": "COMBO",
+          "localized_name": "precision"
+        },
+        {
+          "widget": {
+            "name": "attention"
+          },
+          "name": "attention",
+          "label": "attention",
+          "type": "COMBO",
+          "localized_name": "attention"
+        },
+        {
+          "widget": {
+            "name": "max_new_tokens"
+          },
+          "name": "max_new_tokens",
+          "label": "max_new_tokens",
+          "type": "INT",
+          "localized_name": "max_new_tokens"
+        },
+        {
+          "widget": {
+            "name": "chunk_length"
+          },
+          "name": "chunk_length",
+          "label": "chunk_length",
+          "type": "INT",
+          "localized_name": "chunk_length"
+        },
+        {
+          "widget": {
+            "name": "temperature"
+          },
+          "name": "temperature",
+          "label": "temperature",
+          "type": "FLOAT",
+          "localized_name": "temperature"
+        },
+        {
+          "widget": {
+            "name": "top_p"
+          },
+          "name": "top_p",
+          "label": "top_p",
+          "type": "FLOAT",
+          "localized_name": "top_p"
+        },
+        {
+          "widget": {
+            "name": "repetition_penalty"
+          },
+          "name": "repetition_penalty",
+          "label": "repetition_penalty",
+          "type": "FLOAT",
+          "localized_name": "repetition_penalty"
+        },
+        {
+          "widget": {
+            "name": "seed"
+          },
+          "name": "seed",
+          "label": "seed",
+          "type": "INT",
+          "localized_name": "seed"
+        },
+        {
+          "widget": {
+            "name": "keep_model_loaded"
+          },
+          "name": "keep_model_loaded",
+          "label": "keep_model_loaded",
+          "type": "BOOLEAN",
+          "localized_name": "keep_model_loaded"
+        },
+        {
+          "widget": {
+            "name": "compile_model"
+          },
+          "name": "compile_model",
+          "label": "compile_model",
+          "type": "BOOLEAN",
+          "localized_name": "compile_model"
+        },
+        {
+          "widget": {
+            "name": "pause_after_speaker"
+          },
+          "name": "pause_after_speaker",
+          "label": "pause_after_speaker",
+          "type": "FLOAT",
+          "localized_name": "pause_after_speaker"
+        },
+        {
+          "shape": 7,
+          "name": "num_speakers.speaker_1_audio",
+          "link": 43,
+          "label": "num_speakers.speaker_1_audio",
+          "type": "AUDIO",
+          "localized_name": "speaker_1_audio"
+        },
+        {
+          "widget": {
+            "name": "num_speakers.speaker_1_ref_text"
+          },
+          "shape": 7,
+          "name": "num_speakers.speaker_1_ref_text",
+          "label": "num_speakers.speaker_1_ref_text",
+          "type": "STRING",
+          "localized_name": "speaker_1_ref_text"
+        },
+        {
+          "shape": 7,
+          "name": "num_speakers.speaker_2_audio",
+          "link": 44,
+          "label": "num_speakers.speaker_2_audio",
+          "type": "AUDIO",
+          "localized_name": "speaker_2_audio"
+        },
+        {
+          "widget": {
+            "name": "num_speakers.speaker_2_ref_text"
+          },
+          "shape": 7,
+          "name": "num_speakers.speaker_2_ref_text",
+          "label": "num_speakers.speaker_2_ref_text",
+          "type": "STRING",
+          "localized_name": "speaker_2_ref_text"
+        },
+        {
+          "widget": {
+            "name": "num_speakers"
+          },
+          "name": "num_speakers",
+          "label": "num_speakers",
+          "type": "COMFY_DYNAMICCOMBO_V3",
+          "localized_name": "num_speakers"
+        }
+      ],
+      "flags": {},
+      "type": "FishS2MultiSpeakerTTS",
+      "mode": 0,
+      "bgcolor": "#533",
+      "size": [
+        216.74609375,
+        540
+      ],
+      "pos": [
+        -1675.4735107421875,
+        393.5352478027344
+      ],
+      "id": 24,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "FishS2MultiSpeakerTTS"
+      },
+      "order": 16
+    },
+    {
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "links": [
+            40,
+            43
+          ],
+          "label": "AUDIO",
+          "type": "AUDIO",
+          "localized_name": "AUDIO"
+        }
+      ],
+      "color": "#322",
+      "widgets_values": [
+        "95c53b468ed93ea2358f192382d8f38bf6f640a8a34b0db9e493f1fd39e001f7.WAV",
+        null,
+        null
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "audio"
+          },
+          "name": "audio",
+          "label": "audio",
+          "type": "COMBO",
+          "localized_name": "audio"
+        },
+        {
+          "widget": {
+            "name": "audioUI"
+          },
+          "name": "audioUI",
+          "label": "audioUI",
+          "type": "AUDIO_UI",
+          "localized_name": "audioUI"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "label": "upload",
+          "type": "AUDIOUPLOAD",
+          "localized_name": "choose file to upload"
+        }
+      ],
+      "flags": {},
+      "type": "LoadAudio",
+      "mode": 0,
+      "bgcolor": "#533",
+      "size": [
+        270,
+        136
+      ],
+      "pos": [
+        -2517.951904296875,
+        402.4671630859375
+      ],
+      "id": 3,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.4",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        },
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadAudio"
+      },
+      "order": 11
+    },
+    {
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "links": [
+            41,
+            44
+          ],
+          "label": "AUDIO",
+          "type": "AUDIO",
+          "localized_name": "AUDIO"
+        }
+      ],
+      "color": "#322",
+      "widgets_values": [
+        "abf9d2fd4ed309e17f0a8010400bc4d3d1b36210eb80376faf672b9acfc7ad06.MP3",
+        null,
+        null
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "audio"
+          },
+          "name": "audio",
+          "label": "audio",
+          "type": "COMBO",
+          "localized_name": "audio"
+        },
+        {
+          "widget": {
+            "name": "audioUI"
+          },
+          "name": "audioUI",
+          "label": "audioUI",
+          "type": "AUDIO_UI",
+          "localized_name": "audioUI"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "label": "upload",
+          "type": "AUDIOUPLOAD",
+          "localized_name": "choose file to upload"
+        }
+      ],
+      "flags": {},
+      "type": "LoadAudio",
+      "mode": 0,
+      "bgcolor": "#533",
+      "size": [
+        270,
+        136
+      ],
+      "pos": [
+        -2519.09228515625,
+        593.2039184570312
+      ],
+      "id": 4,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.16.4",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        },
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadAudio"
+      },
+      "order": 12
+    },
+    {
+      "outputs": [],
+      "color": "#432",
+      "widgets_values": [
+        "目前是2语音输入，改成几就是几个不要超过10个"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#653",
+      "size": [
+        320.6990661621094,
+        88
+      ],
+      "pos": [
+        -1448.7088623046875,
+        844.4571533203125
+      ],
+      "id": 36,
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 13
+    },
+    {
+      "outputs": [
+        {
+          "name": "text",
+          "links": [
+            39
+          ],
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        }
+      ],
+      "color": "#322",
+      "widgets_values": [
+        ""
+      ],
+      "inputs": [
+        {
+          "name": "text",
+          "link": 47,
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        }
+      ],
+      "flags": {},
+      "type": "ShowText",
+      "mode": 4,
+      "bgcolor": "#533",
+      "size": [
+        278.6490478515625,
+        114.8189468383789
+      ],
+      "pos": [
+        -2544.4013671875,
+        1631.13916015625
+      ],
+      "id": 29,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ShowText"
+      },
+      "order": 19
+    },
+    {
+      "mode": 4,
+      "outputs": [
+        {
+          "name": "output",
+          "links": [
+            47
+          ],
+          "label": "output",
+          "type": "*",
+          "localized_name": "output"
+        }
+      ],
+      "size": [
+        157.38925170898438,
+        26
+      ],
+      "pos": [
+        -2783.119140625,
+        1688.0498046875
+      ],
+      "inputs": [
+        {
+          "name": "anything",
+          "link": 46,
+          "label": "anything",
+          "type": "*",
+          "localized_name": "anything"
+        }
+      ],
+      "flags": {},
+      "id": 37,
+      "type": "easy cleanGpuUsed",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "easy cleanGpuUsed"
+      },
+      "order": 17
+    }
+  ],
+  "extra": {
+    "links_added_by_ue": [],
+    "VHS_KeepIntermediate": true,
+    "ue_links": [],
+    "VHS_MetadataImage": true,
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "workflowRendererVersion": "LG",
+    "VHS_latentpreviewrate": 0,
+    "frontendVersion": "1.41.16",
+    "VHS_latentpreview": true,
+    "ds": {
+      "offset": [
+        3135.9483297285246,
+        -1259.6671172793144
+      ],
+      "scale": 1.283902517749502
+    }
+  },
+  "groups": [
+    {
+      "color": "#8AA",
+      "font_size": 24,
+      "flags": {},
+      "id": 4,
+      "title": "语音生成",
+      "bounding": [
+        -2958.50634765625,
+        1902.3472900390625,
+        776.4095458984375,
+        593.9070434570312
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {},
+      "id": 6,
+      "title": "多角色语音克隆对话",
+      "bounding": [
+        -3042.427978515625,
+        303.30670166015625,
+        2377.15673828125,
+        703.0774536132812
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {},
+      "id": 7,
+      "title": "单人语音克隆",
+      "bounding": [
+        -3026.956298828125,
+        1159.971923828125,
+        1584.0609130859375,
+        631.6620483398438
+      ]
+    }
+  ],
+  "links": [
+    [
+      11,
+      14,
+      0,
+      13,
+      0,
+      "AUDIO"
+    ],
+    [
+      17,
+      17,
+      0,
+      22,
+      0,
+      "AUDIO"
+    ],
+    [
+      19,
+      24,
+      0,
+      21,
+      0,
+      "AUDIO"
+    ],
+    [
+      23,
+      14,
+      0,
+      25,
+      0,
+      "AUDIO"
+    ],
+    [
+      25,
+      25,
+      0,
+      23,
+      0,
+      "AUDIO"
+    ],
+    [
+      36,
+      27,
+      0,
+      24,
+      1,
+      "STRING"
+    ],
+    [
+      37,
+      28,
+      0,
+      25,
+      2,
+      "STRING"
+    ],
+    [
+      39,
+      29,
+      0,
+      25,
+      15,
+      "STRING"
+    ],
+    [
+      40,
+      3,
+      0,
+      24,
+      16,
+      "AUDIO"
+    ],
+    [
+      41,
+      4,
+      0,
+      24,
+      18,
+      "AUDIO"
+    ],
+    [
+      43,
+      3,
+      0,
+      24,
+      15,
+      "AUDIO"
+    ],
+    [
+      44,
+      4,
+      0,
+      24,
+      17,
+      "AUDIO"
+    ],
+    [
+      46,
+      13,
+      0,
+      37,
+      0,
+      "*"
+    ],
+    [
+      47,
+      37,
+      0,
+      29,
+      0,
+      "STRING"
+    ]
+  ],
+  "id": "43237733-f3f5-46bb-ad8c-be8122aed768",
+  "config": {},
+  "version": 0.4,
+  "last_node_id": 37,
+  "revision": 0
+}

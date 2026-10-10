@@ -1,0 +1,922 @@
+{
+  "last_link_id": 38,
+  "nodes": [
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "SAMPLER",
+          "slot_index": 0,
+          "links": [
+            24
+          ],
+          "label": "采样器",
+          "type": "SAMPLER",
+          "localized_name": "采样器"
+        }
+      ],
+      "size": [
+        404,
+        58
+      ],
+      "pos": [
+        742,
+        606
+      ],
+      "widgets_values": [
+        "euler"
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 14,
+      "type": "KSamplerSelect",
+      "properties": {
+        "Node name for S&R": "KSamplerSelect"
+      },
+      "order": 0
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "NOISE",
+          "slot_index": 0,
+          "links": [
+            23
+          ],
+          "label": "噪波生成",
+          "type": "NOISE",
+          "localized_name": "噪波"
+        }
+      ],
+      "size": [
+        391,
+        82
+      ],
+      "pos": [
+        749,
+        709
+      ],
+      "widgets_values": [
+        947007576710328,
+        "randomize"
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 17,
+      "type": "RandomNoise",
+      "properties": {
+        "Node name for S&R": "RandomNoise"
+      },
+      "order": 1
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "GUIDER",
+          "slot_index": 0,
+          "links": [
+            22
+          ],
+          "label": "引导",
+          "type": "GUIDER",
+          "localized_name": "引导器"
+        }
+      ],
+      "size": [
+        241.79998779296875,
+        46
+      ],
+      "pos": [
+        1227,
+        122
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 36,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "conditioning",
+          "link": 27,
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "flags": {},
+      "id": 15,
+      "type": "BasicGuider",
+      "properties": {
+        "Node name for S&R": "BasicGuider"
+      },
+      "order": 11
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            9
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "size": [
+        230,
+        47
+      ],
+      "pos": [
+        1234,
+        375
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "samples",
+          "link": 26,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        },
+        {
+          "name": "vae",
+          "link": 19,
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "vae"
+        }
+      ],
+      "flags": {},
+      "id": 8,
+      "type": "VAEDecode",
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "order": 13
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "size": [
+        283.25,
+        372.875
+      ],
+      "pos": [
+        1521,
+        124
+      ],
+      "widgets_values": [
+        "ComfyUI"
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 9,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图片"
+        }
+      ],
+      "flags": {},
+      "id": 9,
+      "type": "SaveImage",
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "order": 14
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "slot_index": 0,
+          "links": [
+            10,
+            30
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "size": [
+        259,
+        82
+      ],
+      "pos": [
+        35,
+        102
+      ],
+      "widgets_values": [
+        "flux1-dev-fp8.safetensors",
+        "fp8_e4m3fn"
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 10,
+      "type": "UNETLoader",
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "order": 2
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CLIP",
+          "slot_index": 0,
+          "links": [
+            11
+          ],
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIP"
+        }
+      ],
+      "size": [
+        250,
+        122
+      ],
+      "pos": [
+        39,
+        228
+      ],
+      "widgets_values": [
+        "t5xxl_fp8_e4m3fn.safetensors",
+        "clip_l.safetensors",
+        "flux",
+        "default"
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 11,
+      "type": "DualCLIPLoader",
+      "properties": {
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "order": 3
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "VAE",
+          "slot_index": 0,
+          "links": [
+            19
+          ],
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "VAE"
+        }
+      ],
+      "size": [
+        245,
+        58
+      ],
+      "pos": [
+        45,
+        380
+      ],
+      "widgets_values": [
+        "ae.sft"
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 18,
+      "type": "VAELoader",
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "order": 4
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LATENT",
+          "slot_index": 0,
+          "links": [
+            25
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "size": [
+        401.6759948730469,
+        108.24600219726562
+      ],
+      "pos": [
+        742,
+        454
+      ],
+      "widgets_values": [
+        768,
+        1024,
+        1
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 5,
+      "type": "EmptyLatentImage",
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "order": 5
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "slot_index": 0,
+          "links": [
+            35
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "CLIP",
+          "slot_index": 1,
+          "links": [
+            38
+          ],
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIP"
+        }
+      ],
+      "size": [
+        312.7631530761719,
+        169.65782165527344
+      ],
+      "pos": [
+        363.769775390625,
+        332.82733154296875
+      ],
+      "widgets_values": [
+        "【二元】FLUX-3D运营电商poster_v1.0.safetensors",
+        0.6000000000000001,
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 31,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "clip",
+          "link": 32,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIPCLIP"
+        }
+      ],
+      "flags": {},
+      "id": 20,
+      "type": "LoraLoader",
+      "properties": {
+        "Node name for S&R": "LoraLoader"
+      },
+      "order": 8
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "SIGMAS",
+          "slot_index": 0,
+          "links": [
+            28
+          ],
+          "label": "Sigmas",
+          "type": "SIGMAS",
+          "localized_name": "Sigmas"
+        }
+      ],
+      "size": [
+        418.406005859375,
+        106
+      ],
+      "pos": [
+        738.2808227539062,
+        304
+      ],
+      "widgets_values": [
+        "normal",
+        30,
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 30,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "flags": {},
+      "id": 19,
+      "type": "BasicScheduler",
+      "properties": {
+        "Node name for S&R": "BasicScheduler"
+      },
+      "order": 6
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            27
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "size": [
+        433.8760070800781,
+        142.6959991455078
+      ],
+      "pos": [
+        733,
+        117
+      ],
+      "widgets_values": [
+        "In the sky,an open gift box is at the center of the picture,full of vitality and futurism. The mall atmosphere is bright and ventilated,with a sense of openness and spaciousness,\nThe main body of the poster revolves around a cartoon shopping bag shaped building,inspired by fashionable handbags,showcasing unique creativity. There are many blue and orange colored gift boxes around the shopping bag shaped building,with red envelopes floating above,creating a rich sense of promotion,\nThe scene includes elements such as skyscrapers,neon lights,floating hot air balloons,and various other urban features. The characteristic of the scene is a dynamic background,gradually rising sky,and gradually rising patterns,with bold and vivid colors including neon yellow,orange,red,and bright white,emphasizing a lively and vibrant atmosphere,"
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "link": 37,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "clip"
+        }
+      ],
+      "flags": {},
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "order": 10
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "slot_index": 0,
+          "links": [
+            31
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "CLIP",
+          "slot_index": 1,
+          "links": [
+            32
+          ],
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIP"
+        }
+      ],
+      "size": [
+        312.7631530761719,
+        169.65782165527344
+      ],
+      "pos": [
+        362,
+        109
+      ],
+      "widgets_values": [
+        "xxc-1.safetensors",
+        0.30000000000000004,
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 10,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "clip",
+          "link": 11,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIPCLIP"
+        }
+      ],
+      "flags": {},
+      "id": 12,
+      "type": "LoraLoader",
+      "properties": {
+        "Node name for S&R": "LoraLoader"
+      },
+      "order": 7
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "output",
+          "slot_index": 0,
+          "links": [
+            26
+          ],
+          "label": "输出",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        },
+        {
+          "name": "denoised_output",
+          "label": "降噪输出",
+          "type": "LATENT",
+          "localized_name": "降噪Latent"
+        }
+      ],
+      "size": [
+        236.8000030517578,
+        106
+      ],
+      "pos": [
+        1232.51025390625,
+        206.71046447753906
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "noise",
+          "link": 23,
+          "label": "噪波生成",
+          "type": "NOISE",
+          "localized_name": "噪波"
+        },
+        {
+          "name": "guider",
+          "link": 22,
+          "label": "引导",
+          "type": "GUIDER",
+          "localized_name": "引导器"
+        },
+        {
+          "name": "sampler",
+          "link": 24,
+          "label": "采样器",
+          "type": "SAMPLER",
+          "localized_name": "采样器"
+        },
+        {
+          "name": "sigmas",
+          "link": 28,
+          "label": "Sigmas",
+          "type": "SIGMAS",
+          "localized_name": "西格玛"
+        },
+        {
+          "name": "latent_image",
+          "link": 25,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent图像"
+        }
+      ],
+      "flags": {},
+      "id": 16,
+      "type": "SamplerCustomAdvanced",
+      "properties": {
+        "Node name for S&R": "SamplerCustomAdvanced"
+      },
+      "order": 12
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "slot_index": 0,
+          "links": [
+            36
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "CLIP",
+          "slot_index": 1,
+          "links": [
+            37
+          ],
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIP"
+        }
+      ],
+      "size": [
+        312.7631530761719,
+        169.65782165527344
+      ],
+      "pos": [
+        360,
+        550
+      ],
+      "widgets_values": [
+        "【油条】运营海报-万圣狂欢_pro1.safetensors",
+        0.4000000000000001,
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 35,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "clip",
+          "link": 38,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIPCLIP"
+        }
+      ],
+      "flags": {},
+      "id": 22,
+      "type": "LoraLoader",
+      "properties": {
+        "Node name for S&R": "LoraLoader"
+      },
+      "order": 9
+    }
+  ],
+  "extra": {
+    "VHS_KeepIntermediate": true,
+    "ue_links": [],
+    "VHS_MetadataImage": true,
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "VHS_latentpreviewrate": 0,
+    "VHS_latentpreview": false,
+    "ds": {
+      "offset": [
+        726.9155432838606,
+        120.61362324887023
+      ],
+      "scale": 0.7247295000000004
+    }
+  },
+  "groups": [
+    {
+      "color": "#3f789e",
+      "font_size": 20,
+      "flags": {},
+      "id": 1,
+      "title": "5.输出图片",
+      "bounding": [
+        1507,
+        30,
+        312,
+        502
+      ]
+    },
+    {
+      "color": "#8A8",
+      "font_size": 20,
+      "flags": {},
+      "id": 2,
+      "title": "4.固定",
+      "bounding": [
+        1208,
+        27,
+        275,
+        496
+      ]
+    },
+    {
+      "color": "#A88",
+      "font_size": 24,
+      "flags": {},
+      "id": 3,
+      "title": "3.输入提示词+数值",
+      "bounding": [
+        724,
+        24,
+        450,
+        778
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 20,
+      "flags": {},
+      "id": 4,
+      "title": "2.选择LORA",
+      "bounding": [
+        346,
+        23,
+        348.18341064453125,
+        776.2074584960938
+      ]
+    },
+    {
+      "color": "#8A8",
+      "font_size": 20,
+      "flags": {},
+      "id": 5,
+      "title": "1.FLUX大模型",
+      "bounding": [
+        30,
+        20,
+        277,
+        519
+      ]
+    }
+  ],
+  "links": [
+    [
+      9,
+      8,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      10,
+      10,
+      0,
+      12,
+      0,
+      "MODEL"
+    ],
+    [
+      11,
+      11,
+      0,
+      12,
+      1,
+      "CLIP"
+    ],
+    [
+      19,
+      18,
+      0,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      22,
+      15,
+      0,
+      16,
+      1,
+      "GUIDER"
+    ],
+    [
+      23,
+      17,
+      0,
+      16,
+      0,
+      "NOISE"
+    ],
+    [
+      24,
+      14,
+      0,
+      16,
+      2,
+      "SAMPLER"
+    ],
+    [
+      25,
+      5,
+      0,
+      16,
+      4,
+      "LATENT"
+    ],
+    [
+      26,
+      16,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      27,
+      6,
+      0,
+      15,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      28,
+      19,
+      0,
+      16,
+      3,
+      "SIGMAS"
+    ],
+    [
+      30,
+      10,
+      0,
+      19,
+      0,
+      "MODEL"
+    ],
+    [
+      31,
+      12,
+      0,
+      20,
+      0,
+      "MODEL"
+    ],
+    [
+      32,
+      12,
+      1,
+      20,
+      1,
+      "CLIP"
+    ],
+    [
+      35,
+      20,
+      0,
+      22,
+      0,
+      "MODEL"
+    ],
+    [
+      36,
+      22,
+      0,
+      15,
+      0,
+      "MODEL"
+    ],
+    [
+      37,
+      22,
+      1,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      38,
+      20,
+      1,
+      22,
+      1,
+      "CLIP"
+    ]
+  ],
+  "id": "d28a827c-ef91-4eab-9361-6c48d175a206",
+  "config": {},
+  "version": 0.4,
+  "last_node_id": 22,
+  "revision": 0
+}

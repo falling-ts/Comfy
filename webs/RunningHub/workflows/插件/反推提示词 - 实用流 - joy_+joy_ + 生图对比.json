@@ -1,0 +1,2330 @@
+{
+  "last_link_id": 159,
+  "nodes": [
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            68
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "pos": [
+        -2730.339111328125,
+        -1976.9471435546875
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "samples",
+          "link": 65,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        },
+        {
+          "name": "vae",
+          "link": 66,
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "vae"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 66,
+      "type": "VAEDecode",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAEDecode"
+      },
+      "order": 32
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "GUIDER",
+          "links": [
+            72
+          ],
+          "label": "引导",
+          "type": "GUIDER",
+          "localized_name": "引导器"
+        }
+      ],
+      "size": [
+        241.79998779296875,
+        46
+      ],
+      "pos": [
+        -3520.093505859375,
+        -2017.6800537109375
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 157,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "conditioning",
+          "link": 70,
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 72,
+      "type": "BasicGuider",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "BasicGuider"
+      },
+      "order": 28
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "output",
+          "slot_index": 0,
+          "links": [],
+          "label": "输出",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        },
+        {
+          "name": "denoised_output",
+          "slot_index": 1,
+          "links": [
+            65
+          ],
+          "label": "降噪输出",
+          "type": "LATENT",
+          "localized_name": "降噪Latent"
+        }
+      ],
+      "size": [
+        277.9298095703125,
+        420.82177734375
+      ],
+      "pos": [
+        -3136.2861328125,
+        -2012.2525634765625
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "noise",
+          "link": 71,
+          "label": "噪波生成",
+          "type": "NOISE",
+          "localized_name": "噪波"
+        },
+        {
+          "name": "guider",
+          "link": 72,
+          "label": "引导",
+          "type": "GUIDER",
+          "localized_name": "引导器"
+        },
+        {
+          "name": "sampler",
+          "link": 73,
+          "label": "采样器",
+          "type": "SAMPLER",
+          "localized_name": "采样器"
+        },
+        {
+          "name": "sigmas",
+          "link": 74,
+          "label": "Sigmas",
+          "type": "SIGMAS",
+          "localized_name": "西格玛"
+        },
+        {
+          "name": "latent_image",
+          "link": 75,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent图像"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 73,
+      "type": "SamplerCustomAdvanced",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SamplerCustomAdvanced"
+      },
+      "order": 30
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "SAMPLER",
+          "links": [
+            73,
+            111
+          ],
+          "label": "采样器",
+          "type": "SAMPLER",
+          "localized_name": "采样器"
+        }
+      ],
+      "size": [
+        284.894775390625,
+        58
+      ],
+      "pos": [
+        -4274.36962890625,
+        -1549.7388916015625
+      ],
+      "widgets_values": [
+        "euler"
+      ],
+      "inputs": [],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 67,
+      "type": "KSamplerSelect",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "KSamplerSelect"
+      },
+      "order": 0
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "SIGMAS",
+          "links": [
+            74
+          ],
+          "label": "Sigmas",
+          "type": "SIGMAS",
+          "localized_name": "Sigmas"
+        }
+      ],
+      "size": [
+        294.9297790527344,
+        106
+      ],
+      "pos": [
+        -4283.75390625,
+        -1430.485595703125
+      ],
+      "widgets_values": [
+        "simple",
+        20,
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 158,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 68,
+      "type": "BasicScheduler",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "BasicScheduler"
+      },
+      "order": 11
+    },
+    {
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            76
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        "YouA beautiful Chinese girl in a red cheongsam with intricate gold embroidery is gracefully showing her feet, standing on a polished wooden floor with a traditional Chinese screen in the background. The lighting is soft and warm, highlighting her delicate feet."
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "link": 84,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "clip"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 141,
+          "label": "文本",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "type": "CLIPTextEncode",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        287.9283142089844,
+        123.25181579589844
+      ],
+      "pos": [
+        -4845.85302734375,
+        -2011.5289306640625
+      ],
+      "id": 86,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {
+          "text": true
+        },
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "order": 22
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "output",
+          "slot_index": 0,
+          "links": [],
+          "label": "输出",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        },
+        {
+          "name": "denoised_output",
+          "slot_index": 1,
+          "links": [
+            116
+          ],
+          "label": "降噪输出",
+          "type": "LATENT",
+          "localized_name": "降噪Latent"
+        }
+      ],
+      "size": [
+        277.9298095703125,
+        420.82177734375
+      ],
+      "pos": [
+        -3493.4697265625,
+        -1045.48779296875
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "noise",
+          "link": 109,
+          "label": "噪波生成",
+          "type": "NOISE",
+          "localized_name": "噪波"
+        },
+        {
+          "name": "guider",
+          "link": 110,
+          "label": "引导",
+          "type": "GUIDER",
+          "localized_name": "引导器"
+        },
+        {
+          "name": "sampler",
+          "link": 111,
+          "label": "采样器",
+          "type": "SAMPLER",
+          "localized_name": "采样器"
+        },
+        {
+          "name": "sigmas",
+          "link": 112,
+          "label": "Sigmas",
+          "type": "SIGMAS",
+          "localized_name": "西格玛"
+        },
+        {
+          "name": "latent_image",
+          "link": 113,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent图像"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 92,
+      "type": "SamplerCustomAdvanced",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SamplerCustomAdvanced"
+      },
+      "order": 29
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            120
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "pos": [
+        -3050.243408203125,
+        -1080.6048583984375
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "samples",
+          "link": 116,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        },
+        {
+          "name": "vae",
+          "link": 117,
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "vae"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 94,
+      "type": "VAEDecode",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAEDecode"
+      },
+      "order": 31
+    },
+    {
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            119
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        3.5
+      ],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "link": 118,
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "flags": {},
+      "type": "FluxGuidance",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        234.04547119140625,
+        82.0111312866211
+      ],
+      "pos": [
+        -4505.31982421875,
+        -1002.7177124023438
+      ],
+      "id": 96,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "FluxGuidance"
+      },
+      "order": 23
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "SIGMAS",
+          "links": [
+            112
+          ],
+          "label": "Sigmas",
+          "type": "SIGMAS",
+          "localized_name": "Sigmas"
+        }
+      ],
+      "size": [
+        315,
+        106
+      ],
+      "pos": [
+        -4011.4638671875,
+        -867.3759765625
+      ],
+      "widgets_values": [
+        "simple",
+        20,
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 159,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 91,
+      "type": "BasicScheduler",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "BasicScheduler"
+      },
+      "order": 12
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LATENT",
+          "slot_index": 0,
+          "links": [
+            75,
+            113
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "size": [
+        294.017578125,
+        106
+      ],
+      "pos": [
+        -4280.017578125,
+        -1716.22119140625
+      ],
+      "widgets_values": [
+        768,
+        1024,
+        1
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "width"
+          },
+          "name": "width",
+          "link": 106,
+          "type": "INT",
+          "localized_name": "宽度"
+        },
+        {
+          "widget": {
+            "name": "height"
+          },
+          "name": "height",
+          "link": 107,
+          "type": "INT",
+          "localized_name": "高度"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 84,
+      "type": "EmptyLatentImage",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "order": 16
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "NOISE",
+          "links": [
+            71,
+            109
+          ],
+          "label": "噪波生成",
+          "type": "NOISE",
+          "localized_name": "噪波"
+        }
+      ],
+      "size": [
+        286.5373840332031,
+        82
+      ],
+      "pos": [
+        -4280.60107421875,
+        -1848.913818359375
+      ],
+      "widgets_values": [
+        1069218128590225,
+        "randomize"
+      ],
+      "inputs": [],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 88,
+      "type": "RandomNoise",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "RandomNoise"
+      },
+      "order": 1
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "GUIDER",
+          "links": [
+            110
+          ],
+          "label": "引导",
+          "type": "GUIDER",
+          "localized_name": "引导器"
+        }
+      ],
+      "size": [
+        313.5509033203125,
+        57.03860092163086
+      ],
+      "pos": [
+        -4103.9384765625,
+        -1062.1185302734375
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 156,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "conditioning",
+          "link": 119,
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 93,
+      "type": "BasicGuider",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "BasicGuider"
+      },
+      "order": 27
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CLIP",
+          "slot_index": 0,
+          "links": [
+            84,
+            125
+          ],
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIP"
+        }
+      ],
+      "size": [
+        327.6161193847656,
+        130
+      ],
+      "pos": [
+        -5338.24560546875,
+        -834.4815673828125
+      ],
+      "widgets_values": [
+        "t5xxl_fp8_e4m3fn.safetensors",
+        "clip_l.safetensors",
+        "flux",
+        "default"
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 69,
+      "type": "DualCLIPLoader",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "order": 2
+    },
+    {
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            118
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        "YouA beautiful Chinese girl in a red cheongsam with intricate gold embroidery is gracefully showing her feet, standing on a polished wooden floor with a traditional Chinese screen in the background. The lighting is soft and warm, highlighting her delicate feet."
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "link": 125,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "clip"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 124,
+          "label": "文本",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "type": "CLIPTextEncode",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        301.1745910644531,
+        90.13609313964844
+      ],
+      "pos": [
+        -4828.21240234375,
+        -1018.5889892578125
+      ],
+      "id": 95,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {
+          "text": true
+        },
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "order": 17
+    },
+    {
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            70
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        3.5
+      ],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "link": 76,
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "flags": {},
+      "type": "FluxGuidance",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        259.4342041015625,
+        106.2961196899414
+      ],
+      "pos": [
+        -4535.84228515625,
+        -2010.1497802734375
+      ],
+      "id": 76,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "FluxGuidance"
+      },
+      "order": 26
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            156,
+            157,
+            158,
+            159
+          ],
+          "label": "MODEL",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#322",
+      "widgets_values": [
+        "svdq-int4-flux.1-dev",
+        0,
+        "nunchaku-fp16",
+        "auto",
+        0,
+        "bfloat16",
+        "enabled"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "NunchakuFluxDiTLoader",
+      "mode": 0,
+      "bgcolor": "#533",
+      "size": [
+        315,
+        202
+      ],
+      "pos": [
+        -5331.6591796875,
+        -1108.380126953125
+      ],
+      "id": 137,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "NunchakuFluxDiTLoader"
+      },
+      "order": 3
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "joycaption_beta1_model",
+          "links": [
+            142
+          ],
+          "label": "joycaption_beta1_model",
+          "type": "JOYCAPTIONBETA1_MODEL",
+          "localized_name": "joycaption_beta1_model"
+        }
+      ],
+      "size": [
+        453.6000061035156,
+        116.60948181152344
+      ],
+      "color": "rgba(38, 73, 116, 0.7)",
+      "pos": [
+        -6348.44287109375,
+        -1939.9869384765625
+      ],
+      "widgets_values": [
+        "fancyfeast/llama-joycaption-beta-one-hf-llava",
+        "nf4",
+        "cuda"
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 120,
+      "type": "LayerUtility: LoadJoyCaptionBeta1Model",
+      "properties": {
+        "cnr_id": "ComfyUI_LayerStyle_Advance",
+        "ver": "0f9184100e626e3202568a7cf890b3b92685a168",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LayerUtility: LoadJoyCaptionBeta1Model"
+      },
+      "order": 4
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "extra_option",
+          "links": [
+            144
+          ],
+          "label": "extra_option",
+          "type": "JoyCaption2ExtraOption",
+          "localized_name": "extra_option"
+        }
+      ],
+      "size": [
+        470.3999938964844,
+        706
+      ],
+      "color": "rgba(38, 73, 116, 0.7)",
+      "pos": [
+        -6350.28271484375,
+        -1770.0601806640625
+      ],
+      "widgets_values": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        "wangdapao"
+      ],
+      "inputs": [],
+      "flags": {
+        "collapsed": true
+      },
+      "id": 121,
+      "type": "LayerUtility: JoyCaptionBeta1ExtraOptions",
+      "properties": {
+        "cnr_id": "ComfyUI_LayerStyle_Advance",
+        "ver": "0f9184100e626e3202568a7cf890b3b92685a168",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LayerUtility: JoyCaptionBeta1ExtraOptions"
+      },
+      "order": 5
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "translation",
+          "links": [
+            135
+          ],
+          "label": "translation",
+          "type": "STRING",
+          "localized_name": "translation"
+        }
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "pos": [
+        -6080.66943359375,
+        -1767.5830078125
+      ],
+      "widgets_values": [
+        "",
+        695,
+        "randomize",
+        "force_chinese"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "prompt"
+          },
+          "name": "prompt",
+          "link": 139,
+          "label": "prompt",
+          "type": "STRING"
+        }
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "id": 116,
+      "type": "RH_Translator",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "RH_Translator"
+      },
+      "order": 20
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "JoyTwoPipeline",
+          "links": [
+            11
+          ],
+          "label": "JoyTwoPipeline",
+          "type": "JoyTwoPipeline",
+          "localized_name": "JoyTwoPipeline"
+        }
+      ],
+      "size": [
+        434.2105712890625,
+        145.30526733398438
+      ],
+      "pos": [
+        -6326.3486328125,
+        -1065.98193359375
+      ],
+      "widgets_values": [
+        "unsloth/Meta-Llama-3.1-8B-bnb-4bit"
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 16,
+      "type": "Joy_caption_two_load",
+      "properties": {
+        "cnr_id": "comfyui_slk_joy_caption_two",
+        "ver": "667751cab945bd8e9fb0be4d557d47e36821350a",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "Joy_caption_two_load"
+      },
+      "order": 6
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "translation",
+          "links": [
+            147
+          ],
+          "label": "translation",
+          "type": "STRING",
+          "localized_name": "translation"
+        }
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "pos": [
+        -6074.43994140625,
+        -867.294921875
+      ],
+      "widgets_values": [
+        "",
+        1201,
+        "randomize",
+        "force_chinese"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "prompt"
+          },
+          "name": "prompt",
+          "link": 148,
+          "label": "prompt",
+          "type": "STRING"
+        }
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "id": 126,
+      "type": "RH_Translator",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "RH_Translator"
+      },
+      "order": 19
+    },
+    {
+      "outputs": [],
+      "color": "#ffa8a8",
+      "widgets_values": [
+        "调节提示词文本长度：改“caption_length”后面的选项即可\n"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#ff9494",
+      "size": [
+        445.130615234375,
+        89.10384368896484
+      ],
+      "pos": [
+        -6336.2275390625,
+        -1401.878662109375
+      ],
+      "id": 139,
+      "properties": {},
+      "order": 7
+    },
+    {
+      "outputs": [],
+      "color": "#ffbcbc",
+      "widgets_values": [
+        "调节提示词文本长度：改“caption_length”后面的选项即可\n"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#ffa8a8",
+      "size": [
+        437.40362548828125,
+        88
+      ],
+      "pos": [
+        -6309.78857421875,
+        -580.4058227539062
+      ],
+      "id": 140,
+      "properties": {},
+      "order": 8
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "VAE",
+          "slot_index": 0,
+          "links": [
+            66,
+            117
+          ],
+          "type": "VAE",
+          "localized_name": "VAE"
+        }
+      ],
+      "size": [
+        325.072509765625,
+        59.82453536987305
+      ],
+      "pos": [
+        -5339.56103515625,
+        -650.9088134765625
+      ],
+      "widgets_values": [
+        "ae.sft"
+      ],
+      "inputs": [],
+      "flags": {
+        "collapsed": false
+      },
+      "id": 70,
+      "type": "VAELoader",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAELoader"
+      },
+      "order": 9
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "image",
+          "links": [
+            103,
+            104,
+            137
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "image"
+        },
+        {
+          "name": "mask",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "mask"
+        },
+        {
+          "name": "original_size",
+          "label": "原始大小",
+          "type": "BOX",
+          "localized_name": "original_size"
+        },
+        {
+          "name": "width",
+          "links": [
+            106
+          ],
+          "type": "INT",
+          "localized_name": "width"
+        },
+        {
+          "name": "height",
+          "links": [
+            107
+          ],
+          "type": "INT",
+          "localized_name": "height"
+        }
+      ],
+      "size": [
+        263.3652648925781,
+        333.3173522949219
+      ],
+      "color": "rgba(38, 73, 116, 0.7)",
+      "pos": [
+        -5355.9296875,
+        -1611.96875
+      ],
+      "widgets_values": [
+        "original",
+        1,
+        1,
+        "letterbox",
+        "lanczos",
+        "8",
+        "longest",
+        1024,
+        "#000000"
+      ],
+      "inputs": [
+        {
+          "shape": 7,
+          "name": "image",
+          "link": 105,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "image"
+        },
+        {
+          "shape": 7,
+          "name": "mask",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "mask"
+        }
+      ],
+      "flags": {},
+      "id": 90,
+      "type": "LayerUtility: ImageScaleByAspectRatio V2",
+      "properties": {
+        "cnr_id": "comfyui_layerstyle",
+        "ver": "a46b1e6d26d45be9784c49f7065ba44700ef2b63",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LayerUtility: ImageScaleByAspectRatio V2"
+      },
+      "order": 13
+    },
+    {
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "links": [
+            105
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "color": "#432",
+      "widgets_values": [
+        "5d9e92e43e28abb79475ea7617e207cfe52a9fe0fcead65ed1ba34c3db07a3e6.jpg",
+        "image",
+        ""
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "LoadImage",
+      "mode": 0,
+      "bgcolor": "#653",
+      "size": [
+        508.19793701171875,
+        588.6922607421875
+      ],
+      "pos": [
+        -8791.5966796875,
+        -1884.959716796875
+      ],
+      "id": 5,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 10
+    },
+    {
+      "outputs": [
+        {
+          "shape": 6,
+          "name": "STRING",
+          "label": "字符串",
+          "type": "STRING",
+          "localized_name": "字符串"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [
+        "",
+        "Photograph of an Asian woman with long black hair, sitting on a beige, modern-style sofa in a minimalist living room. She is wearing a light green, sleeveless top and beige pants, holding a white piece of paper and looking up thoughtfully. The sofa is positioned against a white wall with a tall, green potted plant to the left. A light wooden coffee table is in the foreground, with a white, textured rug beneath it. The lighting is soft, casting gentle shadows, and the overall color palette is neutral and calming. The woman's expression is contemplative and serene."
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 140,
+          "label": "文本",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {},
+      "type": "ShowText|pysssss",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        609.7674560546875,
+        236.39462280273438
+      ],
+      "pos": [
+        -8155.671875,
+        -1642.73046875
+      ],
+      "id": 118,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "order": 21
+    },
+    {
+      "outputs": [],
+      "color": "#223",
+      "widgets_values": [
+        "beian",
+        ""
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 68,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图片"
+        }
+      ],
+      "flags": {},
+      "type": "SaveImage",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        595.8002319335938,
+        324.5999450683594
+      ],
+      "pos": [
+        -8148.7451171875,
+        -1344.8948974609375
+      ],
+      "id": 71,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveImage"
+      },
+      "order": 34
+    },
+    {
+      "outputs": [],
+      "color": "#232",
+      "widgets_values": [
+        "beian",
+        ""
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 120,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图片"
+        }
+      ],
+      "flags": {},
+      "type": "SaveImage",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        625.105712890625,
+        303.5884094238281
+      ],
+      "pos": [
+        -7415.1845703125,
+        -1331.77880859375
+      ],
+      "id": 97,
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.30",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveImage"
+      },
+      "order": 33
+    },
+    {
+      "outputs": [
+        {
+          "shape": 6,
+          "name": "STRING",
+          "label": "字符串",
+          "type": "STRING",
+          "localized_name": "字符串"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        "",
+        "A photograph of an Asian woman with long black hair sitting on a white sofa. She is wearing a light green camisole and beige pants. She is holding a piece of white paper in her hands. The room has a light and neutral color palette with white walls and light wood flooring. There is a tall green plant in a white pot next to the sofa. The lighting is soft and diffused, creating a calm and tranquil atmosphere. The woman appears to be in her twenties and has a slim physique.<|end_of_text|>"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 146,
+          "label": "文本",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {},
+      "type": "ShowText|pysssss",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        632.7490234375,
+        249.5435333251953
+      ],
+      "pos": [
+        -7414.46337890625,
+        -1638.7637939453125
+      ],
+      "id": 123,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "order": 18
+    },
+    {
+      "outputs": [
+        {
+          "shape": 6,
+          "name": "text",
+          "links": [
+            139,
+            140,
+            141
+          ],
+          "label": "text",
+          "type": "STRING",
+          "localized_name": "text"
+        }
+      ],
+      "color": "#432",
+      "widgets_values": [
+        "Descriptive",
+        "long",
+        512,
+        0.9,
+        0,
+        0.6,
+        ""
+      ],
+      "inputs": [
+        {
+          "name": "image",
+          "link": 137,
+          "label": "image",
+          "type": "IMAGE",
+          "localized_name": "image"
+        },
+        {
+          "name": "joycaption_beta1_model",
+          "link": 142,
+          "label": "joycaption_beta1_model",
+          "type": "JOYCAPTIONBETA1_MODEL",
+          "localized_name": "joycaption_beta1_model"
+        },
+        {
+          "shape": 7,
+          "name": "extra_options",
+          "link": 144,
+          "label": "extra_options",
+          "type": "JoyCaption2ExtraOption",
+          "localized_name": "extra_options"
+        }
+      ],
+      "flags": {},
+      "type": "LayerUtility: JoyCaptionBeta1",
+      "mode": 0,
+      "bgcolor": "#653",
+      "size": [
+        455.7130126953125,
+        272
+      ],
+      "pos": [
+        -6342.3916015625,
+        -1716.470458984375
+      ],
+      "id": 119,
+      "properties": {
+        "cnr_id": "ComfyUI_LayerStyle_Advance",
+        "ver": "0f9184100e626e3202568a7cf890b3b92685a168",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LayerUtility: JoyCaptionBeta1"
+      },
+      "order": 15
+    },
+    {
+      "outputs": [
+        {
+          "name": "STRING",
+          "links": [
+            124,
+            146,
+            148
+          ],
+          "label": "STRING",
+          "type": "STRING",
+          "localized_name": "字符串"
+        }
+      ],
+      "color": "#432",
+      "widgets_values": [
+        "Descriptive",
+        "long",
+        false
+      ],
+      "inputs": [
+        {
+          "name": "joy_two_pipeline",
+          "link": 11,
+          "label": "joy_two_pipeline",
+          "type": "JoyTwoPipeline",
+          "localized_name": "joy_two_pipeline"
+        },
+        {
+          "name": "image",
+          "link": 104,
+          "label": "image",
+          "type": "IMAGE",
+          "localized_name": "image"
+        }
+      ],
+      "flags": {},
+      "type": "Joy_caption_two",
+      "mode": 0,
+      "bgcolor": "#653",
+      "size": [
+        437.7850646972656,
+        151.776123046875
+      ],
+      "pos": [
+        -6316.05859375,
+        -793.6409912109375
+      ],
+      "id": 15,
+      "properties": {
+        "cnr_id": "comfyui_slk_joy_caption_two",
+        "ver": "667751cab945bd8e9fb0be4d557d47e36821350a",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "Joy_caption_two"
+      },
+      "order": 14
+    },
+    {
+      "outputs": [
+        {
+          "shape": 6,
+          "name": "STRING",
+          "links": [],
+          "label": "字符串",
+          "type": "STRING",
+          "localized_name": "字符串"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        "",
+        "一张亚裔女子的照片，她留着黑色长发，坐在白色沙发上。她身穿浅绿色吊带背心和米色长裤，双手拿着一张白纸。房间采用浅色中性色调，白墙搭配浅色木地板。沙发旁有个白色花盆，种着高大的绿色植物。光线柔和漫射，营造出宁静平和的氛围。这位女子约二十多岁，身材苗条。"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 147,
+          "label": "文本",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {},
+      "type": "ShowText|pysssss",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        639.2025146484375,
+        229.8574676513672
+      ],
+      "pos": [
+        -7418.7861328125,
+        -1921.96875
+      ],
+      "id": 125,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "order": 24
+    },
+    {
+      "outputs": [
+        {
+          "shape": 6,
+          "name": "STRING",
+          "label": "字符串",
+          "type": "STRING",
+          "localized_name": "字符串"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [
+        "",
+        "一张亚洲女性的照片，她有着长长的黑发，坐在极简主义客厅中的米色现代风格沙发上。她身穿浅绿色无袖上衣和米色长裤，手持一张白纸，若有所思地抬头凝视。沙发靠着一面白墙摆放，左侧有一株高大的绿色盆栽。前景处是一张浅色木制咖啡桌，下方铺着白色纹理地毯。光线柔和，投下温柔的阴影，整体色调中性而宁静。女子的表情沉思而安详。"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 135,
+          "label": "文本",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {},
+      "type": "ShowText|pysssss",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": [
+        621.1069946289062,
+        233.08309936523438
+      ],
+      "pos": [
+        -8163.43017578125,
+        -1924.8134765625
+      ],
+      "id": 117,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "order": 25
+    }
+  ],
+  "extra": {
+    "links_added_by_ue": [],
+    "VHS_KeepIntermediate": true,
+    "ue_links": [],
+    "VHS_MetadataImage": true,
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "reroutes": [
+      {
+        "linkIds": [
+          104
+        ],
+        "pos": [
+          -6397.705078125,
+          -2114.884521484375
+        ],
+        "id": 1,
+        "parentId": 6
+      },
+      {
+        "linkIds": [
+          104
+        ],
+        "pos": [
+          -6463.72412109375,
+          -1662.8499755859375
+        ],
+        "id": 2,
+        "parentId": 1
+      },
+      {
+        "linkIds": [
+          137
+        ],
+        "pos": [
+          -6411.59033203125,
+          -2160.517333984375
+        ],
+        "id": 3,
+        "parentId": 5
+      },
+      {
+        "linkIds": [
+          137
+        ],
+        "pos": [
+          -6387.96923828125,
+          -1674.084228515625
+        ],
+        "id": 4,
+        "parentId": 3
+      },
+      {
+        "linkIds": [
+          137
+        ],
+        "pos": [
+          -5345.6162109375,
+          -2120.75390625
+        ],
+        "id": 5
+      },
+      {
+        "linkIds": [
+          104
+        ],
+        "pos": [
+          -5363.42041015625,
+          -2045.488525390625
+        ],
+        "id": 6
+      }
+    ],
+    "VHS_latentpreviewrate": 0,
+    "linkExtensions": [
+      {
+        "id": 104,
+        "parentId": 2
+      },
+      {
+        "id": 137,
+        "parentId": 4
+      }
+    ],
+    "frontendVersion": "1.19.9",
+    "VHS_latentpreview": false,
+    "ds": {
+      "offset": [
+        8782.181061539566,
+        1940.851858682855
+      ],
+      "scale": 0.7247295000000021
+    }
+  },
+  "groups": [
+    {
+      "color": "#b06634",
+      "font_size": 40,
+      "flags": {},
+      "id": 8,
+      "title": "JoyCaption3  beta-one 参数",
+      "bounding": [
+        -6386.02685546875,
+        -2049.793212890625,
+        529.6119384765625,
+        753.9473876953125
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 40,
+      "flags": {},
+      "id": 9,
+      "title": "JoyCaption Two 参数设置",
+      "bounding": [
+        -6367.736328125,
+        -1182.5296630859375,
+        528.2733764648438,
+        739.4749755859375
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 60,
+      "flags": {},
+      "id": 10,
+      "title": "上传图片",
+      "bounding": [
+        -8830.1728515625,
+        -2037.068359375,
+        581.7564086914062,
+        781.0776977539062
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 45,
+      "flags": {},
+      "id": 12,
+      "title": "反推提示词+生图预览",
+      "bounding": [
+        -7450.16015625,
+        -2042.406005859375,
+        697.2340087890625,
+        1052.123779296875
+      ]
+    },
+    {
+      "color": "#b06634",
+      "font_size": 45,
+      "flags": {},
+      "id": 13,
+      "title": "反推提示词+生图预览",
+      "bounding": [
+        -8187.4541015625,
+        -2043.90576171875,
+        672.0411376953125,
+        1055.3104248046875
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {},
+      "id": 14,
+      "title": "FLUX-nunchaku模型+三件套",
+      "bounding": [
+        -5355.904296875,
+        -1203.2867431640625,
+        359.791259765625,
+        639.1527709960938
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 40,
+      "flags": {},
+      "id": 15,
+      "title": "JOY3 生图过程",
+      "bounding": [
+        -4887.51171875,
+        -2141.27099609375,
+        2394.81787109375,
+        861.1259155273438
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 40,
+      "flags": {},
+      "id": 16,
+      "title": "JOY 2  生图过程",
+      "bounding": [
+        -4881.15673828125,
+        -1218.6566162109375,
+        2396.9716796875,
+        704.7723999023438
+      ]
+    },
+    {
+      "color": "#b06634",
+      "font_size": 80,
+      "flags": {},
+      "id": 17,
+      "title": "JOY3",
+      "bounding": [
+        -8185.470703125,
+        -2156.649658203125,
+        226.3016815185547,
+        105.08771514892578
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 80,
+      "flags": {},
+      "id": 18,
+      "title": "JOY2",
+      "bounding": [
+        -7448.6806640625,
+        -2155.361083984375,
+        226.3017578125,
+        108.09831237792969
+      ]
+    }
+  ],
+  "links": [
+    [
+      11,
+      16,
+      0,
+      15,
+      0,
+      "JoyTwoPipeline"
+    ],
+    [
+      65,
+      73,
+      1,
+      66,
+      0,
+      "LATENT"
+    ],
+    [
+      66,
+      70,
+      0,
+      66,
+      1,
+      "VAE"
+    ],
+    [
+      68,
+      66,
+      0,
+      71,
+      0,
+      "IMAGE"
+    ],
+    [
+      70,
+      76,
+      0,
+      72,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      71,
+      88,
+      0,
+      73,
+      0,
+      "NOISE"
+    ],
+    [
+      72,
+      72,
+      0,
+      73,
+      1,
+      "GUIDER"
+    ],
+    [
+      73,
+      67,
+      0,
+      73,
+      2,
+      "SAMPLER"
+    ],
+    [
+      74,
+      68,
+      0,
+      73,
+      3,
+      "SIGMAS"
+    ],
+    [
+      75,
+      84,
+      0,
+      73,
+      4,
+      "LATENT"
+    ],
+    [
+      76,
+      86,
+      0,
+      76,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      84,
+      69,
+      0,
+      86,
+      0,
+      "CLIP"
+    ],
+    [
+      104,
+      90,
+      0,
+      15,
+      1,
+      "IMAGE"
+    ],
+    [
+      105,
+      5,
+      0,
+      90,
+      0,
+      "IMAGE"
+    ],
+    [
+      106,
+      90,
+      3,
+      84,
+      0,
+      "INT"
+    ],
+    [
+      107,
+      90,
+      4,
+      84,
+      1,
+      "INT"
+    ],
+    [
+      109,
+      88,
+      0,
+      92,
+      0,
+      "NOISE"
+    ],
+    [
+      110,
+      93,
+      0,
+      92,
+      1,
+      "GUIDER"
+    ],
+    [
+      111,
+      67,
+      0,
+      92,
+      2,
+      "SAMPLER"
+    ],
+    [
+      112,
+      91,
+      0,
+      92,
+      3,
+      "SIGMAS"
+    ],
+    [
+      113,
+      84,
+      0,
+      92,
+      4,
+      "LATENT"
+    ],
+    [
+      116,
+      92,
+      1,
+      94,
+      0,
+      "LATENT"
+    ],
+    [
+      117,
+      70,
+      0,
+      94,
+      1,
+      "VAE"
+    ],
+    [
+      118,
+      95,
+      0,
+      96,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      119,
+      96,
+      0,
+      93,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      120,
+      94,
+      0,
+      97,
+      0,
+      "IMAGE"
+    ],
+    [
+      124,
+      15,
+      0,
+      95,
+      1,
+      "STRING"
+    ],
+    [
+      125,
+      69,
+      0,
+      95,
+      0,
+      "CLIP"
+    ],
+    [
+      135,
+      116,
+      0,
+      117,
+      0,
+      "STRING"
+    ],
+    [
+      137,
+      90,
+      0,
+      119,
+      0,
+      "IMAGE"
+    ],
+    [
+      139,
+      119,
+      0,
+      116,
+      0,
+      "STRING"
+    ],
+    [
+      140,
+      119,
+      0,
+      118,
+      0,
+      "STRING"
+    ],
+    [
+      141,
+      119,
+      0,
+      86,
+      1,
+      "STRING"
+    ],
+    [
+      142,
+      120,
+      0,
+      119,
+      1,
+      "JOYCAPTIONBETA1_MODEL"
+    ],
+    [
+      144,
+      121,
+      0,
+      119,
+      2,
+      "JoyCaption2ExtraOption"
+    ],
+    [
+      146,
+      15,
+      0,
+      123,
+      0,
+      "STRING"
+    ],
+    [
+      147,
+      126,
+      0,
+      125,
+      0,
+      "STRING"
+    ],
+    [
+      148,
+      15,
+      0,
+      126,
+      0,
+      "STRING"
+    ],
+    [
+      156,
+      137,
+      0,
+      93,
+      0,
+      "MODEL"
+    ],
+    [
+      157,
+      137,
+      0,
+      72,
+      0,
+      "MODEL"
+    ],
+    [
+      158,
+      137,
+      0,
+      68,
+      0,
+      "MODEL"
+    ],
+    [
+      159,
+      137,
+      0,
+      91,
+      0,
+      "MODEL"
+    ]
+  ],
+  "id": "1c0319ad-b3d6-45e5-b20d-c0f5318ff110",
+  "config": {},
+  "version": 0.4,
+  "last_node_id": 140,
+  "revision": 0
+}

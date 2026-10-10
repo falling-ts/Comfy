@@ -1,0 +1,335 @@
+{
+  "last_link_id": 14,
+  "nodes": [
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            7
+          ],
+          "label": "IMAGE",
+          "type": "IMAGE"
+        },
+        {
+          "shape": 3,
+          "name": "MASK",
+          "label": "MASK",
+          "type": "MASK"
+        }
+      ],
+      "size": {
+        "0": 315,
+        "1": 314
+      },
+      "pos": [
+        214,
+        150
+      ],
+      "widgets_values": [
+        "af7b15eddc78f69f1a57e1fc06a6b4aeca8125304f1609d0807b32c83e10adbe.png",
+        "image"
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 3,
+      "type": "LoadImage",
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 0
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "vqa_model",
+          "slot_index": 0,
+          "links": [
+            8
+          ],
+          "label": "vqa_model",
+          "type": "VQA_MODEL"
+        }
+      ],
+      "size": {
+        "0": 352.79998779296875,
+        "1": 106
+      },
+      "color": "rgba(38, 73, 116, 0.7)",
+      "pos": [
+        599,
+        113
+      ],
+      "widgets_values": [
+        "blip-vqa-capfilt-large",
+        "fp16",
+        "cuda"
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 7,
+      "type": "LayerUtility: LoadVQAModel",
+      "properties": {
+        "Node name for S&R": "LayerUtility: LoadVQAModel"
+      },
+      "order": 1
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "text",
+          "slot_index": 0,
+          "links": [
+            11
+          ],
+          "label": "text",
+          "type": "STRING"
+        }
+      ],
+      "size": {
+        "0": 350.3710021972656,
+        "1": 179.27101135253906
+      },
+      "color": "rgba(38, 73, 116, 0.7)",
+      "pos": [
+        599,
+        287
+      ],
+      "widgets_values": [
+        "{age number} years old {ethnicity} {gender}, weared {garment color} {garment}, {eye color} eyes, {hair style} {hair color} hair, {background} background."
+      ],
+      "inputs": [
+        {
+          "name": "image",
+          "link": 7,
+          "label": "image",
+          "type": "IMAGE"
+        },
+        {
+          "name": "vqa_model",
+          "link": 8,
+          "label": "vqa_model",
+          "type": "VQA_MODEL"
+        }
+      ],
+      "flags": {},
+      "id": 8,
+      "type": "LayerUtility: VQAPrompt",
+      "properties": {
+        "Node name for S&R": "LayerUtility: VQAPrompt"
+      },
+      "order": 2
+    },
+    {
+      "mode": 0,
+      "size": [
+        430.29249226253023,
+        360.35103413534034
+      ],
+      "pos": [
+        1826,
+        97
+      ],
+      "widgets_values": [
+        "ComfyUI"
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 14,
+          "label": "images",
+          "type": "IMAGE"
+        }
+      ],
+      "flags": {},
+      "id": 10,
+      "type": "SaveImage",
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "order": 5
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "RGB_image",
+          "slot_index": 0,
+          "links": [
+            14
+          ],
+          "label": "RGB_image",
+          "type": "IMAGE"
+        }
+      ],
+      "size": {
+        "0": 315,
+        "1": 102
+      },
+      "color": "rgba(38, 73, 116, 0.7)",
+      "pos": [
+        1463,
+        352
+      ],
+      "widgets_values": [
+        true,
+        "#000000"
+      ],
+      "inputs": [
+        {
+          "name": "RGBA_image",
+          "link": 13,
+          "label": "RGBA_image",
+          "type": "IMAGE"
+        },
+        {
+          "name": "mask",
+          "label": "mask",
+          "type": "MASK"
+        }
+      ],
+      "flags": {},
+      "id": 11,
+      "type": "LayerUtility: ImageRemoveAlpha",
+      "properties": {
+        "Node name for S&R": "LayerUtility: ImageRemoveAlpha"
+      },
+      "order": 4
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "image",
+          "slot_index": 0,
+          "links": [
+            13
+          ],
+          "label": "image",
+          "type": "IMAGE"
+        },
+        {
+          "shape": 3,
+          "name": "mask",
+          "label": "mask",
+          "type": "MASK"
+        }
+      ],
+      "size": [
+        400,
+        384
+      ],
+      "color": "rgba(38, 73, 116, 0.7)",
+      "pos": [
+        1004,
+        94
+      ],
+      "widgets_values": [
+        "text",
+        "Alibaba-PuHuiTi-Heavy.ttf",
+        "center",
+        40,
+        8,
+        44,
+        "#FFFFFF",
+        0,
+        "#FF8000",
+        0,
+        150,
+        1024,
+        512
+      ],
+      "inputs": [
+        {
+          "name": "size_as",
+          "label": "size_as",
+          "type": "*"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 11,
+          "type": "STRING"
+        }
+      ],
+      "flags": {},
+      "id": 9,
+      "type": "LayerUtility: SimpleTextImage",
+      "properties": {
+        "Node name for S&R": "LayerUtility: SimpleTextImage"
+      },
+      "order": 3
+    }
+  ],
+  "extra": {
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "ds": {
+      "offset": [
+        -69.02372773460007,
+        216.3920150175591
+      ],
+      "scale": 0.7247295000000011
+    }
+  },
+  "groups": [],
+  "links": [
+    [
+      7,
+      3,
+      0,
+      8,
+      0,
+      "IMAGE"
+    ],
+    [
+      8,
+      7,
+      0,
+      8,
+      1,
+      "VQA_MODEL"
+    ],
+    [
+      11,
+      8,
+      0,
+      9,
+      1,
+      "STRING"
+    ],
+    [
+      13,
+      9,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      14,
+      11,
+      0,
+      10,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "config": {},
+  "version": 0.4,
+  "last_node_id": 11
+}

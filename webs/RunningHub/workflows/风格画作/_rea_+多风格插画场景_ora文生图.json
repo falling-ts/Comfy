@@ -1,0 +1,4704 @@
+{
+  "last_link_id": 199,
+  "nodes": [
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "VAE",
+          "links": [
+            8
+          ],
+          "type": "VAE",
+          "localized_name": "VAE"
+        }
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "pos": [
+        1410,
+        -20
+      ],
+      "widgets_values": [
+        "qwen_image_vae.safetensors"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "vae_name"
+          },
+          "name": "vae_name",
+          "type": "COMBO",
+          "localized_name": "vae名称"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 3,
+      "type": "VAELoader",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAELoader"
+      },
+      "order": 0
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CLIP",
+          "links": [
+            1
+          ],
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIP"
+        }
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "pos": [
+        1410,
+        -190
+      ],
+      "widgets_values": [
+        "qwen3vl_4b_fp8_scaled.safetensors",
+        "krea2",
+        "default"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "clip_name"
+          },
+          "name": "clip_name",
+          "type": "COMBO",
+          "localized_name": "CLIP名称"
+        },
+        {
+          "widget": {
+            "name": "type"
+          },
+          "name": "type",
+          "type": "COMBO",
+          "localized_name": "类型"
+        },
+        {
+          "widget": {
+            "name": "device"
+          },
+          "shape": 7,
+          "name": "device",
+          "type": "COMBO",
+          "localized_name": "设备"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 2,
+      "type": "CLIPLoader",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPLoader"
+      },
+      "order": 1
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "links": [
+            4,
+            14
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "size": [
+        460,
+        380
+      ],
+      "pos": [
+        1760,
+        -20
+      ],
+      "widgets_values": [
+        ""
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "link": 1,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "clip"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 115,
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {
+        "pinned": true,
+        "collapsed": true
+      },
+      "id": 5,
+      "type": "CLIPTextEncode",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "order": 70
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "links": [
+            3
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "size": [
+        150,
+        30
+      ],
+      "pos": [
+        1760,
+        40
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "link": 4,
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 7,
+      "type": "ConditioningZeroOut",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ConditioningZeroOut"
+      },
+      "order": 71
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "SEED",
+          "links": [
+            5
+          ],
+          "label": "随机种",
+          "dir": 4,
+          "type": "INT"
+        }
+      ],
+      "size": [
+        270,
+        130
+      ],
+      "pos": [
+        -920,
+        140
+      ],
+      "widgets_values": [
+        -1,
+        "",
+        "",
+        ""
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true,
+        "collapsed": false
+      },
+      "id": 9,
+      "type": "Seed (rgthree)",
+      "properties": {
+        "widget_ue_connectable": {}
+      },
+      "order": 2
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "INT",
+          "links": [
+            196
+          ],
+          "label": "整数",
+          "type": "INT",
+          "localized_name": "整数"
+        }
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "pos": [
+        -920,
+        -70
+      ],
+      "widgets_values": [
+        6
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "value"
+          },
+          "name": "value",
+          "type": "INT",
+          "localized_name": "值"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 63,
+      "type": "Int",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "Int"
+      },
+      "order": 3
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        485.5414733886719,
+        92.96720123291016
+      ],
+      "color": "#fff0",
+      "pos": [
+        -410,
+        -530
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true,
+        "allow_interaction": true
+      },
+      "id": 120,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 39,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "保存JPEG（默认无水印）",
+        "stroke": true,
+        "fontColor": "#04ff00"
+      },
+      "order": 4
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        485.5414733886719,
+        92.96720123291016
+      ],
+      "color": "#fff0",
+      "pos": [
+        510,
+        -530
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true,
+        "allow_interaction": true
+      },
+      "id": 121,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 39,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "保存PNG（会员无水印）",
+        "stroke": true,
+        "fontColor": "#04ff00"
+      },
+      "order": 5
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        240,
+        60
+      ],
+      "color": "#fff0",
+      "pos": [
+        -910,
+        -510
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true,
+        "allow_interaction": true
+      },
+      "id": 122,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 39,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "选择宽高比",
+        "stroke": true,
+        "fontColor": "#04ff00"
+      },
+      "order": 6
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        250,
+        60
+      ],
+      "color": "#fff0",
+      "pos": [
+        -1290,
+        -510
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true,
+        "allow_interaction": true
+      },
+      "id": 119,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 39,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "输入提示词",
+        "stroke": true,
+        "fontColor": "#04ff00"
+      },
+      "order": 7
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        289.30523681640625,
+        69.18538665771484
+      ],
+      "color": "#fff0",
+      "pos": [
+        -930,
+        20
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true,
+        "allow_interaction": true
+      },
+      "id": 125,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 33,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "随机种子（可选）",
+        "stroke": true,
+        "fontColor": "#ffffff"
+      },
+      "order": 8
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        317.2149353027344,
+        68.93936157226562
+      ],
+      "color": "#fff0",
+      "pos": [
+        -930,
+        -190.40301513671875
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true,
+        "allow_interaction": true
+      },
+      "id": 123,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 33,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "选lora（填1-10）",
+        "stroke": true,
+        "fontColor": "#fbff00"
+      },
+      "order": 9
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            144,
+            145,
+            146,
+            147,
+            148,
+            179,
+            180,
+            181,
+            182,
+            183
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "pos": [
+        1410,
+        -340
+      ],
+      "widgets_values": [
+        "Krea2_Turbo_fp8.safetensors",
+        "default"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "unet_name"
+          },
+          "name": "unet_name",
+          "type": "COMBO",
+          "localized_name": "UNET名称"
+        },
+        {
+          "widget": {
+            "name": "weight_dtype"
+          },
+          "name": "weight_dtype",
+          "type": "COMBO",
+          "localized_name": "剪枝类型"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 1,
+      "type": "UNETLoader",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "UNETLoader"
+      },
+      "order": 10
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        440,
+        700
+      ],
+      "pos": [
+        -1810,
+        730
+      ],
+      "widgets_values": [
+        "b026c54569e705d5e64b39e4b141b8b139726aceb8f0f99184a9855753eac925.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 97,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 11
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        430,
+        700
+      ],
+      "pos": [
+        10,
+        730
+      ],
+      "widgets_values": [
+        "3f32d1b922f5ab01ebbad38e846d05e9d53b5b532095ce7091b4a6396f943921.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 103,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 12
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        450,
+        700
+      ],
+      "pos": [
+        -2740,
+        1490
+      ],
+      "widgets_values": [
+        "816aeeb8072f9f4a8be0c8bc5be9b0edd3705dddede29c1718230ce353b35977.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 159,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 13
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        430,
+        700
+      ],
+      "pos": [
+        10,
+        1490
+      ],
+      "widgets_values": [
+        "747c7013a523a4998699f2a47c0680edae145ed624b56725e0e3e9349f843adf.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 162,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 14
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        400,
+        700
+      ],
+      "pos": [
+        -1350,
+        1490
+      ],
+      "widgets_values": [
+        "67cf3bd9b3929d21f060f75053e7bdb25de3261e3631b1c4c84d7330832901b9.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 163,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 15
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        450,
+        700
+      ],
+      "pos": [
+        -460,
+        1490
+      ],
+      "widgets_values": [
+        "b851f7a0ec6245c35c45745fb65632f27a572a352462d1c8850c6c8a3e0f43eb.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 164,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 16
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        450,
+        700
+      ],
+      "pos": [
+        -930,
+        2250
+      ],
+      "widgets_values": [
+        "cca9356c780a2e438951f8539a14d72c286af0bd4161b3cfe16798cb133f470e.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 167,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 17
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        400,
+        700
+      ],
+      "pos": [
+        -1350,
+        2250
+      ],
+      "widgets_values": [
+        "9aaaf2f1de6d5530719153bcd88f836516e41d45b61ea0e4280cd37c4eb947a8.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 169,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 18
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        450,
+        700
+      ],
+      "pos": [
+        -460,
+        2250
+      ],
+      "widgets_values": [
+        "ed4474b9136e8235eed46991bac2d2e3e8f137f8236d2402eb92b1b2e583d601.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 170,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 19
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        430,
+        700
+      ],
+      "pos": [
+        -2260,
+        2250
+      ],
+      "widgets_values": [
+        "3bca516f7241eda8cdecd9583ba58aa0fc7b008bf54235688a24c9d21db0e8bc.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 171,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 20
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        440,
+        700
+      ],
+      "pos": [
+        -1810,
+        2250
+      ],
+      "widgets_values": [
+        "4c5d0a6e61ae25e820f4c30713767381dfe128e305ba4e95e29593dfe5f15168.png",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 172,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 21
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        450,
+        700
+      ],
+      "pos": [
+        -2740,
+        2250
+      ],
+      "widgets_values": [
+        "79174d7ca64724404d37cf70c412812f3af0050b8211383a89b31a749772d1d7.png",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 166,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 22
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "STRING",
+          "links": [
+            82
+          ],
+          "label": "字符串",
+          "type": "*",
+          "localized_name": "STRING"
+        },
+        {
+          "name": "show_help",
+          "label": "显示帮助",
+          "type": "STRING",
+          "localized_name": "show_help"
+        }
+      ],
+      "size": [
+        270,
+        78
+      ],
+      "pos": [
+        2990,
+        -340
+      ],
+      "widgets_values": [
+        "。"
+      ],
+      "inputs": [
+        {
+          "shape": 7,
+          "name": "text1",
+          "link": 86,
+          "label": "文本1",
+          "type": "STRING",
+          "localized_name": "text1"
+        },
+        {
+          "shape": 7,
+          "name": "text2",
+          "link": 154,
+          "label": "文本2",
+          "type": "STRING",
+          "localized_name": "text2"
+        },
+        {
+          "widget": {
+            "name": "separator"
+          },
+          "shape": 7,
+          "name": "separator",
+          "type": "STRING",
+          "localized_name": "分隔符"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 59,
+      "type": "CR Text Concatenate",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CR Text Concatenate"
+      },
+      "order": 67
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        430,
+        700
+      ],
+      "pos": [
+        -2260,
+        1490
+      ],
+      "widgets_values": [
+        "7102b6a5578375c81892b81e06670d7507fe2e0d75aa3904353d1b560aa9d314.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 165,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 23
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        430,
+        700
+      ],
+      "pos": [
+        1380,
+        730
+      ],
+      "widgets_values": [
+        "8fa3b35729a53a19701ef624886e5982a40d2122c8117c41d747de6e9db6adec.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 182,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 24
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        430,
+        700
+      ],
+      "pos": [
+        1380,
+        1490
+      ],
+      "widgets_values": [
+        "9b3536243c0400bb2ac5a21517050545a7756bc935f096aa38719a73dacb7c1d.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 184,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 25
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        430,
+        700
+      ],
+      "pos": [
+        1380,
+        2250
+      ],
+      "widgets_values": [
+        "99e0387e5ee94641bcd922281da7e05275cbfc0d6a23b69a5c042b750c7db3b5.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 186,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 26
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        430,
+        700
+      ],
+      "pos": [
+        930,
+        2250
+      ],
+      "widgets_values": [
+        "de847a2bf4309c401aec7e416b0c8679c0d1113b527fa0ce0f550ee2d00702d3.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 188,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 27
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        430,
+        700
+      ],
+      "pos": [
+        930,
+        730
+      ],
+      "widgets_values": [
+        "67f0bc8a1973edec9e42e874545340b613a6ff9c6e3ede12582865c4d29707be.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 189,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 28
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        430,
+        700
+      ],
+      "pos": [
+        930,
+        1490
+      ],
+      "widgets_values": [
+        "e28c925ab63f5683dc76fbb5acc74d0322f9d3ebd3270f1d03aaee7a3412398c.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 191,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 29
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        450,
+        700
+      ],
+      "pos": [
+        460,
+        730
+      ],
+      "widgets_values": [
+        "89b7141316c85f174263d898c4b44bb90b5ac88d358e3a350b297e179031c46e.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 183,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 30
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        360,
+        123.56900024414062
+      ],
+      "color": "#fff0",
+      "pos": [
+        490,
+        560
+      ],
+      "inputs": [],
+      "flags": {
+        "allow_interaction": true
+      },
+      "id": 190,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 37,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "8\n彩铅绘本",
+        "stroke": true,
+        "fontColor": "#C8C8C8"
+      },
+      "order": 31
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        360,
+        123.56900024414062
+      ],
+      "color": "#fff0",
+      "pos": [
+        960,
+        560
+      ],
+      "inputs": [],
+      "flags": {
+        "allow_interaction": true
+      },
+      "id": 192,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 37,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "9\n蜡笔绘本",
+        "stroke": true,
+        "fontColor": "#C8C8C8"
+      },
+      "order": 32
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        360,
+        123.56900024414062
+      ],
+      "color": "#fff0",
+      "pos": [
+        1400,
+        560
+      ],
+      "inputs": [],
+      "flags": {
+        "allow_interaction": true
+      },
+      "id": 193,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 37,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "10\n水彩绘本",
+        "stroke": true,
+        "fontColor": "#C8C8C8"
+      },
+      "order": 33
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        440,
+        700
+      ],
+      "pos": [
+        -1810,
+        1490
+      ],
+      "widgets_values": [
+        "8bbb1519abc0e44abba7fe031f00c00f707fba9fe4431180cff5e5323f3d9484.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 161,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 34
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 6,
+          "name": "text",
+          "links": [
+            115
+          ],
+          "type": "STRING",
+          "localized_name": "text"
+        }
+      ],
+      "size": [
+        290,
+        500
+      ],
+      "pos": [
+        2990,
+        -70
+      ],
+      "widgets_values": [
+        "插画。一片丛横交错的广阔金黄色稻田（占据画面的4分之3），一名农民（穿着米白色衬衫）站在稻田中央，正在认真查看水稻的长势。水稻长得比较高，遮挡了农民的下半身。晴天，蓝天白云，天空中有2只白鸽（占据画面的4分之1）。高饱和度颜色、光感集中在视觉中心，鲜明笔触，写意线条，治愈感，几米绘本。yanshu。Illustration style。The word \"yanshu\" must not appear in the picture."
+      ],
+      "inputs": [
+        {
+          "name": "text",
+          "link": 82,
+          "type": "STRING",
+          "localized_name": "text"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 61,
+      "type": "ShowText|pysssss",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "order": 69
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        400,
+        700
+      ],
+      "pos": [
+        -1350,
+        730
+      ],
+      "widgets_values": [
+        "08d677ed32be6f53062fc9d4b33b3d1afd95a237c08c66d3aa64eb64bd1c174b.png",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 99,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 35
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        450,
+        700
+      ],
+      "pos": [
+        -930,
+        1490
+      ],
+      "widgets_values": [
+        "ede51511b9177cc7763a21f260f34c4a3c7f35b6648774c39502923557b505c4.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 160,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 36
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 6,
+          "name": "文本",
+          "links": [
+            154
+          ],
+          "label": "文本",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "pos": [
+        2990,
+        -210
+      ],
+      "widgets_values": [
+        "yanshu。Illustration style。The word \"yanshu\" must not appear in the picture."
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "编辑文本"
+          },
+          "name": "编辑文本",
+          "label": "编辑文本",
+          "type": "STRING",
+          "localized_name": "编辑文本"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 176,
+      "type": "MuyeTextEditOutput",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "MuyeTextEditOutput"
+      },
+      "order": 37
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        450,
+        700
+      ],
+      "pos": [
+        -930,
+        730
+      ],
+      "widgets_values": [
+        "60bde464bd1d7bee5ba9aa96c9d781cad49ed5455723e130e3304ef2b7f4a871.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 98,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 38
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        450,
+        700
+      ],
+      "pos": [
+        -460,
+        730
+      ],
+      "widgets_values": [
+        "b052cd09cf2d791c23af99685a2377b3d3cad395fb0a83a89a9312c874ea9a27.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 101,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 39
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        430,
+        700
+      ],
+      "pos": [
+        -2260,
+        730
+      ],
+      "widgets_values": [
+        "9518518781ed6531756d529db0b6e74f6dc1201be4eb1bebcbc3bd32f849acc6.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 102,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 40
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        450,
+        700
+      ],
+      "pos": [
+        -2740,
+        730
+      ],
+      "widgets_values": [
+        "86b874435e8792f5759fdfdf968bf65cccc0eed1c0e4e77b74473a8eb9789909.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 96,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 41
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        396.13519287109375,
+        191.70823669433594
+      ],
+      "color": "#fff0",
+      "pos": [
+        -1360,
+        360
+      ],
+      "inputs": [],
+      "flags": {
+        "allow_interaction": true
+      },
+      "id": 118,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 57,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "编号对应的\nlora风格参考",
+        "stroke": true,
+        "fontColor": "#fbff00"
+      },
+      "order": 42
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            185
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#323",
+      "widgets_values": [
+        "90sGraphic_Anime_v2.safetensors",
+        1.0000000000000002
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 144,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "widget": {
+            "name": "lora_name"
+          },
+          "name": "lora_name",
+          "type": "COMBO",
+          "localized_name": "LoRA名称"
+        },
+        {
+          "widget": {
+            "name": "strength_model"
+          },
+          "name": "strength_model",
+          "type": "FLOAT",
+          "localized_name": "模型强度"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "LoraLoaderModelOnly",
+      "mode": 0,
+      "bgcolor": "#535",
+      "size": [
+        270,
+        82
+      ],
+      "pos": [
+        2050,
+        -340
+      ],
+      "id": 130,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "order": 56
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            186
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#323",
+      "widgets_values": [
+        "虫下krea2日系水彩平涂.safetensors",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 179,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "widget": {
+            "name": "lora_name"
+          },
+          "name": "lora_name",
+          "type": "COMBO",
+          "localized_name": "LoRA名称"
+        },
+        {
+          "widget": {
+            "name": "strength_model"
+          },
+          "name": "strength_model",
+          "type": "FLOAT",
+          "localized_name": "模型强度"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "LoraLoaderModelOnly",
+      "mode": 0,
+      "bgcolor": "#535",
+      "size": [
+        270,
+        82
+      ],
+      "pos": [
+        2050,
+        -170
+      ],
+      "id": 174,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "order": 61
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            187
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#323",
+      "widgets_values": [
+        "Krea2扁平卡通插画.safetensors",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 145,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "widget": {
+            "name": "lora_name"
+          },
+          "name": "lora_name",
+          "type": "COMBO",
+          "localized_name": "LoRA名称"
+        },
+        {
+          "widget": {
+            "name": "strength_model"
+          },
+          "name": "strength_model",
+          "type": "FLOAT",
+          "localized_name": "模型强度"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "LoraLoaderModelOnly",
+      "mode": 0,
+      "bgcolor": "#535",
+      "size": [
+        270,
+        82
+      ],
+      "pos": [
+        2050,
+        -10
+      ],
+      "id": 131,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "order": 57
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            188
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#323",
+      "widgets_values": [
+        "虫下Krea2蜡笔粗犷笔触插画.safetensors",
+        1.0000000000000002
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 146,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "widget": {
+            "name": "lora_name"
+          },
+          "name": "lora_name",
+          "type": "COMBO",
+          "localized_name": "LoRA名称"
+        },
+        {
+          "widget": {
+            "name": "strength_model"
+          },
+          "name": "strength_model",
+          "type": "FLOAT",
+          "localized_name": "模型强度"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "LoraLoaderModelOnly",
+      "mode": 0,
+      "bgcolor": "#535",
+      "size": [
+        270,
+        82
+      ],
+      "pos": [
+        2050,
+        150
+      ],
+      "id": 132,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "order": 58
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            189
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#323",
+      "widgets_values": [
+        "Krea2手绘美食手账插画.safetensors",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 147,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "widget": {
+            "name": "lora_name"
+          },
+          "name": "lora_name",
+          "type": "COMBO",
+          "localized_name": "LoRA名称"
+        },
+        {
+          "widget": {
+            "name": "strength_model"
+          },
+          "name": "strength_model",
+          "type": "FLOAT",
+          "localized_name": "模型强度"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "LoraLoaderModelOnly",
+      "mode": 0,
+      "bgcolor": "#535",
+      "size": [
+        270,
+        82
+      ],
+      "pos": [
+        2050,
+        310
+      ],
+      "id": 133,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "order": 59
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            190
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#323",
+      "widgets_values": [
+        "虫下Krea2韩系治愈小清新插画.safetensors",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 148,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "widget": {
+            "name": "lora_name"
+          },
+          "name": "lora_name",
+          "type": "COMBO",
+          "localized_name": "LoRA名称"
+        },
+        {
+          "widget": {
+            "name": "strength_model"
+          },
+          "name": "strength_model",
+          "type": "FLOAT",
+          "localized_name": "模型强度"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "LoraLoaderModelOnly",
+      "mode": 0,
+      "bgcolor": "#535",
+      "size": [
+        270,
+        82
+      ],
+      "pos": [
+        2370,
+        -340
+      ],
+      "id": 134,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "order": 60
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            191
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#323",
+      "widgets_values": [
+        "虫下Krea2美式风格插画.safetensors",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 180,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "widget": {
+            "name": "lora_name"
+          },
+          "name": "lora_name",
+          "type": "COMBO",
+          "localized_name": "LoRA名称"
+        },
+        {
+          "widget": {
+            "name": "strength_model"
+          },
+          "name": "strength_model",
+          "type": "FLOAT",
+          "localized_name": "模型强度"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "LoraLoaderModelOnly",
+      "mode": 0,
+      "bgcolor": "#535",
+      "size": [
+        270,
+        82
+      ],
+      "pos": [
+        2370,
+        -170
+      ],
+      "id": 173,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "order": 62
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            192
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#323",
+      "widgets_values": [
+        "虫下Krea2彩铅绘本.safetensors",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 181,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "widget": {
+            "name": "lora_name"
+          },
+          "name": "lora_name",
+          "type": "COMBO",
+          "localized_name": "LoRA名称"
+        },
+        {
+          "widget": {
+            "name": "strength_model"
+          },
+          "name": "strength_model",
+          "type": "FLOAT",
+          "localized_name": "模型强度"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "LoraLoaderModelOnly",
+      "mode": 0,
+      "bgcolor": "#535",
+      "size": [
+        270,
+        82
+      ],
+      "pos": [
+        2370,
+        -10
+      ],
+      "id": 135,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "order": 63
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            193
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#323",
+      "widgets_values": [
+        "Krea2彩铅童话绘本插画.safetensors",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 182,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "widget": {
+            "name": "lora_name"
+          },
+          "name": "lora_name",
+          "type": "COMBO",
+          "localized_name": "LoRA名称"
+        },
+        {
+          "widget": {
+            "name": "strength_model"
+          },
+          "name": "strength_model",
+          "type": "FLOAT",
+          "localized_name": "模型强度"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "LoraLoaderModelOnly",
+      "mode": 0,
+      "bgcolor": "#535",
+      "size": [
+        270,
+        82
+      ],
+      "pos": [
+        2370,
+        150
+      ],
+      "id": 177,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "order": 64
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "links": [
+            194
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "color": "#323",
+      "widgets_values": [
+        "Krea2水彩绘本风_v1.safetensors",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 183,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "widget": {
+            "name": "lora_name"
+          },
+          "name": "lora_name",
+          "type": "COMBO",
+          "localized_name": "LoRA名称"
+        },
+        {
+          "widget": {
+            "name": "strength_model"
+          },
+          "name": "strength_model",
+          "type": "FLOAT",
+          "localized_name": "模型强度"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "LoraLoaderModelOnly",
+      "mode": 0,
+      "bgcolor": "#535",
+      "size": [
+        270,
+        82
+      ],
+      "pos": [
+        2370,
+        310
+      ],
+      "id": 178,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "order": 65
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "INT",
+          "links": [
+            195
+          ],
+          "label": "INT",
+          "type": "INT",
+          "localized_name": "selected_value"
+        },
+        {
+          "name": "selected_label",
+          "label": "标签",
+          "type": "STRING",
+          "localized_name": "selected_label"
+        },
+        {
+          "name": "selected_index",
+          "type": "INT",
+          "localized_name": "selected_index"
+        }
+      ],
+      "size": [
+        270,
+        1482
+      ],
+      "pos": [
+        2680,
+        -340
+      ],
+      "widgets_values": [
+        1,
+        false
+      ],
+      "inputs": [
+        {
+          "shape": 7,
+          "name": "input1",
+          "link": 185,
+          "label": "输入1",
+          "type": "INT",
+          "localized_name": "input1"
+        },
+        {
+          "widget": {
+            "name": "select"
+          },
+          "name": "select",
+          "link": 196,
+          "type": "INT",
+          "localized_name": "选择"
+        },
+        {
+          "widget": {
+            "name": "sel_mode"
+          },
+          "name": "sel_mode",
+          "type": "BOOLEAN",
+          "localized_name": "选择模式"
+        },
+        {
+          "name": "input2",
+          "link": 186,
+          "label": "输入2",
+          "type": "INT"
+        },
+        {
+          "name": "input3",
+          "link": 187,
+          "label": "输入3",
+          "type": "INT"
+        },
+        {
+          "name": "input4",
+          "link": 188,
+          "label": "输入4",
+          "type": "INT"
+        },
+        {
+          "name": "input5",
+          "link": 189,
+          "type": "INT"
+        },
+        {
+          "name": "input6",
+          "link": 190,
+          "type": "INT"
+        },
+        {
+          "name": "input7",
+          "link": 191,
+          "type": "INT"
+        },
+        {
+          "name": "input8",
+          "link": 192,
+          "type": "INT"
+        },
+        {
+          "name": "input9",
+          "link": 193,
+          "type": "INT"
+        },
+        {
+          "name": "input10",
+          "link": 194,
+          "type": "INT"
+        },
+        {
+          "name": "input11",
+          "type": "INT"
+        },
+        {
+          "name": "input12",
+          "type": "INT"
+        },
+        {
+          "name": "input13",
+          "type": "INT"
+        },
+        {
+          "name": "input14",
+          "type": "INT"
+        },
+        {
+          "name": "input15",
+          "type": "INT"
+        },
+        {
+          "name": "input16",
+          "type": "INT"
+        },
+        {
+          "name": "input17",
+          "type": "INT"
+        },
+        {
+          "name": "input18",
+          "type": "INT"
+        },
+        {
+          "name": "input19",
+          "type": "INT"
+        },
+        {
+          "name": "input20",
+          "type": "INT"
+        },
+        {
+          "name": "input21",
+          "type": "INT"
+        },
+        {
+          "name": "input22",
+          "type": "INT"
+        },
+        {
+          "name": "input23",
+          "type": "INT"
+        },
+        {
+          "name": "input24",
+          "type": "INT"
+        },
+        {
+          "name": "input25",
+          "type": "INT"
+        },
+        {
+          "name": "input26",
+          "type": "INT"
+        },
+        {
+          "name": "input27",
+          "type": "INT"
+        },
+        {
+          "name": "input28",
+          "type": "INT"
+        },
+        {
+          "name": "input29",
+          "type": "INT"
+        },
+        {
+          "name": "input30",
+          "type": "INT"
+        },
+        {
+          "name": "input31",
+          "type": "INT"
+        },
+        {
+          "name": "input32",
+          "type": "INT"
+        },
+        {
+          "name": "input33",
+          "type": "INT"
+        },
+        {
+          "name": "input34",
+          "type": "INT"
+        },
+        {
+          "name": "input35",
+          "type": "INT"
+        },
+        {
+          "name": "input36",
+          "type": "INT"
+        },
+        {
+          "name": "input37",
+          "type": "INT"
+        },
+        {
+          "name": "input38",
+          "type": "INT"
+        },
+        {
+          "name": "input39",
+          "type": "INT"
+        },
+        {
+          "name": "input40",
+          "type": "INT"
+        },
+        {
+          "name": "input41",
+          "type": "INT"
+        },
+        {
+          "name": "input42",
+          "type": "INT"
+        },
+        {
+          "name": "input43",
+          "type": "INT"
+        },
+        {
+          "name": "input44",
+          "type": "INT"
+        },
+        {
+          "name": "input45",
+          "type": "INT"
+        },
+        {
+          "name": "input46",
+          "type": "INT"
+        },
+        {
+          "name": "input47",
+          "type": "INT"
+        },
+        {
+          "name": "input48",
+          "type": "INT"
+        },
+        {
+          "name": "input49",
+          "type": "INT"
+        },
+        {
+          "name": "input50",
+          "type": "INT"
+        },
+        {
+          "name": "input51",
+          "type": "INT"
+        },
+        {
+          "name": "input52",
+          "type": "INT"
+        },
+        {
+          "name": "input53",
+          "type": "INT"
+        },
+        {
+          "name": "input54",
+          "type": "INT"
+        },
+        {
+          "name": "input55",
+          "type": "INT"
+        },
+        {
+          "name": "input56",
+          "type": "INT"
+        },
+        {
+          "name": "input57",
+          "type": "INT"
+        },
+        {
+          "name": "input58",
+          "type": "INT"
+        },
+        {
+          "name": "input59",
+          "type": "INT"
+        },
+        {
+          "name": "input60",
+          "type": "INT"
+        },
+        {
+          "name": "input61",
+          "type": "INT"
+        },
+        {
+          "name": "input62",
+          "type": "INT"
+        },
+        {
+          "name": "input63",
+          "type": "INT"
+        },
+        {
+          "name": "input64",
+          "type": "INT"
+        },
+        {
+          "name": "input65",
+          "type": "INT"
+        },
+        {
+          "name": "input66",
+          "type": "INT"
+        },
+        {
+          "name": "input67",
+          "type": "INT"
+        },
+        {
+          "name": "input68",
+          "type": "INT"
+        },
+        {
+          "name": "input69",
+          "type": "INT"
+        },
+        {
+          "name": "input70",
+          "type": "INT"
+        },
+        {
+          "name": "input71",
+          "type": "INT"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 195,
+      "type": "ImpactSwitch",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ImpactSwitch"
+      },
+      "order": 68
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        416.15374755859375,
+        122.70511627197266
+      ],
+      "color": "#fff0",
+      "pos": [
+        -2260,
+        560
+      ],
+      "inputs": [],
+      "flags": {
+        "allow_interaction": true
+      },
+      "id": 117,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 37,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "2\n90s复古日系漫画2",
+        "stroke": true,
+        "fontColor": "#C8C8C8"
+      },
+      "order": 43
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        450,
+        700
+      ],
+      "pos": [
+        460,
+        2250
+      ],
+      "widgets_values": [
+        "5187a8347050d861334a42e91bb32e2b3c4ec513d9df3cb5b81c2072bf5ea0cf.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 187,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 44
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        430,
+        700
+      ],
+      "pos": [
+        10,
+        2250
+      ],
+      "widgets_values": [
+        "200e0333c6503ed3533a81d1b0e9c2e09d7348bf7d7ed7c29ff1168f1910819e.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 168,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 45
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        450,
+        700
+      ],
+      "pos": [
+        460,
+        1490
+      ],
+      "widgets_values": [
+        "a9e30ab7d6046701db19c8b7a677f401ab8c0eb8311878a78bb4962561081c7c.jpg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 185,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 46
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LATENT",
+          "links": [
+            9
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "size": [
+        270,
+        262
+      ],
+      "pos": [
+        1730,
+        -340
+      ],
+      "widgets_values": [
+        655139205027562,
+        "randomize",
+        10,
+        1,
+        "euler",
+        "simple",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 195,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "positive",
+          "link": 14,
+          "label": "正面条件",
+          "type": "CONDITIONING",
+          "localized_name": "正面条件"
+        },
+        {
+          "name": "negative",
+          "link": 3,
+          "label": "负面条件",
+          "type": "CONDITIONING",
+          "localized_name": "负面条件"
+        },
+        {
+          "name": "latent_image",
+          "link": 6,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent图像"
+        },
+        {
+          "widget": {
+            "name": "seed"
+          },
+          "name": "seed",
+          "link": 5,
+          "type": "INT",
+          "localized_name": "随机种"
+        },
+        {
+          "widget": {
+            "name": "steps"
+          },
+          "name": "steps",
+          "type": "INT",
+          "localized_name": "步数"
+        },
+        {
+          "widget": {
+            "name": "cfg"
+          },
+          "name": "cfg",
+          "type": "FLOAT",
+          "localized_name": "CFG"
+        },
+        {
+          "widget": {
+            "name": "sampler_name"
+          },
+          "name": "sampler_name",
+          "type": "COMBO",
+          "localized_name": "采样器"
+        },
+        {
+          "widget": {
+            "name": "scheduler"
+          },
+          "name": "scheduler",
+          "type": "COMBO",
+          "localized_name": "调度器"
+        },
+        {
+          "widget": {
+            "name": "denoise"
+          },
+          "name": "denoise",
+          "type": "FLOAT",
+          "localized_name": "降噪"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 4,
+      "type": "KSampler",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "KSampler"
+      },
+      "order": 72
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "image_urls",
+          "type": "STRING",
+          "localized_name": "image_urls"
+        },
+        {
+          "name": "images",
+          "links": [
+            153
+          ],
+          "type": "IMAGE",
+          "localized_name": "images"
+        }
+      ],
+      "size": [
+        870,
+        830
+      ],
+      "pos": [
+        -590,
+        -350
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 10,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "flags": {},
+      "id": 11,
+      "type": "PreviewImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "PreviewImage"
+      },
+      "order": 74
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "image_urls",
+          "type": "STRING",
+          "localized_name": "image_urls"
+        },
+        {
+          "name": "images",
+          "links": [],
+          "type": "IMAGE",
+          "localized_name": "images"
+        }
+      ],
+      "size": [
+        860,
+        830
+      ],
+      "pos": [
+        300,
+        -350
+      ],
+      "widgets_values": [
+        "M"
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 197,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图片"
+        },
+        {
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "name": "filename_prefix",
+          "type": "STRING",
+          "localized_name": "文件名前缀"
+        }
+      ],
+      "flags": {},
+      "id": 12,
+      "type": "SaveImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveImage"
+      },
+      "order": 75
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "links": [
+            10,
+            197
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "size": [
+        140,
+        60
+      ],
+      "pos": [
+        1760,
+        140
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "samples",
+          "link": 9,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        },
+        {
+          "name": "vae",
+          "link": 8,
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "vae"
+        }
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "id": 6,
+      "type": "VAEDecode",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAEDecode"
+      },
+      "order": 73
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        509.21942138671875,
+        129.9947052001953
+      ],
+      "color": "#fff0",
+      "pos": [
+        -2780,
+        560
+      ],
+      "inputs": [],
+      "flags": {
+        "allow_interaction": true
+      },
+      "id": 107,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 37,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "1\n90s复古日系漫画1",
+        "stroke": true,
+        "fontColor": "#C8C8C8"
+      },
+      "order": 47
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        530.4728393554688,
+        239.23104858398438
+      ],
+      "color": "#fff0",
+      "pos": [
+        -1850,
+        437.23681640625
+      ],
+      "inputs": [],
+      "flags": {
+        "allow_interaction": true
+      },
+      "id": 108,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 37,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "3\n复古质感扁平插画\n（此风格建议使用极简提示词，只简单描述主要物品）",
+        "stroke": true,
+        "fontColor": "#C8C8C8"
+      },
+      "order": 48
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        360,
+        123.56900024414062
+      ],
+      "color": "#fff0",
+      "pos": [
+        -1340,
+        560
+      ],
+      "inputs": [],
+      "flags": {
+        "allow_interaction": true
+      },
+      "id": 110,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 37,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "4\n蜡笔粗犷笔触插画",
+        "stroke": true,
+        "fontColor": "#C8C8C8"
+      },
+      "order": 49
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        360,
+        123.56900024414062
+      ],
+      "color": "#fff0",
+      "pos": [
+        -890,
+        560
+      ],
+      "inputs": [],
+      "flags": {
+        "allow_interaction": true
+      },
+      "id": 181,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 37,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "5\n手绘美食手账插画",
+        "stroke": true,
+        "fontColor": "#C8C8C8"
+      },
+      "order": 50
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        360,
+        123.56900024414062
+      ],
+      "color": "#fff0",
+      "pos": [
+        -430,
+        560
+      ],
+      "inputs": [],
+      "flags": {
+        "allow_interaction": true
+      },
+      "id": 111,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 37,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "6\n韩系治愈小清晰插画",
+        "stroke": true,
+        "fontColor": "#C8C8C8"
+      },
+      "order": 51
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        360,
+        123.56900024414062
+      ],
+      "color": "#fff0",
+      "pos": [
+        30,
+        560
+      ],
+      "inputs": [],
+      "flags": {
+        "allow_interaction": true
+      },
+      "id": 113,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#1B4669",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 37,
+        "backgroundAlpha": 0,
+        "lineHeight": 1.4,
+        "text": "7\n复古美式漫画",
+        "stroke": true,
+        "fontColor": "#C8C8C8"
+      },
+      "order": 52
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 6,
+          "name": "*",
+          "type": "*",
+          "localized_name": "*"
+        }
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "pos": [
+        1760,
+        220
+      ],
+      "widgets_values": [
+        "always",
+        0.6000000000000001,
+        "notify.mp3"
+      ],
+      "inputs": [
+        {
+          "name": "any",
+          "link": 153,
+          "label": "输入",
+          "type": "*",
+          "localized_name": "any"
+        },
+        {
+          "widget": {
+            "name": "mode"
+          },
+          "name": "mode",
+          "type": "COMBO",
+          "localized_name": "模式"
+        },
+        {
+          "widget": {
+            "name": "volume"
+          },
+          "name": "volume",
+          "type": "FLOAT",
+          "localized_name": "音量"
+        },
+        {
+          "widget": {
+            "name": "file"
+          },
+          "name": "file",
+          "type": "STRING",
+          "localized_name": "file"
+        }
+      ],
+      "flags": {
+        "pinned": true,
+        "collapsed": true
+      },
+      "id": 95,
+      "type": "PlaySound|pysssss",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "PlaySound|pysssss"
+      },
+      "order": 76
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "width",
+          "links": [
+            198
+          ],
+          "label": "width",
+          "type": "INT",
+          "localized_name": "width"
+        },
+        {
+          "name": "height",
+          "links": [
+            199
+          ],
+          "label": "height",
+          "type": "INT",
+          "localized_name": "height"
+        }
+      ],
+      "size": [
+        270,
+        126
+      ],
+      "pos": [
+        -920,
+        -350
+      ],
+      "widgets_values": [
+        "16:9 (Widescreen)",
+        2,
+        8
+      ],
+      "inputs": [
+        {
+          "shape": 7,
+          "name": "preview",
+          "label": "preview",
+          "type": "RESOLUTION_PREVIEW",
+          "localized_name": "preview"
+        },
+        {
+          "widget": {
+            "name": "aspect_ratio"
+          },
+          "name": "aspect_ratio",
+          "label": "aspect_ratio",
+          "type": "COMBO",
+          "localized_name": "aspect_ratio"
+        },
+        {
+          "widget": {
+            "name": "megapixels"
+          },
+          "name": "megapixels",
+          "label": "megapixels",
+          "type": "FLOAT",
+          "localized_name": "megapixels"
+        },
+        {
+          "widget": {
+            "name": "multiple"
+          },
+          "name": "multiple",
+          "label": "multiple",
+          "type": "INT",
+          "localized_name": "multiple"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "id": 196,
+      "type": "ResolutionSelector",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "ResolutionSelector"
+      },
+      "order": 53
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LATENT",
+          "links": [
+            6
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "pos": [
+        1420,
+        110
+      ],
+      "widgets_values": [
+        768,
+        1024,
+        1
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "width"
+          },
+          "name": "width",
+          "link": 198,
+          "type": "INT",
+          "localized_name": "宽度"
+        },
+        {
+          "widget": {
+            "name": "height"
+          },
+          "name": "height",
+          "link": 199,
+          "type": "INT",
+          "localized_name": "高度"
+        },
+        {
+          "widget": {
+            "name": "batch_size"
+          },
+          "name": "batch_size",
+          "type": "INT",
+          "localized_name": "批次大小"
+        }
+      ],
+      "flags": {
+        "pinned": true,
+        "collapsed": true
+      },
+      "id": 10,
+      "type": "EmptyLatentImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "order": 66
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "bgcolor": "transparent",
+      "size": [
+        782.198974609375,
+        107.0840835571289
+      ],
+      "color": "#fff0",
+      "pos": [
+        -610,
+        -670
+      ],
+      "inputs": [],
+      "flags": {
+        "pinned": true,
+        "allow_interaction": true
+      },
+      "id": 197,
+      "type": "孤海注释",
+      "properties": {
+        "padding": 12,
+        "backgroundColor": "#000000",
+        "borderRadius": 20,
+        "textAlign": "center",
+        "widget_ue_connectable": {},
+        "fontSize": 57,
+        "backgroundAlpha": 1,
+        "lineHeight": 1.4,
+        "text": "Krea2 开源超高品质文生图",
+        "stroke": false,
+        "fontColor": "#37ff00"
+      },
+      "order": 54
+    },
+    {
+      "outputs": [
+        {
+          "name": "text",
+          "links": [
+            86
+          ],
+          "label": "文本",
+          "type": "*",
+          "localized_name": "text"
+        },
+        {
+          "name": "show_help",
+          "label": "显示帮助",
+          "type": "STRING",
+          "localized_name": "show_help"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        "插画。一片丛横交错的广阔金黄色稻田（占据画面的4分之3），一名农民（穿着米白色衬衫）站在稻田中央，正在认真查看水稻的长势。水稻长得比较高，遮挡了农民的下半身。晴天，蓝天白云，天空中有2只白鸽（占据画面的4分之1）。高饱和度颜色、光感集中在视觉中心，鲜明笔触，写意线条，治愈感，几米绘本"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {
+        "pinned": true
+      },
+      "type": "CR Text",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": [
+        400,
+        620
+      ],
+      "pos": [
+        -1350,
+        -350
+      ],
+      "id": 62,
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CR Text"
+      },
+      "order": 55
+    }
+  ],
+  "extra": {
+    "links_added_by_ue": [],
+    "VHS_KeepIntermediate": true,
+    "KKvideo_latentpreview": false,
+    "ue_links": [],
+    "VHS_MetadataImage": true,
+    "KKvideo_latentpreviewrate": 0,
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "pixaromaGroups": [],
+    "VHS_latentpreviewrate": 0,
+    "frontendVersion": "1.23.0",
+    "VHS_latentpreview": false,
+    "ds": {
+      "offset": [
+        1031.6535650318801,
+        326.14351294407413
+      ],
+      "scale": 1.4122927695244596
+    }
+  },
+  "groups": [
+    {
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {},
+      "id": 1,
+      "title": "操作区",
+      "bounding": [
+        -1360,
+        -440,
+        720,
+        730
+      ]
+    },
+    {
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 2,
+      "title": "保存区",
+      "bounding": [
+        -610,
+        -440,
+        1780,
+        940
+      ]
+    },
+    {
+      "color": "#444",
+      "font_size": 24,
+      "flags": {
+        "pinned": true
+      },
+      "id": 3,
+      "title": "零部件区（无视即可）",
+      "bounding": [
+        1400,
+        -430,
+        1900,
+        880
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      2,
+      0,
+      5,
+      0,
+      "CLIP"
+    ],
+    [
+      3,
+      7,
+      0,
+      4,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      4,
+      5,
+      0,
+      7,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      5,
+      9,
+      0,
+      4,
+      4,
+      "INT"
+    ],
+    [
+      6,
+      10,
+      0,
+      4,
+      3,
+      "LATENT"
+    ],
+    [
+      8,
+      3,
+      0,
+      6,
+      1,
+      "VAE"
+    ],
+    [
+      9,
+      4,
+      0,
+      6,
+      0,
+      "LATENT"
+    ],
+    [
+      10,
+      6,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      14,
+      5,
+      0,
+      4,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      82,
+      59,
+      0,
+      61,
+      0,
+      "STRING"
+    ],
+    [
+      86,
+      62,
+      0,
+      59,
+      0,
+      "STRING"
+    ],
+    [
+      115,
+      61,
+      0,
+      5,
+      1,
+      "STRING"
+    ],
+    [
+      144,
+      1,
+      0,
+      130,
+      0,
+      "MODEL"
+    ],
+    [
+      145,
+      1,
+      0,
+      131,
+      0,
+      "MODEL"
+    ],
+    [
+      146,
+      1,
+      0,
+      132,
+      0,
+      "MODEL"
+    ],
+    [
+      147,
+      1,
+      0,
+      133,
+      0,
+      "MODEL"
+    ],
+    [
+      148,
+      1,
+      0,
+      134,
+      0,
+      "MODEL"
+    ],
+    [
+      153,
+      11,
+      1,
+      95,
+      0,
+      "*"
+    ],
+    [
+      154,
+      176,
+      0,
+      59,
+      1,
+      "STRING"
+    ],
+    [
+      179,
+      1,
+      0,
+      174,
+      0,
+      "MODEL"
+    ],
+    [
+      180,
+      1,
+      0,
+      173,
+      0,
+      "MODEL"
+    ],
+    [
+      181,
+      1,
+      0,
+      135,
+      0,
+      "MODEL"
+    ],
+    [
+      182,
+      1,
+      0,
+      177,
+      0,
+      "MODEL"
+    ],
+    [
+      183,
+      1,
+      0,
+      178,
+      0,
+      "MODEL"
+    ],
+    [
+      185,
+      130,
+      0,
+      195,
+      0,
+      "*"
+    ],
+    [
+      186,
+      174,
+      0,
+      195,
+      3,
+      "MODEL"
+    ],
+    [
+      187,
+      131,
+      0,
+      195,
+      4,
+      "MODEL"
+    ],
+    [
+      188,
+      132,
+      0,
+      195,
+      5,
+      "MODEL"
+    ],
+    [
+      189,
+      133,
+      0,
+      195,
+      6,
+      "MODEL"
+    ],
+    [
+      190,
+      134,
+      0,
+      195,
+      7,
+      "MODEL"
+    ],
+    [
+      191,
+      173,
+      0,
+      195,
+      8,
+      "MODEL"
+    ],
+    [
+      192,
+      135,
+      0,
+      195,
+      9,
+      "MODEL"
+    ],
+    [
+      193,
+      177,
+      0,
+      195,
+      10,
+      "MODEL"
+    ],
+    [
+      194,
+      178,
+      0,
+      195,
+      11,
+      "MODEL"
+    ],
+    [
+      195,
+      195,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      196,
+      63,
+      0,
+      195,
+      1,
+      "INT"
+    ],
+    [
+      197,
+      6,
+      0,
+      12,
+      0,
+      "IMAGE"
+    ],
+    [
+      198,
+      196,
+      0,
+      10,
+      0,
+      "INT"
+    ],
+    [
+      199,
+      196,
+      1,
+      10,
+      1,
+      "INT"
+    ]
+  ],
+  "id": "e6220c87-8f21-4320-b63f-52dcf543af3b",
+  "config": {},
+  "version": 0.4,
+  "last_node_id": 197,
+  "revision": 0
+}

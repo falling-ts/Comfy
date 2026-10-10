@@ -1,0 +1,1491 @@
+{
+  "last_link_id": 205,
+  "nodes": [
+    {
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            41
+          ],
+          "label": "条件",
+          "type": "CONDITIONING"
+        }
+      ],
+      "color": "#232",
+      "widgets_values": [
+        "[MOVIE-SHOTS] In an enchanting tale of nature's wonders,\n[SCENE-1] shows <Sophie> observing butterflies in a sunlit meadow, her expression one of awe and delight, \n[SCENE-2] transitioning to <Sophie> sketching the butterflies in her notebook, her brow furrowed in concentration, \n[SCENE-3] She looks up at the sky, surrounded by butterflies, a romantic atmosphere, a smile on her face."
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "link": 119,
+          "label": "CLIP",
+          "type": "CLIP"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 203,
+          "label": "文本",
+          "type": "STRING"
+        }
+      ],
+      "flags": {},
+      "type": "CLIPTextEncode",
+      "mode": 0,
+      "bgcolor": "#353",
+      "size": {
+        "0": 452.8356628417969,
+        "1": 113.51667022705078
+      },
+      "pos": [
+        -160,
+        -410
+      ],
+      "id": 6,
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "order": 20
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "LATENT",
+          "slot_index": 0,
+          "links": [
+            150
+          ],
+          "label": "LATENT",
+          "type": "LATENT"
+        }
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "pos": [
+        -580,
+        -100
+      ],
+      "widgets_values": [
+        1536,
+        768,
+        1
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "width"
+          },
+          "name": "width",
+          "link": 170,
+          "label": "width",
+          "type": "INT"
+        },
+        {
+          "widget": {
+            "name": "height"
+          },
+          "name": "height",
+          "link": 171,
+          "label": "height",
+          "type": "INT"
+        }
+      ],
+      "flags": {},
+      "id": 27,
+      "type": "EmptySD3LatentImage",
+      "properties": {
+        "Node name for S&R": "EmptySD3LatentImage"
+      },
+      "order": 16
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "MODEL",
+          "slot_index": 0,
+          "links": [
+            54,
+            55
+          ],
+          "label": "MODEL",
+          "type": "MODEL"
+        }
+      ],
+      "size": {
+        "0": 315,
+        "1": 130
+      },
+      "pos": [
+        -150,
+        -100
+      ],
+      "widgets_values": [
+        1.15,
+        0.5,
+        1536,
+        768
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 120,
+          "slot_index": 0,
+          "label": "model",
+          "type": "MODEL"
+        },
+        {
+          "widget": {
+            "name": "width"
+          },
+          "name": "width",
+          "link": 173,
+          "slot_index": 1,
+          "label": "width",
+          "type": "INT"
+        },
+        {
+          "widget": {
+            "name": "height"
+          },
+          "name": "height",
+          "link": 172,
+          "slot_index": 2,
+          "label": "height",
+          "type": "INT"
+        }
+      ],
+      "flags": {},
+      "id": 30,
+      "type": "ModelSamplingFlux",
+      "properties": {
+        "Node name for S&R": "ModelSamplingFlux"
+      },
+      "order": 18
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "SAMPLER",
+          "links": [
+            19
+          ],
+          "label": "采样器",
+          "type": "SAMPLER"
+        }
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "pos": [
+        -150,
+        80
+      ],
+      "widgets_values": [
+        "euler"
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 16,
+      "type": "KSamplerSelect",
+      "properties": {
+        "Node name for S&R": "KSamplerSelect"
+      },
+      "order": 0
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "VAE",
+          "slot_index": 0,
+          "links": [
+            12
+          ],
+          "type": "VAE"
+        }
+      ],
+      "size": {
+        "0": 311.81634521484375,
+        "1": 60.429901123046875
+      },
+      "pos": [
+        -150,
+        180
+      ],
+      "widgets_values": [
+        "ae.sft"
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 10,
+      "type": "VAELoader",
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "order": 1
+    },
+    {
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "NOISE",
+          "links": [
+            37
+          ],
+          "label": "噪波生成",
+          "type": "NOISE"
+        }
+      ],
+      "color": "#2a363b",
+      "widgets_values": [
+        915388907647769,
+        "randomize"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "RandomNoise",
+      "mode": 0,
+      "bgcolor": "#3f5159",
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "pos": [
+        -160,
+        -240
+      ],
+      "id": 25,
+      "properties": {
+        "Node name for S&R": "RandomNoise"
+      },
+      "order": 2
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "SIGMAS",
+          "links": [
+            20
+          ],
+          "label": "Sigmas",
+          "type": "SIGMAS"
+        }
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "pos": [
+        -160,
+        280
+      ],
+      "widgets_values": [
+        "simple",
+        20,
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 55,
+          "slot_index": 0,
+          "label": "模型",
+          "type": "MODEL"
+        }
+      ],
+      "flags": {},
+      "id": 17,
+      "type": "BasicScheduler",
+      "properties": {
+        "Node name for S&R": "BasicScheduler"
+      },
+      "order": 21
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "GUIDER",
+          "slot_index": 0,
+          "links": [
+            30
+          ],
+          "label": "引导",
+          "type": "GUIDER"
+        }
+      ],
+      "size": {
+        "0": 222.3482666015625,
+        "1": 46
+      },
+      "pos": [
+        300,
+        -250
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 54,
+          "slot_index": 0,
+          "label": "模型",
+          "type": "MODEL"
+        },
+        {
+          "name": "conditioning",
+          "link": 151,
+          "slot_index": 1,
+          "label": "条件",
+          "type": "CONDITIONING"
+        }
+      ],
+      "flags": {},
+      "id": 22,
+      "type": "BasicGuider",
+      "properties": {
+        "Node name for S&R": "BasicGuider"
+      },
+      "order": 23
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "output",
+          "slot_index": 0,
+          "links": [
+            24
+          ],
+          "label": "输出",
+          "type": "LATENT"
+        },
+        {
+          "shape": 3,
+          "name": "denoised_output",
+          "label": "降噪输出",
+          "type": "LATENT"
+        }
+      ],
+      "bgcolor": "#653",
+      "size": {
+        "0": 220.78335571289062,
+        "1": 176.59463500976562
+      },
+      "color": "#432",
+      "pos": [
+        300,
+        -130
+      ],
+      "inputs": [
+        {
+          "name": "noise",
+          "link": 37,
+          "slot_index": 0,
+          "label": "噪波生成",
+          "type": "NOISE"
+        },
+        {
+          "name": "guider",
+          "link": 30,
+          "slot_index": 1,
+          "label": "引导",
+          "type": "GUIDER"
+        },
+        {
+          "name": "sampler",
+          "link": 19,
+          "slot_index": 2,
+          "label": "采样器",
+          "type": "SAMPLER"
+        },
+        {
+          "name": "sigmas",
+          "link": 20,
+          "slot_index": 3,
+          "label": "Sigmas",
+          "type": "SIGMAS"
+        },
+        {
+          "name": "latent_image",
+          "link": 150,
+          "slot_index": 4,
+          "label": "Latent",
+          "type": "LATENT"
+        }
+      ],
+      "flags": {},
+      "id": 13,
+      "type": "SamplerCustomAdvanced",
+      "properties": {
+        "Node name for S&R": "SamplerCustomAdvanced"
+      },
+      "order": 24
+    },
+    {
+      "mode": 0,
+      "outputs": [],
+      "size": {
+        "0": 928.6238403320312,
+        "1": 1955.64453125
+      },
+      "pos": [
+        300,
+        290
+      ],
+      "widgets_values": [
+        "ComfyUI"
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 9,
+          "label": "图像",
+          "type": "IMAGE"
+        }
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "id": 9,
+      "type": "SaveImage",
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "order": 26
+    },
+    {
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            151
+          ],
+          "label": "CONDITIONING",
+          "type": "CONDITIONING"
+        }
+      ],
+      "color": "#233",
+      "widgets_values": [
+        3.5
+      ],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "link": 41,
+          "label": "conditioning",
+          "type": "CONDITIONING"
+        }
+      ],
+      "flags": {},
+      "type": "FluxGuidance",
+      "mode": 0,
+      "bgcolor": "#355",
+      "size": {
+        "0": 211.60000610351562,
+        "1": 115.00855255126953
+      },
+      "pos": [
+        310,
+        -420
+      ],
+      "id": 26,
+      "properties": {
+        "Node name for S&R": "FluxGuidance"
+      },
+      "order": 22
+    },
+    {
+      "outputs": [],
+      "color": "#fff0",
+      "inputs": [],
+      "flags": {
+        "pinned": true,
+        "allow_interaction": false
+      },
+      "type": "Label (rgthree)",
+      "title": "您无需设置 ComfyUI 环境即可运行此工作流程，而且它是免费的。",
+      "mode": 0,
+      "bgcolor": "#fff0",
+      "size": {
+        "0": 2355.5859375,
+        "1": 80
+      },
+      "pos": {
+        "0": -1070,
+        "1": -1345,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "id": 77,
+      "properties": {
+        "padding": 0,
+        "backgroundColor": "transparent",
+        "fontFamily": "Arial",
+        "borderRadius": 0,
+        "textAlign": "left",
+        "fontSize": 80,
+        "fontColor": "#ffffff"
+      },
+      "order": 3
+    },
+    {
+      "outputs": [],
+      "color": "#fff0",
+      "inputs": [],
+      "flags": {
+        "pinned": true,
+        "allow_interaction": false
+      },
+      "type": "Label (rgthree)",
+      "title": "Runninghub工作流，如需搬运请保留这个标签",
+      "mode": 4,
+      "bgcolor": "#fff0",
+      "size": {
+        "0": 1631.484375,
+        "1": 80
+      },
+      "pos": {
+        "0": -1057,
+        "1": -1443,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "id": 78,
+      "properties": {
+        "padding": 0,
+        "backgroundColor": "transparent",
+        "fontFamily": "Arial",
+        "borderRadius": 0,
+        "textAlign": "left",
+        "fontSize": 80,
+        "fontColor": "#ffffff"
+      },
+      "order": 4
+    },
+    {
+      "outputs": [],
+      "color": "#432",
+      "widgets_values": [
+        "The reference sampling implementation auto adjusts the shift value based on the resolution, if you don't want this you can just bypass (CTRL-B) this ModelSamplingFlux node.\n"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#653",
+      "size": {
+        "0": 337.45501708984375,
+        "1": 80.03682708740234
+      },
+      "pos": [
+        -1440,
+        -1180
+      ],
+      "id": 37,
+      "properties": {
+        "text": ""
+      },
+      "order": 5
+    },
+    {
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "MODEL",
+          "slot_index": 0,
+          "links": [
+            117
+          ],
+          "label": "模型",
+          "type": "MODEL"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [
+        "flux1-dev-fp8-Kijai.safetensors",
+        "default"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "UNETLoader",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": {
+        "0": 407.07098388671875,
+        "1": 82
+      },
+      "pos": [
+        -1040,
+        -440
+      ],
+      "id": 12,
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "order": 6
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "CLIP",
+          "slot_index": 0,
+          "links": [
+            118
+          ],
+          "label": "CLIP",
+          "type": "CLIP"
+        }
+      ],
+      "size": {
+        "0": 404.835205078125,
+        "1": 106
+      },
+      "pos": [
+        -1040,
+        -300
+      ],
+      "widgets_values": [
+        "t5xxl_fp8_e4m3fn.safetensors",
+        "sd3/clip_l.safetensors",
+        "flux"
+      ],
+      "inputs": [],
+      "flags": {},
+      "id": 11,
+      "type": "DualCLIPLoader",
+      "properties": {
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "order": 7
+    },
+    {
+      "outputs": [],
+      "color": "#432",
+      "widgets_values": [
+        "If you get an error in any of the nodes above make sure the files are in the correct directories.\n\nSee the top of the examples page for the links : https://comfyanonymous.github.io/ComfyUI_examples/flux/\n\nflux1-dev.safetensors goes in: ComfyUI/models/unet/\n\nt5xxl_fp16.safetensors and clip_l.safetensors go in: ComfyUI/models/clip/\n\nae.safetensors goes in: ComfyUI/models/vae/\n\n\nTip: You can set the weight_dtype above to one of the fp8 types if you have memory issues."
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "Note",
+      "mode": 0,
+      "bgcolor": "#653",
+      "size": {
+        "0": 342.97015380859375,
+        "1": 276.8846435546875
+      },
+      "pos": [
+        -1440,
+        -1069
+      ],
+      "id": 28,
+      "properties": {
+        "text": ""
+      },
+      "order": 8
+    },
+    {
+      "outputs": [
+        {
+          "name": "MODEL",
+          "slot_index": 0,
+          "links": [
+            120
+          ],
+          "label": "模型",
+          "type": "MODEL"
+        },
+        {
+          "name": "CLIP",
+          "slot_index": 1,
+          "links": [
+            119
+          ],
+          "label": "CLIP",
+          "type": "CLIP"
+        }
+      ],
+      "color": "#223",
+      "widgets_values": [
+        "visual-identity-design.safetensors",
+        1,
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 117,
+          "label": "模型",
+          "type": "MODEL"
+        },
+        {
+          "name": "clip",
+          "link": 118,
+          "label": "CLIP",
+          "type": "CLIP"
+        }
+      ],
+      "flags": {},
+      "type": "LoraLoader",
+      "mode": 0,
+      "bgcolor": "#335",
+      "size": {
+        "0": 418.2059631347656,
+        "1": 126
+      },
+      "pos": [
+        -600,
+        -430
+      ],
+      "id": 38,
+      "properties": {
+        "Node name for S&R": "LoraLoader"
+      },
+      "order": 15
+    },
+    {
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "text",
+          "slot_index": 0,
+          "links": [
+            159
+          ],
+          "label": "text",
+          "type": "STRING"
+        }
+      ],
+      "color": "#a2c8a2",
+      "widgets_values": [
+        "[RUNNINGHUB] "
+      ],
+      "flags": {},
+      "type": "JjkText",
+      "title": "Text1",
+      "mode": 0,
+      "bgcolor": "#8eb48e",
+      "size": [
+        377.4647521972656,
+        76.00000762939453
+      ],
+      "pos": [
+        -543.8820334572354,
+        -1011.7101809983062
+      ],
+      "id": 47,
+      "locked": true,
+      "properties": {
+        "Node name for S&R": "JjkText"
+      },
+      "order": 9
+    },
+    {
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "text",
+          "slot_index": 0,
+          "links": [
+            161
+          ],
+          "label": "text",
+          "type": "STRING"
+        }
+      ],
+      "color": "#a2c8a2",
+      "widgets_values": [
+        "[LEFT] "
+      ],
+      "flags": {},
+      "type": "JjkText",
+      "title": "Text3",
+      "mode": 0,
+      "bgcolor": "#8eb48e",
+      "size": [
+        377.4647521972656,
+        76.0000228881836
+      ],
+      "pos": [
+        -543.8820334572354,
+        -871.7101809983062
+      ],
+      "id": 49,
+      "locked": true,
+      "properties": {
+        "Node name for S&R": "JjkText"
+      },
+      "order": 10
+    },
+    {
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "text",
+          "slot_index": 0,
+          "links": [
+            201,
+            203
+          ],
+          "label": "text",
+          "type": "STRING"
+        }
+      ],
+      "color": "#a2c8a2",
+      "widgets_values": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "text1"
+          },
+          "name": "text1",
+          "link": 159,
+          "label": "text1",
+          "type": "STRING"
+        },
+        {
+          "widget": {
+            "name": "text2"
+          },
+          "name": "text2",
+          "link": 160,
+          "label": "text2",
+          "type": "STRING"
+        },
+        {
+          "widget": {
+            "name": "text3"
+          },
+          "name": "text3",
+          "link": 161,
+          "label": "text3",
+          "type": "STRING"
+        },
+        {
+          "widget": {
+            "name": "text4"
+          },
+          "name": "text4",
+          "link": 162,
+          "label": "text4",
+          "type": "STRING"
+        }
+      ],
+      "flags": {},
+      "type": "TextCombinerSix",
+      "mode": 0,
+      "bgcolor": "#8eb48e",
+      "size": [
+        210,
+        218.93951416015625
+      ],
+      "pos": [
+        -103.88203345723541,
+        -1011.7101809983062
+      ],
+      "id": 59,
+      "locked": true,
+      "properties": {
+        "Node name for S&R": "TextCombinerSix"
+      },
+      "order": 17
+    },
+    {
+      "outputs": [
+        {
+          "widget": {
+            "name": "height"
+          },
+          "name": "INT",
+          "slot_index": 0,
+          "links": [
+            171,
+            172
+          ],
+          "type": "INT"
+        }
+      ],
+      "color": "#323",
+      "widgets_values": [
+        768,
+        "fixed"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "PrimitiveNode",
+      "mode": 0,
+      "bgcolor": "#535",
+      "size": {
+        "0": 210,
+        "1": 82
+      },
+      "pos": [
+        -1020,
+        -30
+      ],
+      "id": 34,
+      "properties": {
+        "Run widget replace on values": false
+      },
+      "order": 11
+    },
+    {
+      "outputs": [
+        {
+          "shape": 6,
+          "name": "STRING",
+          "slot_index": 0,
+          "links": [],
+          "label": "字符串",
+          "type": "STRING"
+        }
+      ],
+      "color": "#a2c8a2",
+      "widgets_values": [
+        "",
+        "[RUNNINGHUB] This two-panel image shows the technological image of a smart brand, with the left panel showing a smiling cloud graphic and the brand name \"Runninghub\" in a tech-sounding, gradient font on a light blue background.[LEFT] while the right panel transforms the design into a hand-held briefcase with a black cloud logo and the brand name \"Runninghub\" in black, held by a person in a work environment, emphasizing the business atmosphere of the brand."
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "link": 201,
+          "slot_index": 0,
+          "label": "文本",
+          "type": "STRING"
+        }
+      ],
+      "flags": {},
+      "type": "ShowText|pysssss",
+      "mode": 0,
+      "bgcolor": "#8eb48e",
+      "size": [
+        335.3730773925781,
+        337.51007080078125
+      ],
+      "pos": [
+        141,
+        -1016
+      ],
+      "id": 79,
+      "locked": true,
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "order": 19
+    },
+    {
+      "outputs": [
+        {
+          "widget": {
+            "name": "width"
+          },
+          "name": "INT",
+          "slot_index": 0,
+          "links": [
+            170,
+            173
+          ],
+          "type": "INT"
+        }
+      ],
+      "color": "#323",
+      "widgets_values": [
+        1536,
+        "fixed"
+      ],
+      "inputs": [],
+      "flags": {},
+      "type": "PrimitiveNode",
+      "mode": 0,
+      "bgcolor": "#535",
+      "size": {
+        "0": 210,
+        "1": 82
+      },
+      "pos": [
+        -1020,
+        -160
+      ],
+      "id": 35,
+      "properties": {
+        "Run widget replace on values": false
+      },
+      "order": 12
+    },
+    {
+      "mode": 0,
+      "bgcolor": "#e9bae5",
+      "size": {
+        "0": 1061.284912109375,
+        "1": 1020.2164916992188
+      },
+      "color": "#fdcef9",
+      "pos": [
+        590,
+        -1067
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 194,
+          "label": "图像",
+          "type": "IMAGE"
+        }
+      ],
+      "flags": {},
+      "id": 66,
+      "type": "PreviewImage",
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "order": 27
+    },
+    {
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "text",
+          "slot_index": 0,
+          "links": [
+            160
+          ],
+          "label": "text",
+          "type": "STRING"
+        }
+      ],
+      "color": "#679c68",
+      "widgets_values": [
+        "This two-panel image shows the technological image of a smart brand, with the left panel showing a smiling cloud graphic and the brand name \"Runninghub\" in a tech-sounding, gradient font on a light blue background."
+      ],
+      "flags": {},
+      "type": "JjkText",
+      "title": "Text2",
+      "mode": 0,
+      "bgcolor": "#538854",
+      "size": [
+        377.4647521972656,
+        76.0000228881836
+      ],
+      "pos": [
+        -1053,
+        -1011
+      ],
+      "id": 57,
+      "locked": true,
+      "properties": {
+        "Node name for S&R": "JjkText"
+      },
+      "order": 13
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            9,
+            194
+          ],
+          "label": "图像",
+          "type": "IMAGE"
+        }
+      ],
+      "size": {
+        "0": 210,
+        "1": 46
+      },
+      "pos": [
+        300,
+        100
+      ],
+      "inputs": [
+        {
+          "name": "samples",
+          "link": 24,
+          "label": "Latent",
+          "type": "LATENT"
+        },
+        {
+          "name": "vae",
+          "link": 12,
+          "label": "VAE",
+          "type": "VAE"
+        }
+      ],
+      "flags": {},
+      "id": 8,
+      "type": "VAEDecode",
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "order": 25
+    },
+    {
+      "outputs": [
+        {
+          "shape": 3,
+          "name": "text",
+          "slot_index": 0,
+          "links": [
+            162
+          ],
+          "label": "text",
+          "type": "STRING"
+        }
+      ],
+      "color": "#679c68",
+      "widgets_values": [
+        "while the right panel transforms the design into a hand-held briefcase with a black cloud logo and the brand name \"Runninghub\" in black, held by a person in a work environment, emphasizing the business atmosphere of the brand."
+      ],
+      "flags": {},
+      "type": "JjkText",
+      "title": "Text4",
+      "mode": 0,
+      "bgcolor": "#538854",
+      "size": [
+        377.4647521972656,
+        76.0000228881836
+      ],
+      "pos": [
+        -1040.0522849252516,
+        -864.5043744704554
+      ],
+      "id": 50,
+      "locked": true,
+      "properties": {
+        "Node name for S&R": "JjkText"
+      },
+      "order": 14
+    }
+  ],
+  "extra": {
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "groupNodes": {},
+    "ds": {
+      "offset": {
+        "0": 2116.4920577945513,
+        "1": 1580.817730827817
+      },
+      "scale": 0.4090909090909093
+    }
+  },
+  "groups": [
+    {
+      "color": "#8A8",
+      "font_size": 80,
+      "title": "Prompt ",
+      "locked": false,
+      "bounding": [
+        -1074,
+        -1219,
+        1573,
+        579
+      ]
+    },
+    {
+      "color": "#8eb3b4",
+      "font_size": 80,
+      "title": "FLUX",
+      "locked": false,
+      "bounding": [
+        -1070,
+        -610,
+        1595,
+        1021
+      ]
+    },
+    {
+      "color": "#b06634",
+      "font_size": 24,
+      "title": "Prompt words can be modified",
+      "locked": false,
+      "bounding": [
+        -1060,
+        -1099,
+        435,
+        345
+      ]
+    },
+    {
+      "color": "#b58b2a",
+      "font_size": 24,
+      "title": "Try not to modify",
+      "locked": false,
+      "bounding": [
+        -557,
+        -1100,
+        1056,
+        458
+      ]
+    }
+  ],
+  "links": [
+    [
+      9,
+      8,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      12,
+      10,
+      0,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      19,
+      16,
+      0,
+      13,
+      2,
+      "SAMPLER"
+    ],
+    [
+      20,
+      17,
+      0,
+      13,
+      3,
+      "SIGMAS"
+    ],
+    [
+      24,
+      13,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      30,
+      22,
+      0,
+      13,
+      1,
+      "GUIDER"
+    ],
+    [
+      37,
+      25,
+      0,
+      13,
+      0,
+      "NOISE"
+    ],
+    [
+      41,
+      6,
+      0,
+      26,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      54,
+      30,
+      0,
+      22,
+      0,
+      "MODEL"
+    ],
+    [
+      55,
+      30,
+      0,
+      17,
+      0,
+      "MODEL"
+    ],
+    [
+      117,
+      12,
+      0,
+      38,
+      0,
+      "MODEL"
+    ],
+    [
+      118,
+      11,
+      0,
+      38,
+      1,
+      "CLIP"
+    ],
+    [
+      119,
+      38,
+      1,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      120,
+      38,
+      0,
+      30,
+      0,
+      "MODEL"
+    ],
+    [
+      150,
+      27,
+      0,
+      13,
+      4,
+      "LATENT"
+    ],
+    [
+      151,
+      26,
+      0,
+      22,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      159,
+      47,
+      0,
+      59,
+      0,
+      "STRING"
+    ],
+    [
+      160,
+      57,
+      0,
+      59,
+      1,
+      "STRING"
+    ],
+    [
+      161,
+      49,
+      0,
+      59,
+      2,
+      "STRING"
+    ],
+    [
+      162,
+      50,
+      0,
+      59,
+      3,
+      "STRING"
+    ],
+    [
+      170,
+      35,
+      0,
+      27,
+      0,
+      "INT"
+    ],
+    [
+      171,
+      34,
+      0,
+      27,
+      1,
+      "INT"
+    ],
+    [
+      172,
+      34,
+      0,
+      30,
+      2,
+      "INT"
+    ],
+    [
+      173,
+      35,
+      0,
+      30,
+      1,
+      "INT"
+    ],
+    [
+      194,
+      8,
+      0,
+      66,
+      0,
+      "IMAGE"
+    ],
+    [
+      201,
+      59,
+      0,
+      79,
+      0,
+      "STRING"
+    ],
+    [
+      203,
+      59,
+      0,
+      6,
+      1,
+      "STRING"
+    ]
+  ],
+  "config": {},
+  "version": 0.4,
+  "last_node_id": 92
+}

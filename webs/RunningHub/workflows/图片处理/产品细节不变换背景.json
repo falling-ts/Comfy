@@ -1,0 +1,922 @@
+{
+  "last_link_id": 26,
+  "nodes": [
+    {
+      "mode": 0,
+      "outputs": [],
+      "size": [
+        529.7760009765625,
+        582.3048095703125
+      ],
+      "pos": [
+        1770,
+        710
+      ],
+      "widgets_values": [
+        "IPAdapter"
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "link": 9,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图片"
+        },
+        {
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "name": "filename_prefix",
+          "type": "STRING",
+          "localized_name": "文件名前缀"
+        }
+      ],
+      "flags": {},
+      "id": 9,
+      "type": "SaveImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "SaveImage"
+      },
+      "order": 11
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            9
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "pos": [
+        1570,
+        700
+      ],
+      "widgets_values": [],
+      "inputs": [
+        {
+          "name": "samples",
+          "link": 7,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        },
+        {
+          "name": "vae",
+          "link": 8,
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "vae"
+        }
+      ],
+      "flags": {},
+      "id": 8,
+      "type": "VAEDecode",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "VAEDecode"
+      },
+      "order": 10
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            4
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "size": [
+        422.84503173828125,
+        164.31304931640625
+      ],
+      "pos": [
+        690,
+        610
+      ],
+      "widgets_values": [
+        "in a peaceful spring morning a woman wearing a white shirt is sitting in a park on a bench\n\nhigh quality, detailed, diffuse light"
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "link": 3,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "clip"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {},
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "order": 5
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "slot_index": 0,
+          "links": [
+            23
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        }
+      ],
+      "size": [
+        315,
+        278
+      ],
+      "pos": [
+        801,
+        256
+      ],
+      "widgets_values": [
+        0.8,
+        "linear",
+        "concat",
+        0,
+        1,
+        "V only"
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 20,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "model"
+        },
+        {
+          "name": "ipadapter",
+          "link": 21,
+          "label": "IPAdapter",
+          "type": "IPADAPTER",
+          "localized_name": "ipadapter"
+        },
+        {
+          "name": "image",
+          "link": 26,
+          "label": "正面图像",
+          "type": "IMAGE",
+          "localized_name": "image"
+        },
+        {
+          "shape": 7,
+          "name": "image_negative",
+          "label": "负面图像",
+          "type": "IMAGE",
+          "localized_name": "image_negative"
+        },
+        {
+          "shape": 7,
+          "name": "attn_mask",
+          "label": "关注层遮罩",
+          "type": "MASK",
+          "localized_name": "attn_mask"
+        },
+        {
+          "shape": 7,
+          "name": "clip_vision",
+          "link": 24,
+          "label": "CLIP视觉",
+          "type": "CLIP_VISION",
+          "localized_name": "clip_vision"
+        },
+        {
+          "widget": {
+            "name": "weight"
+          },
+          "name": "weight",
+          "type": "FLOAT",
+          "localized_name": "权重"
+        },
+        {
+          "widget": {
+            "name": "weight_type"
+          },
+          "name": "weight_type",
+          "type": "COMBO",
+          "localized_name": "权重类型"
+        },
+        {
+          "widget": {
+            "name": "combine_embeds"
+          },
+          "name": "combine_embeds",
+          "type": "COMBO",
+          "localized_name": "合并嵌入组"
+        },
+        {
+          "widget": {
+            "name": "start_at"
+          },
+          "name": "start_at",
+          "type": "FLOAT",
+          "localized_name": "开始应用位置"
+        },
+        {
+          "widget": {
+            "name": "end_at"
+          },
+          "name": "end_at",
+          "type": "FLOAT",
+          "localized_name": "结束应用位置"
+        },
+        {
+          "widget": {
+            "name": "embeds_scaling"
+          },
+          "name": "embeds_scaling",
+          "type": "COMBO",
+          "localized_name": "嵌入组缩放"
+        }
+      ],
+      "flags": {},
+      "id": 14,
+      "type": "IPAdapterAdvanced",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "IPAdapterAdvanced"
+      },
+      "order": 8
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            26
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        }
+      ],
+      "size": [
+        315,
+        106
+      ],
+      "pos": [
+        797,
+        87
+      ],
+      "widgets_values": [
+        "LANCZOS",
+        "top",
+        0.15
+      ],
+      "inputs": [
+        {
+          "name": "image",
+          "link": 25,
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "image"
+        },
+        {
+          "widget": {
+            "name": "interpolation"
+          },
+          "name": "interpolation",
+          "type": "COMBO",
+          "localized_name": "插值方式"
+        },
+        {
+          "widget": {
+            "name": "crop_position"
+          },
+          "name": "crop_position",
+          "type": "COMBO",
+          "localized_name": "裁剪位置"
+        },
+        {
+          "widget": {
+            "name": "sharpening"
+          },
+          "name": "sharpening",
+          "type": "FLOAT",
+          "localized_name": "锐化"
+        }
+      ],
+      "flags": {},
+      "id": 17,
+      "type": "PrepImageForClipVision",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "PrepImageForClipVision"
+      },
+      "order": 7
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "slot_index": 0,
+          "links": [
+            20
+          ],
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "CLIP",
+          "slot_index": 1,
+          "links": [
+            3,
+            5
+          ],
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "CLIP"
+        },
+        {
+          "name": "VAE",
+          "slot_index": 2,
+          "links": [
+            8
+          ],
+          "label": "VAE",
+          "type": "VAE",
+          "localized_name": "VAE"
+        }
+      ],
+      "size": [
+        315,
+        98
+      ],
+      "pos": [
+        50,
+        730
+      ],
+      "widgets_values": [
+        "真境写真XL Apex 商业电商场景摄影真实写实大师_XL_V8.safetensors"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "ckpt_name"
+          },
+          "name": "ckpt_name",
+          "type": "COMBO",
+          "localized_name": "Checkpoint名称"
+        }
+      ],
+      "flags": {},
+      "id": 4,
+      "type": "CheckpointLoaderSimple",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "order": 0
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LATENT",
+          "slot_index": 0,
+          "links": [
+            7
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "size": [
+        315,
+        262
+      ],
+      "pos": [
+        1210,
+        700
+      ],
+      "widgets_values": [
+        484255352170597,
+        "randomize",
+        30,
+        3.5,
+        "euler_ancestral",
+        "karras",
+        1
+      ],
+      "inputs": [
+        {
+          "name": "model",
+          "link": 23,
+          "label": "模型",
+          "type": "MODEL",
+          "localized_name": "模型"
+        },
+        {
+          "name": "positive",
+          "link": 4,
+          "label": "正面条件",
+          "type": "CONDITIONING",
+          "localized_name": "正面条件"
+        },
+        {
+          "name": "negative",
+          "link": 6,
+          "label": "负面条件",
+          "type": "CONDITIONING",
+          "localized_name": "负面条件"
+        },
+        {
+          "name": "latent_image",
+          "link": 2,
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent图像"
+        },
+        {
+          "widget": {
+            "name": "seed"
+          },
+          "name": "seed",
+          "type": "INT",
+          "localized_name": "随机种"
+        },
+        {
+          "widget": {
+            "name": "steps"
+          },
+          "name": "steps",
+          "type": "INT",
+          "localized_name": "步数"
+        },
+        {
+          "widget": {
+            "name": "cfg"
+          },
+          "name": "cfg",
+          "type": "FLOAT",
+          "localized_name": "CFG"
+        },
+        {
+          "widget": {
+            "name": "sampler_name"
+          },
+          "name": "sampler_name",
+          "type": "COMBO",
+          "localized_name": "采样器"
+        },
+        {
+          "widget": {
+            "name": "scheduler"
+          },
+          "name": "scheduler",
+          "type": "COMBO",
+          "localized_name": "调度器"
+        },
+        {
+          "widget": {
+            "name": "denoise"
+          },
+          "name": "denoise",
+          "type": "FLOAT",
+          "localized_name": "降噪"
+        }
+      ],
+      "flags": {},
+      "id": 3,
+      "type": "KSampler",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "KSampler"
+      },
+      "order": 9
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            6
+          ],
+          "label": "条件",
+          "type": "CONDITIONING",
+          "localized_name": "条件"
+        }
+      ],
+      "size": [
+        425.27801513671875,
+        180.6060791015625
+      ],
+      "pos": [
+        690,
+        840
+      ],
+      "widgets_values": [
+        "(worst quality:2),(low quality:2),(normal quality:2),lowres,normal quality,((monochrome)),((grayscale)),skin spots,acnes,skin blemishes,age spot,(ugly:1.331),(duplicate:1.331),(morbid:1.21),(mutilated:1.21),(tranny:1.331),mutated hands,(poorly drawn hands:1.5),blurry,(bad anatomy:1.21),(bad proportions:1.331),extra limbs,(disfigured:1.331),(missing arms:1.331),(extra legs:1.331),(fused fingers:1.61051),(too many fingers:1.61051),(unclear eyes:1.331),lowers,bad hands,missing fingers,extra digit,bad hands,missing fingers,(((extra arms and legs))),\n"
+      ],
+      "inputs": [
+        {
+          "name": "clip",
+          "link": 5,
+          "label": "CLIP",
+          "type": "CLIP",
+          "localized_name": "clip"
+        },
+        {
+          "widget": {
+            "name": "text"
+          },
+          "name": "text",
+          "type": "STRING",
+          "localized_name": "文本"
+        }
+      ],
+      "flags": {},
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "order": 6
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LATENT",
+          "slot_index": 0,
+          "links": [
+            2
+          ],
+          "label": "Latent",
+          "type": "LATENT",
+          "localized_name": "Latent"
+        }
+      ],
+      "size": [
+        315,
+        106
+      ],
+      "pos": [
+        801,
+        1097
+      ],
+      "widgets_values": [
+        768,
+        1024,
+        1
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "width"
+          },
+          "name": "width",
+          "type": "INT",
+          "localized_name": "宽度"
+        },
+        {
+          "widget": {
+            "name": "height"
+          },
+          "name": "height",
+          "type": "INT",
+          "localized_name": "高度"
+        },
+        {
+          "widget": {
+            "name": "batch_size"
+          },
+          "name": "batch_size",
+          "type": "INT",
+          "localized_name": "批次大小"
+        }
+      ],
+      "flags": {},
+      "id": 5,
+      "type": "EmptyLatentImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "order": 1
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IPADAPTER",
+          "links": [
+            21
+          ],
+          "label": "IPAdapter",
+          "type": "IPADAPTER",
+          "localized_name": "IPADAPTER"
+        }
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "pos": [
+        308,
+        52
+      ],
+      "widgets_values": [
+        "ip-adapter-plus_sdxl_vit-h.safetensors"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "ipadapter_file"
+          },
+          "name": "ipadapter_file",
+          "type": "COMBO",
+          "localized_name": "IPAdapter文件"
+        }
+      ],
+      "flags": {},
+      "id": 15,
+      "type": "IPAdapterModelLoader",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "IPAdapterModelLoader"
+      },
+      "order": 2
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CLIP_VISION",
+          "links": [
+            24
+          ],
+          "label": "CLIP视觉",
+          "type": "CLIP_VISION",
+          "localized_name": "CLIP视觉"
+        }
+      ],
+      "size": [
+        412.0998229980469,
+        58
+      ],
+      "pos": [
+        170.3199920654297,
+        165.720458984375
+      ],
+      "widgets_values": [
+        "CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "clip_name"
+          },
+          "name": "clip_name",
+          "type": "COMBO",
+          "localized_name": "CLIP名称"
+        }
+      ],
+      "flags": {},
+      "id": 16,
+      "type": "CLIPVisionLoader",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "CLIPVisionLoader"
+      },
+      "order": 3
+    },
+    {
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            25
+          ],
+          "label": "图像",
+          "type": "IMAGE",
+          "localized_name": "图像"
+        },
+        {
+          "name": "MASK",
+          "label": "遮罩",
+          "type": "MASK",
+          "localized_name": "遮罩"
+        }
+      ],
+      "size": [
+        315,
+        314
+      ],
+      "pos": [
+        274.0230712890625,
+        279.4408874511719
+      ],
+      "widgets_values": [
+        "5.jpeg",
+        "image"
+      ],
+      "inputs": [
+        {
+          "widget": {
+            "name": "image"
+          },
+          "name": "image",
+          "type": "COMBO",
+          "localized_name": "图像"
+        },
+        {
+          "widget": {
+            "name": "upload"
+          },
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "localized_name": "选择文件上传"
+        }
+      ],
+      "flags": {},
+      "id": 12,
+      "type": "LoadImage",
+      "properties": {
+        "widget_ue_connectable": {},
+        "Node name for S&R": "LoadImage"
+      },
+      "order": 4
+    }
+  ],
+  "extra": {
+    "links_added_by_ue": [],
+    "ue_links": [],
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "ds": {
+      "offset": [
+        -197.98522154829334,
+        -219.90000998342177
+      ],
+      "scale": 1.4122927695244514
+    }
+  },
+  "groups": [],
+  "links": [
+    [
+      2,
+      5,
+      0,
+      3,
+      3,
+      "LATENT"
+    ],
+    [
+      3,
+      4,
+      1,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      4,
+      6,
+      0,
+      3,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      5,
+      4,
+      1,
+      7,
+      0,
+      "CLIP"
+    ],
+    [
+      6,
+      7,
+      0,
+      3,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      7,
+      3,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      8,
+      4,
+      2,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      9,
+      8,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      4,
+      0,
+      14,
+      0,
+      "MODEL"
+    ],
+    [
+      21,
+      15,
+      0,
+      14,
+      1,
+      "IPADAPTER"
+    ],
+    [
+      23,
+      14,
+      0,
+      3,
+      0,
+      "MODEL"
+    ],
+    [
+      24,
+      16,
+      0,
+      14,
+      5,
+      "CLIP_VISION"
+    ],
+    [
+      25,
+      12,
+      0,
+      17,
+      0,
+      "IMAGE"
+    ],
+    [
+      26,
+      17,
+      0,
+      14,
+      2,
+      "IMAGE"
+    ]
+  ],
+  "id": "049ccc8e-dd0b-4981-9d81-e6a40dc7301e",
+  "config": {},
+  "version": 0.4,
+  "last_node_id": 17,
+  "revision": 0
+}

@@ -610,3 +610,38 @@ print("成功:", sum(1 for v in results.values() if v["ok"]), "/", len(ids))
 - `webs\RunningHub\` 目录不属于任何 git 仓库,下载文件可安全存放
 - 下载的工作流可能使用 RunningHub 私有自定义节点(详情列有数量),导入本地 ComfyUI 前先装对应节点
 - 批量调用注意频率(6 并发实测稳定),避免触发风控
+
+## 12. 2026-10-10 实际下载(2831 → 4571 个工作流)
+
+需求是「实际下载工作流」而非只拉列表,故本轮用 `scripts/pull-runninghub.py` 走完三段接口把 JSON 落到 `webs/RunningHub/workflows/<分类>/`。
+
+### 12.1 本轮口径与结果
+
+| 项 | 值 |
+|---|---|
+| 分类树 | `POST /api/portal/tag/tree` body `{"rang":"WORKFLOW"}` → 21 个一级分类 |
+| 列表 | `POST /api/portal/template/list`,`size=30` / `sort=REPUTATION` / `days=90` / `tags=该分类全部子标签 id 数组` |
+| 每类取样 | 按 `statisticsInfo.likeCount` 降序取**前 100 条**(旧脚本口径是前 20) |
+| 内容 | `POST /api/workflow/getContent` body `{"workflowId": "<id>"}` → `data.workflowContent`(字符串化 JSON,`json.loads` 后直接落盘) |
+| 本地规模 | 2831 → **4571** 个工作流,21 个分类,**新增 1740** |
+| 站点规模 | 21 个分类 total 合计 **153866**(单类最高 `图片生成` 43653) |
+| JSON 校验 | 4571 个全部可解析、均含 `nodes`,平均 43.2 节点;失败 1(分类 `二次元`,单条 getContent 返回空) |
+
+### 12.2 本轮踩到的坑
+
+1. ⚠️ **`tags` 必须传子标签 id 数组** —— 传一级分类 id 只返回少量官方模板(点赞全 0)。沿用 9.1 的结论。
+2. ⚠️ **`data.total` 远大于本地目录规模是正常的** —— `total` 是该标签下的全站条目数,不是本次取样数;`AI漫剧` 类 total 只有 **2**、`插件` 161,这类小类取不满 100 条也属正常。
+3. ⚠️ **`likeCount` / `useCount` / `collectCount` 在响应里是字符串**,排序前必须 `int()`。
+4. ⚠️ **文件名必须清洗** —— 标题里带 `/ : * ? " < > |` 与控制字符(如 `+FLUX+动漫场景文生图+_+二次修复+.json`),直接当文件名在 Windows 上会失败;脚本统一替换为 `_`、截断到 120 字符、去掉尾部 `.` 与空格。
+5. ⚠️ **同名文件会互相覆盖** —— 不同 id 可能同名。本轮对已存在的同名文件**跳过**(增量、不覆盖),故同名只保留首次落盘的那份。
+6. 增量口径:本轮只下新增、不覆盖旧文件,所以「作者后来更新了工作流」这类变化**不会**被同步;要强制刷新需删目录重拉。
+
+### 12.3 复跑方式
+
+```powershell
+$env:RH_TOKEN='<Bearer token>'
+.\.venv\Scripts\python.exe -X utf8 scripts\pull-runninghub.py
+```
+
+token 只经环境变量传入,**不落盘、不入 md、不提交 git**。
+
