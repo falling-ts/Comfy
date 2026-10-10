@@ -194,6 +194,25 @@
     未识别(唯一路径口径)816 → 630(**净减 186**)。111 个新路径里 97 个自动识别,14 个 3D 文件(slat/ss 一族)沿用旧表
     `未识别(3D)` 口径(旧表 `triposplat_fp16` / `pixal3d_*` / `trellis_2_*` 主干同此)。
 
+#### 5.2.5 2026-10-10 复核(5377 条)与规则表顺序修正
+
+- 本次抓取:`result_total = 5377`(较 10-07 的 5239 增加 138 条记录 / **63 个新实例路径**),消失 0。
+  `max_page = 54`(page_size=100);按 `max_page` 循环 + 按 `id` 去重后恰好 5377 条。
+- ⚠️ **本轮修掉一个影响面很大的规则顺序缺陷**(此前一直存在,只是老条目被"零回归沿用"掩盖着):
+  `classify-models-dir.py` 的 RULES 表里 **LLM 规则(`qwen…|minimax|…`)排在 LoRA 规则之前**,
+  而 Qwen-Image-2.1 与 MiniMax-H3 系列的命名里 **普遍含 `qwen` / `minimax`** ⇒
+  只要文件没先命中 `4step/turbo/lora` 等特征词,**QI2.1 LoRA 与 H3 主模型会整批落进 `LLM`**。
+  本次新增的 63 个路径里有 **18 条**是这样误判的(Clay-Sculpture-Style / Natural-Exposure-LoRA /
+  outfit-swap / outpaint-v2 / H3 motion+expansion adapter / H3 Ref2VA 主模型……)。
+  **修正**:把 LoRA 规则前移到 LLM 之前,并在两者之间插两条 MiniMax-H3 专用规则
+  (主模型 → `diffusion_models`,adapter/temporal 类 → `loras`)。
+  另为这 18 条 + 21 条真·LLM/3D 新文件补 `MANUAL_EXACT` 人工结论(见该文件 2026-10-10 段)。
+  ⚠️ **顺序敏感规则是这类表的结构性风险**:LoRA/主模型/文本编码器/放大四族的命名互相重叠
+  (`turbo` 既是 LoRA 档位也可能出现在主模型名里,`qwen` 既是 LLM 也出现在 LoRA 前缀)。
+  以后加规则一律**先想清楚该族之间会不会互相命中**。
+- **零回归实测**:对 10-07 原表逐路径比对,**已识别结论被改动/丢失 = 0**;
+  未识别(唯一路径口径)645 → 638。63 个新路径零消失。
+
 ### 5.3 前端反推过程(接口变更后自查)
 
 1. 抓 `https://www.autodl.art/app/common/model` HTML → 入口 JS `/assets/index.27e3033b.js`(772KB,主 bundle)
